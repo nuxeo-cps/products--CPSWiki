@@ -191,17 +191,17 @@ class Wiki(CPSBaseFolder):
             parser = generateParser(self.parser)
         return parser
 
-    security.declareProtected(View, 'getWikiPage')
-    def getWikiPage(self, title_or_id):
+    security.declareProtected(View, 'getPage')
+    def getPage(self, title_or_id):
         wikipage_id = makeId(title_or_id)
         if wikipage_id in self.objectIds():
             return self[wikipage_id]
         return None
 
-    security.declareProtected(DeleteObjects, 'deleteWikiPage')
-    def deleteWikiPage(self, title_or_id, REQUEST=None):
+    security.declareProtected(DeleteObjects, 'deletePage')
+    def deletePage(self, title_or_id, REQUEST=None):
         """ deletes a page, given its id or title """
-        page = self.getWikiPage(title_or_id)
+        page = self.getPage(title_or_id)
         if page is not None:
             self.manage_delObjects([page.id])
 
@@ -210,8 +210,8 @@ class Wiki(CPSBaseFolder):
             REQUEST.RESPONSE.redirect(self.absolute_url()+\
                 '?portal_status_message=%s' % psm)
 
-    security.declareProtected(AddPortalContent, 'addWikiPage')
-    def addWikiPage(self, title, REQUEST=None):
+    security.declareProtected(AddPortalContent, 'addPage')
+    def addPage(self, title, REQUEST=None):
         """ creates and adds a wiki page """
         wikipage_id = makeId(title)
         stepper = 1

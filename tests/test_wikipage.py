@@ -45,17 +45,17 @@ class WikiPageTests(ZopeTestCase):
         wiki._getCurrentUser = self._getCurrentUser
 
         wiki.parser = 'zwiki'
-        page = wiki.addWikiPage('my page')
+        page = wiki.addPage('my page')
         page.source = VersionContent('once again')
         self.assertEquals(page.getParserType(), 'zwiki')
         self.assertEquals(page.render(), 'once again')
 
         page.source = VersionContent('once[again] again')
         self.assertEquals(page.render(),
-            'once[again]<a href="../addWikiPage?title=again">?</a> again')
+            'once[again]<a href="../addPage?title=again">?</a> again')
 
         wiki.parser = 'restructuredtext'
-        page = wiki.addWikiPage('my page')
+        page = wiki.addPage('my page')
         page.source = VersionContent('once again')
         self.assertEquals(page.getParserType(), 'restructuredtext')
         # XXX: (madarche) Why does this tests give different results on my
@@ -68,7 +68,7 @@ class WikiPageTests(ZopeTestCase):
         wiki.parser = 'zwiki'
         wiki._getCurrentUser = self._getCurrentUser
 
-        page = wiki.addWikiPage('')
+        page = wiki.addPage('')
         page.source = VersionContent('<ba>my dcds</ba>dcdscdscdscsd')
         self.assertEquals(page.render(), '<ba>my dcds</ba>dcdscdscdscsd')
 
@@ -77,33 +77,33 @@ class WikiPageTests(ZopeTestCase):
         wiki.parser = 'zwiki'
         wiki._getCurrentUser = self._getCurrentUser
 
-        page = wiki.addWikiPage('my page')
+        page = wiki.addPage('my page')
         res = page.renderLinks('once [my link] again')
-        self.assertEquals(res, 'once [my link]<a href="../addWikiPage?title=my%20link">?</a> again')
+        self.assertEquals(res, 'once [my link]<a href="../addPage?title=my%20link">?</a> again')
 
-    def test_deletePage(self):
+    def test_delete(self):
         wiki = Wiki('wiki')
         wiki.parser = 'zwiki'
         wiki._getCurrentUser = self._getCurrentUser
 
-        page = wiki.addWikiPage('my page')
-        page.deletePage()
-        self.assert_(wiki.getWikiPage('my page') is None)
+        page = wiki.addPage('my page')
+        page.delete()
+        self.assert_(wiki.getPage('my page') is None)
 
     def test_versionning(self):
         wiki = Wiki('wiki')
         wiki.parser = 'zwiki'
         wiki._getCurrentUser = self._getCurrentUser
 
-        page = wiki.addWikiPage('my page')
-        page.editPage(source='hello')
-        page.editPage(source='hello, how are you doing ?')
-        page.editPage(source='hello, how are you doing ?\nMe fine.')
+        page = wiki.addPage('my page')
+        page.edit(source='hello')
+        page.edit(source='hello, how are you doing ?')
+        page.edit(source='hello, how are you doing ?\nMe fine.')
 
         res = page.getAllDiffs()
         self.assertEquals(len(res), 4)
 
-        page.editPage(source='hello, how do you do ?\nMe fine.')
+        page.edit(source='hello, how do you do ?\nMe fine.')
 
         res = page.getAllDiffs()
         self.assertEquals(len(res), 5)
@@ -112,19 +112,19 @@ class WikiPageTests(ZopeTestCase):
         self.assertEquals(page.source.getLastVersion()[0],
                           'hello, how are you doing ?')
 
-    def test_getDifferences(self):
+    def test_getDiffs(self):
         wiki = Wiki('wiki')
         wiki.parser = 'zwiki'
         wiki._getCurrentUser = self._getCurrentUser
 
-        page = wiki.addWikiPage('my page')
-        page.editPage(source='hello')
-        page.editPage(source='hello, how are you doing ?')
+        page = wiki.addPage('my page')
+        page.edit(source='hello')
+        page.edit(source='hello, how are you doing ?')
 
-        res = page.getDifferences(0, 1)
+        res = page.getDiffs(0, 1)
         self.assertEquals(res, '+ hello')
 
-        res = page.getDifferences(1, 2)
+        res = page.getDiffs(1, 2)
         self.assertEquals(res, '- hello+ hello, how are you doing ?')
 
     def test_locking(self):
@@ -132,23 +132,23 @@ class WikiPageTests(ZopeTestCase):
         wiki.parser = 'zwiki'
         wiki._getCurrentUser = self._getCurrentUser
 
-        page = wiki.addWikiPage('my page')
-        self.assert_(page.editPage(source='hello'))
+        page = wiki.addPage('my page')
+        self.assert_(page.edit(source='hello'))
         page.lockPage()    # user locks the page (done by template)
 
         # second user comes
         wiki._getCurrentUser = self._getCurrentUser2
-        self.assert_(not page.editPage(source='hello all')) # uneditable
+        self.assert_(not page.edit(source='hello all')) # uneditable
         self.assertEquals(page.render(), 'hello')
 
         # first user finish his work
         wiki._getCurrentUser = self._getCurrentUser
-        self.assert_(page.editPage(source='hello all you'))  # unlocks
+        self.assert_(page.edit(source='hello all you'))  # unlocks
         self.assertEquals(page.render(), 'hello all you')
 
         #second user is good to go now
         wiki._getCurrentUser = self._getCurrentUser2
-        self.assert_(page.editPage(source='hello all'))
+        self.assert_(page.edit(source='hello all'))
         self.assertEquals(page.render(), 'hello all')
 
         # check history
@@ -164,8 +164,8 @@ class WikiPageTests(ZopeTestCase):
             # Testing edit and rendering of a page using default encoding,
             # typically ISO-8859-15.
             content = "C'est éeéfffélo là et où donc ?"
-            page = wiki.addWikiPage('Page 1: with default encoding')
-            self.assert_(page.editPage(source=content))
+            page = wiki.addPage('Page 1: with default encoding')
+            self.assert_(page.edit(source=content))
             if parser == 'restructuredtext':
                 self.assertEquals(page.render(), '<p>%s</p>\n' % content)
             else:
@@ -174,15 +174,15 @@ class WikiPageTests(ZopeTestCase):
             # TODO: When CPS accepts unicode we will decomment this test
             # Testing edit and rendering of a page using unicode encoding
 ##             content = u"C'est éeéfffélo là et où donc ?"
-##             page = wiki.addWikiPage('Page 2: with Unicode')
-##             self.assert_(page.editPage(source=content))
+##             page = wiki.addPage('Page 2: with Unicode')
+##             self.assert_(page.edit(source=content))
 ##             if parser == 'restructuredtext':
 ##                 self.assertEquals(page.render(), '<p>%s</p>\n' % content)
 ##             else:
 ##                 self.assertEquals(page.render(), content)
 
             # Testing the creation of a page with accented characters
-            page = wiki.addWikiPage('éeedzzzzzzzzéé à doù !')
+            page = wiki.addPage('éeedzzzzzzzzéé à doù !')
 
 
 def test_suite():

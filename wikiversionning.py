@@ -126,7 +126,7 @@ class VersionContent:
     def getVersionCount(self):
         return self._getHistorySize() + 1
 
-    def getDifferences(self, index_a, index_b):
+    def getDiffs(self, index_a, index_b):
         """ retrieves a diff between two version """
         version_count = self.getVersionCount()
         if index_a >= version_count or index_b >= version_count:

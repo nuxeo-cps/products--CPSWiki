@@ -25,7 +25,6 @@ from Products.CPSWiki.wiki import Wiki
 
 class WikiParserTest(ZopeTestCase):
 
-
     def test_parsing(self):
         wiki = Wiki('wiki')
 
@@ -35,14 +34,13 @@ class WikiParserTest(ZopeTestCase):
         self.assertEquals(res, 'qzpijdspjvdspdsvjpdsovj')
         res = parser.parseContent(wiki, 'qzpijdspjvd [spds] vjpdsovj')
         self.assertEquals(res,
-            'qzpijdspjvd [spds]<a href="../addWikiPage?title=spds">?</a> vjpdsovj')
+            'qzpijdspjvd [spds]<a href="../addPage?title=spds">?</a> vjpdsovj')
 
-        wiki.addWikiPage('spds')
+        wiki.addPage('spds')
 
         res = parser.parseContent(wiki, 'qzpijdspjvd [spds] vjpdsovj')
         self.assertEquals(res,
             'qzpijdspjvd <a href="../spds/cps_wiki_pageview">spds</a> vjpdsovj')
-
 
 
 def test_suite():

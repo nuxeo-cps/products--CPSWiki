@@ -32,18 +32,18 @@ class WikiTests(ZopeTestCase):
         wiki = Wiki('wiki')
         self.assertNotEquals(wiki, None)
 
-    def test_addWikiPage(self):
+    def test_addPage(self):
         wiki = Wiki('wiki')
-        page = wiki.addWikiPage('my page')
+        page = wiki.addPage('my page')
         self.assertNotEquals(page, None)
         self.assert_(page.title == 'my page')
 
-    def test_deleteWikiPage(self):
+    def test_deletePage(self):
         wiki = Wiki('wiki')
-        page = wiki.addWikiPage('my page')
+        page = wiki.addPage('my page')
         self.assertNotEquals(page, None)
         self.assert_(page.title == 'my page')
-        wiki.deleteWikiPage('my page')
+        wiki.deletePage('my page')
         self.assertEquals(wiki.objectIds(), [])
 
     def test_locking(self):
@@ -51,7 +51,7 @@ class WikiTests(ZopeTestCase):
 
         wiki._getCurrentUser = self._getCurrentUser
 
-        page = wiki.addWikiPage('my page')
+        page = wiki.addPage('my page')
         li = wiki.pageLockInfo(page)
         self.assertEquals(li, None)
 

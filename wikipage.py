@@ -22,7 +22,7 @@
 from Globals import Persistent
 
 from ZODB.PersistentList import PersistentList
-
+from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.permissions import \
      View, ModifyPortalContent, DeleteObjects, ChangePermissions
@@ -63,7 +63,7 @@ factory_type_information = (
                    },
                    {'id': 'delete',
                    'name': 'action_delete',
-                   'action': 'deletePage',
+                   'action': 'delete',
                    'permissions': (DeleteObjects,),
                    },
                   ),
@@ -105,6 +105,8 @@ class WikiPage(CPSBaseFolder):
 
     _properties = CPSBaseFolder._properties
 
+    security = ClassSecurityInfo()
+
     def __init__(self, id, source='', **kw):
         CPSBaseFolder.__init__(self, id, **kw)
         initial_tags = self._createVersionTag()
@@ -123,26 +125,42 @@ class WikiPage(CPSBaseFolder):
         else:
             return mtool.getAuthenticatedMember().getUserName()
 
+    security.declareProtected(View, 'getParent')
     def getParent(self):
         return self.aq_inner.aq_parent
 
+    security.declareProtected(View, 'getParserType')
     def getParserType(self):
         """ returns parser type """
         wiki = self.getParent()
         return wiki.parser
 
+    security.declareProtected(View, 'content')
     def content(self):
-        """ Render the wiki page source. """
+        """Render the wiki page source.
+
+        This method is needed and called by Zope even if the code of CPSWiki
+        doesn't make any reference to it.
+        """
         return self.source.getLastVersion()
 
+    security.declareProtected(View, 'render')
     def render(self):
         """ Render the wiki page source."""
         result = self.source.getLastVersion()[0]
         result = self.renderLinks(result)
         return result
 
-    def editPage(self, title=None, source=None, REQUEST=None):
-        """ Edits the stuff """
+    security.declareProtected(View, 'renderLinks')
+    def renderLinks(self, content):
+        """creates link with founded [pages]"""
+        wiki = self.getParent()
+        parser = wiki.getParser()
+        return parser.parseContent(wiki, content)
+
+    security.declareProtected(ModifyPortalContent, 'edit')
+    def edit(self, title=None, source=None, REQUEST=None):
+        """Edit the page"""
         is_locked, psm = self._verifyLocks(REQUEST)
         if is_locked:
             # TODO: Propose a merge
@@ -167,18 +185,14 @@ class WikiPage(CPSBaseFolder):
                     redirect("cps_wiki_pageview?portal_status_message=%s" % psm)
             return True
 
-    def deletePage(self, REQUEST=None):
+    security.declareProtected(DeleteObjects, 'delete')
+    def delete(self, REQUEST=None):
         """suicide"""
         wiki = self.getParent()
         # XXX: Need to add a warning here
-        wiki.deleteWikiPage(self.id, REQUEST)
+        wiki.deletePage(self.id, REQUEST)
 
-    def renderLinks(self, content):
-        """creates link with founded [pages]"""
-        wiki = self.getParent()
-        parser = wiki.getParser()
-        return parser.parseContent(wiki, content)
-
+    security.declareProtected('View archived revisions', 'getAllDiffs')
     def getAllDiffs(self):
         """renders a list of differences"""
         source = self.source
@@ -191,20 +205,13 @@ class WikiPage(CPSBaseFolder):
         """
 
         for i in range(version_count-1):
-            diff = source.getDifferences(i, i+1)
+            diff = source.getDiffs(i, i+1)
             versions.append(diff)
         """
         return versions
 
-    def restoreVersion(self, index, REQUEST=None):
-        """restores a previous version"""
-        self.source.restoreVersion(index)
-        if REQUEST is not None:
-            psm = 'Version restored.'
-            REQUEST.RESPONSE.redirect\
-                ("cps_wiki_pageview?portal_status_message=%s" % psm)
-
-    def getDifferences(self, version_1, version_2):
+    security.declareProtected('View archived revisions', 'getDiffs')
+    def getDiffs(self, version_1, version_2):
         """retrieves differences between 2 versions"""
         if isinstance(version_1, str):
             version_1 = int(version_1)
@@ -212,7 +219,16 @@ class WikiPage(CPSBaseFolder):
         if isinstance(version_2, str):
             version_2 = int(version_2)
 
-        return self.source.getDifferences(version_1, version_2)
+        return self.source.getDiffs(version_1, version_2)
+
+    security.declareProtected(ModifyPortalContent, 'restoreVersion')
+    def restoreVersion(self, index, REQUEST=None):
+        """restores a previous version"""
+        self.source.restoreVersion(index)
+        if REQUEST is not None:
+            psm = 'Version restored.'
+            REQUEST.RESPONSE.redirect\
+                ("cps_wiki_pageview?portal_status_message=%s" % psm)
 
     def _verifyLocks(self, REQUEST):
         """edition checks lock"""

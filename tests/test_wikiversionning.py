@@ -54,20 +54,20 @@ class VersionContentTest(unittest.TestCase):
         self.assertEquals(vc.getVersion(0), ('9', {}))
         self.assertEquals(vc.getVersion(29), ('38', {}))
 
-    def test_getDifferences(self):
+    def test_getDiffs(self):
         vc = VersionContent('first line')
         vc.appendVersion('first line added part\n one more line')
         vc.appendVersion('first line yes added part\n one line')
         vc.appendVersion('first line \n second line yes added part\n one ine')
-        diff = vc.getDifferences(0, 1)
+        diff = vc.getDiffs(0, 1)
         self.assertEquals(diff, '- first line+ first line added part\n+  one more line')
-        diff = vc.getDifferences(1, 2)
+        diff = vc.getDiffs(1, 2)
         self.assertEquals(diff, '- first line added part\n+ first line yes added part\n?           ++++\n-  one more line?    -----\n+  one line')
-        diff = vc.getDifferences(2, 3)
+        diff = vc.getDiffs(2, 3)
         self.assertEquals(diff, '+ first line \n- first line yes added part\n? ^^^ ^\n+  second line yes added part\n? ^ ^^^^^\n-  one line?      -\n+  one ine')
-        diff = vc.getDifferences(0, 3)
+        diff = vc.getDiffs(0, 3)
         self.assertEquals(diff, '- first line+ first line \n?           ++\n+  second line yes added part\n+  one ine')
-        diff = vc.getDifferences(1, 3)
+        diff = vc.getDiffs(1, 3)
         self.assertEquals(diff, '- first line added part\n-  one more line+ first line \n+  second line yes added part\n+  one ine')
 
 def test_suite():

@@ -3,7 +3,7 @@
                tal:define="wiki here/getParent;
                            v1 request/version_1;
                            v2 request/version_2;
-                           diff python:here.getDifferences(v1, v2)">
+                           diff python:here.getDiffs(v1, v2)">
 
     <h4>Differences between v.<span tal:replace="v1"/> and v.<span tal:replace="v2"/></h4>
     <p tal:content="structure diff"/>

@@ -125,4 +125,4 @@ class BaseParser:
 
         # otherwise, provide a "?" creation link
         else:
-            return '%s<a href="../addWikiPage?title=%s">?</a>' % (morig, quote(m))
+            return '%s<a href="../addPage?title=%s">?</a>' % (morig, quote(m))
