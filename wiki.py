@@ -18,14 +18,19 @@
 #
 # $Id$
 import urllib
+
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from Products.CPSCore.CPSBase import CPSBaseFolder
 from Products.CMFCore.permissions import View, ViewManagementScreens
+from Products.CMFCore.utils import getToolByName
+from Products.CPSCore.CPSBase import CPSBaseFolder
+
 from utils import makeId
 from wikipage import WikiPage
 from wikiparsers import parsers, generateParser
-from wikipermissions import addWikiPage, deleteWikiPage, viewWikiPage
+from wikipermissions import addWikiPage, deleteWikiPage, viewWikiPage,\
+    editWikiPage
+from wikilocker import LockerList, ILockableItem
 
 factory_type_information = (
     { 'id': 'CPS Wiki',
@@ -59,6 +64,23 @@ factory_type_information = (
       },
     )
 
+class WikiLockablePage:
+    __implements__ = (ILockableItem, )
+
+    def __init__(self, wikipage, lock_info, lock_duration):
+        self.uri = wikipage.absolute_url()
+        self.lock_info = lock_info
+        self.lock_duration = lock_duration
+
+    def getURI(self):
+        return self.uri
+
+    def getLockInfo(self):
+        return self.lock_info
+
+    def getLockDuration(self):
+        return self.lock_duration
+
 class Wiki(CPSBaseFolder):
     """
     >>> wiki = Wiki()
@@ -79,11 +101,85 @@ class Wiki(CPSBaseFolder):
     all_parsers = parsers
     parser = all_parsers[0]
     _parser = None
+    lock_duration = 30
 
     security = ClassSecurityInfo()
 
     def __init__(self, id, **kw):
         CPSBaseFolder.__init__(self, id, **kw)
+        self.locker = LockerList()
+
+    def _getCurrentUser(self):
+        mt = getToolByName(self, 'portal_membership')
+        return mt.getAuthenticatedMember()
+
+    security.declareProtected(editWikiPage, 'pageLockInfo')
+    def pageLockInfo(self, page):
+        """ returns page lock infos """
+        # kept for compatibility with previous wiki instances
+        if not hasattr(self, 'locker'):
+            self.locker = LockerList()
+        # not using adapter to avoid info recalculations
+        uri = page.absolute_url()
+        return self.locker.getItemInfo(uri)
+
+
+    security.declareProtected(editWikiPage, 'getLockID')
+    def getLockID(self, REQUEST=None):
+        """ returns a lock info """
+        if REQUEST is not None:
+            info = REQUEST.SESSION.id        # works in all cases
+        else:
+            info = self._getCurrentUser()
+        return info
+
+
+    security.declareProtected(editWikiPage, 'lockPage')
+    def lockPage(self, page, REQUEST=None):
+        """ locks a page """
+        # kept for compatibility with previous wiki instances
+        if not hasattr(self, 'locker'):
+            self.locker = LockerList()
+
+        duration = self.lock_duration
+        info = self.getLockID(REQUEST)
+
+        li = self.pageLockInfo(page)
+        if li is not None:
+            # page is already locked
+            if li[1] == info:
+                return True
+            else:
+                # by someone else
+                raise str(info) + ' <-> ' + str(li)
+                return False
+
+        item = WikiLockablePage(page, info, duration)
+        self.locker.addItem(item)
+        return True
+
+    security.declareProtected(editWikiPage, 'unLockPage')
+    def unLockPage(self, page, REQUEST=None):
+        """ unlocks a page """
+        # kept for compatibility with previous wiki instances
+        if not hasattr(self, 'locker'):
+            self.locker = LockerList()
+
+        info = self.getLockID(REQUEST)
+
+        # not using adapter to avoid info recalculations
+        li = self.pageLockInfo(page)
+        if li is not None:
+            if li[1] != info:
+                # locked by another user
+                return False
+        else:
+            # nothing to unlock
+            return False
+
+        uri = page.absolute_url()
+        self.locker.removeItem(uri)
+        return True
 
     security.declareProtected(viewWikiPage, 'getParser')
     def getParser(self):
