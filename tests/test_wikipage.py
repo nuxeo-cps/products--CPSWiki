@@ -45,6 +45,9 @@ class WikiPageTests(ZopeTestCase):
         page = wiki.addWikiPage('my page')
         page.source = VersionContent('once again')
         self.assertEquals(page.getParserType(), 'restructuredtext')
+	# XXX: (madarche) Why does this tests give different results on my
+	# machine and while run as a part of the Nuxeo unit tests suites?
+        #self.assertEquals(page.render(), '<p>once again</p>\n')
         self.assertEquals(page.render(), '<div class="document">\nonce again</div>\n')
 
     def test_rendering_bad_content(self):
