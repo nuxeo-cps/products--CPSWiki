@@ -4,14 +4,13 @@ From most to less important
 * warn on page deletion
 * add a link on history page so the user can :
     * view the diff between two versions
+      use difflib.Differ instead of home made diff
     * restore a version
+
 * add UI to manage Wiki parser selection
 * add UI to add content in a wikipage (it's already folder so it's just a form away)
 * add a zcatalog dedicated to the wiki
+    * until then, need to index content in general portal_catalog
 * making something better on container view
 * add UI to easily call CPSSubcription for wiki subscriptions
 * add UI to import ZWiki pages
-
-
-
-
