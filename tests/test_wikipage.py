@@ -41,6 +41,13 @@ class WikiPageTests(ZopeTestCase):
         self.assertEquals(page.render(),
             'once[again]<a href="../addWikiPage?title=again">?</a> again')
 
+        wiki.parser = 'dummy'
+
+        page = wiki.addWikiPage('my page')
+        page.source = 'once again'
+
+        self.assertEquals(page.render(), 'once again')
+
 
 def test_suite():
     """
