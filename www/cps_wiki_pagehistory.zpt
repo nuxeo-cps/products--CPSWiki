@@ -3,11 +3,28 @@
                tal:define="wiki here/getParent;
                            diffs here/getAllDiffs">
     History
-    <table>
+    <table width="100%">
       <tr tal:repeat="diff diffs">
+        <tal:block tal:define="index repeat/diff/index;
+                               length repeat/diff/length;
+                               differ python:'cps_wiki_differences?version_1=%s&version_2=%s'
+                                   % (index, index+1)">
+        <tal:block tal:condition="python:index!=length-1">
         <td tal:repeat="key python:diff.keys()">
-           <span tal:replace="key"/> : <span tal:replace="python:diff[key]"/>
+           <strong><span tal:replace="key"/></strong> : <span tal:replace="python:diff[key]"/>
         </td>
+        <td>
+           <a tal:attributes="href differ">
+               <tal:block tal:condition="python:index!=0">
+                   See differences
+               </tal:block>
+               <tal:block tal:condition="python:index==0">
+                   Initial version
+               </tal:block>
+           </a>
+        </td>
+        </tal:block>
+        </tal:block>
       </tr>
     </table>
   </metal:block>
