@@ -1,5 +1,0 @@
-<html>
-<body>
-    <p tal:content="structure view/render" />
-</body>
-</html>
