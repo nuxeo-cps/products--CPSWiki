@@ -25,12 +25,20 @@ from Products.CPSWiki.wikiversionning import VersionContent
 
 class WikiPageTests(ZopeTestCase):
 
+    def _getCurrentUser(self):
+        return 'the user'
+
+    def _getCurrentUser2(self):
+        return 'the second user'
+
     def test_instance(self):
         wikipage = WikiPage('page')
         self.assertNotEquals(wikipage, None)
 
     def test_rendering(self):
         wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+
         wiki.parser = 'zwiki'
         page = wiki.addWikiPage('my page')
         page.source = VersionContent('once again')
@@ -53,6 +61,8 @@ class WikiPageTests(ZopeTestCase):
     def test_rendering_bad_content(self):
         wiki = Wiki('wiki')
         wiki.parser = 'zwiki'
+        wiki._getCurrentUser = self._getCurrentUser
+
         page = wiki.addWikiPage('')
         page.source = VersionContent('<ba>my dcds</ba>dcdscdscdscsd')
         self.assertEquals(page.render(), '<ba>my dcds</ba>dcdscdscdscsd')
@@ -60,6 +70,8 @@ class WikiPageTests(ZopeTestCase):
     def test_renderLinks(self):
         wiki = Wiki('wiki')
         wiki.parser = 'zwiki'
+        wiki._getCurrentUser = self._getCurrentUser
+
         page = wiki.addWikiPage('my page')
         res = page.renderLinks('once [my link] again')
         self.assertEquals(res, 'once [my link]<a href="../addWikiPage?title=my%20link">?</a> again')
@@ -67,6 +79,8 @@ class WikiPageTests(ZopeTestCase):
     def test_deletePage(self):
         wiki = Wiki('wiki')
         wiki.parser = 'zwiki'
+        wiki._getCurrentUser = self._getCurrentUser
+
         page = wiki.addWikiPage('my page')
         page.deletePage()
         self.assert_(wiki.getWikiPage('my page') is None)
@@ -74,6 +88,8 @@ class WikiPageTests(ZopeTestCase):
     def test_versionning(self):
         wiki = Wiki('wiki')
         wiki.parser = 'zwiki'
+        wiki._getCurrentUser = self._getCurrentUser
+
         page = wiki.addWikiPage('my page')
         page.editPage(source='hello')
         page.editPage(source='hello, how are you doing ?')
@@ -94,6 +110,8 @@ class WikiPageTests(ZopeTestCase):
     def test_getDifferences(self):
         wiki = Wiki('wiki')
         wiki.parser = 'zwiki'
+        wiki._getCurrentUser = self._getCurrentUser
+
         page = wiki.addWikiPage('my page')
         page.editPage(source='hello')
         page.editPage(source='hello, how are you doing ?')
@@ -103,6 +121,35 @@ class WikiPageTests(ZopeTestCase):
 
         res = page.getDifferences(1, 2)
         self.assertEquals(res, '- hello+ hello, how are you doing ?')
+
+    def test_locking(self):
+        wiki = Wiki('wiki')
+        wiki.parser = 'zwiki'
+        wiki._getCurrentUser = self._getCurrentUser
+
+        page = wiki.addWikiPage('my page')
+        self.assert_(page.editPage(source='hello'))
+        page.lockPage()    # user locks the page (done by template)
+
+        # second user comes
+        wiki._getCurrentUser = self._getCurrentUser2
+        self.assert_(not page.editPage(source='hello all')) # uneditable
+        self.assertEquals(page.render(), 'hello')
+
+        # first user finish his work
+        wiki._getCurrentUser = self._getCurrentUser
+        self.assert_(page.editPage(source='hello all you'))  # unlocks
+        self.assertEquals(page.render(), 'hello all you')
+
+        #second user is good to go now
+        wiki._getCurrentUser = self._getCurrentUser2
+        self.assert_(page.editPage(source='hello all'))
+        self.assertEquals(page.render(), 'hello all')
+
+        # check history
+        res = page.getAllDiffs()
+        self.assertEquals(len(res), 4)
+
 
 def test_suite():
     """

@@ -25,6 +25,9 @@ from Products.CPSWiki.wiki import Wiki
 
 class WikiTests(ZopeTestCase):
 
+    def _getCurrentUser(self):
+        return 'the user'
+
     def test_instance(self):
         wiki = Wiki('wiki')
         self.assertNotEquals(wiki, None)
@@ -43,6 +46,22 @@ class WikiTests(ZopeTestCase):
         wiki.deleteWikiPage('my page')
         self.assertEquals(wiki.objectIds(), [])
 
+    def test_locking(self):
+        wiki = Wiki('wiki')
+
+        wiki._getCurrentUser = self._getCurrentUser
+
+        page = wiki.addWikiPage('my page')
+        li = wiki.pageLockInfo(page)
+        self.assertEquals(li, None)
+
+        wiki.lockPage(page)
+        li = wiki.pageLockInfo(page)
+        self.assertEquals(li[1], 'the user')
+
+        wiki.unLockPage(page)
+        li = wiki.pageLockInfo(page)
+        self.assertEquals(li, None)
 
 
 def test_suite():
