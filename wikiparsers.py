@@ -18,16 +18,19 @@
 #
 # $Id$
 
-from zwikiparser import ZWikiParser
-from dummyparser import DummyParser
+from baseparser import BaseParser
 from wwwparser import WwwParser
+from rstparser import RstParser
 
-parsers = ['dummy', 'zwiki', 'wikiwikiweb']
+parsers = ['dummy', 'wikiwikiweb', 'html', 'restructuredtext']
 
 def generateParser(name):
-    if name == 'zwiki':
-        return ZWikiParser()
+    if name == 'html':
+        # html parser does nothing yet, as epoz does the work
+        return BaseParser()
     elif name == 'wikiwikiweb':
         return WwwParser()
+    elif name == 'restructuredtext':
+        return RstParser()
     else:
-        return DummyParser()
+        return BaseParser()
