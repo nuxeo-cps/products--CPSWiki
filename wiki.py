@@ -25,7 +25,7 @@ from Products.CMFCore.CMFCorePermissions import View, ViewManagementScreens
 from utils import makeId
 from wikipage import WikiPage
 from wikiparsers import parsers, generateParser
-from wikipermissions import addWikiPage, deleteWikiPage
+from wikipermissions import addWikiPage, deleteWikiPage, viewWikiPage
 
 factory_type_information = (
     { 'id': 'CPS Wiki',
@@ -76,7 +76,6 @@ class Wiki(CPSBaseFolder):
          'label': 'Parser'},
            )
 
-
     all_parsers = parsers
     parser = all_parsers[0]
     _parser = None
@@ -86,21 +85,27 @@ class Wiki(CPSBaseFolder):
     def __init__(self, id, **kw):
         CPSBaseFolder.__init__(self, id, **kw)
 
+    security.declareProtected(viewWikiPage, 'getParser')
     def getParser(self):
-        """ returns a parser instance
-        """
+        """ returns a parser instance """
         parser = self._parser
         if parser is None or parser.getPID() != parser:
             parser = generateParser(self.parser)
         return parser
 
+    security.declareProtected(viewWikiPage, 'getWikiPage')
+    def getWikiPage(self, title_or_id):
+        wikipage_id = makeId(title_or_id)
+        if wikipage_id in self.objectIds():
+            return self[wikipage_id]
+        return None
+
     security.declareProtected(deleteWikiPage, 'deleteWikiPage')
     def deleteWikiPage(self, title_or_id, REQUEST=None):
         """ deletes a page, given its id or title """
-
-        wikipage_id = makeId(title_or_id)
-        if wikipage_id in self.objectIds():
-            self.manage_delObjects([wikipage_id])
+        page = self.getWikiPage(title_or_id)
+        if page is not None:
+            self.manage_delObjects([page.id])
 
         if REQUEST is not None:
             psm = 'page_deleted'
@@ -110,7 +115,6 @@ class Wiki(CPSBaseFolder):
     security.declareProtected(addWikiPage, 'addWikiPage')
     def addWikiPage(self, title, REQUEST=None):
         """ creates and adds a wiki page """
-
         wikipage_id = makeId(title)
         stepper = 1
 
