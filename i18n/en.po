@@ -30,3 +30,6 @@ msgstr "Wiki"
 
 msgid "portal_type_CPSWiki_description"
 msgstr "Holds customizable pages"
+
+msgid "action_add_page"
+msgstr "Add page"

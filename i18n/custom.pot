@@ -21,3 +21,6 @@ msgstr ""
 
 msgid "portal_type_CPSWiki_description"
 msgstr ""
+
+msgid "action_add_page"
+msgstr ""
