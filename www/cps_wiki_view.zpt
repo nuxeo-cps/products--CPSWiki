@@ -5,7 +5,7 @@
   <metal:block fill-slot="main">
     <ul>
       <li tal:repeat="item here/objectItems">
-        <a tal:attributes="href python:item[1].absolute_url()+'/cps_wiki_pageview'">
+        <a tal:attributes="href python:item[1].absolute_url()">
           <span tal:replace="python:item[1].title_or_id()"/>
         </a>
       </li>
