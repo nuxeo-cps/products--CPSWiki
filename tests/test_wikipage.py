@@ -150,6 +150,19 @@ class WikiPageTests(ZopeTestCase):
         res = page.getAllDiffs()
         self.assertEquals(len(res), 4)
 
+    def test_encoding(self):
+        wiki = Wiki('wiki')
+        wiki.parser = 'zwiki'
+        wiki._getCurrentUser = self._getCurrentUser
+
+        page = wiki.addWikiPage('éeeéé')
+        self.assert_(page.editPage(source='éeéfffélo'))
+        self.assert_(page.render()=='éeéfffélo')
+
+        page = wiki.addWikiPage('éeedzzzzzzzzéé')
+        self.assert_(page.editPage(source=u'éeédzdzfffélo'))
+        self.assert_(page.render()==u'éeédzdzfffélo')
+
 
 def test_suite():
     """
