@@ -1,4 +1,22 @@
 *******************************************
+** CPSWiki V0.0.3 [R1 build 2005/03/30-09:21 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Specified that CPS expects an output in 'iso-8859-15' encoding.
+- Specified that the initial header level has to be h2 since the wiki page uses
+  h1. By default restructured text produces an initial header level h3.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSWiki V0.0.2 [R1 build 2005/03/23-08:09 by madarche]
 
 Requires:
