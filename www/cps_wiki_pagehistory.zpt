@@ -2,7 +2,7 @@
   <metal:block fill-slot="main"
                tal:define="wiki here/getParent;
                            diffs here/getAllDiffs">
-    History
+    <h2>History</h2>
     <table width="100%">
       <tr tal:repeat="diff diffs">
         <tal:block tal:define="index repeat/diff/index;

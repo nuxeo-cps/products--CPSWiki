@@ -5,7 +5,7 @@
                            v2 request/version_2;
                            diff python:here.getDiffs(v1, v2)">
 
-    <h4>Differences between v.<span tal:replace="v1"/> and v.<span tal:replace="v2"/></h4>
+    <h2>Differences between v.<span tal:replace="v1"/> and v.<span tal:replace="v2"/></h2>
     <p tal:content="structure diff"/>
   </metal:block>
 </html>
