@@ -21,6 +21,10 @@
 from zwikiparser import ZWikiParser
 from dummyparser import DummyParser
 
-parsers = {}
-parsers['zwiki'] = ZWikiParser()
-parsers['dummy'] = DummyParser()
+parsers = ['dummy', 'zwiki']
+
+def generateParser(name):
+    if name == 'zwiki':
+        return ZWikiParser()
+    else:
+        return DummyParser()
