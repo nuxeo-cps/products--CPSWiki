@@ -59,6 +59,8 @@ XWiki
 
 TWiki
 
+MoinMoin
+
 Jot
   Commercial product
   http://www.jot.com/
@@ -67,6 +69,25 @@ SnipSnap
   Integrates Blog and Wiki
 
 ZWiki
+
+Platypus / Pytypus
+  Platypus Wiki is a project to develop an enhanced Wiki Wiki Web with ideas
+  borrowed from the Semantic Web.
+
+  It offers a simple user interface to create wiki pages with metadata based on
+  W3C standards.
+
+  It uses RDF (Resource Description Framework), RDF Schema and OWL (Web
+  Ontology Language) to create ontologies and manage metadata.
+
+  http://platypuswiki.sourceforge.net/
+  http://www.pytypus.org/ (broken right now)
+    Source on http://cvs.sourceforge.net/viewcvs.py/pytypus/server/
+
+Others
+
+  http://platypuswiki.sourceforge.net/whatis/related/index.html
+
 
 References
 ----------
