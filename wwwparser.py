@@ -1,3 +1,4 @@
+# -*- coding: ISO-8859-15 -*-
 # WikiWikiWeb-style markup
 # contributed by Tres Seaver <tseaver@palladion.com>
 # adapted from ZWiki to CPSWiki by Tarek Ziadé <tz@nuxeo.com>
