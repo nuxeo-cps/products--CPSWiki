@@ -6,6 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
+- Removed the useless dummy parser
+- Removed warning (CMFCore.permissions + file encoding)
 - Added i18n for the "Save" button.
 - Made the default parser be the "restructuredtext" parser.
 New internal features:

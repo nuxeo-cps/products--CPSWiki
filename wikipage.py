@@ -22,7 +22,7 @@ from Globals import Persistent
 from ZODB.PersistentList import PersistentList
 
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from Products.CMFCore.CMFCorePermissions import View, ViewManagementScreens
+from Products.CMFCore.permissions import View, ViewManagementScreens
 from Products.CMFCore.utils import getToolByName
 from Products.CPSUtil.html import sanitize
 from Products.CPSCore.CPSBase import CPSBaseFolder

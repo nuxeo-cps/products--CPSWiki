@@ -41,11 +41,11 @@ class WikiPageTests(ZopeTestCase):
         self.assertEquals(page.render(),
             'once[again]<a href="../addWikiPage?title=again">?</a> again')
 
-        wiki.parser = 'dummy'
+        wiki.parser = 'restructuredtext'
         page = wiki.addWikiPage('my page')
         page.source = VersionContent('once again')
-        self.assertEquals(page.getParserType(), 'dummy')
-        self.assertEquals(page.render(), 'once again')
+        self.assertEquals(page.getParserType(), 'restructuredtext')
+        self.assertEquals(page.render(), '<p>once again</p>\n')
 
     def test_rendering_bad_content(self):
         wiki = Wiki('wiki')

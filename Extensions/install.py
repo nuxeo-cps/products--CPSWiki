@@ -17,10 +17,10 @@
 # 02111-1307, USA.
 #
 # $Id$
-from Products.CMFCore.CMFCorePermissions import setDefaultRoles
+from Products.CMFCore.permissions import setDefaultRoles
 
 from Products.CPSInstaller.CPSInstaller import CPSInstaller
-from Products.CMFCore.CMFCorePermissions import View, ModifyPortalContent
+from Products.CMFCore.permissions import View, ModifyPortalContent
 from Products.CPSWiki.wikipermissions import addWikiPage, deleteWikiPage,\
     editWikiPage, viewWikiPage
 

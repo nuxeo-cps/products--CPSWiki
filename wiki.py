@@ -21,7 +21,7 @@ import urllib
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CPSCore.CPSBase import CPSBaseFolder
-from Products.CMFCore.CMFCorePermissions import View, ViewManagementScreens
+from Products.CMFCore.permissions import View, ViewManagementScreens
 from utils import makeId
 from wikipage import WikiPage
 from wikiparsers import parsers, generateParser

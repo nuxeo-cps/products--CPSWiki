@@ -1,3 +1,4 @@
+# -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
 # Author: Tarek Ziadé <tz@nuxeo.com>
 #
@@ -18,7 +19,7 @@
 # $Id$
 from Products.CMFCore.utils import ContentInit
 from Products.CMFCore.DirectoryView import registerDirectory
-from Products.CMFCore.CMFCorePermissions import AddPortalContent
+from Products.CMFCore.permissions import AddPortalContent
 import wiki, wikipage
 
 fti = (wiki.factory_type_information +
