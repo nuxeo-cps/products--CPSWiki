@@ -1,0 +1,16 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+<body>
+<metal:block use-macro="here/content_lib_master/macros/master">
+  <metal:block fill-slot="main">
+    <ul>
+      <li tal:repeat="item here/objectItems">
+        <a tal:attributes="href python:item[1].absolute_url()+'/cps_wiki_pageview'">
+          <span tal:replace="python:item[1].title_or_id()"/>
+        </a>
+      </li>
+    </ul>
+  </metal:block>
+</metal:block>
+</body>
+</html>

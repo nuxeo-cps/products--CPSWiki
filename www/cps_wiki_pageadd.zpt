@@ -1,0 +1,14 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+<body>
+<metal:block use-macro="here/content_lib_master/macros/master">
+  <metal:block fill-slot="main">
+    <form action="addWikiPage" method="post">
+
+      <span i18:translate="">Title : </span><input name="title" type="text"/>
+      <input type="submit" value="Add" i18n:translate="value"/>
+    </form>
+  </metal:block>
+</metal:block>
+</body>
+</html>
