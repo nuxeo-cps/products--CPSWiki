@@ -3,7 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Added locking capabilities.
 Bug fixes:
 ~~~~~~~~~~
 -
