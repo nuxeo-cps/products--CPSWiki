@@ -4,6 +4,14 @@
                            parser_type wiki/parser;
                            source here/content;
                            source python:source[0]">
+    <tal:block tal:define="locked python:here.lockPage(request)">
+        <tal:block tal:condition="not:locked">
+            <div class="message" i18n:translate="">
+                The page is locked by someone else, you
+                can read it but not write to it at this time.
+            </div>
+        </tal:block>
+    </tal:block>
     <form action="editPage"
           enctype="multipart/form-data"
           method="post">
