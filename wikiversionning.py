@@ -21,7 +21,7 @@
 """ page versionning base on incremental diff
     (not using CMF ones on purpose)
 """
-from difflib import ndiff, restore
+from difflib import ndiff, restore, Differ
 
 LINE_FEED = '\r\n'
 LINE_FEED_U = u'\r\n'
@@ -135,31 +135,7 @@ class VersionContent:
         version_a, tags = self.getVersion(index_a)
         version_b, tags = self.getVersion(index_b)
 
-        delta = list(ndiff(version_a, version_b))
-        difference = []
-        positive = False
-        negative = False
-        for element in delta:
-            if element[0]== '+':
-                negative = False
-                if positive:
-                    difference.append(element[2:])
-                else:
-                    positive = True
-                    if len(difference) > 0:
-                        last = len(difference)-1
-                        difference[last] = difference[last] + LINE_FEED
-                    difference.append(element)
-            elif element[0]== '-':
-                positive = False
-                if negative:
-                    difference.append(element[2:])
-                else:
-                    negative = True
-                    if len(difference) > 0:
-                        last = len(difference)-1
-                        difference[last] = difference[last] + LINE_FEED
-                    difference.append(element)
-
-        return ''.join(difference)
-
+        dif = Differ()
+        result = list(dif.compare(version_a.splitlines(1),
+                                  version_b.splitlines(1)))
+        return ''.join(result)
