@@ -18,14 +18,19 @@
 #
 # $Id$
 import string
+from datetime import datetime
+from random import randrange
+import re
+
 # a few methods ripped
 # for quick integration
 # we assume that we will add dependencies
 # later
 
 _translation_table = string.maketrans(
-    r""""'/\:; &ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜİàáâãäåçèéêëìíîïñòóôõöøùúûüıÿ""",
-    r"""________AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy""")
+    # XXX candidates: @°+=`|
+    '"' r"""'/\:; &ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜİàáâãäåçèéêëìíîïñòóôõöøùúûüıÿ""",
+    '_' r"""_______AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy""")
 
 _ok_chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_."
 
@@ -39,14 +44,23 @@ def makeId(s, lower=0):
     id = id.replace('½', 'oe')
     id = id.replace('ß', 'ss')
     id = ''.join([c for c in id if c in _ok_chars])
+    id = re.sub('_+', '_', id)
     while id.startswith('_') or id.startswith('.'):
         id = id[1:]
     while id.endswith('_'):
         id = id[:-1]
     if not id:
         # Fallback if empty or incorrect
-        newid = str(int(DateTime())) + str(randrange(1000, 10000))
+        newid = str(int(datetime())) + str(randrange(1000, 10000))
         return newid
     if lower:
         id = id.lower()
     return id
+
+def getCurrentDateStr():
+    """ gets current date
+    """
+    date = datetime(1970, 1, 1)
+    now = date.now()
+    # english style
+    return now.strftime('%a %m/%d/%y %H:%M')
