@@ -159,13 +159,28 @@ class WikiPageTests(ZopeTestCase):
             wiki.parser = parser
             wiki._getCurrentUser = self._getCurrentUser
 
-            page = wiki.addWikiPage('éeeéé')
-            self.assert_(page.editPage(source='éeéfffélo'))
-            self.assert_(page.render()=='éeéfffélo')
+            # Testing edit and rendering of a page using default encoding,
+            # typically ISO-8859-15.
+            content = "C'est éeéfffélo là et où donc ?"
+            page = wiki.addWikiPage('Page 1: with default encoding')
+            self.assert_(page.editPage(source=content))
+            if parser == 'restructuredtext':
+                self.assert_(page.render()=='<p>%s</p>\n' % content)
+            else:
+                self.assert_(page.render()==content)
 
-            page = wiki.addWikiPage('éeedzzzzzzzzéé')
-            self.assert_(page.editPage(source=u'éeédzdzfffélo'))
-            self.assert_(page.render()==u'éeédzdzfffélo')
+            # TODO: When CPS accepts unicode we will decomment this test
+            # Testing edit and rendering of a page using unicode encoding
+##             content = u"C'est éeéfffélo là et où donc ?"
+##             page = wiki.addWikiPage('Page 2: with Unicode')
+##             self.assert_(page.editPage(source=content))
+##             if parser == 'restructuredtext':
+##                 self.assert_(page.render()=='<p>%s</p>\n' % content)
+##             else:
+##                 self.assert_(page.render()==content)
+
+            # Testing the creation of a page with accented characters
+            page = wiki.addWikiPage('éeedzzzzzzzzéé à doù !')
 
 
 def test_suite():

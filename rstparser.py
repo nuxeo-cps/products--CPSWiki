@@ -40,6 +40,7 @@ class RstParser(BaseParser):
         """ parses content """
         if rst_available:
             content = reStructuredText.HTML(content,
+                                            input_encoding='utf8',
                                             output_encoding='iso-8859-15',
                                             initial_header_level=2,
                                             report_level=0,
