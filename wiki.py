@@ -18,12 +18,14 @@
 #
 # $Id$
 import urllib
+from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CPSCore.CPSBase import CPSBaseFolder
+from Products.CMFCore.CMFCorePermissions import View, ViewManagementScreens
 from utils import makeId
 from wikipage import WikiPage
-from Products.CMFCore.CMFCorePermissions import View, ViewManagementScreens
-from wikiparsers import parsers
+from wikiparsers import parsers, generateParser
+from wikipermissions import addWikiPage
 
 factory_type_information = (
     { 'id': 'CPS Wiki',
@@ -45,7 +47,7 @@ factory_type_information = (
                  {'id': 'add_page',
                    'name': 'action_add_page',
                    'action': 'cps_wiki_pageadd',
-                   'permissions': (View,),
+                   'permissions': (addWikiPage,),
                    },
                   {'id': 'localroles',
                    'name': 'action_local_roles',
@@ -75,11 +77,23 @@ class Wiki(CPSBaseFolder):
 
 
     all_parsers = parsers
-    parser = all_parsers['zwiki']
+    parser = all_parsers[0]
+    _parser = None
+
+    security = ClassSecurityInfo()
 
     def __init__(self, id, **kw):
         CPSBaseFolder.__init__(self, id, **kw)
 
+    def getParser(self):
+        """ returns a parser instance
+        """
+        _parser = self._parser
+        if _parser is None or _parser.getPID() <> parser:
+            _parser = generateParser(parser)
+        return _parser
+
+    security.declareProtected(addWikiPage, 'addWikiPage')
     def addWikiPage(self, title, REQUEST=None):
         """ creates and adds a wiki page
         """
