@@ -5,7 +5,8 @@
   <metal:block fill-slot="main"
                tal:define="wiki here/getParent;
                            parser_type wiki/parser;
-                           source here/source">
+                           source here/content;
+                           source python:source[0]">
     <form action="editPage"
           enctype="multipart/form-data"
           method="post">
