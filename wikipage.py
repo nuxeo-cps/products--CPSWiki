@@ -115,7 +115,7 @@ class WikiPage(CPSBaseFolder):
         """ creates link with founded [pages]
         """
         wiki = self.getParent()
-        parser = wiki.parser
+        parser = wiki.getParser()
         return parser.parseContent(content)
 
 manage_addWikiPageForm = PageTemplateFile(
