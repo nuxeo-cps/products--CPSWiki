@@ -35,6 +35,8 @@ class WikiPageTests(ZopeTestCase):
         page = wiki.addWikiPage('my page')
         page.source = 'once again'
 
+        self.assertEquals(page.getParserType(), 'zwiki')
+
         self.assertEquals(page.render(), 'once again')
 
         page.source = 'once[again] again'
@@ -45,6 +47,8 @@ class WikiPageTests(ZopeTestCase):
 
         page = wiki.addWikiPage('my page')
         page.source = 'once again'
+
+        self.assertEquals(page.getParserType(), 'dummy')
 
         self.assertEquals(page.render(), 'once again')
 

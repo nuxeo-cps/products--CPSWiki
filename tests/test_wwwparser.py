@@ -36,7 +36,7 @@ class WikiParserTest(ZopeTestCase):
         parser = WwwParser()
         res = parser.parseContent(None, 'qzpijdspjvd http://foo.bar vjpdsovj')
         self.assertEquals(res,
-            'qzpijdspjvd <A HREF="http://foo.bar">http://foo.bar</A> vjpdsovj')
+            'qzpijdspjvd <a href="http://foo.bar">http://foo.bar</a> vjpdsovj')
 
 def test_suite():
     """

@@ -34,6 +34,16 @@ class WikiTests(ZopeTestCase):
         self.assertNotEquals(page, None)
         self.assert_(page.title == 'my page')
 
+    def test_deleteWikiPage(self):
+        wiki = Wiki('wiki')
+        page = wiki.addWikiPage('my page')
+        self.assertNotEquals(page, None)
+        self.assert_(page.title == 'my page')
+        wiki.deleteWikiPage('my page')
+        self.assertEquals(wiki.objectIds(), [])
+
+
+
 def test_suite():
     """
     return unittest.TestSuite((
