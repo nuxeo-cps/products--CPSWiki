@@ -194,6 +194,16 @@ class WikiPage(CPSBaseFolder):
             psm = 'Version restored.'
             REQUEST.RESPONSE.redirect("cps_wiki_pageview?portal_status_message=%s" % psm)
 
+    def getDifferences(self, version_1, version_2):
+        """ retrieves differences between 2 versions """
+        if isinstance(version_1, str):
+            version_1 = int(version_1)
+
+        if isinstance(version_2, str):
+            version_2 = int(version_2)
+
+        return self.source.getDifferences(version_1, version_2)
+
 manage_addWikiPageForm = PageTemplateFile(
     "www/zmi_wikiPageAdd", globals(),
     __name__ = 'manage_addWikiPageForm')
