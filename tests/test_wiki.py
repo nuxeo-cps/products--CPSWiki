@@ -1,3 +1,4 @@
+# -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
 # Author: Tarek Ziadé <tz@nuxeo.com>
 #
@@ -57,3 +58,4 @@ def test_suite():
 
 if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')
+
