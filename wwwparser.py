@@ -5,7 +5,7 @@ from wikiparserinterface import WikiParserInterface
 import re
 from urllib import quote
 
-from zwikiparser import ZWikiParser
+from baseparser import BaseParser
 
 class WWMLTranslator :
     """
@@ -237,9 +237,9 @@ class WWMLTranslator :
         line        = self.emphasis.sub( self.replaceEmphasis, line )
         line        = self.imageURL.sub( self.embedImage, line )
         # SKWM let the main routines take care of this later
-        line        = self.httpURL.sub( self.replaceInlineURL, line )
-        line        = self.ftpURL.sub( self.replaceInlineURL, line )
-        line        = self.mailtoURL.sub( self.replaceInlineURL, line )
+        #line        = self.httpURL.sub( self.replaceInlineURL, line )
+        #line        = self.ftpURL.sub( self.replaceInlineURL, line )
+        #line        = self.mailtoURL.sub( self.replaceInlineURL, line )
         line        = self.hrule.sub( '<HR>', line )
         line        = self.forceBreak.sub( '<BR />', line )
         line        = self.blankLine.sub( '<P>', line )
@@ -332,8 +332,8 @@ class WWMLTranslator :
 
 
     def translate(self, lines):
-        """
-        """
+        """ translating """
+
         self._clear()
 
         for line in lines :
@@ -348,7 +348,7 @@ class WWMLTranslator :
                 self.parseLine( line )
         return self.translatedLines
 
-class WwwParser(ZWikiParser):
+class WwwParser(BaseParser):
 
     __implements__ = (WikiParserInterface, )
 
@@ -370,5 +370,5 @@ class WwwParser(ZWikiParser):
 
         content = self._translate_WWML(content)
         # called for references
-        content = ZWikiParser.parseContent(self, wiki, content)
+        content = BaseParser.parseContent(self, wiki, content)
         return content
