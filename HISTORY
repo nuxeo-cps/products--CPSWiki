@@ -1,4 +1,21 @@
 *******************************************
+** CPSWiki V0.0.2 [R1 build 2005/03/23-08:09 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added locking capabilities.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Added unit tests for the encoding problems with the restructuredtext parser
+  that are not fixed yet.
+
+*******************************************
 ** CPSWiki V0.0.1 [R1 build 2005/03/19-08:53 by madarche]
 
 Requires:
