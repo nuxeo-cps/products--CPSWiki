@@ -33,51 +33,133 @@ class VersionContent:
     _primary = None
     _versions = []
 
-    def __init__(self, primary):
-        self._primary = self._stringToList(primary)
+    def __init__(self, primary, tags={}):
+        self._primary = (self._stringToList(primary), tags)
+        self._versions = []
 
+    #
+    # read - write APIS
+    #
+    def _setContent(self, index, content):
+        """ write content, useful to be overriden """
+        if index == 0:
+            self._primary = content
+        else:
+            self._versions[index-1] = content
+
+    def _getContent(self, index):
+        """ write content, useful to be overriden """
+        if index == 0:
+            return self._primary
+        else:
+            return self._versions[index-1]
+
+    def _delContent(self, index):
+        """ write content, useful to be overriden """
+        if index > 0:
+            del self._versions[index-1]
+
+    def _getHistorySize(self):
+        """ write content, useful to be overriden """
+        return len(self._versions)
+
+    def _addContent(self, content, tags={}):
+        """ write content, useful to be overriden """
+        self._versions.append((content, tags))
+
+    #
+    # base
+    #
     def _stringToList(self, string):
         """ outsourced to deal unicode if needed """
         return  string.split(LINE_FEED)
 
     def _listToString(self, list_):
         """ outsourced to deal unicode if needed """
-        return ''.join(list_)
+        return LINE_FEED.join(list_)
 
-    def appendVersion(self, content):
+    def appendVersion(self, content, tags={}):
         """ adding a new version """
         content = self._stringToList(content)
 
-        while len(self._versions) >= self._max_size:
+        while self._getHistorySize() >= self._max_size:
             firstdiff = self.getVersion(1)
             self._primary = firstdiff
-            del self._versions[0]
+            self._delContent(1)
 
-        last = self._stringToList(self.getLastVersion())
+        last_version = self.getLastVersion()
+        last = last_version[0]
+        last = self._stringToList(last)
+
         delta = list(ndiff(last, content))
-        self._versions.append(delta)
+        self._addContent(delta, tags)
 
     def restoreVersion(self, index):
-        version = self.getVersion(index)
+        version, tags = self.getVersion(index)
 
         # drop index -> end
-        while len(self._versions) != index + 1:
-            del self._versions[len(self._versions)-1]
+        while self._getHistorySize() != index + 1:
+            self._delContent(self._getHistorySize())
 
     def getLastVersion(self):
         """ getting last version """
-        i = len(self._versions)
-        if i == 0:
-            return self._listToString(self._primary)
-        current = restore(self._versions[i-1], 2)
-        return self._listToString(current)
+        i = self._getHistorySize()
+        version = self._getContent(i)
+        content = version[0]
+        tags = version[1]
 
+        if i == 0:
+            return (self._listToString(content), tags)
+        current = restore(content, 2)
+        return (self._listToString(current), tags)
 
     def getVersion(self, index):
         """ restoring a version """
+        version = self._getContent(index)
+        content = version[0]
+        tags = version[1]
         if index == 0:
-            return self._listToString(self._primary)
+            return (self._listToString(content), tags)
+        current = restore(content, 2)
+        return (self._listToString(current), tags)
 
-        current = restore(self._versions[index-1], 2)
-        return self._listToString(current)
+    def getVersionCount(self):
+        return self._getHistorySize() + 1
+
+    def getDifferences(self, index_a, index_b):
+        """ retrieves a diff between two version """
+        version_count = self.getVersionCount()
+        if index_a >= version_count or index_b >= version_count:
+            return None
+
+        version_a, tags = self.getVersion(index_a)
+        version_b, tags = self.getVersion(index_b)
+
+        delta = list(ndiff(version_a, version_b))
+        difference = []
+        positive = False
+        negative = False
+        for element in delta:
+            if element[0]== '+':
+                negative = False
+                if positive:
+                    difference.append(element[2:])
+                else:
+                    positive = True
+                    if len(difference) > 0:
+                        last = len(difference)-1
+                        difference[last] = difference[last] + LINE_FEED
+                    difference.append(element)
+            elif element[0]== '-':
+                positive = False
+                if negative:
+                    difference.append(element[2:])
+                else:
+                    negative = True
+                    if len(difference) > 0:
+                        last = len(difference)-1
+                        difference[last] = difference[last] + LINE_FEED
+                    difference.append(element)
+
+        return ''.join(difference)
 
