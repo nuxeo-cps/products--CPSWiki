@@ -2,6 +2,7 @@ From most to less important
 
 * secure wikipages methods
 * warn on page deletion
+* add a merge proposal when a user comits after a lock timeout
 * add a link on history page so the user can :
     * view the diff between two versions
       use difflib.Differ instead of home made diff
