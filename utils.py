@@ -18,6 +18,7 @@
 #
 # $Id$
 import string
+from DateTime import DateTime
 from datetime import datetime
 from random import randrange
 import re
@@ -51,7 +52,8 @@ def makeId(s, lower=0):
         id = id[:-1]
     if not id:
         # Fallback if empty or incorrect
-        newid = str(int(datetime())) + str(randrange(1000, 10000))
+        randomed = randrange(1000, 10000)
+        newid = str(int(DateTime())) + str(randomed)
         return newid
     if lower:
         id = id.lower()
