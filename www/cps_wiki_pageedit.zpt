@@ -20,7 +20,7 @@
             style='width: 100%; height: 300px; border: 1px solid #a0a0a0; border-style: solid;')" />
       </div>
       <p>
-        <button type="submit" i18n:translate="button_save">Save</button>
+        <button type="submit" i18n:translate="button_change">Save changes</button>
       </p>
     </form>
   </metal:block>
