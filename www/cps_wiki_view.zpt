@@ -1,7 +1,4 @@
-<html xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal">
-<body>
-<metal:block use-macro="here/content_lib_master/macros/master">
+<html metal:use-macro="here/content_lib_master/macros/master">
   <metal:block fill-slot="main">
     <ul>
       <li tal:repeat="item here/objectItems">
@@ -11,6 +8,4 @@
       </li>
     </ul>
   </metal:block>
-</metal:block>
-</body>
 </html>
