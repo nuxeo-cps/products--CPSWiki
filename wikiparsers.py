@@ -22,7 +22,7 @@ from baseparser import BaseParser
 from wwwparser import WwwParser
 from rstparser import RstParser
 
-parsers = ['dummy', 'wikiwikiweb', 'html', 'restructuredtext']
+parsers = ['restructuredtext', 'wikiwikiweb', 'html', 'dummy']
 
 def generateParser(name):
     if name == 'html':

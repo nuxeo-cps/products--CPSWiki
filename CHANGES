@@ -7,6 +7,7 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - Added i18n for the "Save" button.
+- Made the default parser be the "restructuredtext" parser.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Made CPSWiki depend on the CPSUtil.html module for HTML sanitizing for the
