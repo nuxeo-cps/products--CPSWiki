@@ -165,9 +165,9 @@ class WikiPageTests(ZopeTestCase):
             page = wiki.addWikiPage('Page 1: with default encoding')
             self.assert_(page.editPage(source=content))
             if parser == 'restructuredtext':
-                self.assert_(page.render()=='<p>%s</p>\n' % content)
+                self.assertEquals(page.render(), '<p>%s</p>\n' % content)
             else:
-                self.assert_(page.render()==content)
+                self.assertEquals(page.render(), content)
 
             # TODO: When CPS accepts unicode we will decomment this test
             # Testing edit and rendering of a page using unicode encoding
@@ -175,9 +175,9 @@ class WikiPageTests(ZopeTestCase):
 ##             page = wiki.addWikiPage('Page 2: with Unicode')
 ##             self.assert_(page.editPage(source=content))
 ##             if parser == 'restructuredtext':
-##                 self.assert_(page.render()=='<p>%s</p>\n' % content)
+##                 self.assertEquals(page.render(), '<p>%s</p>\n' % content)
 ##             else:
-##                 self.assert_(page.render()==content)
+##                 self.assertEquals(page.render(), content)
 
             # Testing the creation of a page with accented characters
             page = wiki.addWikiPage('éeedzzzzzzzzéé à doù !')
