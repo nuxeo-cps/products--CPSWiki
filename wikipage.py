@@ -47,7 +47,12 @@ factory_type_information = (
                    'action': 'cps_wiki_pageedit',
                    'permissions': (View,),
                    },
-                  {'id': 'localroles',
+                   {'id': 'delete',
+                   'name': 'action_delete',
+                   'action': 'deletePage',
+                   'permissions': (View,),
+                   },
+                   {'id': 'localroles',
                    'name': 'action_local_roles',
                    'action': 'cps_chat_localrole_form',
                    'permissions': (ViewManagementScreens,)
@@ -87,10 +92,10 @@ class WikiPage(CPSBaseFolder):
     def getParent(self):
         return self.aq_inner.aq_parent
 
-    def toolbar(self):
-        res = '<div><a href="cps_wiki_pageedit">Edit</a> \
-            | <a href="../cps_wiki_pageview">TOC</a></div><br/>'
-        return res
+    def getParserType(self):
+        """ returns parser type """
+        wiki = self.getParent()
+        return wiki.parser
 
     def render(self):
         """Render the wiki page source."""
@@ -103,6 +108,7 @@ class WikiPage(CPSBaseFolder):
 
     def editPage(self, title=None, source=None, REQUEST=None):
         """Edits the stuff"""
+
         if source is not None:
             self.source = source
         if title is not None:
@@ -110,6 +116,12 @@ class WikiPage(CPSBaseFolder):
         if REQUEST is not None:
             psm = 'Content changed.'
             REQUEST.RESPONSE.redirect("cps_wiki_pageedit?portal_status_message=%s" % psm)
+
+    def deletePage(self, REQUEST=None):
+        """ suicide """
+
+        wiki = self.getParent()
+        wiki.deleteWikiPage(self.id, REQUEST)     # need to add a warning here
 
     def renderLinks(self, content):
         """ creates link with founded [pages]
