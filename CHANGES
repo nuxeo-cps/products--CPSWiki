@@ -9,4 +9,5 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Added unit tests for the encoding problems with the restructuredtext parser
+  that are not fixed yet.
