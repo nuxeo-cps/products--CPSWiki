@@ -1,0 +1,12 @@
+* add history in wikipage
+
+    + typically it's juste a dictionnary that holds
+      all diffs (just the diffs)
+    + time stamps and user names
+
+* add UI to easily call CPSSubcription for wiki subscriptions
+
+*
+
+
+
