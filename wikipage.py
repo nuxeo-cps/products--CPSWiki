@@ -1,6 +1,8 @@
 # -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
-# Author: Tarek Ziadé <tz@nuxeo.com>
+# Authors:
+# Tarek Ziadé <tz@nuxeo.com>
+# M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -22,7 +24,8 @@ from Globals import Persistent
 from ZODB.PersistentList import PersistentList
 
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from Products.CMFCore.permissions import View, ViewManagementScreens
+from Products.CMFCore.permissions import \
+     View, ModifyPortalContent, DeleteObjects, ChangePermissions
 from Products.CMFCore.utils import getToolByName
 from Products.CPSUtil.html import sanitize
 from Products.CPSCore.CPSBase import CPSBaseFolder
@@ -30,12 +33,10 @@ from Products.CPSCore.CPSBase import CPSBaseDocument
 
 from utils import makeId, getCurrentDateStr
 from wikiversionning import VersionContent
-from wikipermissions import addWikiPage, deleteWikiPage, viewWikiPage,\
-                            editWikiPage
 
 factory_type_information = (
-    { 'id': 'CPS Wiki Page',
-      'meta_type': 'CPS Wiki Page',
+    { 'id': 'Wiki Page',
+      'meta_type': 'Wiki Page',
       'description': 'portal_type_CPSWikiPage_description',
       'icon': 'wikipage.png',
       'title': 'portal_type_CPSWikiPage_title',
@@ -48,27 +49,22 @@ factory_type_information = (
       'actions': ({'id': 'view',
                    'name': 'action_view',
                    'action': 'cps_wiki_pageview',
-                   'permissions': (viewWikiPage,),
+                   'permissions': (View,),
                    },
                   {'id': 'edit',
                    'name': 'action_edit',
                    'action': 'cps_wiki_pageedit',
-                   'permissions': (editWikiPage,),
+                   'permissions': (ModifyPortalContent,),
                    },
                    {'id': 'history',
                    'name': 'action_history',
                    'action': 'cps_wiki_pagehistory',
-                   'permissions': (viewWikiPage,),
+                   'permissions': ('View archived revisions',),
                    },
                    {'id': 'delete',
                    'name': 'action_delete',
                    'action': 'deletePage',
-                   'permissions': (deleteWikiPage,),
-                   },
-                   {'id': 'localroles',
-                   'name': 'action_local_roles',
-                   'action': 'cps_wiki_localrole_form',
-                   'permissions': (ViewManagementScreens,)
+                   'permissions': (DeleteObjects,),
                    },
                   ),
       'cps_display_as_document_in_listing' : 1,
@@ -76,8 +72,8 @@ factory_type_information = (
     )
 
 class ZODBVersionContent(VersionContent):
-    """ Overrides all VersionContent read / write
-        APIs for Zodb Storage
+    """Overrides all VersionContent read / write
+       APIs for Zodb Storage
     """
     def __init__(self, primary, tags={}):
         self.plist = PersistentList()
@@ -104,7 +100,7 @@ class WikiPage(CPSBaseFolder):
     """ A persistent WikiPage Page implementation.
         with versionning
     """
-    meta_type = "CPS Wiki Page"
+    meta_type = 'Wiki Page'
     portal_type = meta_type
 
     _properties = CPSBaseFolder._properties
@@ -149,7 +145,7 @@ class WikiPage(CPSBaseFolder):
         """ Edits the stuff """
         is_locked, psm = self._verifyLocks(REQUEST)
         if is_locked:
-            # XXX todo, propose a merge
+            # TODO: Propose a merge
             if REQUEST is not None:
                 REQUEST.RESPONSE.\
                     redirect("cps_wiki_pageedit?portal_status_message=%s" % psm)
@@ -172,18 +168,19 @@ class WikiPage(CPSBaseFolder):
             return True
 
     def deletePage(self, REQUEST=None):
-        """ suicide """
+        """suicide"""
         wiki = self.getParent()
-        wiki.deleteWikiPage(self.id, REQUEST)     # need to add a warning here
+        # XXX: Need to add a warning here
+        wiki.deleteWikiPage(self.id, REQUEST)
 
     def renderLinks(self, content):
-        """ creates link with founded [pages] """
+        """creates link with founded [pages]"""
         wiki = self.getParent()
         parser = wiki.getParser()
         return parser.parseContent(wiki, content)
 
     def getAllDiffs(self):
-        """ renders a list of differences """
+        """renders a list of differences"""
         source = self.source
         version_count = source.getVersionCount()
         versions = []
@@ -200,7 +197,7 @@ class WikiPage(CPSBaseFolder):
         return versions
 
     def restoreVersion(self, index, REQUEST=None):
-        """ restores a previous version """
+        """restores a previous version"""
         self.source.restoreVersion(index)
         if REQUEST is not None:
             psm = 'Version restored.'
@@ -208,7 +205,7 @@ class WikiPage(CPSBaseFolder):
                 ("cps_wiki_pageview?portal_status_message=%s" % psm)
 
     def getDifferences(self, version_1, version_2):
-        """ retrieves differences between 2 versions """
+        """retrieves differences between 2 versions"""
         if isinstance(version_1, str):
             version_1 = int(version_1)
 
@@ -218,14 +215,14 @@ class WikiPage(CPSBaseFolder):
         return self.source.getDifferences(version_1, version_2)
 
     def _verifyLocks(self, REQUEST):
-        """ edition checks lock """
+        """edition checks lock"""
         wiki = self.getParent()
         infos = wiki.pageLockInfo(self)
         if infos is None:
             # the page is not locked, we can continue
             return False, ''
         else:
-            lock_id = wiki.getLockID(REQUEST)
+            lock_id = wiki.getLockId(REQUEST)
             if infos[1] == lock_id:
                 # page locked by current user,  we can continue
                 return False, ''
@@ -234,12 +231,12 @@ class WikiPage(CPSBaseFolder):
                 return True, 'Page locked.'
 
     def lockPage(self, REQUEST=None):
-        """ locks the page """
+        """locks the page"""
         wiki = self.getParent()
         return wiki.lockPage(self, REQUEST)
 
     def unLockPage(self, REQUEST=None):
-        """ unlocks the page """
+        """unlocks the page"""
         wiki = self.getParent()
         return wiki.unLockPage(self, REQUEST)
 
@@ -260,4 +257,4 @@ def manage_addWikiPage(self, id, title, REQUEST=None):
         u = REQUEST['URL1']
     if REQUEST.has_key('submit_edit'):
         u = "%s/%s" % (u, urllib.quote(id))
-    REQUEST.RESPONSE.redirect(u+'/manage_main')
+    REQUEST.RESPONSE.redirect(u + '/manage_main')

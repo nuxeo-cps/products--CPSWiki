@@ -33,7 +33,7 @@ class RstParser(BaseParser):
 
     __implements__ = (WikiParserInterface, )
 
-    def getPID(self):
+    def getId(self):
         return 'restructuredtext'
 
     def parseContent(self, wiki, content):

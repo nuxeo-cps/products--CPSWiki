@@ -27,6 +27,6 @@ class WikiParserInterface(Interface.Base):
         """ parses content
         """
 
-    def getPID():
+    def getId():
         """ returns a parser unique ID
         """

@@ -1,6 +1,8 @@
 # -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
-# Author: Tarek Ziadé <tz@nuxeo.com>
+# Authors:
+# Tarek Ziadé <tz@nuxeo.com>
+# M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -20,9 +22,8 @@
 from Products.CMFCore.permissions import setDefaultRoles
 
 from Products.CPSInstaller.CPSInstaller import CPSInstaller
-from Products.CMFCore.permissions import View, ModifyPortalContent
-from Products.CPSWiki.wikipermissions import addWikiPage, deleteWikiPage,\
-    editWikiPage, viewWikiPage
+from Products.CMFCore.permissions import \
+     View, ModifyPortalContent, AddPortalContent, DeleteObjects
 
 from Products.CPSWorkflow.transitions import \
      TRANSITION_INITIAL_PUBLISHING, TRANSITION_INITIAL_CREATE, \
@@ -36,8 +37,6 @@ from Products.CPSWorkflow.transitions import \
 from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION, \
      TRIGGER_AUTOMATIC
 
-WebDavLockItem = 'WebDAV Lock items'
-WebDavUnlockItem = 'WebDAV Unlock items'
 SECTIONS_ID = 'sections'
 WORKSPACES_ID = 'workspaces'
 
@@ -69,30 +68,27 @@ class CPSWikiInstaller(CPSInstaller):
         #wiki_type = self.portal.getCPSWikiType()
         #self.verifyFlexibleTypes(wiki_type)
 
-        self.allowContentTypes('CPS Wiki', ('Workspace', 'Section'))
-
+        self.allowContentTypes('Wiki', ('Workspace', 'Section'))
         ptypes = {
-            'CPS Wiki' : {'allowed_content_types': ('CPS Wiki Page',),
-                      'typeinfo_name': 'CPSWiki: CPS Wiki',
+            'Wiki' : {'allowed_content_types': ('Wiki Page',),
+                      'typeinfo_name': 'CPSWiki: Wiki',
                       'add_meta_type': 'Factory-based Type Information',
                       },
-            'CPS Wiki Page' : {'allowed_content_types': (),
-                          'typeinfo_name': 'CPSWiki: CPS Wiki Page',
-                          'add_meta_type': 'Factory-based Type Information',
+            'Wiki Page' : {'allowed_content_types': (),
+                           'typeinfo_name': 'CPSWiki: Wiki Page',
+                           'add_meta_type': 'Factory-based Type Information',
                            },
             }
         self.verifyContentTypes(ptypes, destructive=1)
+        self.allowContentTypes('Wiki Page', 'Wiki')
 
-        self.allowContentTypes('CPS Wiki Page', 'CPS Wiki')
 
     def setupWorkflows(self):
         """ sets up workfows for wiki
         """
-        # workflow for forums
-        # in workspaces
+        # Workflow definition in workspaces
         wfdef = {'wfid': 'workspace_wiki_wf',
-                'permissions': (View, ModifyPortalContent,
-                                WebDavLockItem, WebDavUnlockItem,)
+                'permissions': (View, ModifyPortalContent),
                 }
 
         wfstates = {
@@ -100,8 +96,15 @@ class CPSWikiInstaller(CPSInstaller):
                 'title': 'Work',
                 'transitions':('create_content', 'cut_copy_paste'),
                 'permissions': {View: ('Manager', 'WorkspaceManager',
-                                    'WorkspaceMember', 'WorkspaceReader',
-                                    )},
+                                       'WorkspaceMember', 'WorkspaceReader',
+                                       'Contributor', 'Reader',
+                                       ),
+                                ModifyPortalContent: ('Manager', 'Owner',
+                                                      'WorkspaceManager',
+                                                      'WorkspaceMember',
+                                                      'Contributor',
+                                                      ),
+                                },
                 },
             }
 
@@ -118,9 +121,9 @@ class CPSWikiInstaller(CPSInstaller):
                 'actbox_category': '',
                 'actbox_url': '',
                 'props': {'guard_permissions':'',
-                        'guard_roles':'Manager; WorkspaceManager; '
-                                        'WorkspaceMember',
-                        'guard_expr':''},
+                          'guard_roles':'Manager; WorkspaceManager; '
+                          'WorkspaceMember',
+                          'guard_expr':''},
             },
             'create': {
                 'title': 'Initial creation',
@@ -129,9 +132,9 @@ class CPSWikiInstaller(CPSInstaller):
                 'clone_allowed_transitions': None,
                 'actbox_category': 'workflow',
                 'props': {'guard_permissions':'',
-                        'guard_roles':'Manager; WorkspaceManager; '
-                                        'WorkspaceMember',
-                        'guard_expr':''},
+                          'guard_roles':'Manager; WorkspaceManager; '
+                          'WorkspaceMember; Contributor',
+                          'guard_expr':''},
             },
             'create_content': {
                 'title': 'Create content',
@@ -142,29 +145,32 @@ class CPSWikiInstaller(CPSInstaller):
                 'trigger_type': TRIGGER_USER_ACTION,
                 'actbox_name': '',
                 'props': {'guard_permissions':'',
-                        'guard_roles':'',
-                        'guard_expr':''},
+                          'guard_roles':'Manager; WorkspaceManager; '
+                          'WorkspaceMember; Contributor',
+                          'guard_expr':''},
             },
         }
         self.verifyWorkflow(wfdef, wfstates, wftransitions, {}, {})
 
-        # in sections
+        # Workflow definition in sections
         wfdef = {'wfid': 'section_wiki_wf',
-                'permissions': (View, ModifyPortalContent)}
+                 'permissions': (View, ModifyPortalContent),
+                 }
 
         wfstates = {
             'work': {
                 'title': 'Work',
                 'transitions': ('create_content', 'cut_copy_paste'),
                 'permissions': {View: ('Manager', 'SectionManager',
-                                    'SectionReviewer', 'SectionReader'),
+                                       'SectionReviewer', 'SectionReader',
+                                       'Contributor', 'Reader',
+                                       ),
                                 ModifyPortalContent: ('Manager', 'Owner',
-                                                    'WorkspaceManager',
-                                                    'WorkspaceMember',
-                                                    'SectionManager',
-                                                    'SectionReviewer')},
-            },
-        }
+                                                      'SectionManager',
+                                                      'Contributor')
+                                },
+                },
+            }
 
         wftransitions = {
             'cut_copy_paste': {
@@ -179,9 +185,8 @@ class CPSWikiInstaller(CPSInstaller):
                 'actbox_category': '',
                 'actbox_url': '',
                 'props': {'guard_permissions': '',
-                        'guard_roles': 'Manager; SectionManager; '
-                                        'SectionReviewer; SectionReader',
-                        'guard_expr': ''},
+                          'guard_roles': 'Manager; SectionManager; Contributor',
+                          'guard_expr': ''},
             },
             'create': {
                 'title': 'Initial creation',
@@ -190,8 +195,8 @@ class CPSWikiInstaller(CPSInstaller):
                 'clone_allowed_transitions': None,
                 'actbox_category': 'workflow',
                 'props': {'guard_permissions': '',
-                        'guard_roles': 'Manager; SectionManager;',
-                        'guard_expr': ''},
+                          'guard_roles': 'Manager; SectionManager; Contributor',
+                          'guard_expr': ''},
             },
             'create_content': {
                 'title': 'Create content',
@@ -200,21 +205,21 @@ class CPSWikiInstaller(CPSInstaller):
                                         TRANSITION_ALLOWSUB_PUBLISHING),
                 'clone_allowed_transitions': None,
                 'trigger_type': TRIGGER_USER_ACTION,
-                'props': {'guard_permissions': 'Forum Post',
-                        'guard_roles': '',
-                        'guard_expr': ''},
+                'props': {'guard_permissions': '',
+                          'guard_roles': 'Manager; SectionManager; Contributor',
+                          'guard_expr': ''},
             },
         }
         self.verifyWorkflow(wfdef, wfstates, wftransitions, {}, {})
 
-        ws_chains = { 'CPS Wiki': 'workspace_wiki_wf'}
-        se_chains = { 'CPS Wiki': 'section_wiki_wf'}
+        workspace_chains = {'Wiki': 'workspace_wiki_wf'}
+        section_chains = {'Wiki': 'section_wiki_wf'}
 
         ws = self.portal['workspaces']
-        self.verifyLocalWorkflowChains(ws, ws_chains)
+        self.verifyLocalWorkflowChains(ws, workspace_chains)
 
         se = self.portal['sections']
-        self.verifyLocalWorkflowChains(se, se_chains)
+        self.verifyLocalWorkflowChains(se, section_chains)
 
 
     def updatePortalTree(self):
@@ -225,65 +230,44 @@ class CPSWikiInstaller(CPSInstaller):
         portal_trees = self.portal.portal_trees
 
         types = list(portal_trees.workspaces.type_names)
-        if 'CPS Wiki' not in types:
-            types = types + ['CPS Wiki']
+        if 'Wiki' not in types:
+            types = types + ['Wiki']
             portal_trees.workspaces.manage_changeProperties(type_names=types)
             portal_trees.workspaces.manage_rebuild()
 
         types = list(portal_trees.sections.type_names)
-        if 'CPS Wiki' not in types:
-            types = types + ['CPS Wiki']
+        if 'Wiki' not in types:
+            types = types + ['Wiki']
             portal_trees.sections.manage_changeProperties(type_names=types)
             portal_trees.sections.manage_rebuild()
+
 
     def installNewPermissions(self):
         """Installs new permissions
         """
+        return
+        # Removing old CPSWiki permissions that are now deprecated
+##         deleteWikiPage = 'Delete CPSWiki Page'
+##         editWikiPage = 'Edit CPSWiki Page'
+##         addWikiPage = 'Add CPSWiki Page'
+##         viewWikiPage = 'View CPSWiki Page'
 
-        setDefaultRoles(addWikiPage, ('Manager', 'Owner'))
-        setDefaultRoles(editWikiPage, ('Manager', 'Owner'))
-        setDefaultRoles(deleteWikiPage, ('Manager', 'Owner'))
-        setDefaultRoles(viewWikiPage, ('Manager', 'Owner'))
+##         setDefaultRoles(addWikiPage, ('Manager', 'Owner'))
+##         setDefaultRoles(editWikiPage, ('Manager', 'Owner'))
+##         setDefaultRoles(deleteWikiPage, ('Manager', 'Owner'))
+##         setDefaultRoles(viewWikiPage, ('Manager', 'Owner'))
 
-        # Workspace
-        wiki_ws_perms = {
-            addWikiPage : ['Manager',
-                           'WorkspaceManager',
-                           'WorkspaceMember'],
+##         # Workspace
+##         wiki_ws_perms = [addWikiPage,
+##                          viewWikiPage,
+##                          editWikiPage,
+##                          deleteWikiPage,
+##                          ]
 
-            viewWikiPage : ['Manager',
-                           'WorkspaceManager',
-                           'WorkspaceMember'
-                           'WorkspaceReader'],
-            editWikiPage : ['Manager',
-                           'WorkspaceManager',
-                           'WorkspaceMember'],
-            deleteWikiPage : ['Manager',
-                              'WorkspaceManager']
-            }
+##         for perm in wiki_ws_perms:
+##             self.portal[WORKSPACES_ID].manage_permission(perm, roles, 0)
+##             self.portal[SECTIONS_ID].manage_permission(perm, roles, 0)
 
-        for perm, roles in wiki_ws_perms.items():
-            self.portal[WORKSPACES_ID].manage_permission(perm, roles, 0)
-
-        # Section
-        wiki_sc_perms = {
-            addWikiPage : ['Manager',
-                           'SectionManager',
-                           'vMember'],
-
-            viewWikiPage : ['Manager',
-                           'SectionManager',
-                           'SectionMember'
-                           'SectionReader'],
-            editWikiPage : ['Manager',
-                            'SectionManager',
-                            'SectionMember'],
-            deleteWikiPage : ['Manager',
-                              'SectionManager']
-            }
-
-        for perm, roles in wiki_sc_perms.items():
-            self.portal[SECTIONS_ID].manage_permission(perm, roles, 0)
 
 def install(self):
     installer = CPSWikiInstaller(self)

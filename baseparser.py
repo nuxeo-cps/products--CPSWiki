@@ -49,7 +49,7 @@ class BaseParser:
 
     wiki = None
 
-    def getPID(self):
+    def getId(self):
         return 'baseparser'
 
     def parseContent(self, wiki, content):

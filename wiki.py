@@ -1,6 +1,8 @@
 # -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
-# Author: Tarek Ziadé <tz@nuxeo.com>
+# Authors:
+# Tarek Ziadé <tz@nuxeo.com>
+# M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -20,21 +22,21 @@
 import urllib
 
 from AccessControl import ClassSecurityInfo
+from Products.CMFCore.permissions import \
+     View, ModifyPortalContent, AddPortalContent, DeleteObjects, \
+     ChangePermissions
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from Products.CMFCore.permissions import View, ViewManagementScreens
 from Products.CMFCore.utils import getToolByName
 from Products.CPSCore.CPSBase import CPSBaseFolder
 
 from utils import makeId
 from wikipage import WikiPage
 from wikiparsers import parsers, generateParser
-from wikipermissions import addWikiPage, deleteWikiPage, viewWikiPage,\
-    editWikiPage
 from wikilocker import LockerList, ILockableItem
 
 factory_type_information = (
-    { 'id': 'CPS Wiki',
-      'meta_type': 'CPS Wiki',
+    { 'id': 'Wiki',
+      'meta_type': 'Wiki',
       'description': 'portal_type_CPSWiki_description',
       'icon': 'wiki.png',
       'title': "portal_type_CPSWiki_title",
@@ -42,7 +44,7 @@ factory_type_information = (
       'factory': 'manage_addWiki',
       'immediate_view': 'cps_wiki_view',
       'filter_content_types': 0,
-      'allowed_content_types': ('CPS Wiki Page',),
+      'allowed_content_types': ('Wiki Page',),
       'allow_discussion': 0,
       'actions': ({'id': 'view',
                    'name': 'action_view',
@@ -52,12 +54,12 @@ factory_type_information = (
                  {'id': 'add_page',
                    'name': 'action_add_page',
                    'action': 'cps_wiki_pageadd',
-                   'permissions': (addWikiPage,),
+                   'permissions': (AddPortalContent,),
                    },
                   {'id': 'localroles',
                    'name': 'action_local_roles',
-                   'action': 'cps_chat_localrole_form',
-                   'permissions': (ViewManagementScreens,)
+                   'action': 'folder_localrole_form',
+                   'permissions': (ChangePermissions,)
                    },
                   ),
       'cps_display_as_document_in_listing' : 1,
@@ -90,7 +92,7 @@ class Wiki(CPSBaseFolder):
     >>> wiki.title
     'Wiki Title'
     """
-    meta_type = "CPS Wiki"
+    meta_type = 'Wiki'
     portal_type = meta_type
     _properties = CPSBaseFolder._properties + (
         {'id': 'parser', 'type': 'selection', 'mode': 'w',
@@ -113,7 +115,7 @@ class Wiki(CPSBaseFolder):
         mt = getToolByName(self, 'portal_membership')
         return mt.getAuthenticatedMember()
 
-    security.declareProtected(editWikiPage, 'pageLockInfo')
+    security.declareProtected(ModifyPortalContent, 'pageLockInfo')
     def pageLockInfo(self, page):
         """ returns page lock infos """
         # kept for compatibility with previous wiki instances
@@ -124,8 +126,8 @@ class Wiki(CPSBaseFolder):
         return self.locker.getItemInfo(uri)
 
 
-    security.declareProtected(editWikiPage, 'getLockID')
-    def getLockID(self, REQUEST=None):
+    security.declareProtected(ModifyPortalContent, 'getLockId')
+    def getLockId(self, REQUEST=None):
         """ returns a lock info """
         if REQUEST is not None:
             info = REQUEST.SESSION.id        # works in all cases
@@ -134,7 +136,7 @@ class Wiki(CPSBaseFolder):
         return info
 
 
-    security.declareProtected(editWikiPage, 'lockPage')
+    security.declareProtected(ModifyPortalContent, 'lockPage')
     def lockPage(self, page, REQUEST=None):
         """ locks a page """
         # kept for compatibility with previous wiki instances
@@ -142,7 +144,7 @@ class Wiki(CPSBaseFolder):
             self.locker = LockerList()
 
         duration = self.lock_duration
-        info = self.getLockID(REQUEST)
+        info = self.getLockId(REQUEST)
 
         li = self.pageLockInfo(page)
         if li is not None:
@@ -158,14 +160,14 @@ class Wiki(CPSBaseFolder):
         self.locker.addItem(item)
         return True
 
-    security.declareProtected(editWikiPage, 'unLockPage')
+    security.declareProtected(ModifyPortalContent, 'unLockPage')
     def unLockPage(self, page, REQUEST=None):
         """ unlocks a page """
         # kept for compatibility with previous wiki instances
         if not hasattr(self, 'locker'):
             self.locker = LockerList()
 
-        info = self.getLockID(REQUEST)
+        info = self.getLockId(REQUEST)
 
         # not using adapter to avoid info recalculations
         li = self.pageLockInfo(page)
@@ -181,22 +183,22 @@ class Wiki(CPSBaseFolder):
         self.locker.removeItem(uri)
         return True
 
-    security.declareProtected(viewWikiPage, 'getParser')
+    security.declareProtected(View, 'getParser')
     def getParser(self):
         """ returns a parser instance """
         parser = self._parser
-        if parser is None or parser.getPID() != parser:
+        if parser is None or parser.getId() != parser:
             parser = generateParser(self.parser)
         return parser
 
-    security.declareProtected(viewWikiPage, 'getWikiPage')
+    security.declareProtected(View, 'getWikiPage')
     def getWikiPage(self, title_or_id):
         wikipage_id = makeId(title_or_id)
         if wikipage_id in self.objectIds():
             return self[wikipage_id]
         return None
 
-    security.declareProtected(deleteWikiPage, 'deleteWikiPage')
+    security.declareProtected(DeleteObjects, 'deleteWikiPage')
     def deleteWikiPage(self, title_or_id, REQUEST=None):
         """ deletes a page, given its id or title """
         page = self.getWikiPage(title_or_id)
@@ -208,7 +210,7 @@ class Wiki(CPSBaseFolder):
             REQUEST.RESPONSE.redirect(self.absolute_url()+\
                 '?portal_status_message=%s' % psm)
 
-    security.declareProtected(addWikiPage, 'addWikiPage')
+    security.declareProtected(AddPortalContent, 'addWikiPage')
     def addWikiPage(self, title, REQUEST=None):
         """ creates and adds a wiki page """
         wikipage_id = makeId(title)
@@ -226,7 +228,7 @@ class Wiki(CPSBaseFolder):
 
         # returns to the TOC
         if REQUEST is not None:
-            REQUEST.RESPONSE.redirect(wikipage.absolute_url()+'/cps_wiki_pageedit')
+            REQUEST.RESPONSE.redirect(wikipage.absolute_url() + '/cps_wiki_pageedit')
         else:
             return self[wikipage_id]
 

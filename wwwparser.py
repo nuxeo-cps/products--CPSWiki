@@ -355,7 +355,7 @@ class WwwParser(BaseParser):
 
     translator = WWMLTranslator()
 
-    def getPID(self):
+    def getId(self):
         return 'wikiwikiweb'
 
     def _translate_WWML(self, text):

@@ -6,7 +6,12 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Made the wiki use the CMF and CPS already existing roles and permissions and
+  modified the workflows accordingly.
+  Fixes #563 ("CPSWiki is unusable in sections. Which use cases for CPSWiki in
+  sections and in general?")
+- Made the portal types of CPSWiki follow the Zope, CMF and CPS naming
+  conventions: "CPS Wiki" -> "Wiki", "CPS Wiki Page" -> "Wiki Page".
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
