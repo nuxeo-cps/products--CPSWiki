@@ -39,7 +39,11 @@ class RstParser(BaseParser):
     def parseContent(self, wiki, content):
         """ parses content """
         if rst_available:
-            content = reStructuredText.HTML(content, report_level=0)
+            content = reStructuredText.HTML(content,
+                                            output_encoding='iso-8859-15',
+                                            initial_header_level=2,
+                                            report_level=0,
+                                            )
         # called for references
         content = BaseParser.parseContent(self, wiki, content)
         return content

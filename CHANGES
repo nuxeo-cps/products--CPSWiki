@@ -6,7 +6,9 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Specified that CPS expects an output in 'iso-8859-15' encoding.
+- Specified that the initial header level has to be h2 since the wiki page uses
+  h1. By default restructured text produces an initial header level h3.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
