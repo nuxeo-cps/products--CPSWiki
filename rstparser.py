@@ -26,7 +26,7 @@ from baseparser import BaseParser
 try:
     import reStructuredText
     rst_available = True
-except:
+except ImportError:
     rst_available = False
 
 class RstParser(BaseParser):
@@ -38,7 +38,6 @@ class RstParser(BaseParser):
 
     def parseContent(self, wiki, content):
         """ parses content """
-
         if rst_available:
             content = reStructuredText.HTML(content, report_level=0)
         # called for references
