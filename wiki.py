@@ -25,7 +25,7 @@ from Products.CMFCore.CMFCorePermissions import View, ViewManagementScreens
 from utils import makeId
 from wikipage import WikiPage
 from wikiparsers import parsers, generateParser
-from wikipermissions import addWikiPage
+from wikipermissions import addWikiPage, deleteWikiPage
 
 factory_type_information = (
     { 'id': 'CPS Wiki',
@@ -73,7 +73,8 @@ class Wiki(CPSBaseFolder):
     _properties = CPSBaseFolder._properties + (
         {'id': 'parser', 'type': 'selection', 'mode': 'w',
          'select_variable': 'all_parsers',
-         'label': 'Parser'},)
+         'label': 'Parser'},
+           )
 
 
     all_parsers = parsers
@@ -88,15 +89,28 @@ class Wiki(CPSBaseFolder):
     def getParser(self):
         """ returns a parser instance
         """
-        _parser = self._parser
-        if _parser is None or _parser.getPID() <> parser:
-            _parser = generateParser(self.parser)
-        return _parser
+        parser = self._parser
+        if parser is None or parser.getPID() != parser:
+            parser = generateParser(self.parser)
+        return parser
+
+    security.declareProtected(deleteWikiPage, 'deleteWikiPage')
+    def deleteWikiPage(self, title_or_id, REQUEST=None):
+        """ deletes a page, given its id or title """
+
+        wikipage_id = makeId(title_or_id)
+        if wikipage_id in self.objectIds():
+            self.manage_delObjects([wikipage_id])
+
+        if REQUEST is not None:
+            psm = 'page_deleted'
+            REQUEST.RESPONSE.redirect(self.absolute_url()+\
+                '?portal_status_message=%s' % psm)
 
     security.declareProtected(addWikiPage, 'addWikiPage')
     def addWikiPage(self, title, REQUEST=None):
-        """ creates and adds a wiki page
-        """
+        """ creates and adds a wiki page """
+
         wikipage_id = makeId(title)
         stepper = 1
 
