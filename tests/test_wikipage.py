@@ -21,6 +21,7 @@ import unittest
 from Testing.ZopeTestCase import ZopeTestCase, _print
 from Products.CPSWiki.wikipage import WikiPage
 from Products.CPSWiki.wiki import Wiki
+from Products.CPSWiki.wikiversionning import VersionContent
 
 class WikiPageTests(ZopeTestCase):
 
@@ -31,27 +32,60 @@ class WikiPageTests(ZopeTestCase):
     def test_rendering(self):
         wiki = Wiki('wiki')
         wiki.parser = 'zwiki'
-
         page = wiki.addWikiPage('my page')
-        page.source = 'once again'
-
+        page.source = VersionContent('once again')
         self.assertEquals(page.getParserType(), 'zwiki')
-
         self.assertEquals(page.render(), 'once again')
 
-        page.source = 'once[again] again'
+        page.source = VersionContent('once[again] again')
         self.assertEquals(page.render(),
             'once[again]<a href="../addWikiPage?title=again">?</a> again')
 
         wiki.parser = 'dummy'
-
         page = wiki.addWikiPage('my page')
-        page.source = 'once again'
-
+        page.source = VersionContent('once again')
         self.assertEquals(page.getParserType(), 'dummy')
-
         self.assertEquals(page.render(), 'once again')
 
+    def test_rendering_bad_content(self):
+        wiki = Wiki('wiki')
+        wiki.parser = 'zwiki'
+        page = wiki.addWikiPage('')
+        page.source = VersionContent('<ba>my dcds</ba>dcdscdscdscsd')
+        self.assertEquals(page.render(), '<ba>my dcds</ba>dcdscdscdscsd')
+
+    def test_renderLinks(self):
+        wiki = Wiki('wiki')
+        wiki.parser = 'zwiki'
+        page = wiki.addWikiPage('my page')
+        res = page.renderLinks('once [my link] again')
+        self.assertEquals(res, 'once [my link]<a href="../addWikiPage?title=my%20link">?</a> again')
+
+    def test_deletePage(self):
+        wiki = Wiki('wiki')
+        wiki.parser = 'zwiki'
+        page = wiki.addWikiPage('my page')
+        page.deletePage()
+        self.assert_(wiki.getWikiPage('my page') is None)
+
+    def test_versionning(self):
+        wiki = Wiki('wiki')
+        wiki.parser = 'zwiki'
+        page = wiki.addWikiPage('my page')
+        page.editPage(source='hello')
+        page.editPage(source='hello, how are you doing ?')
+        page.editPage(source='hello, how are you doing ?\r\nMe fine.')
+        res = page.getAllDiffs()
+        self.assertEquals(res, ['+ hello', '+ , how are you doing ?',
+                                '+ \r\nMe fine.'])
+        page.editPage(source='hello, how do you do ?\r\nMe fine.')
+        res = page.getAllDiffs()
+        self.assertEquals(res, ['+ hello', '+ , how are you doing ?',
+                                '+ \r\nMe fine.', '+ do\r\n- areing'])
+
+        page.restoreVersion(1)
+        self.assertEquals(page.source.getLastVersion(),
+                          ('hello, how are you doing ?', {}))
 
 def test_suite():
     """

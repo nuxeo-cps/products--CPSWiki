@@ -28,31 +28,47 @@ class VersionContentTest(unittest.TestCase):
 
         self.assertNotEquals(vc, None)
 
-        self.assertEquals(vc._primary, ['srdcftgyvbuhjnkl'])
-        self.assertEquals(vc.getLastVersion(), 'srdcftgyvbuhjnkl')
+        self.assertEquals(vc._primary, (['srdcftgyvbuhjnkl'], {}))
+        self.assertEquals(vc.getLastVersion(), ('srdcftgyvbuhjnkl', {}))
 
         vc.appendVersion('srdcf      tgyvbuhjnkl')
         self.assertEquals(len(vc._versions), 1)
-        self.assertEquals(vc.getLastVersion(), 'srdcf      tgyvbuhjnkl')
+        self.assertEquals(vc.getLastVersion(), ('srdcf      tgyvbuhjnkl', {}))
 
         vc.appendVersion('srdcf      tgyvbdfzfeef uhjnkl')
-        self.assertEquals(vc.getLastVersion(), 'srdcf      tgyvbdfzfeef uhjnkl')
+        self.assertEquals(vc.getLastVersion(), ('srdcf      tgyvbdfzfeef uhjnkl', {}))
 
         vc.appendVersion('srdcDznkl')
-        self.assertEquals(vc.getLastVersion(), 'srdcDznkl')
-        self.assertEquals(vc.getVersion(3), 'srdcDznkl')
+        self.assertEquals(vc.getLastVersion(), ('srdcDznkl', {}))
+        self.assertEquals(vc.getVersion(3), ('srdcDznkl', {}))
 
-        self.assertEquals(vc.getVersion(0), 'srdcftgyvbuhjnkl')
-        self.assertEquals(vc.getVersion(1), 'srdcf      tgyvbuhjnkl')
-        self.assertEquals(vc.getVersion(2), 'srdcf      tgyvbdfzfeef uhjnkl')
+        self.assertEquals(vc.getVersion(0), ('srdcftgyvbuhjnkl', {}))
+        self.assertEquals(vc.getVersion(1), ('srdcf      tgyvbuhjnkl', {}))
+        self.assertEquals(vc.getVersion(2), ('srdcf      tgyvbdfzfeef uhjnkl', {}))
 
 
         for i in range(40):
             vc.appendVersion(str(i))
 
         self.assert_(len(vc._versions), 30)
-        self.assertEquals(vc.getVersion(0), '9')
-        self.assertEquals(vc.getVersion(29), '38')
+        self.assertEquals(vc.getVersion(0), ('9', {}))
+        self.assertEquals(vc.getVersion(29), ('38', {}))
+
+    def test_getDifferences(self):
+        vc = VersionContent('first line')
+        vc.appendVersion('first line added part\r\none more line')
+        vc.appendVersion('first line yes added part\r\none line')
+        vc.appendVersion('first line \r\nsecond line yes added part\r\none ine')
+        diff = vc.getDifferences(0, 1)
+        self.assertEquals(diff, '+  added part\r\none more line')
+        diff = vc.getDifferences(1, 2)
+        self.assertEquals(diff, '+  yes\r\n- more ')
+        diff = vc.getDifferences(2, 3)
+        self.assertEquals(diff, '+  line \r\nsecond\r\n- l')
+        diff = vc.getDifferences(0, 3)
+        self.assertEquals(diff, '+  \r\nsecond line yes added part\r\none ine')
+        diff = vc.getDifferences(1, 3)
+        self.assertEquals(diff, '+  \r\nsecond line yes\r\n- more l')
 
 def test_suite():
     return unittest.TestSuite((
