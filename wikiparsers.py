@@ -20,11 +20,14 @@
 
 from zwikiparser import ZWikiParser
 from dummyparser import DummyParser
+from wwwparser import WwwParser
 
-parsers = ['dummy', 'zwiki']
+parsers = ['dummy', 'zwiki', 'wikiwikiweb']
 
 def generateParser(name):
     if name == 'zwiki':
         return ZWikiParser()
+    elif name == 'wikiwikiweb':
+        return WwwParser()
     else:
         return DummyParser()
