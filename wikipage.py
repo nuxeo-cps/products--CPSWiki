@@ -116,7 +116,7 @@ class WikiPage(CPSBaseFolder):
         """
         wiki = self.getParent()
         parser = wiki.getParser()
-        return parser.parseContent(content)
+        return parser.parseContent(wiki, content)
 
 manage_addWikiPageForm = PageTemplateFile(
     "www/zmi_wikiPageAdd", globals(),
