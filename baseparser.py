@@ -26,10 +26,11 @@
 """
 
 from utils import makeId
-from wikiparserinterface import WikiParserInterface
 import urllib
 from urllib import quote, unquote
 import re
+
+from wikiparserinterface import WikiParserInterface
 
 # constants
 urlchars = r'[A-Za-z0-9/:@_%~#=&\.\-\?\+\$,]+'
