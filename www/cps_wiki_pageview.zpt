@@ -1,5 +1,16 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
   <metal:block fill-slot="main">
     <p tal:content="structure here/render" />
+    <tal:block tal:condition="python:len(here.objectItems()) &gt; 0">
+    <h4>Attached files</h4>
+    <br/>
+    <ul>
+      <li tal:repeat="element here/objectItems">
+          <a tal:attributes="href python:element[1].absolute_url()">
+              <span tal:replace="python:element[1].title_or_id()"/>
+          </a>
+      </li>
+    </ul>
+    </tal:block>
   </metal:block>
 </html>
