@@ -17,8 +17,12 @@
 # 02111-1307, USA.
 #
 # $Id$
+from Products.CMFCore.CMFCorePermissions import setDefaultRoles
+
 from Products.CPSInstaller.CPSInstaller import CPSInstaller
 from Products.CMFCore.CMFCorePermissions import View, ModifyPortalContent
+from Products.CPSWiki.wikipermissions import addWikiPage, deleteWikiPage,\
+    editWikiPage, viewWikiPage
 
 from Products.CPSCore.CPSWorkflow import \
      TRANSITION_INITIAL_PUBLISHING, TRANSITION_INITIAL_CREATE, \
@@ -34,6 +38,8 @@ from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION, \
 
 WebDavLockItem = 'WebDAV Lock items'
 WebDavUnlockItem = 'WebDAV Unlock items'
+SECTIONS_ID = 'sections'
+WORKSPACES_ID = 'workspaces'
 
 SKINS = {'cps_wiki': 'Products/CPSWiki/www'}
 
@@ -51,6 +57,7 @@ class CPSWikiInstaller(CPSInstaller):
         self.verifyPortalTypes()
         self.updatePortalTree()
         self.setupWorkflows()
+        self.installNewPermissions()
         self.setupTranslations()
         self.finalize()
         self.reindexCatalog()
@@ -229,7 +236,54 @@ class CPSWikiInstaller(CPSInstaller):
             portal_trees.sections.manage_changeProperties(type_names=types)
             portal_trees.sections.manage_rebuild()
 
+    def installNewPermissions(self):
+        """Installs new permissions
+        """
 
+        setDefaultRoles(addWikiPage, ('Manager', 'Owner'))
+        setDefaultRoles(editWikiPage, ('Manager', 'Owner'))
+        setDefaultRoles(deleteWikiPage, ('Manager', 'Owner'))
+        setDefaultRoles(viewWikiPage, ('Manager', 'Owner'))
+
+        # Workspace
+        wiki_ws_perms = {
+            addWikiPage : ['Manager',
+                           'WorkspaceManager',
+                           'WorkspaceMember'],
+
+            viewWikiPage : ['Manager',
+                           'WorkspaceManager',
+                           'WorkspaceMember'
+                           'WorkspaceReader'],
+            editWikiPage : ['Manager',
+                           'WorkspaceManager',
+                           'WorkspaceMember'],
+            deleteWikiPage : ['Manager',
+                              'WorkspaceManager']
+            }
+
+        for perm, roles in wiki_ws_perms.items():
+            self.portal[WORKSPACES_ID].manage_permission(perm, roles, 0)
+
+        # Section
+        wiki_sc_perms = {
+            addWikiPage : ['Manager',
+                           'SectionManager',
+                           'vMember'],
+
+            viewWikiPage : ['Manager',
+                           'SectionManager',
+                           'SectionMember'
+                           'SectionReader'],
+            editWikiPage : ['Manager',
+                            'SectionManager',
+                            'SectionMember'],
+            deleteWikiPage : ['Manager',
+                              'SectionManager']
+            }
+
+        for perm, roles in wiki_sc_perms.items():
+            self.portal[SECTIONS_ID].manage_permission(perm, roles, 0)
 
 def install(self):
     installer = CPSWikiInstaller(self)
