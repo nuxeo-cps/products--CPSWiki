@@ -1,6 +1,6 @@
 Requires:
 ~~~~~~~~~
--
+- CPSDefault > 3.32.1
 New features:
 ~~~~~~~~~~~~~
 -
