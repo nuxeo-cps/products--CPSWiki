@@ -17,11 +17,14 @@
 # 02111-1307, USA.
 #
 # $Id$
+
 import unittest
+
 from Testing.ZopeTestCase import ZopeTestCase, _print
 from Products.CPSWiki.wikipage import WikiPage
 from Products.CPSWiki.wiki import Wiki
 from Products.CPSWiki.wikiversionning import VersionContent
+from Products.CPSWiki.wikiparsers import parsers
 
 class WikiPageTests(ZopeTestCase):
 
@@ -151,17 +154,18 @@ class WikiPageTests(ZopeTestCase):
         self.assertEquals(len(res), 4)
 
     def test_encoding(self):
-        wiki = Wiki('wiki')
-        wiki.parser = 'zwiki'
-        wiki._getCurrentUser = self._getCurrentUser
+        for parser in parsers:
+            wiki = Wiki('wiki for parser "%s"' % parser)
+            wiki.parser = parser
+            wiki._getCurrentUser = self._getCurrentUser
 
-        page = wiki.addWikiPage('éeeéé')
-        self.assert_(page.editPage(source='éeéfffélo'))
-        self.assert_(page.render()=='éeéfffélo')
+            page = wiki.addWikiPage('éeeéé')
+            self.assert_(page.editPage(source='éeéfffélo'))
+            self.assert_(page.render()=='éeéfffélo')
 
-        page = wiki.addWikiPage('éeedzzzzzzzzéé')
-        self.assert_(page.editPage(source=u'éeédzdzfffélo'))
-        self.assert_(page.render()==u'éeédzdzfffélo')
+            page = wiki.addWikiPage('éeedzzzzzzzzéé')
+            self.assert_(page.editPage(source=u'éeédzdzfffélo'))
+            self.assert_(page.render()==u'éeédzdzfffélo')
 
 
 def test_suite():
