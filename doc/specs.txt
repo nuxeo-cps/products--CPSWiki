@@ -84,9 +84,14 @@ Platypus / Pytypus
   http://www.pytypus.org/ (broken right now)
     Source on http://cvs.sourceforge.net/viewcvs.py/pytypus/server/
 
-Others
+Instiki
+  Ruby-based
+  http://instiki.org/
 
+Others
   http://platypuswiki.sourceforge.net/whatis/related/index.html
+  http://c2.com/cgi/wiki?WikiWikiClones
+  http://c2.com/cgi/wiki?WikiEngines
 
 
 References
