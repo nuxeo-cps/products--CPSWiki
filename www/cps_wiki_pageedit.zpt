@@ -7,17 +7,17 @@
     <form action="editPage"
           enctype="multipart/form-data"
           method="post">
-      <div tal:condition="python:parser_type != 'html'">
+      <tal:block condition="python:parser_type != 'html'">
         <textarea style="width: 100%; height: 300px" tal:content="source" name="source">
         </textarea>
-      </div>
-      <div tal:condition="python:parser_type == 'html'">
+      </tal:block>
+      <tal:block condition="python:parser_type == 'html'">
         <tal:block replace="structure python:here.Epoz(
             name='source', data=source, lang='en',
             style='width: 100%; height: 300px; border: 1px solid #a0a0a0; border-style: solid;')" />
-      </div>
+      </tal:block>
       <p>
-        <button type="submit" i18n:translate="button_change">Save changes</button>
+        <button type="submit" i18n:translate="button_change">Save Changes</button>
       </p>
     </form>
   </metal:block>
