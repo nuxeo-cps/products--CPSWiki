@@ -33,3 +33,6 @@ msgstr "Holds customizable pages"
 
 msgid "action_add_page"
 msgstr "Add page"
+
+msgid "action_history"
+msgstr "History"

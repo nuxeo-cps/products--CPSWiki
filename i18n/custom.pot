@@ -24,3 +24,6 @@ msgstr ""
 
 msgid "action_add_page"
 msgstr ""
+
+msgid "action_history"
+msgstr ""

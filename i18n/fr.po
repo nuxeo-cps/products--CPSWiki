@@ -33,3 +33,6 @@ msgstr "contient des pages modifiables en ligne"
 
 msgid "action_add_page"
 msgstr "Ajouter une page"
+
+msgid "action_history"
+msgstr "Historique"
