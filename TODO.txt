@@ -6,7 +6,7 @@
 
 * add UI to easily call CPSSubcription for wiki subscriptions
 
-*
+* add a zcatalog dedicated to the wiki
 
 
 
