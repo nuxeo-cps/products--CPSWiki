@@ -20,7 +20,7 @@
 import unittest
 from Testing.ZopeTestCase import ZopeTestCase, _print
 from Products.CPSWiki.wikipage import WikiPage
-
+from Products.CPSWiki.wiki import Wiki
 
 class WikiPageTests(ZopeTestCase):
 
@@ -28,6 +28,18 @@ class WikiPageTests(ZopeTestCase):
         wikipage = WikiPage('page')
         self.assertNotEquals(wikipage, None)
 
+    def test_rendering(self):
+        wiki = Wiki('wiki')
+        wiki.parser = 'zwiki'
+
+        page = wiki.addWikiPage('my page')
+        page.source = 'once again'
+
+        self.assertEquals(page.render(), 'once again')
+
+        page.source = 'once[again] again'
+        self.assertEquals(page.render(),
+            'once[again]<a href="../addWikiPage?title=again">?</a> again')
 
 
 def test_suite():
