@@ -25,12 +25,12 @@ from rstparser import RstParser
 parsers = ['restructuredtext', 'wikiwikiweb', 'html']
 
 def generateParser(name):
-    if name == 'html':
-        # html parser does nothing yet, as epoz does the work
-        return BaseParser()
+    if name == 'restructuredtext':
+        return RstParser()
     elif name == 'wikiwikiweb':
         return WwwParser()
-    elif name == 'restructuredtext':
-        return RstParser()
+    elif name == 'html':
+        # html parser does nothing yet, as epoz does the work
+        return BaseParser()
     else:
         return BaseParser()
