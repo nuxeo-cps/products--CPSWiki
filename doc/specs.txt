@@ -1,0 +1,74 @@
+Specs notes for CPSWiki
+=======================
+
+Goals
+-----
+
+XXX
+
+Features
+--------
+
+(Mn = Milestone targets).
+
+M1:
+
+XXX
+
+M2:
+
+XXX
+
+...
+
+Other Wiki software or services
+-------------------------------
+
+XWiki
+  http://www.xwiki.org/xwiki/bin/view/Main/WebHome
+
+  XWiki is a WikiWiki clone written in Java which supports many popular
+  features of other Wikis like:
+
+      * Wiki syntax (uses Radeox engine)
+      * Content management (view/edit/preview/save)
+      * Version Control
+      * Attachments
+      * Rights Management
+      * Full-text Search
+
+  It also has many advanced features that many other wiki engines lack:
+
+      * Document Templates to ease creation of common documents.
+      * Relational Database storage using Hibernate.
+      * Design Engine for Meta-Data and Forms.
+      * In-place (inline) editing of form information in pages.
+      * Powerful programming API in documents (Velocity or Groovy)
+      * Search API for more detailed searching in the Meta-Data.
+      * Plugin System in Java.
+      * Plugin compatibility layer in perl with some TWiki plugins.
+      * Scalability and Performance using J2EE.
+      * Complete Skin System (templates content as well as CSS).
+      * RSS output and display of external RSS feeds
+      * Multi-Lingual capabilities
+      * XML/RPC Remote API
+      * Portlet Integration
+      * Integrated Statistics
+      * PDF Export
+      * WYSIWYG HTML Editing
+
+TWiki
+
+Jot
+  Commercial product
+  http://www.jot.com/
+
+SnipSnap
+  Integrates Blog and Wiki
+
+ZWiki
+
+References
+----------
+
+XXX
