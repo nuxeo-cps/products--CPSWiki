@@ -21,16 +21,16 @@ from Globals import Persistent
 
 from ZODB.PersistentList import PersistentList
 
-from Products.CPSCore.CPSBase import CPSBaseFolder
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.CMFCorePermissions import View, ViewManagementScreens
-from Products.CPSCore.CPSBase import CPSBaseDocument
 from Products.CMFCore.utils import getToolByName
+from Products.CPSUtil.html import sanitize
+from Products.CPSCore.CPSBase import CPSBaseFolder
+from Products.CPSCore.CPSBase import CPSBaseDocument
 
 from utils import makeId, getCurrentDateStr
 from wikiversionning import VersionContent
 from wikipermissions import addWikiPage, deleteWikiPage, viewWikiPage
-from htmlsanitizer import sanitize
 
 factory_type_information = (
     { 'id': 'CPS Wiki Page',

@@ -9,4 +9,5 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Made CPSWiki depend on the CPSUtil.html module for HTML sanitizing for the
+  sake of factorization.
