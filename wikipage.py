@@ -136,28 +136,40 @@ class WikiPage(CPSBaseFolder):
         return wiki.parser
 
     def content(self):
-        """Render the wiki page source."""
+        """ Render the wiki page source. """
         return self.source.getLastVersion()
 
     def render(self):
-        """Render the wiki page source."""
+        """ Render the wiki page source."""
         result = self.source.getLastVersion()[0]
         result = self.renderLinks(result)
-        # adding toolbar
-        #result = self.toolbar() + result
         return result
 
     def editPage(self, title=None, source=None, REQUEST=None):
-        """Edits the stuff"""
-        if source is not None:
-            source = sanitize(source)
-            tags = self._createVersionTag()
-            self.source.appendVersion(source, tags)
-        if title is not None:
-            self.title = title
-        if REQUEST is not None:
-            psm = 'Content changed.'
-            REQUEST.RESPONSE.redirect("cps_wiki_pageedit?portal_status_message=%s" % psm)
+        """ Edits the stuff """
+        is_locked, psm = self._verifyLocks(REQUEST)
+        if is_locked:
+            # XXX todo, propose a merge
+            if REQUEST is not None:
+                REQUEST.RESPONSE.\
+                    redirect("cps_wiki_pageedit?portal_status_message=%s" % psm)
+            return False
+        else:
+            try:
+                if source is not None:
+                    source = sanitize(source)
+                    tags = self._createVersionTag()
+                    self.source.appendVersion(source, tags)
+                if title is not None:
+                    self.title = title
+            finally:
+                self.unLockPage(REQUEST)
+
+            if REQUEST is not None:
+                psm = 'Content changed.'
+                REQUEST.RESPONSE.\
+                    redirect("cps_wiki_pageview?portal_status_message=%s" % psm)
+            return True
 
     def deletePage(self, REQUEST=None):
         """ suicide """
@@ -192,7 +204,8 @@ class WikiPage(CPSBaseFolder):
         self.source.restoreVersion(index)
         if REQUEST is not None:
             psm = 'Version restored.'
-            REQUEST.RESPONSE.redirect("cps_wiki_pageview?portal_status_message=%s" % psm)
+            REQUEST.RESPONSE.redirect\
+                ("cps_wiki_pageview?portal_status_message=%s" % psm)
 
     def getDifferences(self, version_1, version_2):
         """ retrieves differences between 2 versions """
@@ -203,6 +216,32 @@ class WikiPage(CPSBaseFolder):
             version_2 = int(version_2)
 
         return self.source.getDifferences(version_1, version_2)
+
+    def _verifyLocks(self, REQUEST):
+        """ edition checks lock """
+        wiki = self.getParent()
+        infos = wiki.pageLockInfo(self)
+        if infos is None:
+            # the page is not locked, we can continue
+            return False, ''
+        else:
+            lock_id = wiki.getLockID(REQUEST)
+            if infos[1] == lock_id:
+                # page locked by current user,  we can continue
+                return False, ''
+            else:
+                # page locked by someone else
+                return True, 'Page locked.'
+
+    def lockPage(self, REQUEST=None):
+        """ locks the page """
+        wiki = self.getParent()
+        return wiki.lockPage(self, REQUEST)
+
+    def unLockPage(self, REQUEST=None):
+        """ unlocks the page """
+        wiki = self.getParent()
+        return wiki.unLockPage(self, REQUEST)
 
 manage_addWikiPageForm = PageTemplateFile(
     "www/zmi_wikiPageAdd", globals(),
