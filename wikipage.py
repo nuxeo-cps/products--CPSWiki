@@ -17,13 +17,20 @@
 # 02111-1307, USA.
 #
 # $Id$
+from Globals import Persistent
 
-from utils import makeId
+from ZODB.PersistentList import PersistentList
+
 from Products.CPSCore.CPSBase import CPSBaseFolder
-#from reStructuredText import HTML
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.CMFCorePermissions import View, ViewManagementScreens
 from Products.CPSCore.CPSBase import CPSBaseDocument
+from Products.CMFCore.utils import getToolByName
+
+from utils import makeId, getCurrentDateStr
+from wikiversionning import VersionContent
+from wikipermissions import addWikiPage, deleteWikiPage, viewWikiPage
+from htmlsanitizer import sanitize
 
 factory_type_information = (
     { 'id': 'CPS Wiki Page',
@@ -40,21 +47,26 @@ factory_type_information = (
       'actions': ({'id': 'view',
                    'name': 'action_view',
                    'action': 'cps_wiki_pageview',
-                   'permissions': (View,),
+                   'permissions': (viewWikiPage,),
                    },
                   {'id': 'edit',
                    'name': 'action_edit',
                    'action': 'cps_wiki_pageedit',
-                   'permissions': (View,),
+                   'permissions': (viewWikiPage,),
+                   },
+                   {'id': 'history',
+                   'name': 'action_history',
+                   'action': 'cps_wiki_pagehistory',
+                   'permissions': (viewWikiPage,),
                    },
                    {'id': 'delete',
                    'name': 'action_delete',
                    'action': 'deletePage',
-                   'permissions': (View,),
+                   'permissions': (deleteWikiPage,),
                    },
                    {'id': 'localroles',
                    'name': 'action_local_roles',
-                   'action': 'cps_chat_localrole_form',
+                   'action': 'cps_wiki_localrole_form',
                    'permissions': (ViewManagementScreens,)
                    },
                   ),
@@ -62,32 +74,57 @@ factory_type_information = (
       },
     )
 
+class ZODBVersionContent(VersionContent):
+    """ Overrides all VersionContent read / write
+        APIs for Zodb Storage
+    """
+    def __init__(self, primary, tags={}):
+        self.plist = PersistentList()
+        self.plist.append((primary, tags))
+
+    def _setContent(self, index, content, tags={}):
+        self.plist[index] = (content, tags)
+
+    def _getContent(self, index):
+        return self.plist[index]
+
+    def _delContent(self, index):
+        if index > 0:
+            del self.plist[index]
+
+    def _getHistorySize(self):
+        return len(self.plist) - 1
+
+    def _addContent(self, content, tags={}):
+        self.plist.append((content, tags))
+
+
 class WikiPage(CPSBaseFolder):
-    """A persistent WikiPage Page implementation.
-
-    Here is an example of changing the title and description of the wiki:
-
-    >>> wp = WikiPage()
-    >>> wp.title
-    ''
-    >>> wp.title = 'WikiPage Title'
-    >>> wp.title
-    'WikiPage Title'
-    >>> wp.source
-    ''
-    >>> wp.source = 'Source'
-    >>> wp.source
-    'Source'
+    """ A persistent WikiPage Page implementation.
+        with versionning
     """
     meta_type = "CPS Wiki Page"
     portal_type = meta_type
-    parent = None
 
     _properties = CPSBaseFolder._properties
 
     def __init__(self, id, source='', **kw):
         CPSBaseFolder.__init__(self, id, **kw)
-        self.source = source
+        initial_tags = self._createVersionTag()
+        self.source = ZODBVersionContent(source, initial_tags)
+
+    def _createVersionTag(self):
+        tag = {}
+        tag['author'] = self._getUserName()
+        tag['date'] = getCurrentDateStr()
+        return tag
+
+    def _getUserName(self):
+        mtool = getToolByName(self, 'portal_membership', None)
+        if mtool is None:
+            return 'Anonymous'
+        else:
+            return mtool.getAuthenticatedMember().getUserName()
 
     def getParent(self):
         return self.aq_inner.aq_parent
@@ -97,10 +134,13 @@ class WikiPage(CPSBaseFolder):
         wiki = self.getParent()
         return wiki.parser
 
+    def content(self):
+        """Render the wiki page source."""
+        return self.source.getLastVersion()
+
     def render(self):
         """Render the wiki page source."""
-        #result = HTML(self.source)
-        result = self.source
+        result = self.source.getLastVersion()[0]
         result = self.renderLinks(result)
         # adding toolbar
         #result = self.toolbar() + result
@@ -108,9 +148,10 @@ class WikiPage(CPSBaseFolder):
 
     def editPage(self, title=None, source=None, REQUEST=None):
         """Edits the stuff"""
-
         if source is not None:
-            self.source = source
+            source = sanitize(source)
+            tags = self._createVersionTag()
+            self.source.appendVersion(source, tags)
         if title is not None:
             self.title = title
         if REQUEST is not None:
@@ -119,16 +160,38 @@ class WikiPage(CPSBaseFolder):
 
     def deletePage(self, REQUEST=None):
         """ suicide """
-
         wiki = self.getParent()
         wiki.deleteWikiPage(self.id, REQUEST)     # need to add a warning here
 
     def renderLinks(self, content):
-        """ creates link with founded [pages]
-        """
+        """ creates link with founded [pages] """
         wiki = self.getParent()
         parser = wiki.getParser()
         return parser.parseContent(wiki, content)
+
+    def getAllDiffs(self):
+        """ renders a list of differences """
+        source = self.source
+        version_count = source.getVersionCount()
+        versions = []
+        for i in range(version_count):
+            version = source.getVersion(i)
+            tags = version[1]
+            versions.append(tags)
+        """
+
+        for i in range(version_count-1):
+            diff = source.getDifferences(i, i+1)
+            versions.append(diff)
+        """
+        return versions
+
+    def restoreVersion(self, index, REQUEST=None):
+        """ restores a previous version """
+        self.source.restoreVersion(index)
+        if REQUEST is not None:
+            psm = 'Version restored.'
+            REQUEST.RESPONSE.redirect("cps_wiki_pageview?portal_status_message=%s" % psm)
 
 manage_addWikiPageForm = PageTemplateFile(
     "www/zmi_wikiPageAdd", globals(),
