@@ -3,8 +3,7 @@
 <body>
 <metal:block use-macro="here/content_lib_master/macros/master">
   <metal:block fill-slot="main"
-               tal:define="wiki here/getParent;
-                           use_epoz wiki/use_html_editor">
+               tal:define="wiki here/getParent">
     <form action="editPage"
           enctype="multipart/form-data"
           method="post"
