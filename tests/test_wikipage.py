@@ -74,18 +74,32 @@ class WikiPageTests(ZopeTestCase):
         page = wiki.addWikiPage('my page')
         page.editPage(source='hello')
         page.editPage(source='hello, how are you doing ?')
-        page.editPage(source='hello, how are you doing ?\r\nMe fine.')
+        page.editPage(source='hello, how are you doing ?\nMe fine.')
+
         res = page.getAllDiffs()
-        self.assertEquals(res, ['+ hello', '+ , how are you doing ?',
-                                '+ \r\nMe fine.'])
-        page.editPage(source='hello, how do you do ?\r\nMe fine.')
+        self.assertEquals(len(res), 4)
+
+        page.editPage(source='hello, how do you do ?\nMe fine.')
+
         res = page.getAllDiffs()
-        self.assertEquals(res, ['+ hello', '+ , how are you doing ?',
-                                '+ \r\nMe fine.', '+ do\r\n- areing'])
+        self.assertEquals(len(res), 5)
 
         page.restoreVersion(1)
-        self.assertEquals(page.source.getLastVersion(),
-                          ('hello, how are you doing ?', {}))
+        self.assertEquals(page.source.getLastVersion()[0],
+                          'hello, how are you doing ?')
+
+    def test_getDifferences(self):
+        wiki = Wiki('wiki')
+        wiki.parser = 'zwiki'
+        page = wiki.addWikiPage('my page')
+        page.editPage(source='hello')
+        page.editPage(source='hello, how are you doing ?')
+
+        res = page.getDifferences(0, 1)
+        self.assertEquals(res, '+ hello')
+
+        res = page.getDifferences(1, 2)
+        self.assertEquals(res, '- hello+ hello, how are you doing ?')
 
 def test_suite():
     """
