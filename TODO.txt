@@ -1,12 +1,17 @@
-* add history in wikipage
+From most to less important
 
-    + typically it's juste a dictionnary that holds
-      all diffs (just the diffs)
-    + time stamps and user names
-
-* add UI to easily call CPSSubcription for wiki subscriptions
-
+* secure wikipages methods
+* warn on page deletion
+* add a link on history page so the user can :
+    * view the diff between two versions
+    * restore a version
+* add UI to manage Wiki parser selection
+* add UI to add content in a wikipage (it's already folder so it's just a form away)
 * add a zcatalog dedicated to the wiki
+* making something better on container view
+* add UI to easily call CPSSubcription for wiki subscriptions
+* add UI to import ZWiki pages
+
 
 
 
