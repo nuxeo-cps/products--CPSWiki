@@ -1,0 +1,19 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+<body>
+<metal:block use-macro="here/content_lib_master/macros/master">
+  <metal:block fill-slot="main"
+               tal:define="wiki here/getParent;
+                           diffs here/getAllDiffs">
+    History
+    <table>
+      <tr tal:repeat="diff diffs">
+        <td tal:repeat="key python:diff.keys()">
+           <span tal:replace="key"/> : <span tal:replace="python:diff[key]"/>
+        </td>
+      </tr>
+    </table>
+  </metal:block>
+</metal:block>
+</body>
+</html>
