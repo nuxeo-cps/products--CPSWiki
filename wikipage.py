@@ -30,7 +30,8 @@ from Products.CPSCore.CPSBase import CPSBaseDocument
 
 from utils import makeId, getCurrentDateStr
 from wikiversionning import VersionContent
-from wikipermissions import addWikiPage, deleteWikiPage, viewWikiPage
+from wikipermissions import addWikiPage, deleteWikiPage, viewWikiPage,\
+                            editWikiPage
 
 factory_type_information = (
     { 'id': 'CPS Wiki Page',
@@ -52,7 +53,7 @@ factory_type_information = (
                   {'id': 'edit',
                    'name': 'action_edit',
                    'action': 'cps_wiki_pageedit',
-                   'permissions': (viewWikiPage,),
+                   'permissions': (editWikiPage,),
                    },
                    {'id': 'history',
                    'name': 'action_history',
