@@ -90,7 +90,7 @@ class Wiki(CPSBaseFolder):
         """
         _parser = self._parser
         if _parser is None or _parser.getPID() <> parser:
-            _parser = generateParser(parser)
+            _parser = generateParser(self.parser)
         return _parser
 
     security.declareProtected(addWikiPage, 'addWikiPage')
