@@ -245,7 +245,7 @@ def manage_addWiki(self, id, title='wiki', REQUEST=None):
         return
     try:
         u = self.DestinationURL()
-    except:
+    except AttributeError:
         u = REQUEST['URL1']
     if REQUEST.has_key('submit_edit'):
         u = "%s/%s" % (u, urllib.quote(id))
