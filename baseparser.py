@@ -58,7 +58,7 @@ class BaseParser:
         self.wiki = wiki
         return re.sub(wikilink, self._wikilinkReplace, content)
 
-    def _wikilinkReplace(self, match, allowed=0, state=None, text=''):
+    def _wikilinkReplace(self, match, text=''):
         # tasty spaghetti regexps! better suggestions welcome ?
         """
         Replace an occurrence of the wikilink regexp or one of the
@@ -68,11 +68,6 @@ class BaseParser:
         for literal context, 'allowed', etc, enclose this function
         with the value using 'thunk_substituter'.
         """
-        # In a literal?
-        if state is not None:
-            if within_literal(match.start(1), match.end(1)-1, state, text):
-                return match.group(1)
-
         # matches beginning with ! should be left alone
         if re.match('^!', match.group(0)):
             return match.group(1)
