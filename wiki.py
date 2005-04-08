@@ -155,10 +155,10 @@ class Wiki(CPSBaseFolder):
                 # by someone else
                 raise str(info) + ' <-> ' + str(li)
                 return False
-
-        item = WikiLockablePage(page, info, duration)
-        self.locker.addItem(item)
-        return True
+        else:
+            item = WikiLockablePage(page, info, duration)
+            self.locker.addItem(item)
+            return True
 
     security.declareProtected(ModifyPortalContent, 'unLockPage')
     def unLockPage(self, page, REQUEST=None):
