@@ -19,20 +19,20 @@
 # 02111-1307, USA.
 #
 # $Id$
-from Globals import Persistent
 
 from ZODB.PersistentList import PersistentList
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.permissions import \
-     View, ModifyPortalContent, DeleteObjects, ChangePermissions
+     View, ModifyPortalContent, DeleteObjects
 from Products.CMFCore.utils import getToolByName
 from Products.CPSUtil.html import sanitize
 from Products.CPSCore.CPSBase import CPSBaseFolder
 from Products.CPSCore.CPSBase import CPSBaseDocument
 
-from utils import makeId, getCurrentDateStr
+from utils import getCurrentDateStr
 from wikiversionning import VersionContent
+import urllib
 
 factory_type_information = (
     { 'id': 'Wiki Page',
@@ -131,7 +131,7 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected(View, 'getParserType')
     def getParserType(self):
-        """ returns parser type """
+        """Return parser type """
         wiki = self.getParent()
         return wiki.parser
 
