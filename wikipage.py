@@ -263,13 +263,15 @@ manage_addWikiPageForm = PageTemplateFile(
 def manage_addWikiPage(self, id, title, REQUEST=None):
     """Add the simple content."""
     ob = WikiPage(id)
+    ob.title = title
+
     id = self._setObject(id, ob)
 
     if REQUEST is None:
         return
     try:
         u = self.DestinationURL()
-    except:
+    except AttributeError:
         u = REQUEST['URL1']
     if REQUEST.has_key('submit_edit'):
         u = "%s/%s" % (u, urllib.quote(id))
