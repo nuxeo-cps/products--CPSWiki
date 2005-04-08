@@ -153,7 +153,6 @@ class Wiki(CPSBaseFolder):
                 return True
             else:
                 # by someone else
-                raise str(info) + ' <-> ' + str(li)
                 return False
         else:
             item = WikiLockablePage(page, info, duration)
@@ -238,6 +237,8 @@ manage_addWikiForm = PageTemplateFile("www/zmi_wikiAdd", globals(),
 def manage_addWiki(self, id, title='wiki', REQUEST=None):
     """Add the simple content."""
     wiki = Wiki(id)
+    wiki.title = title
+
     id = self._setObject(id, wiki)
 
     if REQUEST is None:
