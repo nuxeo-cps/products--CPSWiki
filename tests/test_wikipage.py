@@ -28,6 +28,12 @@ from Products.CPSWiki.wiki import Wiki
 from Products.CPSWiki.wikiversionning import VersionContent
 from Products.CPSWiki.wikiparsers import parsers
 
+try:
+    from reStructuredText import HTML
+    has_rst = True
+except ImportError:
+    has_rst = False
+
 class WikiPageTests(ZopeTestCase):
 
     def _getCurrentUser(self):
@@ -54,11 +60,12 @@ class WikiPageTests(ZopeTestCase):
         self.assertEquals(page.render(),
             'once[again]<a href="../addPage?title=again">?</a> again')
 
-        wiki.parser = 'restructuredtext'
-        page = wiki.addPage('my page')
-        page.source = VersionContent('once again')
-        self.assertEquals(page.getParserType(), 'restructuredtext')
-        self.assertEquals(page.render(), 'once again')
+        if has_rst:
+            wiki.parser = 'restructuredtext'
+            page = wiki.addPage('my page')
+            page.source = VersionContent('once again')
+            self.assertEquals(page.getParserType(), 'restructuredtext')
+            self.assertEquals(page.render(), '<p>once again</p>\n')
 
 
     def test_rendering_bad_content(self):
@@ -154,7 +161,13 @@ class WikiPageTests(ZopeTestCase):
         self.assertEquals(len(res), 4)
 
     def test_encoding(self):
-        for parser in parsers:
+        tested_parsers = parsers
+        if not has_rst:
+            if 'restructuredtext' in  tested_parsers:
+                tested_parsers.remove('restructuredtext')
+
+        for parser in tested_parsers:
+            # if the test machine has no rst, we skip it here
             wiki = Wiki('wiki for parser "%s"' % parser)
             wiki.parser = parser
             wiki._getCurrentUser = self._getCurrentUser
@@ -170,7 +183,10 @@ class WikiPageTests(ZopeTestCase):
             content = u"C'est éeéfffélo là et où donc ?"
             page = wiki.addPage(u'Page 2: with Unicode')
             self.assert_(page.edit(source=content))
-            self.assertEquals(page.render(), content)
+            if parser == 'restructuredtext':
+                self.assertEquals(page.render(), '<p>%s</p>\n' % content)
+            else:
+                self.assertEquals(page.render(), content)
 
             # Testing the creation of a page with accented characters
             page = wiki.addPage('éeedzzzzzzzzéé à doù !')
