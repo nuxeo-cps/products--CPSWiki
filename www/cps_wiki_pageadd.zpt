@@ -1,6 +1,6 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
   <metal:block fill-slot="main">
-    <form action="addWikiPage" method="post">
+    <form action="addPage" method="post">
       <p>
         <tal:block i18n:translate="label_title">Title:</tal:block>
         <input name="title" type="text"/>
