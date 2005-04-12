@@ -28,8 +28,8 @@ from Products.CMFCore.permissions import \
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.utils import getToolByName
 from Products.CPSCore.CPSBase import CPSBaseFolder
+from Products.CPSUtil.id import generateId
 
-from utils import makeId
 from wikipage import WikiPage
 from wikiparsers import parsers, generateParser
 from wikilocker import LockerList, ILockableItem
@@ -192,7 +192,11 @@ class Wiki(CPSBaseFolder):
 
     security.declareProtected(View, 'getPage')
     def getPage(self, title_or_id):
-        wikipage_id = makeId(title_or_id)
+        if isinstance(title_or_id, unicode):
+            wikipage_id = generateId(title_or_id.encode('ISO-8859-15'))
+        else:
+            wikipage_id = generateId(title_or_id)
+
         if wikipage_id in self.objectIds():
             return self[wikipage_id]
         return None
@@ -212,7 +216,11 @@ class Wiki(CPSBaseFolder):
     security.declareProtected(AddPortalContent, 'addPage')
     def addPage(self, title, REQUEST=None):
         """ creates and adds a wiki page """
-        wikipage_id = makeId(title)
+        if isinstance(title, unicode):
+            wikipage_id = generateId(title.encode('ISO-8859-15'))
+        else:
+            wikipage_id = generateId(title)
+
         stepper = 1
 
         while wikipage_id in self.objectIds():
