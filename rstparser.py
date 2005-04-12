@@ -17,12 +17,12 @@
 # 02111-1307, USA.
 #
 # $Id$
+import re
 
 from wikiparserinterface import WikiParserInterface
-import re
 from urllib import quote
-
 from baseparser import BaseParser
+
 try:
     from reStructuredText import HTML # import this one first
     rst_available = True
