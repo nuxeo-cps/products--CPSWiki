@@ -38,6 +38,9 @@ _ok_chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_."
 
 def makeId(s, lower=0):
     "Make id from string"
+    if isinstance(s, unicode):
+        s = s.encode('ISO-8859-15')
+
     id = s.translate(_translation_table)
     id = id.replace('Æ', 'AE')
     id = id.replace('æ', 'ae')
