@@ -88,7 +88,7 @@ class CPSWikiInstaller(CPSInstaller):
         """
         # Workflow definition in workspaces
         wfdef = {'wfid': 'workspace_wiki_wf',
-                'permissions': (View, ModifyPortalContent),
+                'permissions': (View, ModifyPortalContent, AddPortalContent),
                 }
 
         wfstates = {
@@ -104,8 +104,13 @@ class CPSWikiInstaller(CPSInstaller):
                                                       'WorkspaceMember',
                                                       'Contributor',
                                                       ),
+                                AddPortalContent: ('Manager', 'Owner',
+                                                   'WorkspaceManager',
+                                                   'WorkspaceMember',
+                                                   'Contributor',
+                                                   ),
                                 },
-                },
+                }
             }
 
         wftransitions = {
@@ -154,7 +159,7 @@ class CPSWikiInstaller(CPSInstaller):
 
         # Workflow definition in sections
         wfdef = {'wfid': 'section_wiki_wf',
-                 'permissions': (View, ModifyPortalContent),
+                 'permissions': (View, ModifyPortalContent, AddPortalContent),
                  }
 
         wfstates = {
@@ -167,9 +172,14 @@ class CPSWikiInstaller(CPSInstaller):
                                        ),
                                 ModifyPortalContent: ('Manager', 'Owner',
                                                       'SectionManager',
-                                                      'Contributor')
+                                                      'Contributor',
+                                                      ),
+                                AddPortalContent: ('Manager', 'Owner',
+                                                   'SectionManager',
+                                                   'Contributor',
+                                                   ),
                                 },
-                },
+                }
             }
 
         wftransitions = {

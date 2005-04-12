@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- renamed addWikiPage to addPage in page adder template (page adding would fail)
+- Renamed addWikiPage to addPage in page adder template (page adding would fail)
 - Made the wiki use the CMF and CPS already existing roles and permissions and
   modified the workflows accordingly.
   Fixes #563 ("CPSWiki is unusable in sections. Which use cases for CPSWiki in
@@ -15,6 +15,7 @@ Bug fixes:
   conventions: "CPS Wiki" -> "Wiki", "CPS Wiki Page" -> "Wiki Page".
 - Added security checks on WikiPage methods.
 - Made the methods of Wiki and WikiPage named in a more object oriented manner.
+- Added missing permissions in the workflow definitions.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
