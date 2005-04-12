@@ -3,9 +3,10 @@ Requires:
 - CPSDefault > 3.32.1
 New features:
 ~~~~~~~~~~~~~
-- Added locking to avoid people editing at the same time
+-
 Bug fixes:
 ~~~~~~~~~~
+- renamed addWikiPage to addPage in page adder template (page adding would fail)
 - Made the wiki use the CMF and CPS already existing roles and permissions and
   modified the workflows accordingly.
   Fixes #563 ("CPSWiki is unusable in sections. Which use cases for CPSWiki in
