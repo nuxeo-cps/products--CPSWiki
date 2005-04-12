@@ -58,7 +58,7 @@ class WikiPageTests(ZopeTestCase):
 
         page.source = VersionContent('once[again] again')
         self.assertEquals(page.render(),
-            'once[again]<a href="../addPage?title=again">?</a> again')
+                          'once[again]<a href="../addPage?title=again">?</a> again')
 
         if has_rst:
             wiki.parser = 'restructuredtext'
@@ -66,7 +66,6 @@ class WikiPageTests(ZopeTestCase):
             page.source = VersionContent('once again')
             self.assertEquals(page.getParserType(), 'restructuredtext')
             self.assertEquals(page.render(), '<p>once again</p>\n')
-
 
     def test_rendering_bad_content(self):
         wiki = Wiki('wiki')
@@ -84,7 +83,8 @@ class WikiPageTests(ZopeTestCase):
 
         page = wiki.addPage('my page')
         res = page.renderLinks('once [my link] again')
-        self.assertEquals(res, 'once [my link]<a href="../addPage?title=my%20link">?</a> again')
+        self.assertEquals(res,
+                          'once [my link]<a href="../addPage?title=my%20link">?</a> again')
 
     def test_delete(self):
         wiki = Wiki('wiki')
@@ -177,7 +177,10 @@ class WikiPageTests(ZopeTestCase):
             content = "C'est éeéfffélo là et où donc ?"
             page = wiki.addPage('Page 1: with default encoding')
             self.assert_(page.edit(source=content))
-            self.assertEquals(page.render(), content)
+            if parser == 'restructuredtext':
+                self.assertEquals(page.render(), '<p>%s</p>\n' % content)
+            else:
+                self.assertEquals(page.render(), content)
 
             # just checking that given parser support unicoding as well
             content = u"C'est éeéfffélo là et où donc ?"
@@ -190,6 +193,8 @@ class WikiPageTests(ZopeTestCase):
 
             # Testing the creation of a page with accented characters
             page = wiki.addPage('éeedzzzzzzzzéé à doù !')
+
+
 def test_suite():
     """
     return unittest.TestSuite((
