@@ -24,7 +24,7 @@ from urllib import quote
 
 from baseparser import BaseParser
 try:
-    import reStructuredText
+    from reStructuredText import HTML # import this one first
     rst_available = True
 except ImportError:
     rst_available = False
@@ -39,11 +39,9 @@ class RstParser(BaseParser):
     def parseContent(self, wiki, content):
         """ parses content """
         if rst_available:
-            content = reStructuredText.HTML(content,
-                                            output_encoding='iso-8859-15',
-                                            initial_header_level=2,
-                                            report_level=0,
-                                            )
+            content = HTML(content, output_encoding='iso-8859-15',
+                           initial_header_level=2, report_level=0)
+
         # called for references
         content = BaseParser.parseContent(self, wiki, content)
         return content
