@@ -19,20 +19,22 @@
 # 02111-1307, USA.
 #
 # $Id$
+import urllib
+from datetime import datetime
 
 from ZODB.PersistentList import PersistentList
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+
 from Products.CMFCore.permissions import \
      View, ModifyPortalContent, DeleteObjects
+
 from Products.CMFCore.utils import getToolByName
 from Products.CPSUtil.html import sanitize
 from Products.CPSCore.CPSBase import CPSBaseFolder
 from Products.CPSCore.CPSBase import CPSBaseDocument
 
-from utils import getCurrentDateStr
 from wikiversionning import VersionContent
-import urllib
 
 factory_type_information = (
     { 'id': 'Wiki Page',
@@ -112,10 +114,17 @@ class WikiPage(CPSBaseFolder):
         initial_tags = self._createVersionTag()
         self.source = ZODBVersionContent(source, initial_tags)
 
+    def _getCurrentDateStr(self):
+        """ gets current date """
+        date = datetime(1970, 1, 1)
+        now = date.now()
+        # english style
+        return now.strftime('%a %m/%d/%y %H:%M')
+
     def _createVersionTag(self):
         tag = {}
         tag['author'] = self._getUserName()
-        tag['date'] = getCurrentDateStr()
+        tag['date'] = self._getCurrentDateStr()
         return tag
 
     def _getUserName(self):
