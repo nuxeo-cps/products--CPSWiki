@@ -24,11 +24,11 @@
     this parser takes the content and create
     internal and external links
 """
-
-from utils import makeId
 import urllib
 from urllib import quote, unquote
 import re
+
+from Products.CPSUtil.id import generateId
 
 from wikiparserinterface import WikiParserInterface
 
@@ -75,7 +75,7 @@ class BaseParser:
         m = morig = match.group(1)
 
         m_nospace = m.strip('[').strip(']')
-        m_nospace = makeId(m_nospace)
+        m_nospace = generateId(m_nospace)
 
         # if it's a bracketed expression,
         if re.match(bracketedexpr, m):
