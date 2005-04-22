@@ -65,6 +65,10 @@ Jot
   Commercial product
   http://www.jot.com/
 
+Socialtext
+  Another commercial
+  http://www.socialtext.com
+
 SnipSnap
   Integrates Blog and Wiki
 
