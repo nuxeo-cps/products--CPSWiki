@@ -63,6 +63,43 @@ class WikiTests(ZopeTestCase):
         li = wiki.pageLockInfo(page)
         self.assertEquals(li, None)
 
+    def test_getSummary(self):
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+
+        page1 = wiki.addPage('page1')
+        page2 = wiki.addPage('page2')
+        page3 = wiki.addPage('page3')
+        page3.edit(source=' dddddd [page2] zaaaaaza ')
+        page4 = wiki.addPage('page4')
+        page5 = wiki.addPage('page5')
+        page5.edit(source=' dddddd [page2] za [page1] aaaaza ')
+
+        summary = wiki.getSummary()
+
+        self.assertEquals(len(summary), 3)
+
+
+        # adding a circular link to make sure wiki summary knows ho to deal it
+        page2.edit(source=' dddddd [page5] za [page3] aaaaza ')
+
+        summary = wiki.getSummary()
+        self.assertEquals(len(summary), 1)
+
+
+    def test_recursiveGetLinks(self):
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+
+        page1 = wiki.addPage('page1')
+        page1.edit(source=' dddddd [page2]')
+        page2 = wiki.addPage('page2')
+        page2.edit(source=' dddddd [page3]')
+        page3 = wiki.addPage('page3')
+
+        content = wiki._recursiveGetLinks(page1)
+        sub = content[0]
+        self.assertEquals(sub['page'], page2)
 
 def test_suite():
     """

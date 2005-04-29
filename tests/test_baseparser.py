@@ -31,16 +31,16 @@ class WikiParserTest(ZopeTestCase):
         parser = BaseParser()
 
         res = parser.parseContent(wiki, 'qzpijdspjvdspdsvjpdsovj')
-        self.assertEquals(res, 'qzpijdspjvdspdsvjpdsovj')
+        self.assertEquals(res, ([], 'qzpijdspjvdspdsvjpdsovj'))
         res = parser.parseContent(wiki, 'qzpijdspjvd [spds] vjpdsovj')
-        self.assertEquals(res,
-            'qzpijdspjvd [spds]<a href="../addPage?title=spds">?</a> vjpdsovj')
+        self.assertEquals(res, ([],
+            'qzpijdspjvd [spds]<a href="../addPage?title=spds">?</a> vjpdsovj'))
 
         wiki.addPage('spds')
 
         res = parser.parseContent(wiki, 'qzpijdspjvd [spds] vjpdsovj')
-        self.assertEquals(res,
-            'qzpijdspjvd <a href="../spds/cps_wiki_pageview">spds</a> vjpdsovj')
+        self.assertEquals(res, (['spds'],
+            'qzpijdspjvd <a href="../spds/cps_wiki_pageview">spds</a> vjpdsovj'))
 
 
 def test_suite():

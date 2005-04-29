@@ -23,6 +23,8 @@
 import unittest
 
 from Testing.ZopeTestCase import ZopeTestCase, _print
+from ZPublisher.HTTPRequest import FileUpload
+
 from Products.CPSWiki.wikipage import WikiPage
 from Products.CPSWiki.wiki import Wiki
 from Products.CPSWiki.wikiversionning import VersionContent
@@ -33,6 +35,11 @@ try:
     has_rst = True
 except ImportError:
     has_rst = False
+
+class FakeFieldStorage:
+    file = None
+    filename = ''
+    headers = []
 
 class WikiPageTests(ZopeTestCase):
 
@@ -54,18 +61,18 @@ class WikiPageTests(ZopeTestCase):
         page = wiki.addPage('my page')
         page.source = VersionContent('once again')
         self.assertEquals(page.getParserType(), 'zwiki')
-        self.assertEquals(page.render(), 'once again')
+        self.assertEquals(page.render(), ([], 'once again'))
 
         page.source = VersionContent('once[again] again')
-        self.assertEquals(page.render(),
-                          'once[again]<a href="../addPage?title=again">?</a> again')
+        self.assertEquals(page.render(), ([],
+            'once[again]<a href="../addPage?title=again">?</a> again'))
 
         if has_rst:
             wiki.parser = 'restructuredtext'
             page = wiki.addPage('my page')
             page.source = VersionContent('once again')
             self.assertEquals(page.getParserType(), 'restructuredtext')
-            self.assertEquals(page.render(), '<p>once again</p>\n')
+            self.assertEquals(page.render(), ([], '<p>once again</p>\n'))
 
     def test_rendering_bad_content(self):
         wiki = Wiki('wiki')
@@ -74,7 +81,7 @@ class WikiPageTests(ZopeTestCase):
 
         page = wiki.addPage('')
         page.source = VersionContent('<ba>my dcds</ba>dcdscdscdscsd')
-        self.assertEquals(page.render(), '<ba>my dcds</ba>dcdscdscdscsd')
+        self.assertEquals(page.render(), ([], '<ba>my dcds</ba>dcdscdscdscsd'))
 
     def test_renderLinks(self):
         wiki = Wiki('wiki')
@@ -83,8 +90,8 @@ class WikiPageTests(ZopeTestCase):
 
         page = wiki.addPage('my page')
         res = page.renderLinks('once [my link] again')
-        self.assertEquals(res,
-                          'once [my link]<a href="../addPage?title=my%20link">?</a> again')
+        self.assertEquals(res,([],
+            'once [my link]<a href="../addPage?title=my%20link">?</a> again'))
 
     def test_delete(self):
         wiki = Wiki('wiki')
@@ -144,17 +151,17 @@ class WikiPageTests(ZopeTestCase):
         # second user comes
         wiki._getCurrentUser = self._getCurrentUser2
         self.assert_(not page.edit(source='hello all')) # uneditable
-        self.assertEquals(page.render(), 'hello')
+        self.assertEquals(page.render(), ([], 'hello'))
 
         # first user finish his work
         wiki._getCurrentUser = self._getCurrentUser
         self.assert_(page.edit(source='hello all you'))  # unlocks
-        self.assertEquals(page.render(), 'hello all you')
+        self.assertEquals(page.render(), ([], 'hello all you'))
 
         #second user is good to go now
         wiki._getCurrentUser = self._getCurrentUser2
         self.assert_(page.edit(source='hello all'))
-        self.assertEquals(page.render(), 'hello all')
+        self.assertEquals(page.render(), ([], 'hello all'))
 
         # check history
         res = page.getAllDiffs()
@@ -180,7 +187,7 @@ class WikiPageTests(ZopeTestCase):
             if parser == 'restructuredtext':
                 self.assertEquals(page.render(), '<p>%s</p>\n' % content)
             else:
-                self.assertEquals(page.render(), content)
+                self.assertEquals(page.render(), ([], content))
 
             # just checking that given parser support unicoding as well
             content = u"C'est éeéfffélo là et où donc ?"
@@ -193,11 +200,53 @@ class WikiPageTests(ZopeTestCase):
                                                      .output_encoding)
                 self.assertEquals(render, expected_render)
             else:
-                self.assertEquals(page.render(), content)
+                self.assertEquals(page.render(), ([],content))
 
             # Testing the creation of a page with accented characters
             page = wiki.addPage('éeedzzzzzzzzéé à doù !')
 
+    def test_getLinkedPages(self):
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+        page1 = wiki.addPage('page1')
+        page1.edit(source=' page 1 ')
+        page3 = wiki.addPage('page3')
+        page3.edit(source=' page 1 ')
+        page2 = wiki.addPage('page2')
+        page2.edit(source=
+            ' link to [page1] again [page1] and [page3] and [page6]')
+        self.assertEquals(page2.getLinkedPages(), ['page1', 'page3'])
+        self.assertEquals(page1.getLinkedPages(), [])
+
+    def test_getBackedLinkedPages(self):
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+        page1 = wiki.addPage('page1')
+        page1.edit(source=' page 1 ')
+        page3 = wiki.addPage('page3')
+        page3.edit(source=' page 1 ')
+        page2 = wiki.addPage('page2')
+        page2.edit(source=
+            ' link to [page1] again [page1] and [page3] and [page6]')
+
+        self.assertEquals(page1.getBackedLinkedPages(), ['page2'])
+        self.assertEquals(page2.getBackedLinkedPages(), [])
+
+    def test_uploadFile(self):
+        # using current file for tests
+        file = open(__file__, 'r')
+        storage = FakeFieldStorage()
+        storage.file = file
+        storage.filename = 'yopla'
+
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+        page1 = wiki.addPage('page1')
+        self.assertEquals(page1.objectIds(), [])
+        upload = FileUpload(storage)
+        page1.uploadFile(upload)
+        self.assertEquals(page1.objectIds(), ['yopla'])
+        file.close()
 
 def test_suite():
     """
