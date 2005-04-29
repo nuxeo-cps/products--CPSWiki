@@ -30,3 +30,9 @@ msgstr ""
 
 msgid "action_history"
 msgstr ""
+
+msgid "action_full_view"
+msgstr ""
+
+msgid "Back to the top"
+msgstr ""

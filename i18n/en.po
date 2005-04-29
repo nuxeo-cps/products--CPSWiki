@@ -36,3 +36,9 @@ msgstr "Add page"
 
 msgid "action_history"
 msgstr "History"
+
+msgid "action_full_view"
+msgstr "Full view"
+
+msgid "Back to the top"
+msgstr "Back to the top"

@@ -36,3 +36,9 @@ msgstr "Ajouter une page"
 
 msgid "action_history"
 msgstr "Historique"
+
+msgid "action_full_view"
+msgstr "Voir tout"
+
+msgid "Back to the top"
+msgstr "Retour au sommaire"
