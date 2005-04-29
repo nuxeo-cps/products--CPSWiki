@@ -15,7 +15,7 @@
         <h4 tal:content="id"/>
         <p tal:content="structure content"/>
       </tal:block>
-      <a href="cps_wiki_full_view#_summary">Back to the top</a>
+      <a href="cps_wiki_full_view#_summary" i18n:translate="">Back to the top</a>
     </div>
   </metal:block>
 </html>
