@@ -23,6 +23,8 @@ import urllib
 from datetime import datetime
 
 from ZODB.PersistentList import PersistentList
+from OFS.Image import cookId
+from ZPublisher.HTTPRequest import FileUpload
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
@@ -156,6 +158,7 @@ class WikiPage(CPSBaseFolder):
     security.declareProtected(View, 'render')
     def render(self):
         """ Render the wiki page source."""
+        # XXX need to memoize this to speedup things
         result = self.source.getLastVersion()[0]
         result = self.renderLinks(result)
         return result
@@ -166,6 +169,44 @@ class WikiPage(CPSBaseFolder):
         wiki = self.getParent()
         parser = wiki.getParser()
         return parser.parseContent(wiki, content)
+
+    security.declareProtected(View, 'getLinkedPages')
+    def getLinkedPages(self):
+        """creates link with founded [pages]"""
+        content = self.source.getLastVersion()[0]
+        wiki = self.getParent()
+        parser = wiki.getParser()
+        links, rendered = parser.parseContent(wiki, content)
+        return links
+
+    security.declareProtected(View, 'getBackedLinkedPages')
+    def getBackedLinkedPages(self):
+        """ get pages where this page is linked """
+        back_links = []
+        wiki = self.getParent()
+        for id, page in wiki.objectItems():
+            if self.id in page.getLinkedPages():
+                back_links.append(id)
+        return back_links
+
+    security.declareProtected(ModifyPortalContent, 'edit')
+    def uploadFile(self, file, REQUEST=None):
+        """ uploads a file in the repository """
+        if not isinstance(file, FileUpload):
+            if REQUEST is not None:
+                psm = 'not a file'
+                REQUEST.RESPONSE.\
+                    redirect("cps_wiki_pageedit?portal_status_message=%s" % psm)
+            return False
+
+        fileid = cookId('', '', file)[0]
+        self.manage_addFile(fileid, file=file)
+
+        if REQUEST is not None:
+            psm = 'File uploaded.'
+            REQUEST.RESPONSE.\
+                redirect("cps_wiki_pageview?portal_status_message=%s" % psm)
+        return True
 
     security.declareProtected(ModifyPortalContent, 'edit')
     def edit(self, title=None, source=None, REQUEST=None):
@@ -211,16 +252,10 @@ class WikiPage(CPSBaseFolder):
             version = source.getVersion(i)
             tags = version[1]
             versions.append(tags)
-        """
-
-        for i in range(version_count-1):
-            diff = source.getDiffs(i, i+1)
-            versions.append(diff)
-        """
         return versions
 
     security.declareProtected('View archived revisions', 'getDiffs')
-    def getDiffs(self, version_1, version_2):
+    def getDiffs(self, version_1, version_2, separator=''):
         """retrieves differences between 2 versions"""
         if isinstance(version_1, str):
             version_1 = int(version_1)
@@ -228,7 +263,7 @@ class WikiPage(CPSBaseFolder):
         if isinstance(version_2, str):
             version_2 = int(version_2)
 
-        return self.source.getDiffs(version_1, version_2)
+        return self.source.getDiffs(version_1, version_2, separator)
 
     security.declareProtected(ModifyPortalContent, 'restoreVersion')
     def restoreVersion(self, index, REQUEST=None):
