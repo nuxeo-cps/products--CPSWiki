@@ -64,6 +64,8 @@ class WikiPageTests(ZopeTestCase):
         self.assertEquals(page.render(), ([], 'once again'))
 
         page.source = VersionContent('once[again] again')
+        page._saved_linked_pages = None
+        page._last_render = None
         self.assertEquals(page.render(), ([],
             'once[again]<a href="../addPage?title=again">?</a> again'))
 
