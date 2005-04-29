@@ -3,7 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Front page is an automatic summary of all pages
+- Added a full view where the whole wiki content is displayed
+- Added backlinks
+- Added file attachments
 Bug fixes:
 ~~~~~~~~~~
 -
