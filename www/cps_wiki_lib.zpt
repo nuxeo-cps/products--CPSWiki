@@ -1,0 +1,14 @@
+<metal:block metal:define-macro="wikinode">
+  <tal:block tal:define="page python:item['page'];
+                          childs python:item['childs'];">
+
+    <a tal:attributes="href python:page.absolute_url()">
+      <span tal:replace="python:page.title_or_id()"/>
+    </a>
+    <ul>
+      <li tal:repeat="item childs">
+        <metal:block metal:use-macro="here/cps_wiki_lib/macros/wikinode"/>
+      </li>
+    </ul>
+</tal:block>
+</metal:block>
