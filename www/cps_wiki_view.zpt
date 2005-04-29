@@ -1,10 +1,8 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
   <metal:block fill-slot="main">
     <ul>
-      <li tal:repeat="item here/objectItems">
-        <a tal:attributes="href python:item[1].absolute_url()">
-          <span tal:replace="python:item[1].title_or_id()"/>
-        </a>
+      <li tal:repeat="item python:here.getSummary()">
+         <metal:block metal:use-macro="here/cps_wiki_lib/macros/wikinode"/>
       </li>
     </ul>
   </metal:block>
