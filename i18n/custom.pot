@@ -33,3 +33,15 @@ msgstr ""
 
 msgid "Back to the top"
 msgstr ""
+
+msgid "BackLinks"
+msgstr ""
+
+msgid "upload file"
+msgstr ""
+
+msgid "File uploaded."
+msgstr ""
+
+msgid "Attached files"
+msgstr ""

@@ -42,3 +42,15 @@ msgstr "Voir tout"
 
 msgid "Back to the top"
 msgstr "Retour au sommaire"
+
+msgid "BackLinks"
+msgstr "Rétroliens"
+
+msgid "upload file"
+msgstr "Charger un fichier"
+
+msgid "File uploaded."
+msgstr "Fichier chargé."
+
+msgid "Attached files"
+msgstr "Fichiers attachés"

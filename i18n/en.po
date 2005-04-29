@@ -42,3 +42,15 @@ msgstr "Full view"
 
 msgid "Back to the top"
 msgstr "Back to the top"
+
+msgid "BackLinks"
+msgstr "Backlinks"
+
+msgid "upload file"
+msgstr "Upload a file"
+
+msgid "File uploaded."
+msgstr "File uploaded."
+
+msgid "Attached files"
+msgstr "Attached files"
