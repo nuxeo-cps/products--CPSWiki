@@ -7,7 +7,7 @@
          <metal:block metal:use-macro="here/cps_wiki_lib/macros/wikinode"/>
       </li>
     </ul>
-    <div tal:repeat="item here/objectItems">
+    <div tal:repeat="item here/objectItems" class="group">
 
       <tal:block tal:define="content python:item[1].render()[1];
                               id python:item[1].title_or_id()">
