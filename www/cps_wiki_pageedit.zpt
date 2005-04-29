@@ -27,7 +27,7 @@
     <br/>
     <form action="uploadFile" enctype="multipart/form-data" method="post">
       <input type="file" name="file"/><br/>
-      <button type="submit" name="upload">upload file</button>
+      <button type="submit" name="upload" i18n:translate="">upload file</button>
     </form>
   </metal:block>
 </html>
