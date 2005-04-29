@@ -115,6 +115,8 @@ class WikiPage(CPSBaseFolder):
         CPSBaseFolder.__init__(self, id, **kw)
         initial_tags = self._createVersionTag()
         self.source = ZODBVersionContent(source, initial_tags)
+        self._saved_linked_pages = None
+        self._last_render = None
 
     def _getCurrentDateStr(self):
         """ gets current date """
@@ -158,9 +160,13 @@ class WikiPage(CPSBaseFolder):
     security.declareProtected(View, 'render')
     def render(self):
         """ Render the wiki page source."""
-        # XXX need to memoize this to speedup things
+        if not hasattr(self, '_last_render'):
+            self._last_render = None
+        if self._last_render is not None:
+            return self._last_render
         result = self.source.getLastVersion()[0]
         result = self.renderLinks(result)
+        self._last_render = result
         return result
 
     security.declareProtected(View, 'renderLinks')
@@ -173,10 +179,15 @@ class WikiPage(CPSBaseFolder):
     security.declareProtected(View, 'getLinkedPages')
     def getLinkedPages(self):
         """creates link with founded [pages]"""
+        if not hasattr(self, '_saved_linked_pages'):
+            self._saved_linked_pages = None
+        if self._saved_linked_pages is not None:
+            return self._saved_linked_pages
         content = self.source.getLastVersion()[0]
         wiki = self.getParent()
         parser = wiki.getParser()
         links, rendered = parser.parseContent(wiki, content)
+        self._saved_linked_pages = links
         return links
 
     security.declareProtected(View, 'getBackedLinkedPages')
@@ -185,6 +196,8 @@ class WikiPage(CPSBaseFolder):
         back_links = []
         wiki = self.getParent()
         for id, page in wiki.objectItems():
+            if id == self.id:
+                continue
             if self.id in page.getLinkedPages():
                 back_links.append(id)
         return back_links
@@ -219,6 +232,8 @@ class WikiPage(CPSBaseFolder):
                     redirect("cps_wiki_pageedit?portal_status_message=%s" % psm)
             return False
         else:
+            self._saved_linked_pages = None
+            self._last_render = None
             try:
                 if source is not None:
                     source = sanitize(source)
