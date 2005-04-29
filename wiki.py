@@ -235,9 +235,61 @@ class Wiki(CPSBaseFolder):
 
         # returns to the TOC
         if REQUEST is not None:
-            REQUEST.RESPONSE.redirect(wikipage.absolute_url() + '/cps_wiki_pageedit')
+            REQUEST.RESPONSE.redirect(wikipage.absolute_url() +
+                                      '/cps_wiki_pageedit')
         else:
             return self[wikipage_id]
+
+    security.declarePrivate('_recursiveGetLinks')
+    def _recursiveGetLinks(self, page, called=[]):
+        """ make link tree, avoiding circular references """
+        if page in called:
+            return []
+        else:
+            called.append(page)
+
+        returned = []
+        pages = page.getLinkedPages()
+        for cpage in pages:
+            scalled = []
+            object = self[cpage]
+            element = {}
+            element['page'] = object
+            element['childs'] = self._recursiveGetLinks(object, scalled)
+            returned.append(element)
+        return returned
+
+    security.declareProtected(View, 'getSummary')
+    def getSummary(self):
+        """ creates the summary tree """
+        # first of all, let's find the first layer
+        # of pages by sorting pages with their backlink count
+        page_ids = self.objectIds()
+        if page_ids == []:
+            return []
+
+        pages = [self[id] for id in page_ids]
+        sorted_list = []
+        for page in pages:
+            element = (len(page.getLinkedPages()),
+                       len(page.getBackedLinkedPages()), page)
+            sorted_list.append(element)
+        sorted_list.sort()
+
+        # now constructing trees
+        tree = []
+        for item in sorted_list:
+            if item[1] > 0:
+                continue
+            element = {}
+            element['page'] = item[2]
+            childs = self._recursiveGetLinks(item[2], [])
+            element['childs'] = childs
+            tree.append((len(childs), element))
+        tree.sort()
+        tree.reverse()
+        return [node[1] for node in tree]
+
 
 manage_addWikiForm = PageTemplateFile("www/zmi_wikiAdd", globals(),
     __name__ = 'manage_addWikiForm')
