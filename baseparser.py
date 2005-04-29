@@ -48,6 +48,7 @@ class BaseParser:
     __implements__ = (WikiParserInterface, )
 
     wiki = None
+    linked_pages = []
 
     def getId(self):
         return 'baseparser'
@@ -56,7 +57,9 @@ class BaseParser:
         """ creates link with founded [pages]
         """
         self.wiki = wiki
-        return re.sub(wikilink, self._wikilinkReplace, content)
+        self.linked_pages = []
+        rendered = re.sub(wikilink, self._wikilinkReplace, content)
+        return self.linked_pages, rendered
 
     def _wikilinkReplace(self, match, text=''):
         # tasty spaghetti regexps! better suggestions welcome ?
@@ -116,6 +119,8 @@ class BaseParser:
         # it
 
         elif (wiki is not None) and (m_nospace in wiki.objectIds()):
+            if m_nospace not in self.linked_pages:
+                self.linked_pages.append(m_nospace)
             return '<a href="../%s/cps_wiki_pageview">%s</a>' % (quote(m_nospace), m)
 
         # otherwise, provide a "?" creation link
