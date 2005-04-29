@@ -1,8 +1,13 @@
 <metal:block metal:define-macro="wikinode">
   <tal:block tal:define="page python:item['page'];
-                          childs python:item['childs'];">
+                          childs python:item['childs'];
+                          nolink nolink|python:0">
 
-    <a tal:attributes="href python:page.absolute_url()">
+
+    <a tal:condition="not:nolink" tal:attributes="href python:page.absolute_url()">
+      <span tal:replace="python:page.title_or_id()"/>
+    </a>
+    <a tal:condition="nolink" tal:attributes="href python:'cps_wiki_full_view#'+page.title_or_id()">
       <span tal:replace="python:page.title_or_id()"/>
     </a>
     <ul>
