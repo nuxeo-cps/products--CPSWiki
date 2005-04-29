@@ -1,0 +1,21 @@
+<html metal:use-macro="here/content_lib_master/macros/master">
+  <metal:block fill-slot="main">
+    <a name="_summary"></a>
+    <ul>
+      <li tal:repeat="item python:here.getSummary()"
+           tal:define="nolink python:1">
+         <metal:block metal:use-macro="here/cps_wiki_lib/macros/wikinode"/>
+      </li>
+    </ul>
+    <div tal:repeat="item here/objectItems">
+
+      <tal:block tal:define="content python:item[1].render()[1];
+                              id python:item[1].title_or_id()">
+        <a tal:attributes="name id"></a>
+        <h4 tal:content="id"/>
+        <p tal:content="structure content"/>
+      </tal:block>
+      <a href="cps_wiki_full_view#_summary">Back to the top</a>
+    </div>
+  </metal:block>
+</html>
