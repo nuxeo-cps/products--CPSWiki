@@ -6,9 +6,9 @@
                              files here/objectItems">
 
     <span tal:replace="structure content"/>
-
+    <div class="group" tal:condition="python:len(files) &gt; 0 or len(backlinks) &gt; 0">
     <tal:block tal:condition="python:len(files) &gt; 0">
-        <h4>Attached files</h4>
+        <h4 i18n:translate="">Attached files</h4>
         <ul>
         <li tal:repeat="element here/objectItems">
             <a tal:attributes="href python:element[1].absolute_url()">
@@ -18,7 +18,7 @@
         </ul>
     </tal:block>
     <tal:block tal:condition="python:len(backlinks) &gt; 0">
-        <h4>BackLinks</h4>
+        <h4 i18n:translate="">BackLinks</h4>
         <ul>
         <li tal:repeat="link backlinks">
           <tal:block tal:define="link_ob python:wiki[link]">
@@ -29,6 +29,7 @@
         </li>
         </ul>
     </tal:block>
+    </div>
 
   </metal:block>
 </html>
