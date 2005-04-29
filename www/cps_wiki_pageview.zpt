@@ -1,16 +1,34 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
-  <metal:block fill-slot="main">
-    <p tal:content="structure here/render" />
-    <tal:block tal:condition="python:len(here.objectItems()) &gt; 0">
-    <h4>Attached files</h4>
-    <br/>
-    <ul>
-      <li tal:repeat="element here/objectItems">
-          <a tal:attributes="href python:element[1].absolute_url()">
-              <span tal:replace="python:element[1].title_or_id()"/>
-          </a>
-      </li>
-    </ul>
+  <metal:block fill-slot="main"
+                 tal:define="content python:here.render()[1];
+                             wiki here/getParent;
+                             backlinks python:here.getBackedLinkedPages();
+                             files here/objectItems">
+
+    <span tal:replace="structure content"/>
+
+    <tal:block tal:condition="python:len(files) &gt; 0">
+        <h4>Attached files</h4>
+        <ul>
+        <li tal:repeat="element here/objectItems">
+            <a tal:attributes="href python:element[1].absolute_url()">
+                <span tal:replace="python:element[1].title_or_id()"/>
+            </a>
+        </li>
+        </ul>
     </tal:block>
+    <tal:block tal:condition="python:len(backlinks) &gt; 0">
+        <h4>BackLinks</h4>
+        <ul>
+        <li tal:repeat="link backlinks">
+          <tal:block tal:define="link_ob python:wiki[link]">
+          <a tal:attributes="href python:link_ob.absolute_url()">
+            <span tal:replace="python:link_ob.title_or_id()"/>
+          </a>
+          </tal:block>
+        </li>
+        </ul>
+    </tal:block>
+
   </metal:block>
 </html>
