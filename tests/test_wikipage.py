@@ -187,7 +187,7 @@ class WikiPageTests(ZopeTestCase):
             page = wiki.addPage('Page 1: with default encoding')
             self.assert_(page.edit(source=content))
             if parser == 'restructuredtext':
-                self.assertEquals(page.render(), '<p>%s</p>\n' % content)
+                self.assertEquals(page.render(), ([], '<p>%s</p>\n' % content))
             else:
                 self.assertEquals(page.render(), ([], content))
 
