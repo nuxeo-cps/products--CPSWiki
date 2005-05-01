@@ -289,6 +289,7 @@ class WikiPage(CPSBaseFolder):
             REQUEST.RESPONSE.redirect\
                 ("cps_wiki_pageview?portal_status_message=%s" % psm)
 
+    security.declarePrivate('_verifyLocks')
     def _verifyLocks(self, REQUEST):
         """edition checks lock"""
         wiki = self.getParent()
@@ -305,15 +306,22 @@ class WikiPage(CPSBaseFolder):
                 # page locked by someone else
                 return True, 'Page locked.'
 
+    security.declareProtected(ModifyPortalContent, 'lockPage')
     def lockPage(self, REQUEST=None):
         """locks the page"""
         wiki = self.getParent()
         return wiki.lockPage(self, REQUEST)
 
+    security.declareProtected(ModifyPortalContent, 'unLockPage')
     def unLockPage(self, REQUEST=None):
         """unlocks the page"""
         wiki = self.getParent()
         return wiki.unLockPage(self, REQUEST)
+
+    security.declareProtected(ModifyPortalContent, 'clearCache')
+    def clearCache(self):
+        self._last_render = None
+        self._saved_linked_pages = None
 
 manage_addWikiPageForm = PageTemplateFile(
     "www/zmi_wikiPageAdd", globals(),
