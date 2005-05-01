@@ -238,6 +238,11 @@ class Wiki(CPSBaseFolder):
         wikipage_id = self._setObject(wikipage_id, wikipage)
         wikipage = self[wikipage_id]
 
+        # empty backlink pages
+        for page_id in wikipage.getBackedLinkedPages():
+            page = self[page_id]
+            page.clearCache()
+
         # returns to the TOC
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(wikipage.absolute_url() +
@@ -295,6 +300,12 @@ class Wiki(CPSBaseFolder):
         tree.reverse()
         return [node[1] for node in tree]
 
+    security.declareProtected(ModifyPortalContent, 'clearCaches')
+    def clearCaches(self):
+        """ clear all caches """
+        for page_id in list(self.objectItems()):
+            page = self[page_id]
+            page.clearCache()
 
 manage_addWikiForm = PageTemplateFile("www/zmi_wikiAdd", globals(),
     __name__ = 'manage_addWikiForm')
