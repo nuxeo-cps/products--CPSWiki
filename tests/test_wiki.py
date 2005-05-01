@@ -101,6 +101,35 @@ class WikiTests(ZopeTestCase):
         sub = content[0]
         self.assertEquals(sub['page'], page2)
 
+    def test_clearCaches(self):
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+
+        page1 = wiki.addPage('page1')
+        page1.edit(source=' dddddd [page2]')
+        page2 = wiki.addPage('page2')
+        page2.edit(source=' dddddd [page3]')
+        page3 = wiki.addPage('page3')
+
+        page1.render()
+        page2.render()
+
+        summary = wiki.getSummary()
+
+        self.assert_(page1._saved_linked_pages is not None)
+        self.assert_(page1._last_render is not None)
+
+        self.assert_(page2._saved_linked_pages is not None)
+        self.assert_(page2._last_render is not None)
+
+        wiki.clearCaches()
+
+        self.assert_(page1._saved_linked_pages is None)
+        self.assert_(page1._last_render is None)
+
+        self.assert_(page2._saved_linked_pages is None)
+        self.assert_(page2._last_render is None)
+
 def test_suite():
     """
     return unittest.TestSuite((

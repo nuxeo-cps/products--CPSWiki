@@ -250,6 +250,10 @@ class WikiPageTests(ZopeTestCase):
         self.assertEquals(page1.objectIds(), ['yopla'])
         file.close()
 
+        self.assert_(page1.uploadFile('nnn', None) == False)
+        self.assert_(page1.uploadFile(None, None) == False)
+
+
 def test_suite():
     """
     return unittest.TestSuite((
