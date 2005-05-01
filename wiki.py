@@ -303,7 +303,7 @@ class Wiki(CPSBaseFolder):
     security.declareProtected(ModifyPortalContent, 'clearCaches')
     def clearCaches(self):
         """ clear all caches """
-        for page_id in list(self.objectItems()):
+        for page_id in list(self.objectIds()):
             page = self[page_id]
             page.clearCache()
 
