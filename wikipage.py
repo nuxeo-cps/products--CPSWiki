@@ -205,6 +205,8 @@ class WikiPage(CPSBaseFolder):
     security.declareProtected(ModifyPortalContent, 'edit')
     def uploadFile(self, file, REQUEST=None):
         """ uploads a file in the repository """
+        if file is None or file == '':
+            return False
         if not isinstance(file, FileUpload):
             if REQUEST is not None:
                 psm = 'not a file'
