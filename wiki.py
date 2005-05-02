@@ -261,6 +261,8 @@ class Wiki(CPSBaseFolder):
         returned = []
         pages = page.getLinkedPages()
         for cpage in pages:
+            if cpage == page.id:
+                continue
             scalled = []
             object = self[cpage]
             element = {}
