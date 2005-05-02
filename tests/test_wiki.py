@@ -130,6 +130,19 @@ class WikiTests(ZopeTestCase):
         self.assert_(page2._saved_linked_pages is None)
         self.assert_(page2._last_render is None)
 
+    def test__recursiveGetLinks_circular(self):
+        # this would lead to a maximum recursion depth exceeded
+        # when a page is refering to itself
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+
+        page1 = wiki.addPage('page1')
+        page1.edit(source=' dddddd [page1] ezfezf')
+
+        summary = wiki.getSummary()
+
+
+
 def test_suite():
     """
     return unittest.TestSuite((
