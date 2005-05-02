@@ -234,8 +234,7 @@ class WikiPage(CPSBaseFolder):
                     redirect("cps_wiki_pageedit?portal_status_message=%s" % psm)
             return False
         else:
-            self._saved_linked_pages = None
-            self._last_render = None
+            self.clearCache()
             try:
                 if source is not None:
                     source = sanitize(source)
