@@ -200,9 +200,9 @@ class WikiPageTests(ZopeTestCase):
                 expected_render = ('<p>%s</p>\n'
                                    % content).encode(wiki.getParser()
                                                      .output_encoding)
-                self.assertEquals(render, expected_render)
+                self.assertEquals(render, ([], expected_render))
             else:
-                self.assertEquals(page.render(), ([],content))
+                self.assertEquals(page.render(), ([], content))
 
             # Testing the creation of a page with accented characters
             page = wiki.addPage('éeedzzzzzzzzéé à doù !')
