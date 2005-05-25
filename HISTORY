@@ -1,4 +1,25 @@
 *******************************************
+** CPSWiki V0.1.0 [R1 build 2005/05/25-09:17 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 21807
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Front page is an automatic summary of all pages.
+- Added a full view where the whole wiki content is displayed.
+- Added backlinks.
+- Added file attachments.
+Bug fixes:
+~~~~~~~~~~
+- Used monospaced font for the wiki text areas used for edition.
+  This fixes #671: "The text area used for editing wiki pages should use
+  fixed-size font".
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSWiki V0.0.4 [R1 build 2005/04/12-15:22 by madarche]
 
 Requires:
