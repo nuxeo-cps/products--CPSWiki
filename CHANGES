@@ -3,10 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Added a "folder_contents" action on wikis.
 Bug fixes:
 ~~~~~~~~~~
--
+- Improved quality of the .po files.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
