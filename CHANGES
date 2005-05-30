@@ -7,6 +7,7 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - Improved quality of the .po files.
+- Fixed handling of input encoding for restructured-text wiki pages.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -

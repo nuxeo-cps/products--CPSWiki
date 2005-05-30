@@ -33,6 +33,7 @@ class RstParser(BaseParser):
 
     __implements__ = (WikiParserInterface, )
 
+    input_encoding = 'iso-8859-15'
     output_encoding = 'iso-8859-15'
 
     def getId(self):
@@ -42,6 +43,7 @@ class RstParser(BaseParser):
         """ parses content """
         if rst_available:
             content = HTML(content, output_encoding=self.output_encoding,
+                           input_encoding=self.input_encoding,
                            initial_header_level=2, report_level=0)
 
         # called for references
