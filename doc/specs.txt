@@ -57,6 +57,10 @@ XWiki
       * PDF Export
       * WYSIWYG HTML Editing
 
+Confluence (Java/Servlet-based)
+  Has macros: see http://confluence.atlassian.com/display/DOC/Guide+to+Confluence+Macros
+  Interesting AJAX-style task manager: http://confluence.atlassian.com/display/DOC/Dynamic+Tasklist+Macro
+
 TWiki
 
 MoinMoin
