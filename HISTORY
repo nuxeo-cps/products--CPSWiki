@@ -1,4 +1,21 @@
 *******************************************
+** CPSWiki V0.1.1 [R1 build 2005/06/02-09:36 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 22058
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added a "folder_contents" action on wikis.
+Bug fixes:
+~~~~~~~~~~
+- Improved quality of the .po files.
+- Fixed handling of input encoding for restructured-text wiki pages.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSWiki V0.1.0 [R1 build 2005/05/25-09:17 by madarche]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 21807
 Requires:
