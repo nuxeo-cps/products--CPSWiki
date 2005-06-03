@@ -1,0 +1,454 @@
+#!/usr/bin/python
+#
+# (C) Copyright 2005 Laurent Pelecq <laurent.pelecq@soleil.org>
+# Author:
+# Laurent Pelecq <laurent.pelecq@soleil.org>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as published
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+#
+# $Id: install.py 18033 2005-04-12 14:09:45Z madarche $
+"""A script that converts wiki pages using the structuredtext syntax into wiki
+pages using the reStructuredText syntax.
+
+For more info on reStructuredText, check
+http://docutils.sourceforge.net/rst.html
+
+TODO:
+  * Clean some parts of the script.
+  * Use the epitaphs module for handling options
+"""
+
+import sys, os
+import getopt
+import string, re
+
+sys.path.append(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))
+
+from zwiki import *
+
+### Global
+
+joinpath = os.path.join
+
+isdir = os.path.isdir
+isfile = os.path.isfile
+
+### Functions
+
+def warn(msg):
+    sys.stderr.write(msg)
+
+def die(msg, status=1):
+    warn(msg)
+    sys.exit(status)
+
+def usage(status=1, long=0):
+    prg_name = os.path.basename(sys.argv[0])
+    warn('Usage: %s [OPTIONS] INPUT_FILE OUTPUT_DIR\n'%(prg_name))
+    warn('       %s [OPTIONS] INPUT_DIR OUTPUT_DIR\n'%(prg_name))
+    if long:
+        warn("""Backup wiki with history.
+
+Each page is saved in a directory. Revisions are kept in separate files.
+
+Options:
+-r FILE, --rename=FILE  List of links to rename. The file is automatically
+                        created if it doesn't exists.
+-n,      --no-act       No act.
+-v,      --verbose      Verbose mode
+""")
+    else:
+        warn('Use -h or --help for more help.\n')
+    sys.exit(status)
+
+def noop(msg):
+    pass
+
+### Parsing command line
+
+# Default options values
+verbose = noop
+debug_mode = False
+rename_file = None
+
+optlist, args = getopt.getopt(sys.argv[1:], 'hr:v',
+                              [ "debug", "help", "rename=", "verbose" ])
+for opt, val in optlist:
+    if opt == '--debug':
+        debug_mode = True
+    elif opt == '-h' or opt == '--help':
+        usage(0, 1)
+    elif opt == '-r' or opt == '--rename':
+        rename_file = val
+    elif opt == '-v' or opt == '--verbose':
+        verbose = warn
+
+if len(args) != 2: usage(1)
+
+input_file, output_dir = tuple(args)
+
+### Main
+
+canonical_page_name = CanonicalPageName()
+
+def warn(msg):
+    sys.stderr.write("%s\n"%msg)
+
+class RenameFile(dict):
+
+    def __init__(self, filename):
+        self.filename = filename
+
+    def read(self):
+        if self.filename and os.path.isfile(self.filename):
+            fd = file(self.filename)
+            try:
+                for line in fd:
+                    key, val = tuple(line.rstrip().split('=', 2))
+                    self[key] = val
+            finally:
+                fd.close()
+
+    def write(self):
+        if self.filename:
+            fd = file(self.filename, "w")
+            try:
+                key_list = self.keys()
+                key_list.sort()
+                for key in key_list:
+                    fd.write('%s=%s\n'%(key, self[key]))
+            finally:
+                fd.close()
+
+rename = None
+if rename_file:
+    rename = RenameFile(rename_file)
+    rename.read()
+
+class Paragraph:
+
+    ws_re = re.compile(r'^\s*')
+
+    bracket_link_re = re.compile(r'(?<!!)\[([^][]+)\]')
+
+    http_re = re.compile(r'"([^"]+)":(https?:\S+)')
+
+    header_mark = [ "=", "-", "~", "+", "<", ">" ]
+
+    (type_para, type_title, type_quote, type_enum_list, type_bullet_list,
+     type_enum_list_cont, type_bullet_list_cont, type_verbatim) = range(8)
+
+    def __init__(self, lines, lineno):
+        self.lineno = lineno
+        self.lines = self.replace_char_format(lines)
+        self.nlines = len(lines)
+        self.text = "\n".join(self.lines + [ '' ])
+        indent = 0
+        for l in lines:
+            m = self.ws_re.match(l)
+            line_indent = len(m.group(0))
+            if indent == 0 or indent > line_indent:
+                indent = line_indent
+        self.indent = indent
+        self.level = 0
+        self.type = self.type_para
+
+    def set_text(self, text):
+        self.lines = text.split("\n")
+        if not self.lines[-1]:
+            self.lines.pop()
+        self.text = text
+
+    class WikiLinkSubstitute:
+
+        def __init__(self):
+            self.start = 0
+            self.line = ''
+
+        def strip_link(self, link):
+            """Remove useless brackets."""
+            if link[0] == '[' and link[-1] == ']':
+                actual_link = link[1:-1]
+                if WikiLinkMatcher.match(actual_link):
+                    return actual_link
+            return link
+
+        def process(self, m):
+            s = m.string
+            link = self.strip_link(m.group(1))
+            if rename and link in rename:
+                link = rename[link]
+            if not WikiLinkMatcher.match(link):
+                self.line += s[self.start:m.end(0)]
+                warn("Cannot convert link: %s\n"%(link))
+                if not link in rename:
+                    rename[link] = link
+                link = None
+            if link:
+                self.line += s[self.start:m.start(0)] + link
+            self.start = m.end(0)
+
+        def finish(self, line):
+            self.line += line[self.start:]
+            return self.line
+
+    class ExternalLinkSubstitute:
+
+        def __init__(self, href):
+            self.start = 0
+            self.line = ''
+            self.href = href
+
+        def process(self, m):
+            s = m.string
+            self.line += s[self.start:m.start(0)] + "`%s`_"%(m.group(1))
+            self.start = m.end(0)
+            self.href.append('.. _%s: %s'%(m.group(1), m.group(2)))
+
+        def finish(self, line):
+            self.line += line[self.start:]
+            return self.line
+
+    def replace_char_format(self, lines):
+        result = []
+        href = []
+        for line in lines:
+            line = line.lstrip()
+            # Replace bracketed links
+            line_builder = self.WikiLinkSubstitute()
+            WikiLinkMatcher(line_builder.process)(line)
+            line = line_builder.finish(line)
+            # Replace external links
+            line_builder = self.ExternalLinkSubstitute(href)
+            ExternalLinkMatcher(line_builder.process)(line)
+            line = line_builder.finish(line)
+
+            result.append(line)
+        if href:
+            result = result + [ '' ] + href
+        return result
+
+    def write_text(self, outfd, first_line_prefix='', following_lines_prefix=None):
+        if following_lines_prefix == None:
+            following_lines_prefix = first_line_prefix
+        prefix = first_line_prefix
+        for line in self.lines:
+            outfd.write(prefix)
+            outfd.write(line)
+            outfd.write("\n")
+            prefix = following_lines_prefix
+
+    def print_to(self, outfd):
+        if self.type == self.type_title:
+            if self.level >= len(self.header_mark):
+                self.write_text(outfd)
+                warn("line: %d: title indentation too high."%(self.lineno))
+            else:
+                underline = self.header_mark[self.level]
+                if self.level > 0:
+                    underline = '-'
+                self.write_text(outfd)
+                outfd.write('%s\n'%(underline*len(self.lines[0])))
+        elif self.type == self.type_quote:
+            self.write_text(outfd, "  ")
+        elif (self.type == self.type_enum_list or
+              self.type == self.type_bullet_list or
+              self.type == self.type_enum_list_cont or
+              self.type == self.type_bullet_list_cont):
+            indent = '  ' * self.level
+            if self.type == self.type_enum_list:
+                first_line_prefix = '%d. '%(self.num)
+            elif self.type == self.type_bullet_list:
+                if self.level == 0:
+                    first_line_prefix = '* '
+                else:
+                    first_line_prefix = '- '
+            elif self.type == self.type_enum_list_cont:
+                first_line_prefix = ' '*len('1. ')
+            else:
+                first_line_prefix = ' '*len('  ')
+            first_line_prefix = indent + first_line_prefix
+            following_lines_prefix = indent + ' '*(len(first_line_prefix))
+            self.write_text(outfd, first_line_prefix, following_lines_prefix)
+        elif self.type == self.type_verbatim:
+            outfd.write('::\n\n')
+            indent = '  ' * self.indent
+            self.write_text(outfd, indent)
+        else:
+            self.write_text(outfd)
+        outfd.write('\n')
+
+
+class Matcher:
+
+    def __init__(self, regexp):
+        self.m = None
+        self.regexp = regexp
+
+    def match(self, text):
+        self.m = self.regexp.match(text)
+        return self.m
+
+class St2reSt:
+
+    quote_re = re.compile(r'.*::\s*$')
+
+    enum_list_re = re.compile(r'\s*[0-9].\s.*')
+
+    bullet_list_re = re.compile(r'\s*[*-]\s.*')
+
+    list_first_line_re = re.compile(r'\s*\S+\s*(.*)')
+
+    beg_verbatim_re = Matcher(re.compile(r'\s*(<pre>)'))
+
+    end_verbatim_re = Matcher(re.compile(r'(?:.|\n)*(</pre>)'))
+
+    hexa_re = re.compile(r'_([a-z0-9]{2})')
+
+    def __init__(self):
+        self.lineno = 0
+
+    def read_file(self, input_file):
+        infd = file(input_file)
+        content = []
+        try:
+            para = []
+            lineno = 0
+            start_para = None
+            for line in infd:
+                lineno += 1
+                line = line.rstrip()
+                if (not line and para) or self.beg_verbatim_re.match(line):
+                    content.append(Paragraph(para, start_para))
+                    para = []
+                    if line:
+                        para.append(line)
+                    start_para = None
+                elif line:
+                    para.append(line)
+                    if not start_para:
+                        start_para = lineno
+            if para:
+                content.append(Paragraph(para, start_para))
+        finally:
+            infd.close()
+        return content
+
+    def convert(self, input_file, output_file):
+        content = self.read_file(input_file)
+        prev_para = None
+        levels = [ 0 ]
+        list_levels = []
+        list_nums = []
+        quote_level = None
+        in_verbatim = False
+        for para in content:
+            if verbose != noop:
+                print '='*50
+                print para.text,
+                print '-'*50
+
+            if prev_para:
+                if quote_level:
+                    if para.indent > quote_level:
+                        verbose("--> paragraph of type quote\n")
+                        para.type = Paragraph.type_quote
+                    else:
+                        verbose("--> paragraph out of quote\n")
+                        quote_level = None
+                elif (not list_levels and prev_para.nlines == 1 and
+                      prev_para.indent < para.indent):
+                    verbose("--> previous paragraph was actually a title\n")
+                    prev_para.type = Paragraph.type_title
+                    prev_para.level = len(levels) - 1
+                    levels.append(para.indent)
+            while para.indent < levels[-1]:
+                levels.pop()
+            while list_levels and para.indent < list_levels[-1]:
+                list_levels.pop()
+                list_nums.pop()
+            if not in_verbatim:
+                if self.quote_re.match(para.text):
+                    verbose("--> following indented paragraphs are quoted\n")
+                    quote_level = para.indent
+                elif self.enum_list_re.match(para.text):
+                    para.type = Paragraph.type_enum_list
+                    list_type_name = 'enumerated'
+                elif self.bullet_list_re.match(para.text):
+                    para.type = Paragraph.type_bullet_list
+                    list_type_name = 'bullet'
+                elif self.beg_verbatim_re.match(para.text):
+                    in_verbatim = True
+                    m = self.beg_verbatim_re.m
+                    para.set_text(para.text[0:m.start(1)] + para.text[m.end(1):])
+                elif prev_para and prev_para.level == len(list_levels) - 1:
+                    if prev_para.type == Paragraph.type_enum_list:
+                        para.type = Paragraph.type_enum_list_cont
+                    elif prev_para.type == Paragraph.type_bullet_list:
+                        para.type = Paragraph.type_bullet_list_cont
+            if in_verbatim:
+                para.type = Paragraph.type_verbatim
+                if self.end_verbatim_re.match(para.text):
+                    m = self.end_verbatim_re.m
+                    para.set_text(para.text[0:m.start(1)] + para.text[m.end(1):])
+                    in_verbatim = False
+            if para.type == Paragraph.type_enum_list or para.type == Paragraph.type_bullet_list:
+                m = self.list_first_line_re.match(para.lines[0])
+                para.lines[0] = m.group(1)
+                if not list_levels or para.indent > list_levels[-1]:
+                    list_levels.append(para.indent)
+                    list_nums.append(0)
+                para.level = len(list_levels) - 1
+                para.num = list_nums[para.level] + 1
+                list_nums[para.level] = para.num
+                verbose("--> paragraph is a %s list of level %s\n"%(list_type_name, para.level))
+            prev_para = para
+        outfd = file(output_file, "wt")
+        try:
+            for para in content:
+                para.print_to(outfd)
+        finally:
+            outfd.close()
+
+    def hexa2char(self, name):
+        result = ''
+        start = 0
+        for m in self.hexa_re.finditer(name):
+            result += (name[start:m.start(0)] + chr(int(m.group(1), 16)))
+            start = m.end(0)
+        result += name[start:]
+        return result
+
+    def __call__(self, input_file, output_dir):
+        basename = self.hexa2char(os.path.basename(input_file))
+        if rename and basename in rename:
+            basename = rename[basename]
+        output_file = os.path.join(output_dir, basename)
+        self.convert(input_file, output_file)
+
+convert = St2reSt()
+
+if not os.path.isdir(output_dir):
+    die("%s: not a directory"%(output_dir))
+
+if os.path.isdir(input_file):
+    for page_name in os.listdir(input_file):
+        print "*** Page:", page_name
+        convert(os.path.join(input_file, page_name), output_dir)
+else:
+    convert(input_file, output_dir)
+
+if rename:
+    rename.write()

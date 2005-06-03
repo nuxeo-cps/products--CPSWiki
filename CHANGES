@@ -3,7 +3,9 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Added the st2rest utility script for converting wiki pages using the
+  structuredtext syntax into wiki pages using the reStructuredText syntax.
+  This script is contributed by Laurent Pelecq <laurent.pelecq@soleil.org>
 Bug fixes:
 ~~~~~~~~~~
 -
