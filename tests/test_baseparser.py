@@ -42,6 +42,23 @@ class WikiParserTest(ZopeTestCase):
         self.assertEquals(res, (['spds'],
             'qzpijdspjvd <a href="../spds/cps_wiki_pageview">spds</a> vjpdsovj'))
 
+    def test_weirdParsingcases(self):
+        # trac ticket #698
+        # 1. protect regexpr searches from weird characters
+        # 2. do not provide a link for a page creation on 'empty ids'
+        # empty ids are ids like '???????' that get random zope id
+        # until #730 is fixed
+        wiki = Wiki('wiki')
+        parser = BaseParser()
+        res = parser.parseContent(wiki, 'qzpijd [***] dsvjpdsovj')
+        self.assertEquals(res, ([], 'qzpijd [***] dsvjpdsovj'))
+
+        res = parser.parseContent(wiki, 'qzpijd [???] dsvjpdsovj')
+        self.assertEquals(res, ([], 'qzpijd [???] dsvjpdsovj'))
+
+        res = parser.parseContent(wiki, 'qzpijd [?a?] dsvjpdsovj')
+        self.assertEquals(res, ([],
+          'qzpijd [?a?]<a href="../addPage?title=%3Fa%3F">?</a> dsvjpdsovj'))
 
 def test_suite():
     """
