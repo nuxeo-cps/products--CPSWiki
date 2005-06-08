@@ -25,7 +25,7 @@ import wiki, wikipage
 fti = (wiki.factory_type_information +
        wikipage.factory_type_information)
 
-registerDirectory('www', globals())
+registerDirectory('skins', globals())
 
 contentClasses = (wiki.Wiki,
                   wikipage.WikiPage, )

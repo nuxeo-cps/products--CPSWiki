@@ -314,7 +314,7 @@ class Wiki(CPSBaseFolder):
             page = self[page_id]
             page.clearCache()
 
-manage_addWikiForm = PageTemplateFile("www/zmi_wikiAdd", globals(),
+manage_addWikiForm = PageTemplateFile("zmi/zmi_wikiAdd", globals(),
     __name__ = 'manage_addWikiForm')
 
 def manage_addWiki(self, id, title='wiki', REQUEST=None):

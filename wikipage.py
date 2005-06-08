@@ -325,7 +325,7 @@ class WikiPage(CPSBaseFolder):
         self._saved_linked_pages = None
 
 manage_addWikiPageForm = PageTemplateFile(
-    "www/zmi_wikiPageAdd", globals(),
+    "zmi/zmi_wikiPageAdd", globals(),
     __name__ = 'manage_addWikiPageForm')
 
 def manage_addWikiPage(self, id, title, REQUEST=None):
