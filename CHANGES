@@ -11,4 +11,4 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Moved product skin in skins/cps_wiki as it should be.

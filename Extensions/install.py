@@ -40,7 +40,7 @@ from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION, \
 SECTIONS_ID = 'sections'
 WORKSPACES_ID = 'workspaces'
 
-SKINS = {'cps_wiki': 'Products/CPSWiki/www'}
+SKINS = {'cps_wiki': 'Products/CPSWiki/skins/cps_wiki'}
 
 class CPSWikiInstaller(CPSInstaller):
     """CPSWiki Installer
