@@ -12,3 +12,5 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Moved product skin in skins/cps_wiki as it should be.
+- Renamed ZPT files so they have the .pt suffix as they should have, instead of
+  the .zpt suffix.
