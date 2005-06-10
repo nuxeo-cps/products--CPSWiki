@@ -79,12 +79,6 @@ class BaseParser:
 
         stripped_label = m.strip('[').strip(']')
         m_nospace = generateId(stripped_label)
-        second_try = generateId(stripped_label)
-
-        # if based on random gen, we don't want to use it
-        # because it will create new pages for the same label
-        # all the time
-        empty_id = second_try != m_nospace
 
         # if it's a bracketed expression,
         if re.match(bracketedexpr, m):
@@ -134,7 +128,4 @@ class BaseParser:
             return '<a href="../%s/cps_wiki_pageview">%s</a>' % (quote(m_nospace), m)
 
         # otherwise, provide a "?" creation link
-        if not empty_id:
-            return '%s<a href="../addPage?title=%s">?</a>' % (morig, quote(m))
-        else:
-            return morig
+        return '%s<a href="../addPage?title=%s">?</a>' % (morig, quote(m))

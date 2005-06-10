@@ -44,17 +44,16 @@ class WikiParserTest(ZopeTestCase):
 
     def test_weirdParsingcases(self):
         # trac ticket #698
-        # 1. protect regexpr searches from weird characters
-        # 2. do not provide a link for a page creation on 'empty ids'
-        # empty ids are ids like '???????' that get random zope id
-        # until #730 is fixed
+        # protect regexpr searches from weird characters
         wiki = Wiki('wiki')
         parser = BaseParser()
         res = parser.parseContent(wiki, 'qzpijd [***] dsvjpdsovj')
-        self.assertEquals(res, ([], 'qzpijd [***] dsvjpdsovj'))
+        self.assertEquals(res, ([],
+          'qzpijd [***]<a href="../addPage?title=%2A%2A%2A">?</a> dsvjpdsovj'))
 
         res = parser.parseContent(wiki, 'qzpijd [???] dsvjpdsovj')
-        self.assertEquals(res, ([], 'qzpijd [???] dsvjpdsovj'))
+        self.assertEquals(res, ([],
+          'qzpijd [???]<a href="../addPage?title=%3F%3F%3F">?</a> dsvjpdsovj'))
 
         res = parser.parseContent(wiki, 'qzpijd [?a?] dsvjpdsovj')
         self.assertEquals(res, ([],
