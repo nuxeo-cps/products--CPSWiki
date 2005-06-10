@@ -8,7 +8,8 @@ New features:
   This script is contributed by Laurent Pelecq <laurent.pelecq@soleil.org>
 Bug fixes:
 ~~~~~~~~~~
--
+- Made CPSWiki fully take advantage of the CPSUtil.id.generatedId method now
+  fixed.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Moved product skin in skins/cps_wiki and ZMI pages in zmi as it should be.
