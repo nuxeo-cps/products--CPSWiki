@@ -1,13 +1,25 @@
+=======================
 Specs notes for CPSWiki
 =======================
 
+*$Id$*
+
+
 Goals
------
+=====
 
 XXX
 
+
+
 Features
---------
+========
+
+Locking
+-------
+
+The locking logic of CPSWiki is the following: TODO
+
 
 (Mn = Milestone targets).
 
@@ -21,8 +33,10 @@ XXX
 
 ...
 
+
+
 Other Wiki software or services
--------------------------------
+===============================
 
 XWiki
   http://www.xwiki.org/xwiki/bin/view/Main/WebHome
@@ -103,7 +117,8 @@ Others
   http://c2.com/cgi/wiki?WikiEngines
 
 
+
 References
-----------
+==========
 
 XXX
