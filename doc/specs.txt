@@ -97,6 +97,7 @@ Instiki
   http://instiki.org/
 
 Others
+  http://wiki.splitbrain.org/wiki:compare?s=compare
   http://platypuswiki.sourceforge.net/whatis/related/index.html
   http://c2.com/cgi/wiki?WikiWikiClones
   http://c2.com/cgi/wiki?WikiEngines
