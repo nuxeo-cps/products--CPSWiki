@@ -1,8 +1,7 @@
 <metal:block metal:define-macro="wikinode">
   <tal:block tal:define="page python:item['page'];
-                          childs python:item['childs'];
+                          children python:item['children'];
                           nolink nolink|python:0">
-
 
     <a tal:condition="not:nolink" tal:attributes="href python:page.absolute_url()">
       <span tal:replace="python:page.title_or_id()"/>
@@ -11,7 +10,7 @@
       <span tal:replace="python:page.title_or_id()"/>
     </a>
     <ul>
-      <li tal:repeat="item childs">
+      <li tal:repeat="item children">
         <metal:block metal:use-macro="here/cps_wiki_lib/macros/wikinode"/>
       </li>
     </ul>

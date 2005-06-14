@@ -38,6 +38,8 @@ from Products.CPSCore.CPSBase import CPSBaseDocument
 
 from wikiversionning import VersionContent
 
+from zLOG import LOG, DEBUG
+
 factory_type_information = (
     { 'id': 'Wiki Page',
       'meta_type': 'Wiki Page',
@@ -195,9 +197,12 @@ class WikiPage(CPSBaseFolder):
         """ get pages where this page is linked """
         back_links = []
         wiki = self.getParent()
-        for id, page in wiki.objectItems():
+        for id, object in wiki.objectItems():
+            if object.portal_type != self.portal_type:
+                continue
             if id == self.id:
                 continue
+            page = object
             if self.id in page.getLinkedPages():
                 back_links.append(id)
         return back_links

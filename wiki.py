@@ -34,6 +34,8 @@ from wikipage import WikiPage
 from wikiparsers import parsers, generateParser
 from wikilocker import LockerList, ILockableItem
 
+from zLOG import LOG, DEBUG
+
 factory_type_information = (
     { 'id': 'Wiki',
       'meta_type': 'Wiki',
@@ -256,7 +258,7 @@ class Wiki(CPSBaseFolder):
             return self[wikipage_id]
 
     security.declarePrivate('_recursiveGetLinks')
-    def _recursiveGetLinks(self, page, called=[]):
+    def _recursiveGetLinks(self, page, called=[], depth=0):
         """ make link tree, avoiding circular references """
         if page in called:
             return []
@@ -264,7 +266,10 @@ class Wiki(CPSBaseFolder):
             called.append(page)
 
         returned = []
-        pages = page.getLinkedPages()
+        if depth < 5:
+            pages = page.getLinkedPages()
+        else:
+            pages = []
         for cpage in pages:
             if cpage == page.id:
                 continue
@@ -272,8 +277,11 @@ class Wiki(CPSBaseFolder):
             object = self[cpage]
             element = {}
             element['page'] = object
-            element['childs'] = self._recursiveGetLinks(object, scalled)
+            element['children'] = self._recursiveGetLinks(object, scalled,
+                                                          depth + 1)
             returned.append(element)
+
+        returned.sort(lambda x, y: cmp(x['page'].title, y['page'].title))
         return returned
 
     security.declareProtected(View, 'getSummary')
@@ -281,31 +289,31 @@ class Wiki(CPSBaseFolder):
         """ creates the summary tree """
         # first of all, let's find the first layer
         # of pages by sorting pages with their backlink count
-        page_ids = self.objectIds()
-        if page_ids == []:
-            return []
-
-        pages = [self[id] for id in page_ids]
         sorted_list = []
-        for page in pages:
+        for id, object in self.objectItems():
+            if object.portal_type != WikiPage.portal_type:
+                continue
+            page = self[id]
             element = (len(page.getLinkedPages()),
                        len(page.getBackedLinkedPages()), page)
             sorted_list.append(element)
+        if len(sorted_list) == 0:
+            return []
         sorted_list.sort()
 
-        # now constructing trees
+        # Now constructing the tree
         tree = []
         for item in sorted_list:
             if item[1] > 0:
                 continue
             element = {}
             element['page'] = item[2]
-            childs = self._recursiveGetLinks(item[2], [])
-            element['childs'] = childs
-            tree.append((len(childs), element))
-        tree.sort()
-        tree.reverse()
-        return [node[1] for node in tree]
+            children = self._recursiveGetLinks(item[2], [])
+            element['children'] = children
+            tree.append((len(children), element))
+        tree_first_level = [node[1] for node in tree]
+        tree_first_level.sort(lambda x, y: cmp(x['page'].title, y['page'].title))
+        return tree_first_level
 
     security.declareProtected(ModifyPortalContent, 'clearCaches')
     def clearCaches(self):
@@ -313,6 +321,7 @@ class Wiki(CPSBaseFolder):
         for page_id in list(self.objectIds()):
             page = self[page_id]
             page.clearCache()
+
 
 manage_addWikiForm = PageTemplateFile("zmi/zmi_wikiAdd", globals(),
     __name__ = 'manage_addWikiForm')

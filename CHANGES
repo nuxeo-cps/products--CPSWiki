@@ -10,6 +10,11 @@ Bug fixes:
 ~~~~~~~~~~
 - Made CPSWiki fully take advantage of the CPSUtil.id.generatedId method now
   fixed.
+- Made CPSWiki wiki objects be able to hold not only pages objects (the code was
+  making assumption that all contained objects were page objects).
+- Made CPSWiki table of content be alphabetically sorted. Fixed #691.
+- Made the "_recursiveGetLinks" methods avoid too long recursive loops, even if
+  the current implementation is not as good as it should.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Moved product skin in skins/cps_wiki and ZMI pages in zmi as it should be.
