@@ -34,10 +34,6 @@ import sys, os
 import getopt
 import string, re
 
-sys.path.append(os.path.join(os.path.dirname(sys.argv[0]), 'lib'))
-
-from zwiki import *
-
 ### Global
 
 joinpath = os.path.join
@@ -98,6 +94,83 @@ for opt, val in optlist:
 if len(args) != 2: usage(1)
 
 input_file, output_dir = tuple(args)
+
+### ZWiki specific classes
+
+class CanonicalPageName:
+
+    """Convert wiki names to a canonical file name."""
+
+    spaceandlowerexpr = re.compile(r'\s+([%s])'%(string.lowercase))
+
+    zwikiidcharsexpr = re.compile(r'[a-zA-Z0-9.-]')
+
+    def __call__(self, page_name):
+        name = page_name
+        if page_name[0] == '[' and page_name[-1] == ']':
+            name = page_name[1:-1]
+        # remove punctuation, preserving word boundaries.
+        # ' is not considered a word boundary.
+        name = re.sub(r"'",r"",name)
+        name = re.sub(r'[%s]+'%re.escape(string.punctuation),r' ',name)
+
+        # capitalize whitespace-separated words (preserving existing
+        # capitals) then strip whitespace
+        id = ' '+name
+        id = self.spaceandlowerexpr.sub(lambda m:string.upper(m.group(1)),id)
+        id = string.join(string.split(id),'')
+
+        # quote any remaining unsafe characters (international chars)
+        safeid = ''
+        for c in id:
+            if self.zwikiidcharsexpr.match(c):
+                safeid = safeid + c
+            else:
+                safeid = safeid + '_%02x' % ord(c)
+
+        # zope ids may not begin with _
+        if len(safeid) > 0 and safeid[0] == '_':
+            safeid = 'X'+safeid
+        return safeid
+
+
+class WikiLinkMatcher:
+
+    """Match wiki links and apply a handler."""
+
+    U = 'A-Z\xc0-\xdf'
+    L = 'a-z\xe0-\xff'
+    b = '(?<![%s0-9])' % (U+L)
+    bracketedexpr    = r'\[\[?([^\n\]]+)\]\]?'
+    wikiname1        = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (b,U,L,U,U+L)
+    wikiname2        = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (b,U,U,L,U+L)
+    localwikilink    = r'(?<!!)(%s|%s|%s)' % (wikiname1, wikiname2, bracketedexpr)
+    wiki_link_re = re.compile(localwikilink, re.LOCALE)
+
+    def __init__(self, handler):
+        self.handler = handler
+
+    def __call__(self, line):
+        """Apply a function to all wiki link in a line."""
+        map(self.handler, self.wiki_link_re.finditer(line))
+
+    def match(self, s):
+        return self.wiki_link_re.match(s)
+    match = classmethod(match)
+
+class ExternalLinkMatcher:
+
+    """Match external links and apply a handler."""
+
+    elink_re = re.compile(r'"([^"]+)":(https?:\S+)')
+
+    def __init__(self, handler):
+        self.handler = handler
+
+    def __call__(self, line):
+        """Apply a function to all wiki link in a line."""
+        map(self.handler, self.elink_re.finditer(line))
+
 
 ### Main
 
@@ -452,3 +525,7 @@ else:
 
 if rename:
     rename.write()
+
+#  Local Variables: ***
+#  mode: python ***
+#  End: ***
