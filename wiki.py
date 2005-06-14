@@ -258,7 +258,7 @@ class Wiki(CPSBaseFolder):
             return self[wikipage_id]
 
     security.declarePrivate('_recursiveGetLinks')
-    def _recursiveGetLinks(self, page, called=[], depth=0):
+    def _recursiveGetLinks(self, page, called=[]):
         """ make link tree, avoiding circular references """
         if page in called:
             return []
@@ -266,19 +266,16 @@ class Wiki(CPSBaseFolder):
             called.append(page)
 
         returned = []
-        if depth < 5:
-            pages = page.getLinkedPages()
-        else:
-            pages = []
+
+        pages = page.getLinkedPages()
+
         for cpage in pages:
-            if cpage == page.id:
-                continue
-            scalled = []
             object = self[cpage]
+            if object.id == page.id or object in called:
+                continue
             element = {}
             element['page'] = object
-            element['children'] = self._recursiveGetLinks(object, scalled,
-                                                          depth + 1)
+            element['children'] = self._recursiveGetLinks(object, called)
             returned.append(element)
 
         returned.sort(lambda x, y: cmp(x['page'].title, y['page'].title))
