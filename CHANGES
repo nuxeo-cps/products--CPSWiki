@@ -3,21 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Added the st2rest utility script for converting wiki pages using the
-  structuredtext syntax into wiki pages using the reStructuredText syntax.
-  This script is contributed by Laurent Pelecq <laurent.pelecq@soleil.org>
+-
 Bug fixes:
 ~~~~~~~~~~
-- Made CPSWiki fully take advantage of the CPSUtil.id.generatedId method now
-  fixed.
-- Made CPSWiki wiki objects be able to hold not only pages objects (the code was
-  making assumption that all contained objects were page objects).
-- Made CPSWiki table of content be alphabetically sorted. Fixed #691.
-- Made the "_recursiveGetLinks" methods avoid too long recursive loops, even if
-  the current implementation is not as good as it should.
-- Made the wiki generated summary be valid XHTML.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Moved product skin in skins/cps_wiki and ZMI pages in zmi as it should be.
-- Renamed ZPT files so they have the .pt suffix as they should have, instead of
-  the .zpt suffix.
+-
