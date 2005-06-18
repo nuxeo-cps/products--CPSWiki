@@ -86,7 +86,15 @@ class ZwikiContext:
 
     page_end_comment = ' start of footer '
 
-    wikilink_re = re.compile(r'(?:[A-Z][a-z]+){2,}[0-9]*')
+    U = 'A-Z\xc0-\xdf'
+    L = 'a-z\xe0-\xff'
+    b = '(?<![%s0-9])' % (U+L)
+    wikiname1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (b,U,L,U,U+L)
+    wikiname2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (b,U,U,L,U+L)
+    wikilink  = r'(?:%s|%s)' % (wikiname1,wikiname2)
+    wikilink_re = re.compile(wikilink)
+
+    #wikilink_re = re.compile(r'(?:[A-Z][a-z]+){2,}[0-9]*')
 
     char_re = re.compile(r'_[a-z0-9]{2}')
 
@@ -102,8 +110,10 @@ class ZwikiContext:
         if text == '?':
             return '' # Non existent page, text before link is sufficient
         url_base, url_name = os.path.split(href)
-        if url_base == self.base_url and url_name in self.pages:
-            if not self.wikilink_re.match(text):
+        if url_base == self.base_url:
+            if self.wikilink_re.match(text):
+                return text
+            elif url_name in self.pages:
                 return '[%s]'%(text) # Preserve bracketed Wiki names
             return text
         return None
@@ -200,19 +210,19 @@ class ListItemFormatter(Formatter):
 
 class HorizontalRuleFormatter(Formatter):
 
-    def format(self, lines):
+    def parse(self, lines):
         self.add_lines([ '----', '' ])
 
 
 class LineBreakFormatter(Formatter):
 
-    def format(self, lines):
+    def parse(self, lines):
         self.add_lines(self.add_prefix(lines, '| '))
 
 
 class QuoteFormatter(Formatter):
 
-    def format(self, lines):
+    def parse(self, lines):
         self.add_lines(self.add_prefix(lines, '%  '))
 
 
@@ -223,7 +233,7 @@ class VerbatimFormatter(Formatter):
     def get_child_width(self, total_width):
         return total_width - len(self.indent)
 
-    def format(self, lines):
+    def parse(self, lines):
         self.add_lines(self.add_prefix(lines, self.indent))
 
 
@@ -234,15 +244,19 @@ class TitleFormatter(Formatter):
     def __init__(self, parent, level):
         Formatter.__init__(self, parent)
         self.level = level
+        self.title = ''
 
-    def format(self, lines):
-        title = ' '.join(lines).strip()
+    def parse(self, lines):
+        self.title += ' '.join(lines).strip()
+
+    def finish(self):
+        title = self.title
         underline_char = self.delimiters[self.level - 1]
         underline = underline_char * len(title)
         result = [ title, underline, '' ]
         if self.level == 1:
             result = [ underline ] + result
-        self.add_lines(result)
+        return result
 
     @classmethod
     def factory(self, parent, tag, attrs):

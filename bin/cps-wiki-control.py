@@ -1,4 +1,5 @@
 #! /usr/bin/python
+# -*- coding: utf-8 -*-
 
 # Copyright (C) 2005 Laurent Pelecq <laurent.pelecq@soleil.org>
 
@@ -20,7 +21,7 @@
 import sys, os
 import optparse
 
-import re
+import string, re
 
 import urlparse
 import urllib
@@ -315,6 +316,18 @@ class WikiControl:
 
     """Create, modify, delete and fetch Wiki pages."""
 
+    latin1 = urllib.unquote("%22%27/%5C%3A%3B%20%26%C0%C1%C2%C3%C4%C5%C7"
+                            "%C8%C9%CA%CB%CC%CD%CE%CF%D1%D2%D3%D4%D5%D6%D8"
+                            "%D9%DA%DB%DC%DD%E0%E1%E2%E3%E4%E5%E7%E8%E9%EA"
+                            "%EB%EC%ED%EE%EF%F1%F2%F3%F4%F5%F6%F8%F9%FA%FB"
+                            "%FC%FD%FF")
+
+    ascii = "--------AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy"
+
+    SAFE_CHARS_TRANSLATIONS = string.maketrans(latin1, ascii)
+
+    max_chars = 24
+
     def __init__(self, wiki_url, cookie_file=None):
         self.wiki_url = wiki_url
         cookiejar = None
@@ -362,7 +375,8 @@ class WikiControl:
         return "%s/%s"%(base_url, "/".join(rel_urls))
 
     def page_url(self, page_name):
-        return self.join_url(self.wiki_url, page_name)
+        id = page_name.translate(self.SAFE_CHARS_TRANSLATIONS)
+        return self.join_url(self.wiki_url, id[:self.max_chars])
 
     def read_file(self, input_file):
         """Read a file and return the content."""
