@@ -500,7 +500,7 @@ class LinkStyler(Styler):
             link = context.match(self.href, text)
             if link != None:
                 return link
-        self.links.append(self.Link(self.href, text))
+        self.links.append('.. _%s: %s'%(text, self.href))
         if not self.word_re.match(text):
             text = '`%s`'%(text)
         text = '%s_'%(text)
@@ -514,6 +514,39 @@ class LinkStyler(Styler):
                 href = aval
                 break
         return self(href)
+
+
+class ImageStyler(Styler):
+
+    class Counter:
+        def __init__(self):
+            self.n = 0
+        def next(self):
+            self.n += 1
+            return self.n
+
+    index = Counter()
+
+    def __init__(self, src, alt=None):
+        Styler.__init__(self)
+        self.src = src
+        self.alt = alt or 'img%d'%(self.index.next())
+
+    def getvalue(self):
+        text = '|%s|'%(self.alt)
+        self.links.append('.. %s image:: %s'%(text, self.src))
+        return text
+
+    @classmethod
+    def factory(self, tag, attrs):
+        alt = None
+        src = None
+        for aname, aval in attrs:
+            if aname == 'src':
+                src = aval
+            elif aname == 'alt':
+                alt = aval
+        return self(src)
 
 
 class Cdata(Styler):
@@ -552,7 +585,7 @@ class Cdata(Styler):
         links = self.links
         if links:
             lines.append('')
-            lines += [ '.. _%s: %s'%(x.name, x.url) for x in links ]
+            lines += links
         lines.append('')
         return lines
 
@@ -643,7 +676,7 @@ class Html2ReStructuredTextParser(HTMLParser.HTMLParser):
         'pre': VerbatimFormatter,
         'hr': HorizontalRuleFormatter,
         'table': TableFormatter,
-        #'blockquote': QuoteFormatter,
+        'blockquote': QuoteFormatter,
         'tr': TableRowFormatter,
         'td': TableCellFormatter,
         'th': TableCellFormatter,
@@ -665,7 +698,8 @@ class Html2ReStructuredTextParser(HTMLParser.HTMLParser):
         'b': CharStyler,
         'em': CharStyler,
         'i': CharStyler,
-        'code': CharStyler
+        'code': CharStyler,
+        'img': ImageStyler
     }
 
     pure_tag = {
