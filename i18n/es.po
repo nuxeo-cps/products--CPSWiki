@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2004-10-25 10:20default\n"
+"POT-Creation-Date: 2005-06-23 17:31default\n"
 "PO-Revision-Date: 2005-05-27 10:57+0100\n"
 "Last-Translator: Jesús <jesusmartin@lasalle.es>\n"
 "Language-Team: español <jesusmartin@lasalle.es>\n"
@@ -27,11 +27,43 @@ msgstr ""
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: Spain\n"
 
+#.   <h4>Attached files</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "Attached files"
+msgstr ""
+
+#.   <a href="cps_wiki_full_view#_summary">Back to the top</a>
+#: from ../skins/cps_wiki/cps_wiki_full_view.pt
+msgid "Back to the top"
+msgstr ""
+
+#.   <h4>BackLinks</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "BackLinks"
+msgstr ""
+
+#.   <div class="message">
+#.                   The page is locked by someone else, you
+#.                   can read it but not write to it at this time.
+#.               </div>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid ""
+"The page is locked by someone else, you can read it but not write to it at "
+"this time."
+msgstr ""
+
+#.   <button type="submit" name="upload">upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "upload file"
+msgstr ""
+
 msgid "portal_type_CPSWiki_title"
 msgstr "Documento Wiki"
 
 msgid "portal_type_CPSWiki_description"
-msgstr "Tipo especial de documento. Todos los usuarios que tengan acceso a él, podrán modificarlo en línea, guardándose un historial de todos los cambios."
+msgstr ""
+"Tipo especial de documento. Todos los usuarios que tengan acceso a él, "
+"podrán modificarlo en línea, guardándose un historial de todos los cambios."
 
 msgid "action_add_page"
 msgstr "Añadir una página"
@@ -39,3 +71,8 @@ msgstr "Añadir una página"
 msgid "action_history"
 msgstr "Historial"
 
+msgid "action_full_view"
+msgstr ""
+
+msgid "File uploaded."
+msgstr ""

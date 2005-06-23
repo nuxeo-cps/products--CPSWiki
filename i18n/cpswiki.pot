@@ -1,12 +1,9 @@
-# ##########################################################
-# ################# DON'T EDIT THIS FILE! ##################
-# ##########################################################
 # Gettext Message File for default.
 # Your Name <your@email>, Year
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2004-10-25 10:20default\n"
+"POT-Creation-Date: 2005-06-23 17:31default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -14,10 +11,40 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language-code: LL\n"
-"Language-name: Language\n"
+"Language-Code: LL\n"
+"Language-Name: Language\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
+
+#.   <h4>Attached files</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "Attached files"
+msgstr ""
+
+#.   <a href="cps_wiki_full_view#_summary">Back to the top</a>
+#: from ../skins/cps_wiki/cps_wiki_full_view.pt
+msgid "Back to the top"
+msgstr ""
+
+#.   <h4>BackLinks</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "BackLinks"
+msgstr ""
+
+#.   <div class="message">
+#.                   The page is locked by someone else, you
+#.                   can read it but not write to it at this time.
+#.               </div>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid ""
+"The page is locked by someone else, you can read it but not write to it at "
+"this time."
+msgstr ""
+
+#.   <button type="submit" name="upload">upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "upload file"
+msgstr ""
 
 msgid "portal_type_CPSWiki_title"
 msgstr ""
@@ -34,17 +61,5 @@ msgstr ""
 msgid "action_full_view"
 msgstr ""
 
-msgid "Back to the top"
-msgstr ""
-
-msgid "BackLinks"
-msgstr ""
-
-msgid "upload file"
-msgstr ""
-
 msgid "File uploaded."
-msgstr ""
-
-msgid "Attached files"
 msgstr ""

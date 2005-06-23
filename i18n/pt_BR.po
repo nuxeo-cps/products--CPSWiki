@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"POT-Creation-Date: 2004-10-25 10:20default\n"
+"POT-Creation-Date: 2005-06-23 17:31default\n"
 "PO-Revision-Date: 2005-06-17 18:05-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -23,6 +23,36 @@ msgstr ""
 "Language-Name: Portuguese Brazilian\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
+
+#.   <h4>Attached files</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "Attached files"
+msgstr "Arquivos anexados"
+
+#.   <a href="cps_wiki_full_view#_summary">Back to the top</a>
+#: from ../skins/cps_wiki/cps_wiki_full_view.pt
+msgid "Back to the top"
+msgstr "Volta para o topo"
+
+#.   <h4>BackLinks</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "BackLinks"
+msgstr "Links Anteriores"
+
+#.   <div class="message">
+#.                   The page is locked by someone else, you
+#.                   can read it but not write to it at this time.
+#.               </div>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid ""
+"The page is locked by someone else, you can read it but not write to it at "
+"this time."
+msgstr ""
+
+#.   <button type="submit" name="upload">upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "upload file"
+msgstr "Enviar arquivo"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Wiki"
@@ -39,17 +69,5 @@ msgstr "História"
 msgid "action_full_view"
 msgstr "Visão expandida"
 
-msgid "Back to the top"
-msgstr "Volta para o topo"
-
-msgid "BackLinks"
-msgstr "Links Anteriores"
-
-msgid "upload file"
-msgstr "Enviar arquivo"
-
 msgid "File uploaded."
 msgstr "Arquivo enviado"
-
-msgid "Attached files"
-msgstr "Arquivos anexados"
