@@ -1,0 +1,55 @@
+# translation of fr.po to Francais
+# translation of fr.po to French
+# translation of fr.po to ben
+# translation of fr.po to francais
+# Gettext Message File for default.
+# Your Name <your@email>, Year
+# emmanuel <epietriga@nuxeo.com>, 2003, 2004.
+# ben <ben@nuxeo.com>, 2003,2004.
+# Encolpe DEGOUTE <ed@nuxeo.com>, 2004.
+# DARCHE <madarche@nuxeo.com>, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: pt_BR\n"
+"POT-Creation-Date: 2004-10-25 10:20default\n"
+"PO-Revision-Date: 2005-06-17 18:05-0300\n"
+"Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
+"Language-Team: Portuguese <pt@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: pt_BR\n"
+"Language-Name: Portuguese Brazilian\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: default\n"
+
+msgid "portal_type_CPSWiki_title"
+msgstr "Wiki"
+
+msgid "portal_type_CPSWiki_description"
+msgstr "Contém páginas customizáveis"
+
+msgid "action_add_page"
+msgstr "Adiciona uma página"
+
+msgid "action_history"
+msgstr "História"
+
+msgid "action_full_view"
+msgstr "Visão expandida"
+
+msgid "Back to the top"
+msgstr "Volta para o topo"
+
+msgid "BackLinks"
+msgstr "Links Anteriores"
+
+msgid "upload file"
+msgstr "Enviar arquivo"
+
+msgid "File uploaded."
+msgstr "Arquivo enviado"
+
+msgid "Attached files"
+msgstr "Arquivos anexados"

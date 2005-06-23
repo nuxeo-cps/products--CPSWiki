@@ -3,7 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Added the pt_BR translation.
 Bug fixes:
 ~~~~~~~~~~
 - Taking advantage of the new centralized CPSI18n.tests.translations module.
