@@ -207,7 +207,7 @@ class WikiPage(CPSBaseFolder):
                 back_links.append(id)
         return back_links
 
-    security.declareProtected(ModifyPortalContent, 'edit')
+    security.declareProtected(ModifyPortalContent, 'uploadFile')
     def uploadFile(self, file, REQUEST=None):
         """ uploads a file in the repository """
         if file is None or file == '':
