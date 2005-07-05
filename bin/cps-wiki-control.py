@@ -18,10 +18,18 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
+"""A script to access CPSWiki site.
+
+Known bugs:
+  * Long names are not properly handled (they are truncated by CPS).
+"""
+
 import sys, os
 import optparse
 
 import string, re
+import time
+import filecmp
 
 import urlparse
 import urllib
@@ -29,6 +37,9 @@ import urllib2
 import cookielib
 import httplib # For error codes only
 import HTMLParser
+
+joinpath = os.path.join
+isfile = os.path.isfile
 
 ### Version
 
@@ -52,21 +63,27 @@ usage="""%prog [OPTIONS] ARGS
 
 Possible commands are:
 
-  create WIKI_URL PAGE_NAME [INPUT_FILE]
-  create WIKI_URL PAGES_DIR
-     Create pages. If pages already exist, an error is reported.
+  create   WIKI_URL PAGE_NAME [INPUT_FILE]
+     Create a page. If the page already exist, an error is reported.
 
-  modify WIKI_URL PAGE_NAME INPUT_FILE
-  modify WIKI_URL PAGES_DIR
-     Modify pages. If pages doesn't exist, they are created.
+  modify   WIKI_URL PAGE_NAME INPUT_FILE
+     Modify a page. If the page doesn't exist, it is created.
 
-  delete WIKI_URL PAGE_NAME ...
+  delete   WIKI_URL PAGE_NAME ...
 
-  fetch  WIKI_URL PAGE_NAME [OUTPUT_FILE]
-     Fetch a single wiki page.
+  fetch    WIKI_URL PAGE_NAME [OUTPUT_FILE]
+     Fetch a single wiki page. Print page on standard output if
+     OUTPUT_FILE is omitted.
 
-  fetch  WIKI_URL PAGE_NAME DEST_DIR
+  upload   WIKI_URL PAGES_DIR
+     Create or modify pages. For each file in PAGES_DIR, the corresponding
+     page is created or modified.
+
+  download WIKI_URL PAGE_NAME DEST_DIR
      Recursively retrieves wiki pages.
+
+  backup WIKI_URL PAGE_NAME DEST_DIR
+     Recursively retrieves wiki pages while keeping the history.
 
 Manipulate wiki pages. When command takes a directory as argument, all
 files in that directory are considered as pages. Their names must be
@@ -91,11 +108,6 @@ option_parser.add_option("--trace",
 option_parser.add_option("-v", "--verbose",
                          dest="verbose", action="store_true", default=False,
                          help="print status messages to stdout")
-
-option_parser.add_option("-n", "--no-act",
-                         dest="no_act", action="store_true", default=False,
-                         help="print what would be done without"
-                         " executing anything")
 
 option_parser.add_option("-u", "--http-user",
                          dest="http_user", action="store", default=None,
@@ -333,7 +345,7 @@ class WikiControl:
         cookiejar = None
         if cookie_file:
             cookiejar = cookielib.LWPCookieJar(cookie_file)
-            if os.path.isfile(cookie_file):
+            if isfile(cookie_file):
                 verbose('Loading cookies from %s\n'%(cookie_file))
                 cookiejar.load()
         self.cookiejar = cookiejar
@@ -360,8 +372,8 @@ class WikiControl:
             if status != httplib.OK:
                 raise Exception("%s: authentification failed"%(http_user))
 
-    def check_response(self):
-        if self.request.resp_url:
+    def check_auth(self, status):
+        if status == httplib.OK and self.request.resp_url:
             path = urlparse.urlparse(self.request.resp_url)[2]
             if path.endswith('/login_form'):
                 raise Exception('authentification required')
@@ -388,89 +400,64 @@ class WikiControl:
             fd.close()
         return text
 
-    def write_file(self, output_file, text):
-        """Write text in file.
+    def __set_page(self, page_name, input_file, is_new):
+        """Create or modify page.
 
-        If an error occurs, the file is deleted."""
-        outfd = file(output_file, "w")
-        try:
-            try:
-                outfd.write(text)
-            finally:
-                outfd.close()
-        except:
-            os.unlink(output_file)
-            raise
-
-    def edit_content(self, page_url, content):
-        """Change the page content."""
-        edit_url = self.join_url(page_url, "edit")
-        return self.request(edit_url, source=content)
-
-    def __create_page(self, page_name, page_url, input_file):
-        """Create a page.
-
-        The caller is responsible for checking that the page doesn't
-        exists."""
-        create_url = self.join_url(self.wiki_url, "addPage")
-        status = self.request(create_url, title=page_name)
-        self.check_response()
-
+        If IS_NEW is True, an exception is raised if page exists."""
         content = ''
         if input_file:
             content = self.read_file(input_file)
 
-        if self.edit_content(page_url, content) != httplib.OK:
-            raise Exception("%s: creation failed"%(page_name))
+        page_url = self.page_url(page_name)
+
+        status = self.request(page_url)
+
+        if status == httplib.OK:
+            if is_new:
+                raise Exception("%s: page exists"%(page_name))
+        elif status == httplib.NOT_FOUND:
+            create_url = self.join_url(self.wiki_url, "addPage")
+            verbose("Creating page %s\n"%(page_name))
+            status = self.request(create_url, title=page_name)
+            self.check_auth(status)
+
+        verbose("Editing page %s\n"%(page_name))
+        edit_url = self.join_url(page_url, "edit")
+        status = self.request(edit_url, source=content)
+        self.check_auth(status)
+        if status != httplib.OK:
+            raise Exception("%s: modification failed"%(page_name))
 
     def create_page(self, page_name, input_file=None):
         """Create a page.
 
         If no input file is provided, the page is empty."""
-        page_url = self.page_url(page_name)
-
-        status = self.request(page_url)
-
-        if status != httplib.NOT_FOUND:
-            raise Exception("%s: page exists"%(page_name))
-
-        self.__create_page(page_name, page_url, input_file)
+        self.__set_page(page_name, input_file, is_new=True)
 
     def modify_page(self, page_name, input_file):
         """Modify a page by copying the input file content.
 
         If the page doesn't exist, it is created."""
-        page_url = self.page_url(page_name)
-
-        status = self.request(page_url)
-
-        if status != httplib.OK:
-            self.__create_page(page_name, page_url, input_file)
-        else:
-            content = self.read_file(input_file)
-
-            if self.edit_content(page_url, content) != httplib.OK:
-                raise Exception("%s: modification failed"%(page_name))
-            self.check_response()
+        self.__set_page(page_name, input_file, is_new=False)
 
     def delete_page(self, page_name):
         """Delete a page."""
         page_url = self.page_url(page_name)
         delete_url = self.join_url(page_url, "delete")
+        verbose("Deleting page %s\n"%(page_name))
         status = self.request(delete_url)
-        self.check_response()
+        self.check_auth(status)
 
         if status == httplib.NOT_FOUND:
             raise Exception("%s: page doesn't exists"%(page_name))
 
-    def fetch_page(self, page_name, output_file=None):
-        """Fetch page content and return it as text.
-
-        Content can also be saved in an output file."""
+    def __fetch_page(self, page_name):
+        """Fetch page content and return it as text."""
         page_url = self.page_url(page_name)
         edit_url = self.join_url(page_url, "cps_wiki_pageedit")
+        verbose("Fetching page %s\n"%(page_name))
         status = self.request(edit_url)
-        self.check_response()
+        self.check_auth(status)
 
         if status == httplib.NOT_FOUND:
             raise Exception("%s: page doesn't exists"%(page_name))
@@ -479,10 +466,29 @@ class WikiControl:
         html_parser.feed(self.request.data)
         html_parser.close()
 
-        if output_file:
-            self.write_file(output_file, html_parser.text)
-
         return html_parser.text
+
+    def write_page(self, page_name, outfd=sys.stdout):
+        """Fetch page and write it into stream.
+
+        It returns the list of links."""
+        text = self.__fetch_page(page_name)
+        outfd.write(text)
+        return text
+
+    def save_page(self, page_name, output_file):
+        """Fetch page content and save it into file."""
+        text = None
+        outfd = file(output_file, "w")
+        try:
+            try:
+                text = self.write_page(page_name, outfd)
+            finally:
+                outfd.close()
+        except:
+            os.unlink(output_file)
+            raise
+        return text
 
     def fetch_wiki(self, front_page_name, dest_dir):
         """Recursively fetch all pages.
@@ -494,73 +500,184 @@ class WikiControl:
             page_name = pages.pop()
             if page_name in downloaded:
                 continue
-            output_file = os.path.join(dest_dir, page_name)
+            output_file = joinpath(dest_dir, page_name)
             try:
-                text = self.fetch_page(page_name, output_file)
+                text = self.save_page(page_name, output_file)
                 downloaded[page_name] = True
                 pages.findall(text)
             except Exception, ex:
                 warn("Error: %s\n"%(ex))
+                if options.debug:
+                    raise
 
 
-def get_pages_list(args, allow_empty_content=False):
-    """Parse arguments to build the list of pages.
+class WikiBackup:
 
-    It returns a dictionary with keys the page names and with value
-    corresponding file names."""
-    nargs = len(args)
-    result = {}
-    if nargs == 2:
-        result[args[0]] = args[1]
-    elif nargs != 1:
-        raise Exception("invalid number of arguments")
-    elif os.path.isdir(args[0]):
-        dir = args[0]
-        for page_name in os.listdir(dir):
-            result[page_name] = os.path.join(dir, page_name)
-    elif allow_empty_content:
-        result[args[0]] = None
-    else:
-        raise Exception("invalid arguments")
-    return result
+    """Backup wiki pages.
+
+    History is preserved."""
+
+    backup_dir_fmt = '%02d-%03d-%03d'
+
+    backup_dir_re = re.compile(r'(?P<year>\d{2})-(?P<yday>\d{3})-(?P<index>\d{3})$')
+
+    def __init__(self, control):
+        self.control = control
+
+    def get_directories(self, dest_dir):
+        """Return the directory where the last backup occured and the
+        directory for the next backup."""
+        last_year = None
+        last_yday = 0
+        last_index = 0
+        for dir in os.listdir(dest_dir):
+            m = self.backup_dir_re.match(dir)
+            if m:
+                year = int(m.group('year'))
+                yday = int(m.group('yday'))
+                index = int(m.group('index'))
+                if year > last_year:
+                    last_year = year
+                    last_yday = yday
+                    last_index = index
+                elif yday > last_yday:
+                    last_yday = yday
+                    last_index = index
+                elif yday == last_yday and index > last_index:
+                    last_index = index
+
+        now = time.localtime()
+        year = now.tm_year % 100
+        yday = now.tm_yday
+        index = 1
+        if last_year == year and last_yday == yday:
+            index = last_index + 1
+        next_dir = joinpath(dest_dir, self.backup_dir_fmt%(year, yday, index))
+        if last_year == None:
+            return None, next_dir
+        prev_dir = joinpath(dest_dir,
+                            self.backup_dir_fmt%(last_year, last_yday,
+                                                 last_index))
+        return prev_dir, next_dir
+
+    def process(self, page_name, dest_dir):
+        prev_dir, next_dir = self.get_directories(dest_dir)
+        os.mkdir(next_dir)
+        self.control.fetch_wiki(page_name, next_dir)
+        if prev_dir:
+            for filename in os.listdir(next_dir):
+                prev_file = joinpath(prev_dir, filename)
+                next_file = joinpath(next_dir, filename)
+                if isfile(prev_file) and filecmp.cmp(prev_file, next_file):
+                    # Create a hard link for identical files
+                    verbose("Linking %s to %s\n"%(prev_file, next_file))
+                    os.unlink(next_file)
+                    os.link(prev_file, next_file)
+
+    __call__ = process
+
+
+class WikiDelete:
+
+    """Delete wiki page.
+
+    Only discard the second argument for consistency with other actions."""
+
+    def __init__(self, control):
+        self.control = control
+
+    def process(self, page_name, ignored):
+        self.control.delete_page(page_name)
+
+    __call__ = process
+
+
+class WikiFetch:
+
+    """Fetch wiki page."""
+
+    def __init__(self, control):
+        self.control = control
+
+    def process(self, page_name, dest_file):
+        if not dest_file:
+            print self.control.write_page(page_name)
+        else:
+            self.control.save_page(page_name, dest_file)
+
+    __call__ = process
+
+
+class Args:
+
+    arity = {
+        'create':   { 'min': 3, 'max': 4 },
+        'modify':   { 'min': 4, 'max': 4 },
+        'delete':   { 'min': 3 },
+        'fetch' :   { 'min': 3, 'max': 4 },
+        'upload':   { 'min': 3, 'max': 3 },
+        'download': { 'min': 4, 'max': 4 },
+        'backup':   { 'min': 4, 'max': 4 }
+        }
+
+    def __init__(self, *args):
+        nargs = len(args)
+        if len(args) < 2:
+            raise Exception("too few arguments")
+        self.action = action = args[0]
+        self.wiki_url = args[1]
+        if not action in self.arity:
+            raise Exception('%s: unknown action'%(action))
+        else:
+            arity = self.arity[action]
+            if 'min' in arity and nargs < arity['min']:
+                raise Exception("too few arguments")
+            elif 'max' in arity and nargs > arity['max']:
+                raise Exception("too many arguments")
+        self.pages = {}
+        if action == 'delete':
+            for page_name in args[2:]:
+                self.pages[page_name] = True
+        elif action == 'upload':
+            dir = args[2]
+            for filename in os.listdir(dir):
+                pagename = os.path.splitext(filename)[0]
+                self.pages[pagename] = joinpath(dir, filename)
+        else:
+            filename = None
+            if nargs == 4:
+                filename = args[3]
+            self.pages[args[2]] = filename
 
 
 def main(args, options):
 
     try:
-        if len(args) < 2:
-            raise Exception("invalid number of arguments")
 
-        action, wiki_url = tuple(args[0:2])
+        args = Args(*args)
 
-        args = args[2:]
-
-        control = WikiControl(wiki_url, options.cookie_file)
+        control = WikiControl(args.wiki_url, options.cookie_file)
 
         if options.http_user:
             control.authentificate(options.http_user, options.http_password)
 
-        if action == 'create':
-            pages = get_pages_list(args, True)
-            for page_name in pages:
-                control.create_page(page_name, pages[page_name])
-        elif action == 'modify':
-            pages = get_pages_list(args)
-            for page_name in pages:
-                control.modify_page(page_name, pages[page_name])
-        elif action == 'delete':
-            for page_name in args:
-                control.delete_page(page_name)
-        elif action == 'fetch':
-            page_name = args.pop(0)
-            if not args:
-                print control.fetch_page(page_name)
-            elif len(args) > 1:
-                raise Exception("invalid number of arguments")
-            elif os.path.isdir(args[0]):
-                control.fetch_wiki(page_name, args[0])
-            else:
-                control.fetch_page(page_name, args[0])
+        process = None
+        if args.action == 'create':
+            process = control.create_page
+        elif args.action == 'modify' or args.action == 'upload':
+            process = control.modify_page
+        elif args.action == 'download':
+            process = control.fetch_wiki
+        elif args.action == 'backup':
+            process = WikiBackup(control)
+        elif args.action == 'delete':
+            process = WikiDelete(control)
+        elif args.action == 'fetch':
+            process = WikiFetch(control)
+
+        if process:
+            for page_name in args.pages:
+                process(page_name, args.pages[page_name])
 
         control.close()
     except:
