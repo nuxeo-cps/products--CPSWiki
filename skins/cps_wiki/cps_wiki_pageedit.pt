@@ -14,10 +14,12 @@
     </tal:block>
     <form action="edit" enctype="multipart/form-data" method="post">
       <tal:block condition="python:parser_type != 'html'">
-        <textarea name="source" rows="30" cols="80"
-          style="width: 100%; font-family: monospace !important;"
-          tal:content="source">
-        </textarea>
+        <p>
+          <textarea name="source" rows="30" cols="80"
+            style="width: 100%; font-family: monospace !important;"
+            tal:content="source">
+          </textarea>
+        </p>
       </tal:block>
       <tal:block condition="python:parser_type == 'html'">
         <tal:block replace="structure python:here.Epoz(
