@@ -65,21 +65,20 @@ class CPSWikiInstaller(CPSInstaller):
     def verifyPortalTypes(self):
         """Verify portal types
         """
-        #wiki_type = self.portal.getCPSWikiType()
-        #self.verifyFlexibleTypes(wiki_type)
-
-        self.allowContentTypes('Wiki', ('Workspace', 'Section'))
         ptypes = {
-            'Wiki' : {'allowed_content_types': ('Wiki Page',),
-                      'typeinfo_name': 'CPSWiki: Wiki',
-                      'add_meta_type': 'Factory-based Type Information',
-                      },
-            'Wiki Page' : {'allowed_content_types': (),
-                           'typeinfo_name': 'CPSWiki: Wiki Page',
-                           'add_meta_type': 'Factory-based Type Information',
-                           },
+            'Wiki': {
+                'typeinfo_name': 'CPSWiki: Wiki (Wiki)',
+                'add_meta_type': 'Factory-based Type Information',
+                'allowed_content_types': ('Wiki Page',),
+                },
+            'Wiki Page': {
+                'typeinfo_name': 'CPSWiki: Wiki Page (Wiki Page)',
+                'add_meta_type': 'Factory-based Type Information',
+                'allowed_content_types': (),
+                },
             }
         self.verifyContentTypes(ptypes, destructive=1)
+        self.allowContentTypes('Wiki', ('Workspace', 'Section'))
         self.allowContentTypes('Wiki Page', 'Wiki')
 
 
