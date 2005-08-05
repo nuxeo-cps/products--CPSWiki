@@ -3,14 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Added the pt_BR translation.
+-
 Bug fixes:
 ~~~~~~~~~~
-- Taking advantage of the new centralized CPSI18n.tests.translations module.
-- Fixed the security assertion on the uploadFile method. Fixes #791.
-- Modified some ZPT files so that they are valid XHTML 1.0 Strict. This is a
-  work in progress to fix #773 "Using XHTML 1.0 Strict by default for CPS
-  sites".
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
