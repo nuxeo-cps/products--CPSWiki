@@ -205,10 +205,8 @@ class Wiki(CPSBaseFolder):
     security.declareProtected(View, 'getPage')
     def getPage(self, title_or_id):
         if isinstance(title_or_id, unicode):
-            wikipage_id = generateId(title_or_id.encode('ISO-8859-15'))
-        else:
-            wikipage_id = generateId(title_or_id)
-
+            title_or_id = title_or_id.encode('ISO-8859-15')
+        wikipage_id = generateId(title_or_id, lower=False)
         if wikipage_id in self.objectIds():
             return self[wikipage_id]
         return None
@@ -229,10 +227,8 @@ class Wiki(CPSBaseFolder):
     def addPage(self, title, REQUEST=None):
         """ creates and adds a wiki page """
         if isinstance(title, unicode):
-            wikipage_id = generateId(title.encode('ISO-8859-15'))
-        else:
-            wikipage_id = generateId(title)
-
+            title = title.encode('ISO-8859-15')
+        wikipage_id = generateId(title, lower=False)
         stepper = 1
 
         while wikipage_id in self.objectIds():

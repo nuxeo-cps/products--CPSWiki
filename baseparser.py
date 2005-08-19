@@ -78,7 +78,7 @@ class BaseParser:
         m = morig = match.group(1)
 
         stripped_label = m.strip('[').strip(']')
-        m_nospace = generateId(stripped_label)
+        m_nospace = generateId(stripped_label, lower=False)
 
         # if it's a bracketed expression,
         if re.match(bracketedexpr, m):
