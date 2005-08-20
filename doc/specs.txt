@@ -111,14 +111,15 @@ Instiki
   http://instiki.org/
 
 Others
+  http://c2.com/cgi-bin/wiki?TopTenWikiEngines
   http://wiki.splitbrain.org/wiki:compare?s=compare
   http://platypuswiki.sourceforge.net/whatis/related/index.html
   http://c2.com/cgi/wiki?WikiWikiClones
   http://c2.com/cgi/wiki?WikiEngines
 
 
-
 References
 ==========
 
+http://informationweek.com/shared/printableArticle.jhtml?articleID=167600331
 XXX
