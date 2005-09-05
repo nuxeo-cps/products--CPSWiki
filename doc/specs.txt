@@ -8,32 +8,51 @@ Specs notes for CPSWiki
 Goals
 =====
 
-XXX
-
+CPSWiki aims to provide a light, flexible Wiki for CPS, with all features a wiki can give.
 
 
 Features
 ========
 
-Locking
--------
++ automatic front page, based on the wiki content
 
-The locking logic of CPSWiki is the following: TODO
++ automatic summary, based on the wiki content, that gathers
+  all content in one html page.
 
++ page locking to avoid conflicts, the lock is done with a heartbeat technique
 
-(Mn = Milestone targets).
++ several wiki page parser engine for rendering:
+  + html
+  + rest
+  + wikiwikiweb
 
-M1:
+  based on a plugin framework, parsers are extensible
 
-XXX
++ internal page caching
++ ability to upload files into pages
 
-M2:
+Things do be done
+=================
 
-XXX
++ add a js warning on page deletion
++ add UI to change page title
++ add a merge proposal when a user tries to commit after a lock timeout
++ add a link on history page so the user can restore a version
++ add UI to manage Wiki parser selection
++ add UI to add content in a wikipage (it's already folder so it's just a form away)
++ add a zcatalog dedicated to the wiki
+    -> until then, need to index content in general portal_catalog
++ making something better on container view
++ add UI to easily call CPSSubcription for wiki notifications
++ add UI to import ZWiki pages
++ add a pdf export
++ setup rdf relations between pages, so relations can be made between pages, using keywords
++ ...
 
-...
+Useful links
+============
 
-
+report bugs and other things here: http://svn.nuxeo.org/trac/pub
 
 Other Wiki software or services
 ===============================
