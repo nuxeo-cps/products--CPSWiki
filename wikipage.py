@@ -28,8 +28,12 @@ from ZPublisher.HTTPRequest import FileUpload
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
-from Products.CMFCore.permissions import \
-     View, ModifyPortalContent, DeleteObjects
+try:
+    from Products.CMFCore.permissions import \
+         View, ModifyPortalContent, DeleteObjects
+except ImportError: # CPS <= 3.2
+    from Products.CMFCore.CMFCorePermissions import \
+         View, ModifyPortalContent, DeleteObjects
 
 from Products.CMFCore.utils import getToolByName
 from Products.CPSUtil.html import sanitize

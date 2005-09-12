@@ -19,7 +19,11 @@
 # $Id$
 from Products.CMFCore.utils import ContentInit
 from Products.CMFCore.DirectoryView import registerDirectory
-from Products.CMFCore.permissions import AddPortalContent
+try:
+    from Products.CMFCore.permissions import AddPortalContent
+except ImportError: # CPS 3.2
+    from Products.CMFCore.CMFCorePermissions import AddPortalContent
+    
 import wiki, wikipage
 
 fti = (wiki.factory_type_information +

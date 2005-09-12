@@ -22,9 +22,14 @@
 import urllib
 
 from AccessControl import ClassSecurityInfo
-from Products.CMFCore.permissions import \
-     View, ModifyPortalContent, AddPortalContent, DeleteObjects, \
-     ChangePermissions
+try:
+    from Products.CMFCore.permissions import \
+         View, ModifyPortalContent, AddPortalContent, DeleteObjects, \
+         ChangePermissions
+except ImportError: # CPS <= 3.2
+    from Products.CMFCore.CMFCorePermissions import \
+         View, ModifyPortalContent, AddPortalContent, DeleteObjects, \
+         ChangePermissions
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.utils import getToolByName
 from Products.CPSCore.CPSBase import CPSBaseFolder
