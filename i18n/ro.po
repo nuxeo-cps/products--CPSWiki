@@ -1,0 +1,67 @@
+# Gettext Message File for default.
+# Your Name <your@email>, Year
+msgid ""
+msgstr ""
+"Project-Id-Version: ro\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-08-05 14:33default\n"
+"PO-Revision-Date: 2005-04-04 17:31+0300\n"
+"Last-Translator: \n"
+"Language-Team:  <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: ro\n"
+"Language-Name: Romanian\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: default\n"
+"X-Generator: KBabel 1.9.1\n"
+
+#.   <h4>Attached files</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "Attached files"
+msgstr ""
+
+#.   <a href="cps_wiki_full_view#_summary">Back to the top</a>
+#: from ../skins/cps_wiki/cps_wiki_full_view.pt
+msgid "Back to the top"
+msgstr ""
+
+#.   <h4>BackLinks</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "BackLinks"
+msgstr ""
+
+#.   <div class="message">
+#.                   The page is locked by someone else, you
+#.                   can read it but not write to it at this time.
+#.               </div>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid ""
+"Aceasta pagina este blocata de altcineva, poti citi, dar momentan "
+"nu poti scrie."
+msgstr ""
+
+#.   <button type="submit" name="upload">upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "upload file"
+msgstr ""
+
+msgid "portal_type_CPSWiki_title"
+msgstr ""
+
+msgid "portal_type_CPSWiki_description"
+msgstr ""
+
+msgid "action_add_page"
+msgstr ""
+
+msgid "action_history"
+msgstr ""
+
+msgid "action_full_view"
+msgstr ""
+
+msgid "File uploaded."
+msgstr ""
