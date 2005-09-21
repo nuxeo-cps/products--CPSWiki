@@ -42,11 +42,13 @@ class WikiParserTest(ZopeTestCase):
         self.assertEquals(res, (['spds'],
             'qzpijdspjvd <a href="../spds/cps_wiki_pageview">spds</a> vjpdsovj'))
 
+
     def test_weirdParsingcases(self):
+        # Protect regexpr searches from weird characters.
         # trac ticket #698
-        # protect regexpr searches from weird characters
         wiki = Wiki('wiki')
         parser = BaseParser()
+
         res = parser.parseContent(wiki, 'qzpijd [***] dsvjpdsovj')
         self.assertEquals(res, ([],
           'qzpijd [***]<a href="../addPage?title=%2A%2A%2A">?</a> dsvjpdsovj'))
@@ -58,6 +60,19 @@ class WikiParserTest(ZopeTestCase):
         res = parser.parseContent(wiki, 'qzpijd [?a?] dsvjpdsovj')
         self.assertEquals(res, ([],
           'qzpijd [?a?]<a href="../addPage?title=%3Fa%3F">?</a> dsvjpdsovj'))
+
+        res = parser.parseContent(wiki, 'qzpijd [[junk] dsvjpdsovj')
+        self.assertEquals(res, ([],
+          'qzpijd [[junk]<a href="../addPage?title=junk">?</a> dsvjpdsovj'))
+
+        res = parser.parseContent(wiki, 'qzpijd [[Junk] dsvjpdsovj')
+        self.assertEquals(res, ([],
+          'qzpijd [[Junk]<a href="../addPage?title=Junk">?</a> dsvjpdsovj'))
+
+        res = parser.parseContent(wiki, 'qzpijd [[Detaxe]] dsvjpdsovj')
+        self.assertEquals(res, ([],
+          'qzpijd [[Detaxe]<a href="../addPage?title=Detaxe">?</a>] dsvjpdsovj'))
+
 
 def test_suite():
     """

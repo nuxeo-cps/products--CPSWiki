@@ -44,6 +44,8 @@ from wikiversionning import VersionContent
 
 from zLOG import LOG, DEBUG
 
+LOG_KEY = 'CPSWiki.wikipage'
+
 factory_type_information = (
     { 'id': 'Wiki Page',
       'meta_type': 'Wiki Page',

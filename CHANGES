@@ -6,7 +6,8 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Fixed bug that was causing an "unexpected end of regular expression" when text
+  like [[mylink]] was used.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Adapted to new CPSUtil.id.generateId default values.
