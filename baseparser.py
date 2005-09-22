@@ -35,25 +35,30 @@ from zLOG import LOG, DEBUG
 
 LOG_KEY = 'CPSWiki.baseparser'
 
-# constants
-urlchars = r'[A-Za-z0-9/:@_%~#=&\.\-\?\+\$,]+'
-
+# All the characters that can be found in a URL
+URL_CHARS = r'[A-Za-z0-9/:@_%~#=&\.\-\?\+\$,]+'
 # All the kinds of URLs
-url = r'["=]?((about|http|https|ftp|mailto|file):%s)' % urlchars
+URL = r'["=]?((about|http|https|ftp|mailto|file):%s)' % URL_CHARS
+URL_REGEXP = re.compile(URL)
+
 # All the letters ASCII and unicode in upper-case
 U = 'A-Z\xc0-\xdf'
 # All the letters ASCII and unicode in lower-case
 L = 'a-z\xe0-\xff'
 # Using a negative lookbehind assertion (?<!...)
-b = '(?<![%s0-9])' % (U+L)
-
-# XXX: Give some examples and explain what the names mean!
+B = '(?<![%s0-9])' % (U + L)
+# XXX: Give some examples
+WIKINAME1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (B, U, L, U, U + L)
+# XXX: Give some examples
+WIKINAME2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (B, U, U, L, U + L)
 # [xxx] but not [[xxx]] or [xxx[xxx] or [xxx]xxx]
-bracketedexpr = r'\[([^][\n]+)\]'
-wikiname1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (b, U, L, U, U+L)
-wikiname2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (b, U, U, L, U+L)
-wikilink  = r'!?(%s|%s|%s|%s)' % (wikiname1, wikiname2, bracketedexpr, url)
-WIKILINK_REGEXP = re.compile(wikilink)
+BRACKETED_CONTENT = r'\[([^][\n]+)\]'
+
+# WIKILINK is just a combitation of the possibilities of WIKINAME1, WIKINAME2,
+# BRACKETED_CONTENT and URL.
+WIKILINK  = r'!?(%s|%s|%s|%s)' % (WIKINAME1, WIKINAME2, BRACKETED_CONTENT, URL)
+WIKILINK_REGEXP = re.compile(WIKILINK)
+BRACKETED_CONTENT_REGEXP = re.compile(BRACKETED_CONTENT)
 
 class BaseParser:
     __implements__ = (WikiParserInterface,)
@@ -90,9 +95,9 @@ class BaseParser:
         m_nospace = generateId(stripped_label, lower=False)
 
         # If it's a bracketed expression
-        if re.match(bracketedexpr, m):
+        if BRACKETED_CONTENT_REGEXP.match(m):
             # Strip the enclosing []'s
-            m = re.sub(bracketedexpr, r'\1', m)
+            m = BRACKETED_CONTENT_REGEXP.sub(r'\1', m)
 
             # extract a (non-url) path if there is one
             pathmatch = re.match(r'(([^/]*/)+)([^/]+)', m)
@@ -113,7 +118,7 @@ class BaseParser:
         wiki = self.wiki
 
         # If it's an ordinary url, link to it
-        if re.match(url, m):
+        if URL_REGEXP.match(m):
             # except, if preceded by " or = it should probably be left alone
             if re.match('^["=]', m):     # "
                 return m
