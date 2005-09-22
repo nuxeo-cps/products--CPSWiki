@@ -1,6 +1,8 @@
 # -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
-# Author: Tarek Ziadé <tz@nuxeo.com>
+# Authors:
+# Tarek Ziadé <tz@nuxeo.com>
+# M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -17,14 +19,11 @@
 # 02111-1307, USA.
 #
 # $Id$
+"""A base parser that takes the content and create internal and external links.
 
-""" parsing method taken from ZWiki
-    and refactored for CPSWiki needs
-
-    this parser takes the content and create
-    internal and external links
+Parsing methods taken from ZWiki and refactored for CPSWiki needs.
 """
-import urllib
+
 from urllib import quote, unquote
 import re
 
@@ -35,8 +34,6 @@ from wikiparserinterface import WikiParserInterface
 from zLOG import LOG, DEBUG
 
 LOG_KEY = 'CPSWiki.baseparser'
-
-# TODO: The regexp should be compiled for the code to be faster
 
 # constants
 urlchars = r'[A-Za-z0-9/:@_%~#=&\.\-\?\+\$,]+'
@@ -56,6 +53,7 @@ bracketedexpr = r'\[([^][\n]+)\]'
 wikiname1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (b, U, L, U, U+L)
 wikiname2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (b, U, U, L, U+L)
 wikilink  = r'!?(%s|%s|%s|%s)' % (wikiname1, wikiname2, bracketedexpr, url)
+WIKILINK_REGEXP = re.compile(wikilink)
 
 class BaseParser:
     __implements__ = (WikiParserInterface,)
@@ -73,7 +71,7 @@ class BaseParser:
         self.linked_pages = []
         # A regexp can be with either a replacement string or a replacement
         # function.
-        rendered = re.sub(wikilink, self._wikilinkReplace, content)
+        rendered = WIKILINK_REGEXP.sub(self._wikilinkReplace, content)
         return self.linked_pages, rendered
 
     def _wikilinkReplace(self, match):
