@@ -227,7 +227,7 @@ class Wiki(CPSBaseFolder):
             self.manage_delObjects([page.id])
 
         if REQUEST is not None:
-            psm = 'page_deleted'
+            psm = 'psm_page_deleted'
             REQUEST.RESPONSE.redirect(self.absolute_url()+\
                 '?portal_status_message=%s' % psm)
 

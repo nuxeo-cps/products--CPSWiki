@@ -1,0 +1,12 @@
+<html metal:use-macro="here/content_lib_master/macros/master">
+  <metal:block fill-slot="main">
+    <p class="message" i18n:translate="description_confirm_page_delete">
+      We need a confirmation to delete this page.
+    </p>
+    <form action="delete" method="post">
+      <p>
+        <button type="submit" i18n:translate="button_delete">Delete</button>
+      </p>
+    </form>
+  </metal:block>
+</html>

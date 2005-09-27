@@ -45,3 +45,9 @@ msgstr ""
 
 msgid "Attached files"
 msgstr ""
+
+# Status messages (psm)
+#######################
+msgid "psm_page_deleted"
+msgstr ""
+

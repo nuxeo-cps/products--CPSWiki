@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: default\n"
-"POT-Creation-Date: 2005-06-23 17:31default\n"
+"POT-Creation-Date: 2005-09-27 12:27default\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
 "Language-Team: Name <email>\n"
@@ -11,8 +11,8 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language-Code: LL\n"
-"Language-Name: Language\n"
+"Language-code: LL\n"
+"Language-name: Language\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 
@@ -41,6 +41,13 @@ msgid ""
 "this time."
 msgstr ""
 
+#.   <p class="message">
+#.         We need a confirmation to delete this page.
+#.       </p>
+#: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
+msgid "description_confirm_page_delete"
+msgstr ""
+
 #.   <button type="submit" name="upload">upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
 msgid "upload file"
@@ -62,4 +69,9 @@ msgid "action_full_view"
 msgstr ""
 
 msgid "File uploaded."
+msgstr ""
+
+# Status messages (psm)
+# ######################
+msgid "psm_page_deleted"
 msgstr ""

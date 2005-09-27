@@ -77,7 +77,7 @@ factory_type_information = (
                    },
                    {'id': 'delete',
                    'name': 'action_delete',
-                   'action': 'delete',
+                   'action': 'cps_wiki_pagedelete',
                    'permissions': (DeleteObjects,),
                    },
                   ),
@@ -265,8 +265,8 @@ class WikiPage(CPSBaseFolder):
     def delete(self, REQUEST=None):
         """suicide"""
         wiki = self.getParent()
-        # XXX: Need to add a warning here
         wiki.deletePage(self.id, REQUEST)
+        wiki.clearCaches()
 
     security.declareProtected('View archived revisions', 'getAllDiffs')
     def getAllDiffs(self):

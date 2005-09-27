@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ro\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-05 14:33default\n"
+"POT-Creation-Date: 2005-09-27 12:27default\n"
 "PO-Revision-Date: 2005-04-04 17:31+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -39,8 +39,15 @@ msgstr ""
 #.               </div>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
 msgid ""
-"Aceasta pagina este blocata de altcineva, poti citi, dar momentan "
-"nu poti scrie."
+"The page is locked by someone else, you can read it but not write to it at "
+"this time."
+msgstr ""
+
+#.   <p class="message">
+#.         We need a confirmation to delete this page.
+#.       </p>
+#: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
+msgid "description_confirm_page_delete"
 msgstr ""
 
 #.   <button type="submit" name="upload">upload file</button>
@@ -64,4 +71,9 @@ msgid "action_full_view"
 msgstr ""
 
 msgid "File uploaded."
+msgstr ""
+
+# Status messages (psm)
+# ######################
+msgid "psm_page_deleted"
 msgstr ""
