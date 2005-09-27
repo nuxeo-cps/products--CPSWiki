@@ -171,14 +171,16 @@ class WikiPage(CPSBaseFolder):
             self._last_render = None
         if self._last_render is not None:
             return self._last_render
-        result = self.source.getLastVersion()[0]
-        result = self.renderLinks(result)
-        self._last_render = result
-        return result
+        source = self.source.getLastVersion()[0]
+        render = self.renderLinks(source)
+        self._last_render = render
+        return render
 
     security.declareProtected(View, 'renderLinks')
     def renderLinks(self, content):
-        """Create link with founded [pages]."""
+        """Store a reference on the linked pages and return those references
+        along with the render of the content.
+        """
         wiki = self.getParent()
         parser = wiki.getParser()
         return parser.parseContent(wiki, content)
@@ -190,10 +192,8 @@ class WikiPage(CPSBaseFolder):
             self._saved_linked_pages = None
         if self._saved_linked_pages is not None:
             return self._saved_linked_pages
-        content = self.source.getLastVersion()[0]
-        wiki = self.getParent()
-        parser = wiki.getParser()
-        links, rendered = parser.parseContent(wiki, content)
+        source = self.source.getLastVersion()[0]
+        links, rendered = self.renderLinks(source)
         self._saved_linked_pages = links
         return links
 

@@ -70,14 +70,15 @@ class BaseParser:
         return 'baseparser'
 
     def parseContent(self, wiki, content):
-        """Create links with found [pages].
+        """Store a reference on the linked pages and return those references
+        along with the render of the content.
         """
         self.wiki = wiki
         self.linked_pages = []
         # A regexp can be with either a replacement string or a replacement
         # function.
-        rendered = WIKILINK_REGEXP.sub(self._wikilinkReplace, content)
-        return self.linked_pages, rendered
+        render = WIKILINK_REGEXP.sub(self._wikilinkReplace, content)
+        return self.linked_pages, render
 
     def _wikilinkReplace(self, match):
         """Replace an occurrence of the wikilink regexp or one of the
