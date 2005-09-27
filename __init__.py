@@ -23,7 +23,7 @@ try:
     from Products.CMFCore.permissions import AddPortalContent
 except ImportError: # CPS 3.2
     from Products.CMFCore.CMFCorePermissions import AddPortalContent
-    
+
 import wiki, wikipage
 
 fti = (wiki.factory_type_information +
@@ -32,10 +32,12 @@ fti = (wiki.factory_type_information +
 registerDirectory('skins', globals())
 
 contentClasses = (wiki.Wiki,
-                  wikipage.WikiPage, )
+                  wikipage.WikiPage,
+                  )
 
-contentConstructors = ( wiki.manage_addWiki,
-                        wikipage.manage_addWikiPage, )
+contentConstructors = (wiki.manage_addWiki,
+                       wikipage.manage_addWikiPage,
+                       )
 
 fti = (wiki.factory_type_information +
        wikipage.factory_type_information)
@@ -43,8 +45,8 @@ fti = (wiki.factory_type_information +
 
 def initialize(context):
     ContentInit('Wiki Content',
-                      content_types=contentClasses,
-                      permission=AddPortalContent,
-                      extra_constructors=contentConstructors,
-                      fti=fti
-                      ).initialize(context)
+                content_types=contentClasses,
+                permission=AddPortalContent,
+                extra_constructors=contentConstructors,
+                fti=fti
+                ).initialize(context)

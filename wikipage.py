@@ -19,13 +19,17 @@
 # 02111-1307, USA.
 #
 # $Id$
+
+from zLOG import LOG, DEBUG
+
 import urllib
 from datetime import datetime
 
+from Globals import InitializeClass
+from AccessControl import ClassSecurityInfo
 from ZODB.PersistentList import PersistentList
 from OFS.Image import cookId
 from ZPublisher.HTTPRequest import FileUpload
-from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 try:
@@ -41,8 +45,6 @@ from Products.CPSCore.CPSBase import CPSBaseFolder
 from Products.CPSCore.CPSBase import CPSBaseDocument
 
 from wikiversionning import VersionContent
-
-from zLOG import LOG, DEBUG
 
 LOG_KEY = 'CPSWiki.wikipage'
 
@@ -79,9 +81,10 @@ factory_type_information = (
                    'permissions': (DeleteObjects,),
                    },
                   ),
-      'cps_display_as_document_in_listing' : 1,
+      'cps_display_as_document_in_listing': 1,
       },
     )
+
 
 class ZODBVersionContent(VersionContent):
     """Overrides all VersionContent read / write
@@ -109,8 +112,7 @@ class ZODBVersionContent(VersionContent):
 
 
 class WikiPage(CPSBaseFolder):
-    """ A persistent WikiPage Page implementation.
-        with versionning
+    """A persistent WikiPage Page implementation with versionning.
     """
     meta_type = 'Wiki Page'
     portal_type = meta_type
@@ -156,18 +158,15 @@ class WikiPage(CPSBaseFolder):
         wiki = self.getParent()
         return wiki.parser
 
-    security.declareProtected(View, 'content')
-    def content(self):
-        """Render the wiki page source.
-
-        This method is needed and called by Zope even if the code of CPSWiki
-        doesn't make any reference to it.
+    security.declareProtected(View, 'getSource')
+    def getSource(self):
+        """Return the source as it has been entered by the user.
         """
-        return self.source.getLastVersion()
+        return self.source.getLastVersion()[0]
 
     security.declareProtected(View, 'render')
     def render(self):
-        """ Render the wiki page source."""
+        """Render the wiki page source."""
         if not hasattr(self, '_last_render'):
             self._last_render = None
         if self._last_render is not None:
@@ -179,14 +178,14 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected(View, 'renderLinks')
     def renderLinks(self, content):
-        """creates link with founded [pages]"""
+        """Create link with founded [pages]."""
         wiki = self.getParent()
         parser = wiki.getParser()
         return parser.parseContent(wiki, content)
 
     security.declareProtected(View, 'getLinkedPages')
     def getLinkedPages(self):
-        """creates link with founded [pages]"""
+        """Create link with founded [pages]."""
         if not hasattr(self, '_saved_linked_pages'):
             self._saved_linked_pages = None
         if self._saved_linked_pages is not None:
@@ -200,7 +199,7 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected(View, 'getBackedLinkedPages')
     def getBackedLinkedPages(self):
-        """ get pages where this page is linked """
+        """Get pages where this page is linked."""
         back_links = []
         wiki = self.getParent()
         for id, object in wiki.objectItems():
@@ -215,7 +214,7 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected(ModifyPortalContent, 'uploadFile')
     def uploadFile(self, file, REQUEST=None):
-        """ uploads a file in the repository """
+        """Upload a file in the repository."""
         if file is None or file == '':
             return False
         if not isinstance(file, FileUpload):
@@ -236,7 +235,7 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected(ModifyPortalContent, 'edit')
     def edit(self, title=None, source=None, REQUEST=None):
-        """Edit the page"""
+        """Edit the page."""
         is_locked, psm = self._verifyLocks(REQUEST)
         if is_locked:
             # TODO: Propose a merge
@@ -271,7 +270,7 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected('View archived revisions', 'getAllDiffs')
     def getAllDiffs(self):
-        """renders a list of differences"""
+        """Renders a list of differences."""
         source = self.source
         version_count = source.getVersionCount()
         versions = []
@@ -283,7 +282,7 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected('View archived revisions', 'getDiffs')
     def getDiffs(self, version_1, version_2, separator=''):
-        """retrieves differences between 2 versions"""
+        """Retrieve differences between 2 versions."""
         if isinstance(version_1, str):
             version_1 = int(version_1)
 
@@ -294,7 +293,7 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected(ModifyPortalContent, 'restoreVersion')
     def restoreVersion(self, index, REQUEST=None):
-        """restores a previous version"""
+        """Restore a previous version."""
         self.source.restoreVersion(index)
         if REQUEST is not None:
             psm = 'Version restored.'
@@ -303,7 +302,7 @@ class WikiPage(CPSBaseFolder):
 
     security.declarePrivate('_verifyLocks')
     def _verifyLocks(self, REQUEST):
-        """edition checks lock"""
+        """Edition check lock."""
         wiki = self.getParent()
         infos = wiki.pageLockInfo(self)
         if infos is None:
@@ -320,13 +319,13 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected(ModifyPortalContent, 'lockPage')
     def lockPage(self, REQUEST=None):
-        """locks the page"""
+        """Lock the page."""
         wiki = self.getParent()
         return wiki.lockPage(self, REQUEST)
 
     security.declareProtected(ModifyPortalContent, 'unLockPage')
     def unLockPage(self, REQUEST=None):
-        """unlocks the page"""
+        """Unlock the page."""
         wiki = self.getParent()
         return wiki.unLockPage(self, REQUEST)
 
@@ -335,9 +334,34 @@ class WikiPage(CPSBaseFolder):
         self._last_render = None
         self._saved_linked_pages = None
 
-manage_addWikiPageForm = PageTemplateFile(
-    "zmi/zmi_wikiPageAdd", globals(),
-    __name__ = 'manage_addWikiPageForm')
+    #
+    # ZMI
+    #
+
+    manage_options = (
+        {'label': "Edit",
+         'action': 'manage_editPageForm'
+         },
+        ) + CPSBaseFolder.manage_options
+
+    security.declareProtected(ModifyPortalContent, 'manage_editPageForm')
+    manage_editPageForm = PageTemplateFile('zmi/edit_page', globals(),
+                                           __name__='manage_editPageForm')
+
+    security.declareProtected(ModifyPortalContent, 'manage_editPage')
+    def manage_editPage(self, source, REQUEST=None):
+        """Modify the source of the page."""
+        self.edit(source=source)
+        if REQUEST is not None:
+            REQUEST.RESPONSE.redirect(self.absolute_url()
+                                      + '/manage_editPageForm'
+                                      '?manage_tabs_message=Modified.')
+
+InitializeClass(WikiPage)
+
+
+manage_addWikiPageForm = PageTemplateFile('zmi/zmi_wikiPageAdd', globals(),
+                                          __name__='manage_addWikiPageForm')
 
 def manage_addWikiPage(self, id, title, REQUEST=None):
     """Add the simple content."""

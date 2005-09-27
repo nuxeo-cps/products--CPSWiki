@@ -6,7 +6,9 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Added the possibility to view and edit the source of a wiki page in the ZMI,
+  fixes #676.
+- Added missing InitializeClass statements for the Wiki and WikiPage classes.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Optimized the regexps in baseparser.py by compiling them first.

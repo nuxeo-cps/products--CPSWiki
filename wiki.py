@@ -22,6 +22,7 @@
 import urllib
 
 from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass
 try:
     from Products.CMFCore.permissions import \
          View, ModifyPortalContent, AddPortalContent, DeleteObjects, \
@@ -79,12 +80,13 @@ factory_type_information = (
                    'permissions': (ChangePermissions,)
                    },
                   ),
-      'cps_display_as_document_in_listing' : 1,
+      'cps_display_as_document_in_listing': 1,
       },
     )
 
+
 class WikiLockablePage:
-    __implements__ = (ILockableItem, )
+    __implements__ = (ILockableItem,)
 
     def __init__(self, wikipage, lock_info, lock_duration):
         self.uri = wikipage.absolute_url()
@@ -99,6 +101,7 @@ class WikiLockablePage:
 
     def getLockDuration(self):
         return self.lock_duration
+
 
 class Wiki(CPSBaseFolder):
     """
@@ -320,9 +323,14 @@ class Wiki(CPSBaseFolder):
             page = self[page_id]
             page.clearCache()
 
+InitializeClass(Wiki)
 
-manage_addWikiForm = PageTemplateFile("zmi/zmi_wikiAdd", globals(),
-    __name__ = 'manage_addWikiForm')
+    #
+    # ZMI
+    #
+
+manage_addWikiForm = PageTemplateFile('zmi/wikiAdd', globals(),
+                                      __name__='manage_addWikiForm')
 
 def manage_addWiki(self, id, title='wiki', REQUEST=None):
     """Add the simple content."""
