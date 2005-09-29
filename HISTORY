@@ -1,4 +1,28 @@
 *******************************************
+** CPSWiki V0.4.1 [R1 build 2005/09/29-12:21 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 27709
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Added the possibility to view and edit the source of a wiki page in the ZMI,
+  fixes #676.
+- Made the deletion of a wiki page be a POST requests, fixes #835.
+- Added potential linked pages in the wiki page cache, this fixes #833.
+- Made the wiki raise an exception if asked to create a page that does already
+  exists.
+- Added missing InitializeClass statements for the Wiki and WikiPage classes.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Optimized the regexps in baseparser.py by compiling them first.
+- Changed the API of the WikiPage (especially the render method) to make it
+  manage its cache better.
+
+*******************************************
 ** CPSWiki V0.4.0 [R1 build 2005/09/21-15:29 by fguillaume]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 27306
 Requires:
