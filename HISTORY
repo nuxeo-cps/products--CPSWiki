@@ -1,4 +1,21 @@
 *******************************************
+** CPSWiki V0.4.2 [R1 build 2005/09/29-16:20 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 27729
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fixed a bug in the clearCaches and appPage method that was happening when a
+  wiki did contain other objects than wiki pages.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSWiki V0.4.1 [R1 build 2005/09/29-12:21 by madarche]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 27709
 Requires:

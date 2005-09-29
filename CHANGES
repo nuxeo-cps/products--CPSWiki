@@ -6,8 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
-- Fixed a bug in the clearCaches and appPage method that was happening when a
-  wiki did contain other objects than wiki pages.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
