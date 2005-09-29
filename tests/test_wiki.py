@@ -1,6 +1,8 @@
 # -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
-# Author: Tarek Ziadé <tz@nuxeo.com>
+# Authors:
+# Tarek Ziadé <tz@nuxeo.com>
+# M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -17,16 +19,15 @@
 # 02111-1307, USA.
 #
 # $Id$
+
 import unittest
 #from Testing.ZopeTestCase.doctest import DocTestSuite
-from Testing.ZopeTestCase import ZopeTestCase, _print
+
+from Products.CPSWiki.tests.wiki_test_case import WikiTestCase
 from Products.CPSWiki.wiki import Wiki
 
 
-class WikiTests(ZopeTestCase):
-
-    def _getCurrentUser(self):
-        return 'the user'
+class WikiTests(WikiTestCase):
 
     def test_instance(self):
         wiki = Wiki('wiki')
@@ -37,6 +38,32 @@ class WikiTests(ZopeTestCase):
         page = wiki.addPage('my page')
         self.assertNotEquals(page, None)
         self.assert_(page.title == 'my page')
+
+        # It should be impossible to create a page with the same title
+        try:
+            page = wiki.addPage('my page')
+        except ValueError, exception:
+            self.assertEquals(str(exception),
+                              "The ID \"my-page\" is already in use.")
+
+    def test_renderingAfterAddPage(self):
+        # Testing the fix for #833
+        wiki = Wiki('wiki')
+
+        wiki._getCurrentUser = self._getCurrentUser
+
+        page1 = wiki.addPage('MyPage')
+        page1.edit(source='AnotherPage')
+        self.assertEquals(page1.render(),
+          '<p>AnotherPage<a href="../addPage?title=AnotherPage">?</a></p>\n')
+        self.assertEquals(page1.getLinkedPages(), [])
+        self.assertEquals(page1.getPotentialLinkedPages(), ['AnotherPage'])
+        page2 = wiki.addPage('AnotherPage')
+        # The potential link has become an actual link
+        self.assertEquals(page1.render(),
+          '<p><a href="../AnotherPage/cps_wiki_pageview">AnotherPage</a></p>\n')
+        self.assertEquals(page1.getLinkedPages(), ['AnotherPage'])
+        self.assertEquals(page1.getPotentialLinkedPages(), [])
 
     def test_deletePage(self):
         wiki = Wiki('wiki')
@@ -79,7 +106,6 @@ class WikiTests(ZopeTestCase):
 
         self.assertEquals(len(summary), 3)
 
-
         # adding a circular link to make sure wiki summary knows ho to deal it
         page2.edit(source=' dddddd [page5] za [page3] aaaaza ')
 
@@ -116,19 +142,23 @@ class WikiTests(ZopeTestCase):
 
         summary = wiki.getSummary()
 
-        self.assert_(page1._saved_linked_pages is not None)
-        self.assert_(page1._last_render is not None)
+        self.assert_(page1._render is not None)
+        self.assert_(page1._linked_pages is not None)
+        self.assert_(page1._potential_linked_pages is not None)
 
-        self.assert_(page2._saved_linked_pages is not None)
-        self.assert_(page2._last_render is not None)
+        self.assert_(page2._render is not None)
+        self.assert_(page2._linked_pages is not None)
+        self.assert_(page2._potential_linked_pages is not None)
 
         wiki.clearCaches()
 
-        self.assert_(page1._saved_linked_pages is None)
-        self.assert_(page1._last_render is None)
+        self.assert_(page1._render is None)
+        self.assert_(page1._linked_pages is None)
+        self.assert_(page1._potential_linked_pages is None)
 
-        self.assert_(page2._saved_linked_pages is None)
-        self.assert_(page2._last_render is None)
+        self.assert_(page2._render is None)
+        self.assert_(page2._linked_pages is None)
+        self.assert_(page2._potential_linked_pages is None)
 
     def test_recursiveGetLinks_circular(self):
         # this would lead to a maximum recursion depth exceeded

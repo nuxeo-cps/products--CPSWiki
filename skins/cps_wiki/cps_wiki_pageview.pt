@@ -1,6 +1,6 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
   <metal:block fill-slot="main"
-                 tal:define="content python:here.render()[1];
+                 tal:define="content python:here.render();
                              wiki here/getParent;
                              backlinks python:here.getBackedLinkedPages();
                              files here/objectItems">

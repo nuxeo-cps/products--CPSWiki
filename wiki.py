@@ -19,6 +19,7 @@
 # 02111-1307, USA.
 #
 # $Id$
+
 import urllib
 
 from AccessControl import ClassSecurityInfo
@@ -26,11 +27,11 @@ from Globals import InitializeClass
 try:
     from Products.CMFCore.permissions import \
          View, ModifyPortalContent, AddPortalContent, DeleteObjects, \
-         ChangePermissions
+         ChangePermissions, ManagePortal
 except ImportError: # CPS <= 3.2
     from Products.CMFCore.CMFCorePermissions import \
          View, ModifyPortalContent, AddPortalContent, DeleteObjects, \
-         ChangePermissions
+         ChangePermissions, ManagePortal
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.utils import getToolByName
 from Products.CPSCore.CPSBase import CPSBaseFolder
@@ -40,7 +41,9 @@ from wikipage import WikiPage
 from wikiparsers import parsers, generateParser
 from wikilocker import LockerList, ILockableItem
 
-from zLOG import LOG, DEBUG
+from zLOG import LOG, DEBUG, TRACE
+
+LOG_KEY = 'CPSWiki.wiki'
 
 factory_type_information = (
     { 'id': 'Wiki',
@@ -233,28 +236,29 @@ class Wiki(CPSBaseFolder):
 
     security.declareProtected(AddPortalContent, 'addPage')
     def addPage(self, title, REQUEST=None):
-        """ creates and adds a wiki page """
+        """Create and add a wiki page."""
         if isinstance(title, unicode):
             title = title.encode('ISO-8859-15')
         wikipage_id = generateId(title, lower=False)
-        stepper = 1
+        if wikipage_id in self.objectIds():
+            raise ValueError("The ID \"%s\" is already in use." % wikipage_id)
 
-        while wikipage_id in self.objectIds():
-            wikipage_id = wikipage_id + str(stepper)
-            stepper += 1
-
-        # creates the instance
-        wikipage = WikiPage(wikipage_id, '')
+        # Creating the actual page
+        wikipage = WikiPage(wikipage_id)
         wikipage.title = title
         wikipage_id = self._setObject(wikipage_id, wikipage)
         wikipage = self[wikipage_id]
 
-        # empty backlink pages
-        for page_id in wikipage.getBackedLinkedPages():
+        # Clearing the cache of the pages that have a reference to this page.
+        for page_id in self.objectIds():
             page = self[page_id]
-            page.clearCache()
+            potential_links = page.getPotentialLinkedPages()
+            #LOG(LOG_KEY, TRACE, "page %s has potential_links = %s"
+            #    % (page_id, potential_links))
+            if potential_links:
+                page.clearCache()
 
-        # returns to the TOC
+        # Redirecting to the edit view of the newly created page
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(wikipage.absolute_url() +
                                       '/cps_wiki_pageedit')
@@ -323,11 +327,31 @@ class Wiki(CPSBaseFolder):
             page = self[page_id]
             page.clearCache()
 
-InitializeClass(Wiki)
-
     #
     # ZMI
     #
+
+    manage_options = CPSBaseFolder.manage_options[:1] + (
+        {'label': "Cache",
+         'action': 'manage_cacheForm'
+         },
+        ) + CPSBaseFolder.manage_options[1:]
+
+    security.declareProtected(ManagePortal, 'manage_cacheForm')
+    manage_cacheForm = PageTemplateFile('zmi/clear_cache', globals(),
+                                           __name__='manage_cacheForm')
+
+    security.declareProtected(ManagePortal, 'manage_clearCache')
+    def manage_clearCache(self, REQUEST=None):
+        """Clear all the caches of the wiki."""
+        self.clearCaches()
+        if REQUEST is not None:
+            REQUEST.RESPONSE.redirect(self.absolute_url()
+                                      + '/manage_cacheForm'
+                                      '?manage_tabs_message=Modified.')
+
+InitializeClass(Wiki)
+
 
 manage_addWikiForm = PageTemplateFile('zmi/wikiAdd', globals(),
                                       __name__='manage_addWikiForm')

@@ -8,8 +8,13 @@ Bug fixes:
 ~~~~~~~~~~
 - Added the possibility to view and edit the source of a wiki page in the ZMI,
   fixes #676.
-- Added missing InitializeClass statements for the Wiki and WikiPage classes.
 - Made the deletion of a wiki page be a POST requests, fixes #835.
+- Added potential linked pages in the wiki page cache, this fixes #833.
+- Made the wiki raise an exception if asked to create a page that does already
+  exists.
+- Added missing InitializeClass statements for the Wiki and WikiPage classes.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Optimized the regexps in baseparser.py by compiling them first.
+- Changed the API of the WikiPage (especially the render method) to make it
+  manage its cache better.

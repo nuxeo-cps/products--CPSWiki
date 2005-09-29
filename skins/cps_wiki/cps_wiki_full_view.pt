@@ -9,7 +9,7 @@
     </ul>
     <div tal:repeat="item here/objectItems" class="group">
 
-      <tal:block tal:define="content python:item[1].render()[1];
+      <tal:block tal:define="content python:item[1].render();
                               id python:item[1].title_or_id()">
         <a tal:attributes="name id"></a>
         <h4 tal:content="id"/>

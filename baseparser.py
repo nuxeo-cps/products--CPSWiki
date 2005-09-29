@@ -53,6 +53,8 @@ WIKINAME1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (B, U, L, U, U + L)
 WIKINAME2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (B, U, U, L, U + L)
 # [xxx] but not [[xxx]] or [xxx[xxx] or [xxx]xxx]
 BRACKETED_CONTENT = r'\[([^][\n]+)\]'
+# Proposed more restrictive expression
+#BRACKETED_CONTENT = r'\[((%s.-_ )+)\]' % (U + L)
 
 # WIKILINK is just a combitation of the possibilities of WIKINAME1, WIKINAME2,
 # BRACKETED_CONTENT and URL.
@@ -69,16 +71,19 @@ class BaseParser:
     def getId(self):
         return 'baseparser'
 
-    def parseContent(self, wiki, content):
-        """Store a reference on the linked pages and return those references
-        along with the render of the content.
+
+    def parseContent(self, content, wiki):
+        """Return the render of the provided content along with references on
+        the linked pages and potentially linked pages.
         """
         self.wiki = wiki
         self.linked_pages = []
+        self.potential_linked_pages = []
         # A regexp can be with either a replacement string or a replacement
         # function.
         render = WIKILINK_REGEXP.sub(self._wikilinkReplace, content)
-        return self.linked_pages, render
+        return render, self.linked_pages, self.potential_linked_pages
+
 
     def _wikilinkReplace(self, match):
         """Replace an occurrence of the wikilink regexp or one of the
@@ -136,6 +141,9 @@ class BaseParser:
             if m_nospace not in self.linked_pages:
                 self.linked_pages.append(m_nospace)
             return '<a href="../%s/cps_wiki_pageview">%s</a>' % (quote(m_nospace), m)
-
-        # otherwise, provide a "?" creation link
-        return '%s<a href="../addPage?title=%s">?</a>' % (morig, quote(m))
+        else:
+            # Adding a potential page
+            if m_nospace not in self.potential_linked_pages:
+                self.potential_linked_pages.append(m_nospace)
+            # Providing a "?" creation link
+            return '%s<a href="../addPage?title=%s">?</a>' % (morig, quote(m))

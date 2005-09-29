@@ -39,13 +39,14 @@ class RstParser(BaseParser):
     def getId(self):
         return 'restructuredtext'
 
-    def parseContent(self, wiki, content):
-        """ parses content """
+    def parseContent(self, content, wiki):
+        """Return the render of the provided content along with references on
+        the linked pages and potentially linked pages.
+        """
         if rst_available:
             content = HTML(content, output_encoding=self.output_encoding,
                            input_encoding=self.input_encoding,
                            initial_header_level=2, report_level=0)
 
-        # called for references
-        content = BaseParser.parseContent(self, wiki, content)
-        return content
+        result = BaseParser.parseContent(self, content, wiki)
+        return result

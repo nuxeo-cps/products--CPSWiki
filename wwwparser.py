@@ -343,10 +343,10 @@ class WWMLTranslator :
             splitted = self.leadingSpaces.split(line)
             if len(splitted) == 3:
                 line = self.spaceChunks.sub("\t", splitted[1]) + splitted[2]
-            if self.codeLine.match( line ) :
-                self.appendCodeLine( line )
+            if self.codeLine.match(line) :
+                self.appendCodeLine(line)
             else :
-                self.parseLine( line )
+                self.parseLine(line)
         return self.translatedLines
 
 class WwwParser(BaseParser):
@@ -360,16 +360,16 @@ class WwwParser(BaseParser):
 
     def _translate_WWML(self, text):
         """ calls WWMLTranslator with given text """
-
-        lines = text.split('\r\n')    # XXX change this, not reliable on linux
+        # XXX change this, not reliable on linux
+        lines = text.split('\r\n')
         lines = self.translator.translate(lines)
         text = '\r\n'.join(lines)
         return text
 
-    def parseContent(self, wiki, content):
-        """ parses content """
-
+    def parseContent(self, content, wiki):
+        """Return the render of the provided content along with references on
+        the linked pages and potentially linked pages.
+        """
         content = self._translate_WWML(content)
-        # called for references
-        content = BaseParser.parseContent(self, wiki, content)
-        return content
+        result = BaseParser.parseContent(self, content, wiki)
+        return result

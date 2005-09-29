@@ -20,7 +20,7 @@
 #
 # $Id$
 
-from zLOG import LOG, DEBUG
+from zLOG import LOG, DEBUG, TRACE
 
 import urllib
 from datetime import datetime
@@ -46,7 +46,7 @@ from Products.CPSCore.CPSBase import CPSBaseDocument
 
 from wikiversionning import VersionContent
 
-LOG_KEY = 'CPSWiki.wikipage'
+GLOG_KEY = 'CPSWiki.wikipage'
 
 factory_type_information = (
     { 'id': 'Wiki Page',
@@ -125,8 +125,18 @@ class WikiPage(CPSBaseFolder):
         CPSBaseFolder.__init__(self, id, **kw)
         initial_tags = self._createVersionTag()
         self.source = ZODBVersionContent(source, initial_tags)
-        self._saved_linked_pages = None
-        self._last_render = None
+
+        # This is a cache. It contains the last HTML render as a string.
+        self._render = None
+
+        # This is a cache. It contains the IDs of the pages this page is linked
+        # to.
+        self._linked_pages = None
+
+        # This is a cache. It contains the IDs of the pages that can be created
+        # from this page.
+        self._potential_linked_pages = None
+
 
     def _getCurrentDateStr(self):
         """ gets current date """
@@ -167,35 +177,61 @@ class WikiPage(CPSBaseFolder):
     security.declareProtected(View, 'render')
     def render(self):
         """Render the wiki page source."""
-        if not hasattr(self, '_last_render'):
-            self._last_render = None
-        if self._last_render is not None:
-            return self._last_render
-        source = self.source.getLastVersion()[0]
-        render = self.renderLinks(source)
-        self._last_render = render
-        return render
-
-    security.declareProtected(View, 'renderLinks')
-    def renderLinks(self, content):
-        """Store a reference on the linked pages and return those references
-        along with the render of the content.
-        """
-        wiki = self.getParent()
-        parser = wiki.getParser()
-        return parser.parseContent(wiki, content)
+        LOG_KEY = GLOG_KEY + '.render'
+        if not hasattr(self, '_render'):
+            # Compatibility:
+            # In previous versions of CPSWiki there was no _render
+            self._render = None
+        if self._render is None:
+            self.updateCache()
+        #LOG(LOG_KEY, TRACE, "self._render = %s" % self._render)
+        return self._render
 
     security.declareProtected(View, 'getLinkedPages')
     def getLinkedPages(self):
-        """Create link with founded [pages]."""
-        if not hasattr(self, '_saved_linked_pages'):
-            self._saved_linked_pages = None
-        if self._saved_linked_pages is not None:
-            return self._saved_linked_pages
-        source = self.source.getLastVersion()[0]
-        links, rendered = self.renderLinks(source)
-        self._saved_linked_pages = links
-        return links
+        """Create link with founded [pages].
+
+        This method can also return the links of potential pages that can be
+        created from this page.
+        """
+        if not hasattr(self, '_linked_pages'):
+            # Compatibility:
+            # In previous versions of CPSWiki there was no _linked_pages
+            self._linked_pages = None
+        if self._linked_pages is None:
+            self.updateCache()
+        return self._linked_pages
+
+    security.declareProtected(View, 'getPotentialLinkedPages')
+    def getPotentialLinkedPages(self):
+        """Create link with founded [pages].
+
+        This method can also return the links of potential pages that can be
+        created from this page.
+        """
+        if not hasattr(self, '_potential_linked_pages'):
+            # Compatibility:
+            # In previous versions of CPSWiki there was no _potential_linked_pages
+            self._potential_linked_pages = None
+        if self._potential_linked_pages is None:
+            self.updateCache()
+        return self._potential_linked_pages
+
+    security.declareProtected(View, 'updateCache')
+    def updateCache(self):
+        """Update all the caches of the page with the current computed values.
+        """
+        LOG_KEY = GLOG_KEY + '.updateCache'
+        wiki = self.getParent()
+        parser = wiki.getParser()
+        #LOG(LOG_KEY, TRACE, "self.source = %s" % str(self.source))
+        source = self.getSource()
+        #LOG(LOG_KEY, TRACE, "source = %s" % source)
+        render, links, potential_links = parser.parseContent(source, wiki)
+        #LOG(LOG_KEY, TRACE, "render = %s" % render)
+        self._render = render
+        self._linked_pages = links
+        self._potential_linked_pages = potential_links
 
     security.declareProtected(View, 'getBackedLinkedPages')
     def getBackedLinkedPages(self):
@@ -263,9 +299,11 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected(DeleteObjects, 'delete')
     def delete(self, REQUEST=None):
-        """suicide"""
+        """Delete this page."""
         wiki = self.getParent()
         wiki.deletePage(self.id, REQUEST)
+        # XXX: This can be optimized so that only pages pointing to this page
+        # have their cache cleared.
         wiki.clearCaches()
 
     security.declareProtected('View archived revisions', 'getAllDiffs')
@@ -331,8 +369,9 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected(ModifyPortalContent, 'clearCache')
     def clearCache(self):
-        self._last_render = None
-        self._saved_linked_pages = None
+        self._render = None
+        self._linked_pages = None
+        self._potential_linked_pages = None
 
     #
     # ZMI

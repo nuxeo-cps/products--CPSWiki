@@ -21,12 +21,14 @@
 import Interface
 
 class WikiParserInterface(Interface.Base):
-    """ defines an interface for all wiki parser
+    """Define an interface for all wiki parser.
     """
+
     def parseContent(content, wiki):
-        """ parses content
+        """Return the render of the provided content along with references on
+        the linked pages and potentially linked pages.
         """
 
     def getId():
-        """ returns a parser unique ID
+        """Return a parser unique ID.
         """
