@@ -31,8 +31,12 @@ Features
 + internal page caching
 + ability to upload files into pages
 
-Things do be done
-=================
+TODO
+====
+
++ add a unit test that puts non wiki pages in a wiki
++ improve cache clearing when deleting a page
++ Wiki objects should be BTree folders
 
 + add a js warning on page deletion
 + add UI to change page title
