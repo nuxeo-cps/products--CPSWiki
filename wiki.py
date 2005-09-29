@@ -250,8 +250,10 @@ class Wiki(CPSBaseFolder):
         wikipage = self[wikipage_id]
 
         # Clearing the cache of the pages that have a reference to this page.
-        for page_id in self.objectIds():
-            page = self[page_id]
+        for id, object in self.objectItems():
+            if object.portal_type != WikiPage.portal_type:
+                continue
+            page = self[id]
             potential_links = page.getPotentialLinkedPages()
             #LOG(LOG_KEY, TRACE, "page %s has potential_links = %s"
             #    % (page_id, potential_links))
@@ -323,8 +325,10 @@ class Wiki(CPSBaseFolder):
     security.declareProtected(ModifyPortalContent, 'clearCaches')
     def clearCaches(self):
         """ clear all caches """
-        for page_id in list(self.objectIds()):
-            page = self[page_id]
+        for id, object in self.objectItems():
+            if object.portal_type != WikiPage.portal_type:
+                continue
+            page = self[id]
             page.clearCache()
 
     #
