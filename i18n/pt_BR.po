@@ -11,8 +11,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"POT-Creation-Date: 2005-09-27 12:27default\n"
-"PO-Revision-Date: 2005-06-17 18:05-0300\n"
+"POT-Creation-Date: 2005-06-23 17:31default\n"
+"PO-Revision-Date: 2005-09-29 15:01-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,14 +47,7 @@ msgstr "Links Anteriores"
 msgid ""
 "The page is locked by someone else, you can read it but not write to it at "
 "this time."
-msgstr ""
-
-#.   <p class="message">
-#.         We need a confirmation to delete this page.
-#.       </p>
-#: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
-msgid "description_confirm_page_delete"
-msgstr ""
+msgstr "Esta página está bloqueada por alguém; você pode lê-la mas não escrever nela neste momento."
 
 #.   <button type="submit" name="upload">upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
@@ -78,8 +71,3 @@ msgstr "Visão expandida"
 
 msgid "File uploaded."
 msgstr "Arquivo enviado"
-
-# Status messages (psm)
-# ######################
-msgid "psm_page_deleted"
-msgstr ""
