@@ -19,7 +19,6 @@
 # 02111-1307, USA.
 #
 # $Id$
-#from Products.CMFCore.permissions import setDefaultRoles
 
 from Products.CPSInstaller.CPSInstaller import CPSInstaller
 
