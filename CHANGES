@@ -9,6 +9,7 @@ New features:
 Bug fixes:
 ~~~~~~~~~~
 - Improved the cache clearing when deleting a page.
+- Made it possible to change the title of a page from the ZMI. It may fix #905.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Add a unit test about non-wiki-pages content present in a wiki

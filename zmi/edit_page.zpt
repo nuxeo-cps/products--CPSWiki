@@ -5,13 +5,28 @@
     tal:replace="structure here/manage_form_title">Form Title</h3>
 
 <p class="form-help">
-Edit this content
+You can edit the source of this wiki page.
+</p>
+<p class="form-help">
+You can also edit the title of this wiki page,
+but do note that <strong>changing the title of a wiki page here is dangerous</strong>
+since it will not change the id of the page.
+You will have to change the id of the page yourself and all the links that used to
+point to this page.
 </p>
 
 <form action="manage_editPage" method="post">
-<textarea name="source"
+<p>
+<label for="wikipageTitle">Title :</label>
+<input type="text" name="title" id="wikipageTitle"
+       tal:attributes="value here/title"/>
+</p>
+<p>
+<label for="wikipageSource">Source :</label><br/>
+<textarea name="source" id="wikipageSource"
     style="width: 100%;" cols="50" rows="30"
     tal:content="python:here.getSource()"></textarea>
+</p>
 <p>
   <input type="submit"  value="Modify" />
 </p>

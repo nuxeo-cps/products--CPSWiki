@@ -384,9 +384,9 @@ class WikiPage(CPSBaseFolder):
                                            __name__='manage_editPageForm')
 
     security.declareProtected(ModifyPortalContent, 'manage_editPage')
-    def manage_editPage(self, source, REQUEST=None):
+    def manage_editPage(self, title, source, REQUEST=None):
         """Modify the source of the page."""
-        self.edit(source=source)
+        self.edit(title, source)
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(self.absolute_url()
                                       + '/manage_editPageForm'
