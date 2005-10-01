@@ -1,4 +1,23 @@
 *******************************************
+** CPSWiki V0.4.3 [R1 build 2005/10/01-15:09 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 27804
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Made CPSWiki usable with older versions of CPS (as old as CPS 3.2).
+- Updated Brazilian Portuguese translations (Thanks to Mario Olimpio de Menezes
+  <mario [at] curiango.ipen.br>)
+Bug fixes:
+~~~~~~~~~~
+- Improved the cache clearing when deleting a page.
+- Made it possible to change the title of a page from the ZMI. It may fix #905.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Add a unit test about non-wiki-pages content present in a wiki
+
+*******************************************
 ** CPSWiki V0.4.2 [R1 build 2005/09/29-16:20 by madarche]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 27729
 Requires:
