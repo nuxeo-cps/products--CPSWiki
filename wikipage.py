@@ -129,8 +129,7 @@ class WikiPage(CPSBaseFolder):
         # This is a cache. It contains the last HTML render as a string.
         self._render = None
 
-        # This is a cache. It contains the IDs of the pages this page is linked
-        # to.
+        # This is a cache. It contains the IDs of the pages this page links to
         self._linked_pages = None
 
         # This is a cache. It contains the IDs of the pages that can be created
@@ -183,45 +182,39 @@ class WikiPage(CPSBaseFolder):
             # In previous versions of CPSWiki there was no _render
             self._render = None
         if self._render is None:
-            self.updateCache()
+            self._updateCache()
         #LOG(LOG_KEY, TRACE, "self._render = %s" % self._render)
         return self._render
 
     security.declareProtected(View, 'getLinkedPages')
     def getLinkedPages(self):
-        """Create link with founded [pages].
-
-        This method can also return the links of potential pages that can be
-        created from this page.
+        """Return the IDs of the pages this page links to.
         """
         if not hasattr(self, '_linked_pages'):
             # Compatibility:
             # In previous versions of CPSWiki there was no _linked_pages
             self._linked_pages = None
         if self._linked_pages is None:
-            self.updateCache()
+            self._updateCache()
         return self._linked_pages
 
     security.declareProtected(View, 'getPotentialLinkedPages')
     def getPotentialLinkedPages(self):
-        """Create link with founded [pages].
-
-        This method can also return the links of potential pages that can be
-        created from this page.
+        """Return the IDs of the pages that can be created from this page.
         """
         if not hasattr(self, '_potential_linked_pages'):
             # Compatibility:
             # In previous versions of CPSWiki there was no _potential_linked_pages
             self._potential_linked_pages = None
         if self._potential_linked_pages is None:
-            self.updateCache()
+            self._updateCache()
         return self._potential_linked_pages
 
-    security.declareProtected(View, 'updateCache')
-    def updateCache(self):
+    security.declareProtected(View, '_updateCache')
+    def _updateCache(self):
         """Update all the caches of the page with the current computed values.
         """
-        LOG_KEY = GLOG_KEY + '.updateCache'
+        LOG_KEY = GLOG_KEY + '._updateCache'
         wiki = self.getParent()
         parser = wiki.getParser()
         #LOG(LOG_KEY, TRACE, "self.source = %s" % str(self.source))
@@ -235,7 +228,8 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected(View, 'getBackedLinkedPages')
     def getBackedLinkedPages(self):
-        """Get pages where this page is linked."""
+        """Return the IDs of the pages where this page is linked.
+        """
         back_links = []
         wiki = self.getParent()
         for id, object in wiki.objectItems():
@@ -302,9 +296,11 @@ class WikiPage(CPSBaseFolder):
         """Delete this page."""
         wiki = self.getParent()
         wiki.deletePage(self.id, REQUEST)
-        # XXX: This can be optimized so that only pages pointing to this page
-        # have their cache cleared.
-        wiki.clearCaches()
+
+        # Clearing the cache of the pages that have links to this page
+        for id in self.getBackedLinkedPages():
+            page = wiki[id]
+            page.clearCache()
 
     security.declareProtected('View archived revisions', 'getAllDiffs')
     def getAllDiffs(self):

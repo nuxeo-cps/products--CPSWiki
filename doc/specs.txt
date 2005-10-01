@@ -35,7 +35,6 @@ TODO
 ====
 
 + add a unit test that puts non wiki pages in a wiki
-+ improve cache clearing when deleting a page
 + Wiki objects should be BTree folders
 
 + add a js warning on page deletion

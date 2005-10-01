@@ -5,10 +5,9 @@ New features:
 ~~~~~~~~~~~~~
 - updated Brazilian Portuguese translations (Thanks to Mario Olimpio de Menezes
   <mario [at] curiango.ipen.br>)
--
 Bug fixes:
 ~~~~~~~~~~
--
+- Improved the cache clearing when deleting a page.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
