@@ -11,4 +11,4 @@ Bug fixes:
 - Improved the cache clearing when deleting a page.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Add a unit test about non-wiki-pages content present in a wiki

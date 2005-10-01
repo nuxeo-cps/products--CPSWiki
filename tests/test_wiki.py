@@ -23,6 +23,10 @@
 import unittest
 #from Testing.ZopeTestCase.doctest import DocTestSuite
 
+from cStringIO import StringIO
+from OFS.Image import Image, File
+from OFS.Folder import Folder
+
 from Products.CPSWiki.tests.wiki_test_case import WikiTestCase
 from Products.CPSWiki.wiki import Wiki
 
@@ -37,7 +41,7 @@ class WikiTests(WikiTestCase):
         wiki = Wiki('wiki')
         page = wiki.addPage('my page')
         self.assertNotEquals(page, None)
-        self.assert_(page.title == 'my page')
+        self.assertEquals(page.title, 'my page')
 
         # It should be impossible to create a page with the same title
         try:
@@ -45,6 +49,34 @@ class WikiTests(WikiTestCase):
         except ValueError, exception:
             self.assertEquals(str(exception),
                               "The ID \"my-page\" is already in use.")
+
+
+    def test_wikiWithPagesAndObjects(self):
+        # Testing that the wiki is not broken if it contains not only wiki pages
+        # but also images and files as a real life wiki does.
+        wiki = Wiki('wiki')
+
+        page1 = wiki.addPage('my page 1')
+        page2 = wiki.addPage('my page 2')
+        obj1 = File('my file id', 'my file title', StringIO())
+        wiki._setObject('my file', obj1)
+        obj2 = File('my image id', 'my image title', StringIO())
+        wiki._setObject('my image', obj2)
+        obj3 = Folder('my folder id')
+        wiki._setObject('my folder', obj3)
+
+        # There are now 5 objects in the wiki
+        self.assertEquals(len(wiki.objectItems()), 5)
+
+        # No operations should break
+        self.assertNotEquals(wiki.getSummary(), None)
+        self.assertEquals(wiki.clearCaches(), None)
+        for page in (page1, page2):
+            self.assertNotEquals(page.render(), None)
+            self.assertNotEquals(page.getLinkedPages(), None)
+            self.assertNotEquals(page.getPotentialLinkedPages(), None)
+            self.assertNotEquals(page.getBackedLinkedPages(), None)
+
 
     def test_renderingAfterAddPage(self):
         # Testing the fix for #833
@@ -65,13 +97,15 @@ class WikiTests(WikiTestCase):
         self.assertEquals(page1.getLinkedPages(), ['AnotherPage'])
         self.assertEquals(page1.getPotentialLinkedPages(), [])
 
+
     def test_deletePage(self):
         wiki = Wiki('wiki')
         page = wiki.addPage('my page')
         self.assertNotEquals(page, None)
-        self.assert_(page.title == 'my page')
+        self.assertEquals(page.title, 'my page')
         wiki.deletePage('my page')
         self.assertEquals(wiki.objectIds(), [])
+
 
     def test_locking(self):
         wiki = Wiki('wiki')
@@ -89,6 +123,7 @@ class WikiTests(WikiTestCase):
         wiki.unLockPage(page)
         li = wiki.pageLockInfo(page)
         self.assertEquals(li, None)
+
 
     def test_getSummary(self):
         wiki = Wiki('wiki')
@@ -127,6 +162,7 @@ class WikiTests(WikiTestCase):
         sub = content[0]
         self.assertEquals(sub['page'], page2)
 
+
     def test_clearCaches(self):
         wiki = Wiki('wiki')
         wiki._getCurrentUser = self._getCurrentUser
@@ -160,6 +196,7 @@ class WikiTests(WikiTestCase):
         self.assert_(page2._linked_pages is None)
         self.assert_(page2._potential_linked_pages is None)
 
+
     def test_recursiveGetLinks_circular(self):
         # this would lead to a maximum recursion depth exceeded
         # when a page is refering to itself
@@ -178,7 +215,6 @@ class WikiTests(WikiTestCase):
         summary = wiki.getSummary()
 
 
-
 def test_suite():
     """
     return unittest.TestSuite((
@@ -192,4 +228,3 @@ def test_suite():
 
 if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')
-

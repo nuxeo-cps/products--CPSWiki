@@ -324,7 +324,9 @@ class Wiki(CPSBaseFolder):
 
     security.declareProtected(ModifyPortalContent, 'clearCaches')
     def clearCaches(self):
-        """ clear all caches """
+        """Clear all the caches contained in this wiki, including those of the
+        pages.
+        """
         for id, object in self.objectItems():
             if object.portal_type != WikiPage.portal_type:
                 continue
