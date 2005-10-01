@@ -30,7 +30,7 @@ except ImportError:
     # CPS 3.2
     from Products.CMFCore.CMFCorePermissions import \
     View, ModifyPortalContent, AddPortalContent, DeleteObjects, setDefaultRoles
-    
+
 try:
     from Products.CPSWorkflow.transitions import \
      TRANSITION_INITIAL_PUBLISHING, TRANSITION_INITIAL_CREATE, \
@@ -52,7 +52,7 @@ except ImportError:
     TRANSITION_BEHAVIOR_CHECKOUT, TRANSITION_ALLOW_CHECKIN, \
     TRANSITION_BEHAVIOR_CHECKIN, TRANSITION_ALLOWSUB_DELETE, \
     TRANSITION_ALLOWSUB_MOVE, TRANSITION_ALLOWSUB_COPY
-    
+
 from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION, \
      TRIGGER_AUTOMATIC
 

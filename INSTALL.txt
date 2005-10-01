@@ -1,8 +1,8 @@
 1) Put the CPSWiki in Products.
 
-2) If you are running CPS 3.3 or later, "install" CPSWiki using
-portal_quickinstaller at the cps root from the ZMI.
+2a) If you are running CPS 3.3 or later, you may "install" CPSWiki using
+portal_quickinstaller at the root of your CPS instance from the ZMI.
 
-2bis) (Experimental) If you are running CPS 3.2.x, get CPSUtil and
-CMFQuickInstaller from CPS 3.3.x and put them in Products too. Instanciate
-a portal_quickinstaller from the ZMI, the go to 2).
+2b) If you are running CPS 3.2.x, get also CPSUtil from CPS 3.3.x.
+You may also use CMFQuickInstaller from CPS 3.3.x and put it in the Products
+directory too. Instanciate a portal_quickinstaller from the ZMI, then go to 2a).

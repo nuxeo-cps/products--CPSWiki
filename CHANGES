@@ -3,7 +3,8 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- updated Brazilian Portuguese translations (Thanks to Mario Olimpio de Menezes
+- Made CPSWiki usable with older versions of CPS (as old as CPS 3.2).
+- Updated Brazilian Portuguese translations (Thanks to Mario Olimpio de Menezes
   <mario [at] curiango.ipen.br>)
 Bug fixes:
 ~~~~~~~~~~
