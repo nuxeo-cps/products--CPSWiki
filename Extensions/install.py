@@ -58,7 +58,9 @@ from Products.DCWorkflow.Transitions import TRIGGER_USER_ACTION, \
 SECTIONS_ID = 'sections'
 WORKSPACES_ID = 'workspaces'
 
-SKINS = {'cps_wiki': 'Products/CPSWiki/skins/cps_wiki'}
+SKINS = {'cps_wiki': 'Products/CPSWiki/skins/cps_wiki',
+         'cps_wiki_3_2':'Products/CPSWiki/skins/cps_wiki_3_2',
+         }
 
 class CPSWikiInstaller(CPSInstaller):
     """CPSWiki Installer
@@ -85,12 +87,16 @@ class CPSWikiInstaller(CPSInstaller):
         """
         ptypes = {
             'Wiki': {
-                'typeinfo_name': 'CPSWiki: Wiki (Wiki)',
+                #RSC adaptation for CMF former than 1.5
+                #'typeinfo_name': 'CPSWiki: Wiki (Wiki)',
+                'typeinfo_name': 'CPSWiki: Wiki',
                 'add_meta_type': 'Factory-based Type Information',
                 'allowed_content_types': ('Wiki Page',),
                 },
             'Wiki Page': {
-                'typeinfo_name': 'CPSWiki: Wiki Page (Wiki Page)',
+                #RSC adaptation for CMF former than 1.5
+                #'typeinfo_name': 'CPSWiki: Wiki Page (Wiki Page)',
+                'typeinfo_name': 'CPSWiki: Wiki Page',
                 'add_meta_type': 'Factory-based Type Information',
                 'allowed_content_types': (),
                 },
