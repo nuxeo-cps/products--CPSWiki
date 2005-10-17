@@ -80,6 +80,7 @@ class WikiTests(WikiTestCase):
 
     def test_renderingAfterAddPage(self):
         # Testing the fix for #833
+        # XXX need to take care of boxes that does not have rest installed
         wiki = Wiki('wiki')
 
         wiki._getCurrentUser = self._getCurrentUser
@@ -87,13 +88,13 @@ class WikiTests(WikiTestCase):
         page1 = wiki.addPage('MyPage')
         page1.edit(source='AnotherPage')
         self.assertEquals(page1.render(),
-          'AnotherPage<a href="../addPage?title=AnotherPage">?</a>')
+          '<p>AnotherPage<a href="../addPage?title=AnotherPage">?</a></p>\n')
         self.assertEquals(page1.getLinkedPages(), [])
         self.assertEquals(page1.getPotentialLinkedPages(), ['AnotherPage'])
         page2 = wiki.addPage('AnotherPage')
         # The potential link has become an actual link
         self.assertEquals(page1.render(),
-          '<a href="../AnotherPage/cps_wiki_pageview">AnotherPage</a>')
+          '<p><a href="../AnotherPage/cps_wiki_pageview">AnotherPage</a></p>\n')
         self.assertEquals(page1.getLinkedPages(), ['AnotherPage'])
         self.assertEquals(page1.getPotentialLinkedPages(), [])
 
