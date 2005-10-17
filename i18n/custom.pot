@@ -51,3 +51,14 @@ msgstr ""
 msgid "psm_page_deleted"
 msgstr ""
 
+msgid "psm_properties_changed"
+msgstr ""
+
+msgid "cpswiki_choose_parser"
+msgstr ""
+
+msgid "cpswiki_button_submit"
+msgstr ""
+
+msgid "action_properties"
+msgstr ""

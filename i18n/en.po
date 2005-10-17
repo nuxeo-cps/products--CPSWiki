@@ -84,3 +84,15 @@ msgstr "File uploaded."
 # ######################
 msgid "psm_page_deleted"
 msgstr "Page deleted"
+
+msgid "psm_properties_changed"
+msgstr "Properties changed"
+
+msgid "cpswiki_choose_parser"
+msgstr "Parser in use"
+
+msgid "cpswiki_button_submit"
+msgstr "Modify"
+
+msgid "action_properties"
+msgstr "Properties"

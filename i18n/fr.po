@@ -84,3 +84,16 @@ msgstr "Fichier chargé."
 # ######################
 msgid "psm_page_deleted"
 msgstr "Page supprimée"
+
+msgid "psm_properties_changed"
+msgstr "Propriétés modifiées"
+
+msgid "cpswiki_choose_parser"
+msgstr "Parser utilisé"
+
+msgid "cpswiki_button_submit"
+msgstr "Modifier"
+
+msgid "action_properties"
+msgstr "Propriétés"
+

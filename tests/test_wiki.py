@@ -87,13 +87,13 @@ class WikiTests(WikiTestCase):
         page1 = wiki.addPage('MyPage')
         page1.edit(source='AnotherPage')
         self.assertEquals(page1.render(),
-          '<p>AnotherPage<a href="../addPage?title=AnotherPage">?</a></p>\n')
+          'AnotherPage<a href="../addPage?title=AnotherPage">?</a>')
         self.assertEquals(page1.getLinkedPages(), [])
         self.assertEquals(page1.getPotentialLinkedPages(), ['AnotherPage'])
         page2 = wiki.addPage('AnotherPage')
         # The potential link has become an actual link
         self.assertEquals(page1.render(),
-          '<p><a href="../AnotherPage/cps_wiki_pageview">AnotherPage</a></p>\n')
+          '<a href="../AnotherPage/cps_wiki_pageview">AnotherPage</a>')
         self.assertEquals(page1.getLinkedPages(), ['AnotherPage'])
         self.assertEquals(page1.getPotentialLinkedPages(), [])
 
@@ -213,6 +213,13 @@ class WikiTests(WikiTestCase):
         page3.edit(source=' dddddd [page1] [page 2] ezfezf')
 
         summary = wiki.getSummary()
+
+    def test_changeProperties(self):
+        wiki = Wiki('wiki')
+        wiki.changeProperties(parser='wikiwikiweb')
+        self.assertEquals(wiki.parser, 'wikiwikiweb')
+        wiki.changeProperties(parser='html')
+        self.assertEquals(wiki.parser, 'html')
 
 
 def test_suite():

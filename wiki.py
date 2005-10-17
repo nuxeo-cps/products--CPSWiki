@@ -65,7 +65,12 @@ factory_type_information = (
                   {'id': 'full_view',
                    'name': 'action_full_view',
                    'action': 'cps_wiki_full_view',
-                   'permissions': (View,),
+                   'permissions': (ModifyPortalContent,),
+                   },
+                  {'id': 'properties',
+                   'name': 'action_properties',
+                   'action': 'cps_wiki_properties',
+                   'permissions': (ModifyPortalContent,),
                    },
                  {'id': 'add_page',
                    'name': 'action_add_page',
@@ -332,6 +337,20 @@ class Wiki(CPSBaseFolder):
                 continue
             page = self[id]
             page.clearCache()
+
+    security.declareProtected(ModifyPortalContent, 'changeProperties')
+    def changeProperties(self, REQUEST=None, **kw):
+        """ let the user change global properties """
+        if hasattr(REQUEST, 'form'):
+            for element in REQUEST.form:
+                kw[element] = REQUEST.form[element]
+
+        self.manage_changeProperties(**kw)
+
+        if REQUEST is not None:
+            psm = 'psm_properties_changed'
+            REQUEST.RESPONSE.redirect(self.absolute_url()+\
+                '/cps_wiki_properties?portal_status_message=%s' % psm)
 
     #
     # ZMI
