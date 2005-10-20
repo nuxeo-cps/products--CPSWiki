@@ -94,6 +94,16 @@ msgstr "Parser utilisé"
 msgid "cpswiki_button_submit"
 msgstr "Modifier"
 
+msgid "action_syntax_help"
+msgstr "Aide sur la syntaxe"
+
 msgid "action_properties"
 msgstr "Propriétés"
+
+msgid "cpswiki_member_help"
+msgstr ""
+"utilisation: <i>[member:member id, text]</i><br/>"
+"Renvoi un lien vers la fiche du membre. "
+"Si text est donné, est affiché dans le lien à la place de l'id du membre<br/>"
+"exemple: <i>[member:manager, Le manager]</i>"
 

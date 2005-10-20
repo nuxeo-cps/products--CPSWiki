@@ -94,5 +94,16 @@ msgstr "Parser in use"
 msgid "cpswiki_button_submit"
 msgstr "Modify"
 
+msgid "action_syntax_help"
+msgstr "Syntax help"
+
 msgid "action_properties"
 msgstr "Properties"
+
+msgid "cpswiki_member_help"
+msgstr ""
+"usage: <i>[member:member id, text]</i><br/>"
+"renders a link to member's directory entry. "
+"If text is given, it's used to be displayed in the link<br/>"
+"example: <i>[member:manager, The Wiki Manager]</i>"
+

@@ -40,6 +40,7 @@ from Products.CPSUtil.id import generateId
 from wikipage import WikiPage
 from wikiparsers import parsers, generateParser
 from wikilocker import LockerList, ILockableItem
+from wikitags import getRegisteredTags as _getRegisteredTags
 
 from zLOG import LOG, DEBUG, TRACE
 
@@ -71,6 +72,11 @@ factory_type_information = (
                    'name': 'action_properties',
                    'action': 'cps_wiki_properties',
                    'permissions': (ModifyPortalContent,),
+                   },
+                   {'id': 'syntax_help',
+                   'name': 'action_syntax_help',
+                   'action': 'cps_wiki_help',
+                   'permissions': (View,),
                    },
                  {'id': 'add_page',
                    'name': 'action_add_page',
@@ -351,6 +357,10 @@ class Wiki(CPSBaseFolder):
             psm = 'psm_properties_changed'
             REQUEST.RESPONSE.redirect(self.absolute_url()+\
                 '/cps_wiki_properties?portal_status_message=%s' % psm)
+
+    security.declareProtected(View, 'getRegisteredTags')
+    def getRegisteredTags(self):
+        return _getRegisteredTags()
 
     #
     # ZMI

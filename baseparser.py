@@ -30,6 +30,7 @@ import re
 from Products.CPSUtil.id import generateId
 
 from wikiparserinterface import WikiParserInterface
+from wikitags import renderBrackets
 
 from zLOG import LOG, DEBUG
 
@@ -104,6 +105,11 @@ class BaseParser:
         if BRACKETED_CONTENT_REGEXP.match(m):
             # Strip the enclosing []'s
             m = BRACKETED_CONTENT_REGEXP.sub(r'\1', m)
+
+            handled, value = renderBrackets(m, self, self.wiki)
+
+            if handled:
+                return value
 
             # extract a (non-url) path if there is one
             pathmatch = re.match(r'(([^/]*/)+)([^/]+)', m)

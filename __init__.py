@@ -26,6 +26,9 @@ except ImportError: # CPS 3.2
 
 import wiki, wikipage
 
+# add register tag modules here
+import wikicpstags
+
 fti = (wiki.factory_type_information +
        wikipage.factory_type_information)
 

@@ -62,3 +62,12 @@ msgstr ""
 
 msgid "action_properties"
 msgstr ""
+
+msgid "action_syntax_help"
+msgstr ""
+
+msgid "cpswiki_specialtags"
+msgstr ""
+
+msgid "cpswiki_member_help"
+msgstr ""

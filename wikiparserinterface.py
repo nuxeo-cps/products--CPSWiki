@@ -32,3 +32,26 @@ class WikiParserInterface(Interface.Base):
     def getId():
         """Return a parser unique ID.
         """
+
+class IWikiTag(Interface.Base):
+    """ let the user extends the tags parsed
+    by providing bracketed content
+
+    for example [id:*anything*] will be sent to
+    the right wikitag with the *anything* value
+    """
+
+    def getTagId():
+        """ returns the id of the tage """
+
+    def render(context, parameters):
+        """ gets what's inside the brackets and return
+        what has to be displayed, given a context
+        """
+
+    def canHandle(parser):
+        """ returns true if it's compatible with the given parser """
+
+    def getHelp():
+        """ returns translatable text, that can be used to display
+        syntax help"""
