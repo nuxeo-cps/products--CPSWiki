@@ -135,7 +135,19 @@ class VersionContent:
         version_a, tags = self.getVersion(index_a)
         version_b, tags = self.getVersion(index_b)
 
+        # Make sure texts end with a newline, or the formatting will be off:
+        if not version_a[-1] == '\n':
+            version_a += '\n'
+        if not version_b[-1] == '\n':
+            version_b += '\n'
+        
         dif = Differ()
         result = list(dif.compare(version_a.splitlines(1),
                                   version_b.splitlines(1)))
-        return separator.join(result)
+        result = separator.join(result)
+        # The python difflib inserts lines that highlight what changed when 
+        # things inside a line changed. So far so good, but it starts these
+        # lines with a '?', which to most normal people means that there is
+        # something questionable going on. Hence, we switch that out for
+        # a '>' character instead, which does not carry any such connotations.
+        return result.replace('\n?', '\n>')

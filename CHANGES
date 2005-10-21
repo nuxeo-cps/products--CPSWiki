@@ -6,7 +6,7 @@ New features:
 - pluggable tags
 Bug fixes:
 ~~~~~~~~~~
--
+- The differences display was unreadable (#829).
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
