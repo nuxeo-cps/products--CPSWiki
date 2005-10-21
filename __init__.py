@@ -28,6 +28,7 @@ import wiki, wikipage
 
 # add register tag modules here
 import wikicpstags
+import wikicommontags
 
 fti = (wiki.factory_type_information +
        wikipage.factory_type_information)

@@ -20,9 +20,9 @@
 #
 # $Id$
 import unittest
-#from Testing.ZopeTestCase.doctest import DocTestSuite
+import re
 from Testing.ZopeTestCase import ZopeTestCase, _print
-from Products.CPSWiki.baseparser import BaseParser
+from Products.CPSWiki.baseparser import BaseParser, WIKILINK_REGEXP
 from Products.CPSWiki.wiki import Wiki
 
 class WikiParserTest(ZopeTestCase):
@@ -98,6 +98,25 @@ class WikiParserTest(ZopeTestCase):
         self.assertEquals(res[0],
           'qzpijd [[Detaxe]<a href="../addPage?title=Detaxe">?</a>] dsvjpdsovj')
 
+    def test_triple_parsing(self):
+        wiki = Wiki('wiki')
+        parser = BaseParser()
+        res = parser.parseContent('qzpijd {{{Dezd \n\n [triple] taxe}}} dsvjpdsovj', wiki)
+        self.assertEquals(res[0],
+          'qzpijd {{{Dezd \n\n [triple] taxe}}} dsvjpdsovj')
+
+        text = ("{{{pycode: class BaseParser: __implements__ = (WikiParserInte"
+        "rface,) wiki = None linked_pages = ['d'] def getId(self): return 'bas"
+        "eparser' def parseContent(self, content, wiki): \"\"\"Return the render o"
+        "df the provided content along with references on the linked pages and"
+        " potentially linked pagesd. \"\"\" self.wiki = wiki self.linked_pa"
+        "ges = [] self.potential_linked_pages = [] # A regexp can be with e"
+        "ither a replacement string or a replacement # function. render ="
+        "WIKILINK_REGEXP.sub(self._wikilinkReplace, content, re.M) return "
+        "render, self.linked_pages, self.potential_linked_pages}}}")
+
+        res = parser.parseContent(text, wiki)
+        self.assert_(len(res[0]) >= len(text))
 
 def test_suite():
     """

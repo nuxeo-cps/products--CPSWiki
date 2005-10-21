@@ -53,15 +53,21 @@ WIKINAME1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (B, U, L, U, U + L)
 # XXX: Give some examples
 WIKINAME2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (B, U, U, L, U + L)
 # [xxx] but not [[xxx]] or [xxx[xxx] or [xxx]xxx]
-BRACKETED_CONTENT = r'\[([^][\n]+)\]'
+BRACKETED_CONTENT = r'(?s)\[.*?\]'
+STRICT_BRACKETED_CONTENT = r'\[([^][\n]+)\]'
+TRIPLE_BRACKETED_CONTENT = r'(?s)\{\{\{.*?\}\}\}'
+
 # Proposed more restrictive expression
 #BRACKETED_CONTENT = r'\[((%s.-_ )+)\]' % (U + L)
 
 # WIKILINK is just a combitation of the possibilities of WIKINAME1, WIKINAME2,
 # BRACKETED_CONTENT and URL.
-WIKILINK  = r'!?(%s|%s|%s|%s)' % (WIKINAME1, WIKINAME2, BRACKETED_CONTENT, URL)
+WIKILINK  = r'!?(%s|%s|%s|%s|%s)' % (WIKINAME1, WIKINAME2, TRIPLE_BRACKETED_CONTENT,
+                                     BRACKETED_CONTENT, URL)
 WIKILINK_REGEXP = re.compile(WIKILINK)
 BRACKETED_CONTENT_REGEXP = re.compile(BRACKETED_CONTENT)
+TRIPLE_BRACKETED_CONTENT = re.compile(TRIPLE_BRACKETED_CONTENT)
+STRICT_BRACKETED_CONTENT_REGEXP = re.compile(STRICT_BRACKETED_CONTENT)
 
 class BaseParser:
     __implements__ = (WikiParserInterface,)
@@ -72,7 +78,6 @@ class BaseParser:
     def getId(self):
         return 'baseparser'
 
-
     def parseContent(self, content, wiki):
         """Return the render of the provided content along with references on
         the linked pages and potentially linked pages.
@@ -82,9 +87,8 @@ class BaseParser:
         self.potential_linked_pages = []
         # A regexp can be with either a replacement string or a replacement
         # function.
-        render = WIKILINK_REGEXP.sub(self._wikilinkReplace, content)
+        render = WIKILINK_REGEXP.sub(self._wikilinkReplace, content, re.S)
         return render, self.linked_pages, self.potential_linked_pages
-
 
     def _wikilinkReplace(self, match):
         """Replace an occurrence of the wikilink regexp or one of the
@@ -98,34 +102,41 @@ class BaseParser:
 
         m = morig = match.group(1)
 
-        stripped_label = m.strip('[').strip(']')
-        m_nospace = generateId(stripped_label, lower=False)
-
         # If it's a bracketed expression
-        if BRACKETED_CONTENT_REGEXP.match(m):
-            # Strip the enclosing []'s
-            m = BRACKETED_CONTENT_REGEXP.sub(r'\1', m)
 
-            handled, value = renderBrackets(m, self, self.wiki)
+        if TRIPLE_BRACKETED_CONTENT.match(m):
+            unbracketed_m = m[3:-3]
+            handled, value = renderBrackets(unbracketed_m, self, self.wiki)
+            if handled:
+                return value
+            else:
+                return m
+
+        elif BRACKETED_CONTENT_REGEXP.match(m):
+            # Strip the enclosing []'s
+            unbracketed_m = m[1:-1]
+
+            handled, value = renderBrackets(unbracketed_m, self, self.wiki)
 
             if handled:
                 return value
 
-            # extract a (non-url) path if there is one
-            pathmatch = re.match(r'(([^/]*/)+)([^/]+)', m)
-            if pathmatch:
-                path, id = pathmatch.group(1), pathmatch.group(3)
-            else:
-                path, id = '', m
+            if STRICT_BRACKETED_CONTENT_REGEXP.match(m):
+                # extract a (non-url) path if there is one
+                pathmatch = re.match(r'(([^/]*/)+)([^/]+)', unbracketed_m)
+                if pathmatch:
+                    path, id = pathmatch.group(1), pathmatch.group(3)
+                else:
+                    path, id = '', unbracketed_m
 
-            # or if there was a path assume it's to some non-wiki
-            # object and skip the usual existence checking for
-            # simplicity. Could also attempt to navigate the path in
-            # zodb to learn more about the destination
-            if path:
-                return '<a href="%s%s">%s%s</a>' % (path, id, path, id)
+                # or if there was a path assume it's to some non-wiki
+                # object and skip the usual existence checking for
+                # simplicity. Could also attempt to navigate the path in
+                # zodb to learn more about the destination
+                if path:
+                    return '<a href="%s%s">%s%s</a>' % (path, id, path, id)
 
-            # otherwise fall through to normal link processing
+                # otherwise fall through to normal link processing
 
         wiki = self.wiki
 
@@ -143,13 +154,19 @@ class BaseParser:
             search_m = search_m.replace(re_specialchar, '\%s' % re_specialchar)
 
         # If a page (or something) of this name exists, link to it
+        stripped_label = m.strip('[').strip(']')
+        m_nospace = generateId(stripped_label, lower=False)
+
         if (wiki is not None) and (m_nospace in wiki.objectIds()):
             if m_nospace not in self.linked_pages:
                 self.linked_pages.append(m_nospace)
-            return '<a href="../%s/cps_wiki_pageview">%s</a>' % (quote(m_nospace), m)
+            return '<a href="../%s/cps_wiki_pageview">%s</a>' % (quote(m_nospace),
+                                                                    stripped_label)
         else:
             # Adding a potential page
             if m_nospace not in self.potential_linked_pages:
                 self.potential_linked_pages.append(m_nospace)
+
             # Providing a "?" creation link
-            return '%s<a href="../addPage?title=%s">?</a>' % (morig, quote(m))
+            return '%s<a href="../addPage?title=%s">?</a>' % (morig,
+                                                              quote(stripped_label))

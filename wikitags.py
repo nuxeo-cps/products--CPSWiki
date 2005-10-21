@@ -44,10 +44,13 @@ def unRegisterTag(tag):
 
 def renderBrackets(bracket, parser, context=None):
     """ renders the bracket if an appropriate tag is found """
-    splited_content = bracket.split(':')
-    tag_id = splited_content[0].strip()
-    if len(splited_content) > 1:
-        parameters = splited_content[1].strip()
+    tag_pos = bracket.find(':')
+    if tag_pos != -1:
+        tag_id = bracket[:tag_pos].strip()
+        parameters = bracket[tag_pos+1:]
+    else:
+        tag_id = bracket
+        parameters = None
 
     if tag_id in __registered_tags:
         tagger = __registered_tags[tag_id]

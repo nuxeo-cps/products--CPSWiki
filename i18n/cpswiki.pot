@@ -96,3 +96,6 @@ msgstr ""
 
 msgid "cpswiki_member_help"
 msgstr ""
+
+msgid "cpswiki_pycode_help"
+msgstr ""

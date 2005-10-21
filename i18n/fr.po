@@ -107,3 +107,11 @@ msgstr ""
 "Si text est donné, est affiché dans le lien à la place de l'id du membre<br/>"
 "exemple: <i>[member:manager, Le manager]</i>"
 
+msgid "cpswiki_pycode_help"
+msgstr ""
+"colorise le code"
+"usage:<br/>"
+"   <p>{{{pycode:"
+"       du code python"
+"   }}}</p>"
+
