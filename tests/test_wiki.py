@@ -33,6 +33,9 @@ from Products.CPSWiki.wiki import Wiki
 
 class WikiTests(WikiTestCase):
 
+    def _wiki_url(self):
+        return 'http://xxx'
+
     def test_instance(self):
         wiki = Wiki('wiki')
         self.assertNotEquals(wiki, None)
@@ -82,19 +85,20 @@ class WikiTests(WikiTestCase):
         # Testing the fix for #833
         # XXX need to take care of boxes that does not have rest installed
         wiki = Wiki('wiki')
+        wiki.absolute_url = self._wiki_url
 
         wiki._getCurrentUser = self._getCurrentUser
 
         page1 = wiki.addPage('MyPage')
         page1.edit(source='AnotherPage')
         self.assertEquals(page1.render(),
-          '<p>AnotherPage<a href="../addPage?title=AnotherPage">?</a></p>\n')
+          '<p>AnotherPage<a href="http://xxx/addPage?title=AnotherPage">?</a></p>\n')
         self.assertEquals(page1.getLinkedPages(), [])
         self.assertEquals(page1.getPotentialLinkedPages(), ['AnotherPage'])
         page2 = wiki.addPage('AnotherPage')
         # The potential link has become an actual link
         self.assertEquals(page1.render(),
-          '<p><a href="../AnotherPage/cps_wiki_pageview">AnotherPage</a></p>\n')
+          '<p><a href="http://xxx/AnotherPage/cps_wiki_pageview">AnotherPage</a></p>\n')
         self.assertEquals(page1.getLinkedPages(), ['AnotherPage'])
         self.assertEquals(page1.getPotentialLinkedPages(), [])
 

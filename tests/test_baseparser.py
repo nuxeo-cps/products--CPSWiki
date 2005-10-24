@@ -26,9 +26,12 @@ from Products.CPSWiki.baseparser import BaseParser, WIKILINK_REGEXP
 from Products.CPSWiki.wiki import Wiki
 
 class WikiParserTest(ZopeTestCase):
+    def _wiki_url(self):
+        return 'http://xxx'
 
     def test_parsing(self):
         wiki = Wiki('wiki')
+        wiki.absolute_url = self._wiki_url
 
         parser = BaseParser()
 
@@ -39,31 +42,31 @@ class WikiParserTest(ZopeTestCase):
         # Testing potential links
         res = parser.parseContent('I want to create MyPage', wiki)
         self.assertEquals(res,
-          ('I want to create MyPage<a href="../addPage?title=MyPage">?</a>',
+          ('I want to create MyPage<a href="http://xxx/addPage?title=MyPage">?</a>',
            [], ['MyPage']))
 
         res = parser.parseContent('I want to create MyPage I said.', wiki)
         self.assertEquals(res,
-          ('I want to create MyPage<a href="../addPage?title=MyPage">?</a> I said.',
+          ('I want to create MyPage<a href="http://xxx/addPage?title=MyPage">?</a> I said.',
            [], ['MyPage']))
 
         res = parser.parseContent('MyPage\n\nAnotherProduct\n\nTryMe.', wiki)
         self.assertEquals(res,
-          ('MyPage<a href="../addPage?title=MyPage">?</a>\n\n'
-           'AnotherProduct<a href="../addPage?title=AnotherProduct">?</a>\n\n'
-           'TryMe<a href="../addPage?title=TryMe">?</a>.',
+          ('MyPage<a href="http://xxx/addPage?title=MyPage">?</a>\n\n'
+           'AnotherProduct<a href="http://xxx/addPage?title=AnotherProduct">?</a>\n\n'
+           'TryMe<a href="http://xxx/addPage?title=TryMe">?</a>.',
            [], ['MyPage', 'AnotherProduct', 'TryMe']))
 
         res = parser.parseContent('qzpijdspjvd [spds] vjpdsovj', wiki)
         self.assertEquals(res,
-          ('qzpijdspjvd [spds]<a href="../addPage?title=spds">?</a> vjpdsovj',
+          ('qzpijdspjvd [spds]<a href="http://xxx/addPage?title=spds">?</a> vjpdsovj',
            [], ['spds']))
 
         # Testing found links
         wiki.addPage('spds')
         res = parser.parseContent('qzpijdspjvd [spds] vjpdsovj', wiki)
         self.assertEquals(res,
-          ('qzpijdspjvd <a href="../spds/cps_wiki_pageview">spds</a> vjpdsovj',
+          ('qzpijdspjvd <a href="http://xxx/spds/cps_wiki_pageview">spds</a> vjpdsovj',
            ['spds'], []))
 
 
@@ -72,31 +75,33 @@ class WikiParserTest(ZopeTestCase):
         # rendering.
         # trac ticket #698
         wiki = Wiki('wiki')
+        wiki.absolute_url = self._wiki_url
+
         parser = BaseParser()
 
         res = parser.parseContent('qzpijd [***] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [***]<a href="../addPage?title=%2A%2A%2A">?</a> dsvjpdsovj')
+          'qzpijd [***]<a href="http://xxx/addPage?title=%2A%2A%2A">?</a> dsvjpdsovj')
 
         res = parser.parseContent('qzpijd [???] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [???]<a href="../addPage?title=%3F%3F%3F">?</a> dsvjpdsovj')
+          'qzpijd [???]<a href="http://xxx/addPage?title=%3F%3F%3F">?</a> dsvjpdsovj')
 
         res = parser.parseContent('qzpijd [?a?] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [?a?]<a href="../addPage?title=%3Fa%3F">?</a> dsvjpdsovj')
+          'qzpijd [?a?]<a href="http://xxx/addPage?title=%3Fa%3F">?</a> dsvjpdsovj')
 
         res = parser.parseContent('qzpijd [[junk] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [[junk]<a href="../addPage?title=junk">?</a> dsvjpdsovj')
+          'qzpijd [[junk]<a href="http://xxx/addPage?title=junk">?</a> dsvjpdsovj')
 
         res = parser.parseContent('qzpijd [[Junk] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [[Junk]<a href="../addPage?title=Junk">?</a> dsvjpdsovj')
+          'qzpijd [[Junk]<a href="http://xxx/addPage?title=Junk">?</a> dsvjpdsovj')
 
         res = parser.parseContent('qzpijd [[Detaxe]] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [[Detaxe]<a href="../addPage?title=Detaxe">?</a>] dsvjpdsovj')
+          'qzpijd [[Detaxe]<a href="http://xxx/addPage?title=Detaxe">?</a>] dsvjpdsovj')
 
     def test_triple_parsing(self):
         wiki = Wiki('wiki')

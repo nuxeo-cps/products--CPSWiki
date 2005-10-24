@@ -46,8 +46,12 @@ class WikiPageTests(WikiTestCase):
         wikipage = WikiPage('page')
         self.assertNotEquals(wikipage, None)
 
+    def _wiki_url(self):
+        return 'http://xxx'
+
     def test_rendering(self):
         wiki = Wiki('wiki')
+        wiki.absolute_url = self._wiki_url
         wiki._getCurrentUser = self._getCurrentUser
 
         wiki.parser = 'zwiki'
@@ -58,7 +62,7 @@ class WikiPageTests(WikiTestCase):
 
         page.edit(source='once[again] again')
         self.assertEquals(page.render(),
-                          'once[again]<a href="../addPage?title=again">?</a> again')
+                          'once[again]<a href="http://xxx/addPage?title=again">?</a> again')
 
         if has_rst:
             wiki.parser = 'restructuredtext'
@@ -78,6 +82,7 @@ class WikiPageTests(WikiTestCase):
 
     def test_links(self):
         wiki = Wiki('wiki')
+        wiki.absolute_url = self._wiki_url
         wiki.parser = 'zwiki'
         wiki._getCurrentUser = self._getCurrentUser
 
@@ -85,7 +90,7 @@ class WikiPageTests(WikiTestCase):
         page.edit(source='once[again] again')
         page.clearCache()
         self.assertEquals(page.render(),
-                          'once[again]<a href="../addPage?title=again">?</a> again')
+                          'once[again]<a href="http://xxx/addPage?title=again">?</a> again')
         self.assertEquals(page.getLinkedPages(), [])
         self.assertEquals(page.getPotentialLinkedPages(), ['again'])
 

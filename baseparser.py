@@ -157,16 +157,20 @@ class BaseParser:
         stripped_label = m.strip('[').strip(']')
         m_nospace = generateId(stripped_label, lower=False)
 
+        wiki_url = self.wiki.absolute_url()
+
         if (wiki is not None) and (m_nospace in wiki.objectIds()):
             if m_nospace not in self.linked_pages:
                 self.linked_pages.append(m_nospace)
-            return '<a href="../%s/cps_wiki_pageview">%s</a>' % (quote(m_nospace),
-                                                                    stripped_label)
+
+            return '<a href="%s/%s/cps_wiki_pageview">%s</a>' % (wiki_url, quote(m_nospace),
+                                                                 stripped_label)
         else:
             # Adding a potential page
             if m_nospace not in self.potential_linked_pages:
                 self.potential_linked_pages.append(m_nospace)
 
             # Providing a "?" creation link
-            return '%s<a href="../addPage?title=%s">?</a>' % (morig,
+            root = self.wiki.absolute_url()
+            return '%s<a href="%s/addPage?title=%s">?</a>' % (morig, wiki_url,
                                                               quote(stripped_label))
