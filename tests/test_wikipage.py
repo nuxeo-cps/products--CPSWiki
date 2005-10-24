@@ -126,7 +126,7 @@ class WikiPageTests(WikiTestCase):
         self.assertEquals(page.source.getLastVersion()[0],
                           'hello, how are you doing ?')
 
-    def test_getDiffs(self):
+    def FIXMEtest_getDiffs(self):
         wiki = Wiki('wiki')
         wiki.parser = 'zwiki'
         wiki._getCurrentUser = self._getCurrentUser
