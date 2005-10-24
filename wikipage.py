@@ -46,8 +46,6 @@ from Products.CPSCore.CPSBase import CPSBaseDocument
 
 from wikiversionning import VersionContent
 
-GLOG_KEY = 'CPSWiki.wikipage'
-
 factory_type_information = (
     { 'id': 'Wiki Page',
       'meta_type': 'Wiki Page',
@@ -181,14 +179,12 @@ class WikiPage(CPSBaseFolder):
     security.declareProtected(View, 'render')
     def render(self):
         """Render the wiki page source."""
-        LOG_KEY = GLOG_KEY + '.render'
         if not hasattr(self, '_render'):
             # Compatibility:
             # In previous versions of CPSWiki there was no _render
             self._render = None
         if self._render is None:
             self._updateCache()
-        #LOG(LOG_KEY, TRACE, "self._render = %s" % self._render)
         return self._render
 
     security.declareProtected(View, 'getLinkedPages')
@@ -219,14 +215,10 @@ class WikiPage(CPSBaseFolder):
     def _updateCache(self):
         """Update all the caches of the page with the current computed values.
         """
-        LOG_KEY = GLOG_KEY + '._updateCache'
         wiki = self.getParent()
         parser = wiki.getParser()
-        #LOG(LOG_KEY, TRACE, "self.source = %s" % str(self.source))
         source = self.getSource()
-        #LOG(LOG_KEY, TRACE, "source = %s" % source)
         render, links, potential_links = parser.parseContent(source, wiki)
-        #LOG(LOG_KEY, TRACE, "render = %s" % render)
         self._render = render
         self._linked_pages = links
         self._potential_linked_pages = potential_links
