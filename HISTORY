@@ -1,4 +1,20 @@
 *******************************************
+** CPSWiki V0.5.1 [R1 build 2005/10/25-15:18 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 28619
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Displayed the last diff first in the differences page.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSWiki V0.5.0 [R1 build 2005/10/25-10:10 by madarche]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 28601
 Requires:
