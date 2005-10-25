@@ -301,11 +301,13 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected('View archived revisions', 'getAllDiffs')
     def getAllDiffs(self):
-        """Renders a list of differences."""
+        """Renders a list of differences with last diff first."""
         source = self.source
         version_count = source.getVersionCount()
         versions = []
-        for i in range(version_count):
+        version_numbers = range(version_count)
+        version_numbers.reverse()
+        for i in version_numbers:
             version = source.getVersion(i)
             tags = version[1]
             versions.append(tags)
