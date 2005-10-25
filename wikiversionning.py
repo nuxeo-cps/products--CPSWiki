@@ -136,9 +136,9 @@ class VersionContent:
         version_b, tags = self.getVersion(index_b)
 
         # Make sure texts end with a newline, or the formatting will be off:
-        if not version_a[-1] == '\n':
+        if version_a and not version_a[-1] == '\n':
             version_a += '\n'
-        if not version_b[-1] == '\n':
+        if version_b and not version_b[-1] == '\n':
             version_b += '\n'
         
         dif = Differ()

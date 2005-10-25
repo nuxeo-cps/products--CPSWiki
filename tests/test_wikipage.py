@@ -126,7 +126,7 @@ class WikiPageTests(WikiTestCase):
         self.assertEquals(page.source.getLastVersion()[0],
                           'hello, how are you doing ?')
 
-    def FIXMEtest_getDiffs(self):
+    def test_getDiffs(self):
         wiki = Wiki('wiki')
         wiki.parser = 'zwiki'
         wiki._getCurrentUser = self._getCurrentUser
@@ -136,10 +136,10 @@ class WikiPageTests(WikiTestCase):
         page.edit(source='hello, how are you doing ?')
 
         res = page.getDiffs(0, 1)
-        self.assertEquals(res, '+ hello')
+        self.assertEquals(res, '+ hello\n')
 
         res = page.getDiffs(1, 2)
-        self.assertEquals(res, '- hello+ hello, how are you doing ?')
+        self.assertEquals(res, '- hello\n+ hello, how are you doing ?\n')
 
     def test_locking(self):
         wiki = Wiki('wiki')
