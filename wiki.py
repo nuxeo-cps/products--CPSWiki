@@ -244,11 +244,7 @@ class Wiki(CPSBaseFolder):
                 backlinks = []
 
             CPSBaseFolder.manage_delObjects(self, ids=[id])
-
-            for id in backlinks:
-                back_page = self.getPage(id)
-                if back_page is not None:
-                    back_page.clearCache()
+            self.clearCaches(backlinks)
 
         if REQUEST is not None:
             psm = 'psm_page_deleted'
@@ -262,13 +258,8 @@ class Wiki(CPSBaseFolder):
         page = self.getPage(title_or_id)
         if page is not None:
             backlinks = page.getBackedLinkedPages()
-
             CPSBaseFolder.manage_delObjects(self, [page.id])
-
-            for id in backlinks:
-                back_page = self.getPage(id)
-                if back_page is not None:
-                    back_page.clearCache()
+            self.clearCaches(backlinks)
 
         if REQUEST is not None:
             psm = 'psm_page_deleted'
@@ -364,11 +355,20 @@ class Wiki(CPSBaseFolder):
         return tree_first_level
 
     security.declareProtected(ModifyPortalContent, 'clearCaches')
-    def clearCaches(self):
+    def clearCaches(self, ids=[]):
         """Clear all the caches contained in this wiki, including those of the
         pages.
         """
-        for id, object in self.objectItems():
+        if ids == []:
+            elements = self.objectItems()
+        else:
+            elements = []
+            for id in ids:
+                back_page = self.getPage(id)
+                if back_page is not None:
+                    elements.append((id, back_page))
+
+        for id, object in elements:
             if object.portal_type != WikiPage.portal_type:
                 continue
             page = self[id]
