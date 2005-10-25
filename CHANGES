@@ -3,13 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- pluggable tags
-- cps tag: link to a member entry
-- commmon tag: code colorizer
-	
+-
 Bug fixes:
 ~~~~~~~~~~
-- The differences display was unreadable (#829).
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 -
