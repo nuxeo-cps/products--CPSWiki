@@ -1,7 +1,7 @@
 # -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
 # Authors:
-# Tarek Ziadé <tz@nuxeo.com>
+# Tarek Ziadï¿œ<tz@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -111,6 +111,25 @@ class WikiTests(WikiTestCase):
         wiki.deletePage('my page')
         self.assertEquals(wiki.objectIds(), [])
 
+    def test_deletePageCleanCache(self):
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+        page1 = wiki.addPage('my page')
+        page1.edit(source='AnotherPage')
+        page2 = wiki.addPage('AnotherPage')
+        self.assertEquals(page1.getLinkedPages(), ['AnotherPage'])
+        wiki.deletePage('AnotherPage')
+        self.assertEquals(page1.getLinkedPages(), [])
+
+    def test_deletePageCleanCache2(self):
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+        page1 = wiki.addPage('my page')
+        page1.edit(source='AnotherPage')
+        page2 = wiki.addPage('AnotherPage')
+        self.assertEquals(page1.getLinkedPages(), ['AnotherPage'])
+        wiki.manage_delObjects(['AnotherPage'])
+        self.assertEquals(page1.getLinkedPages(), [])
 
     def test_locking(self):
         wiki = Wiki('wiki')

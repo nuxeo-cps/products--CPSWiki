@@ -1,7 +1,7 @@
 # -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
 # Authors:
-# Tarek Ziadé <tz@nuxeo.com>
+# Tarek Ziadï¿œ<tz@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -233,12 +233,42 @@ class Wiki(CPSBaseFolder):
             return self[wikipage_id]
         return None
 
+    security.declareProtected(DeleteObjects, 'manage_delObjects')
+    def manage_delObjects(self, ids=[], REQUEST=None):
+        """ used by regular views """
+        for id in ids:
+            page = self.getPage(id)
+            if page is not None:
+                backlinks = page.getBackedLinkedPages()
+            else:
+                backlinks = []
+
+            CPSBaseFolder.manage_delObjects(self, ids=[id])
+
+            for id in backlinks:
+                back_page = self.getPage(id)
+                if back_page is not None:
+                    back_page.clearCache()
+
+        if REQUEST is not None:
+            psm = 'psm_page_deleted'
+            REQUEST.RESPONSE.redirect(self.absolute_url()+\
+                '?portal_status_message=%s' % psm)
+
     security.declareProtected(DeleteObjects, 'deletePage')
     def deletePage(self, title_or_id, REQUEST=None):
-        """ deletes a page, given its id or title """
+        """ deletes a page, given its id or title and clean the caches
+        """
         page = self.getPage(title_or_id)
         if page is not None:
-            self.manage_delObjects([page.id])
+            backlinks = page.getBackedLinkedPages()
+
+            CPSBaseFolder.manage_delObjects(self, [page.id])
+
+            for id in backlinks:
+                back_page = self.getPage(id)
+                if back_page is not None:
+                    back_page.clearCache()
 
         if REQUEST is not None:
             psm = 'psm_page_deleted'
