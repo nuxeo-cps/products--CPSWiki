@@ -100,6 +100,9 @@ msgstr "Aide sur la syntaxe"
 msgid "action_properties"
 msgstr "Propriétés"
 
+msgid "cpswiki_specialtags"
+msgstr "Marqueurs spéciaux"
+
 msgid "cpswiki_member_help"
 msgstr ""
 "utilisation: <i>[member:member id, text]</i><br/>"
