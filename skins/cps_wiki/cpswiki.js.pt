@@ -1,0 +1,182 @@
+<!--
+/*
+    Loading
+*/
+
+function createXMLObject()
+{
+  if (window.XMLHttpRequest) // Firefox
+    xml = new XMLHttpRequest();
+  else if (window.ActiveXObject) // Internet Explorer
+    xml = new ActiveXObject("Microsoft.XMLHTTP");
+  else
+  {
+    // XMLHttpRequest not supported
+    xml = null;
+  }
+  return xml;
+}
+var currentXMLObject = false;
+var currentTranslateXMLObject = false;
+
+function loadEditMode()
+{
+  currentXMLObject = createXMLObject();
+
+  if (currentXMLObject)
+  {
+    url = "getSource";
+
+    currentXMLObject.open("POST", url, true);
+    currentXMLObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    currentXMLObject.onreadystatechange = loadEditModeResult;
+    currentXMLObject.send(null);
+  }
+  else
+  {
+    alert("loadEditMode: operation not supported");
+  }
+}
+
+function loadEditModeResult()
+{
+  if (currentXMLObject.readyState == 4)
+  {
+    response = currentXMLObject.responseText;
+    node = document.getElementById("wikipageContent");
+
+    var content = new Array();
+    content.push('<textarea id="wikipageEditableContent" name="source" rows="30" cols="80"');
+    content.push('style="width: 100%; font-family: monospace !important;">');
+    content.push(response);
+    content.push('</textarea>');
+    content = content.join("");
+
+    node.innerHTML = content;
+
+    // change "edit" into "save"
+    node = document.getElementById("saveButton");
+    node.style.visibility = 'visible';
+    node = document.getElementById("editButton");
+    node.style.visibility = 'hidden';
+    unWaitProcess();
+  }
+  else
+  {
+    if (currentXMLObject.readyState==1)
+    {
+      // protecting from "double-send" and making screen changes
+      waitProcess();
+    }
+  }
+}
+
+/*
+    Saving
+*/
+
+function saveEditMode()
+{
+  currentXMLObject = createXMLObject();
+
+  if (currentXMLObject)
+  {
+    url = "edit";
+
+    node = document.getElementById("wikipageEditableContent");
+    source = node.value;
+    var poster = new Array();
+    poster.push("source=" + encodeURIComponent(source));
+    poster = poster.join("&");
+
+    currentXMLObject.open("POST", url, true);
+    currentXMLObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    currentXMLObject.onreadystatechange = saveEditModeResult;
+    currentXMLObject.send(poster);
+  }
+  else
+  {
+    alert("saveEditMode: operation not supported");
+  }
+}
+
+function saveEditModeResult()
+{
+  if (currentXMLObject.readyState == 4)
+  {
+    response = currentXMLObject.responseText;
+    // alert(response); ?????
+    reloadWikiContent();
+    unWaitProcess();
+  }
+  else
+  {
+    if (currentXMLObject.readyState==1)
+    {
+      // protecting from "double-send" and making screen changes
+      waitProcess();
+    }
+  }
+}
+
+function reloadWikiContentResult()
+{
+  if (currentXMLObject.readyState == 4)
+  {
+    response = currentXMLObject.responseText;
+    node = document.getElementById("wikipageContent");
+    node.innerHTML = response;
+    // change "edit" into "save"
+    node = document.getElementById("saveButton");
+    node.style.visibility = 'hidden';
+    node = document.getElementById("editButton");
+    node.style.visibility = 'visible';
+  }
+}
+
+function reloadWikiContent()
+{
+  currentXMLObject = createXMLObject();
+
+  if (currentXMLObject)
+  {
+    url = "render";
+    currentXMLObject.open("POST", url, true);
+    currentXMLObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    currentXMLObject.onreadystatechange = reloadWikiContentResult;
+    currentXMLObject.send(null);
+  }
+  else
+  {
+    alert("reloadWikiContent: operation not supported");
+  }
+}
+
+function waitProcess()
+{
+  node = document.getElementById("redlite");
+  node.style.visibility = 'visible';
+}
+
+function unWaitProcess()
+{
+  node = document.getElementById("redlite");
+  node.style.visibility = 'hidden';
+}
+
+function setCursor(obj)
+{
+  if (navigator.appName == "Microsoft Internet Explorer")
+  {
+    isIE = true;
+  }
+  else
+    isIE = false;
+
+  // Change the mouse cursor to hand or pointer
+  if (isIE)
+    obj.style.cursor = "hand";
+  else
+    obj.style.cursor = "pointer";
+}
+//-->

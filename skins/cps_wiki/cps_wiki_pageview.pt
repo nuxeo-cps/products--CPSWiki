@@ -1,11 +1,46 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
+
+  <metal:main fill-slot="javascript_head_slot">
+    <script type="text/javascript"
+      tal:attributes="src string:${base_url}/pdlib.js;">
+    </script>
+    <script type="text/javascript"
+      tal:attributes="src string:${base_url}/cpswiki.js;">
+    </script>
+  </metal:main>
+  <metal:block fill-slot="header">
+
+  <div>
+     <div style="float:left">
+       <h1 style="float:left" tal:content="here/title_or_id"/>
+
+     </div>
+     <div style="float:right">
+     <span id="redlite"
+              style="float:left;visibility: hidden;background-color:red;width: 10px; height: 10px"/>
+        <img id="editButton" style="float:right;visibility: visible"
+              onclick="loadEditMode()"
+              onmouseover="setCursor(this)"
+              src="wikipage_write.png"/>
+
+        <img id="saveButton" style="float:right;visibility: hidden"
+              onclick="saveEditMode()"
+              onmouseover="setCursor(this)"
+              src="wikipage_save.png"/>
+
+     </div>
+  </div>
+  <div style="clear:both">
+  </metal:block>
+
   <metal:block fill-slot="main"
                  tal:define="content python:here.render();
                              wiki here/getParent;
                              backlinks python:here.getBackedLinkedPages();
                              files here/objectItems">
 
-    <span tal:replace="structure content"/>
+    <div id="wikipageContent" tal:content="structure content"/>
+
     <div class="group" tal:condition="python:len(files) &gt; 0 or len(backlinks) &gt; 0">
     <tal:block tal:condition="python:len(files) &gt; 0">
         <h4 i18n:translate="">Attached files</h4>
