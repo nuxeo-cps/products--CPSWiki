@@ -258,7 +258,7 @@ class WikiPageTests(WikiTestCase):
         wiki._getCurrentUser = self._getCurrentUser
         page1 = wiki.addPage('page1')
         page1.jedit(source='tÃ©tÃ©tÃ©')
-        self.assertEquals(page1.render(), 'tétété')
+        self.assertEquals(page1.render(), '<p>tétété</p>\n')
 
 def test_suite():
     """
