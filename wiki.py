@@ -393,6 +393,62 @@ class Wiki(CPSBaseFolder):
         return _getRegisteredTags()
 
     #
+    # ajax - XXX need to be moved in a view
+    #
+    def _Utf8ToIso(self, value, codec='ISO-8859-15'):
+        if isinstance(value, str):
+            uvalue = value.decode('utf-8', 'replace')
+            return uvalue.encode(codec)
+        else:
+            return value
+
+
+    security.declareProtected(AddPortalContent, 'jaddPage')
+    def jaddPage(self, title, REQUEST=None):
+        """ prevents uf8 junk
+
+        if edited from AJAX for example, we get a string
+        that contains unicode"""
+        REQUEST.response.setHeader('content-type',
+                                   'text/plain; charset=ISO-8859-15')
+        if title is not None:
+            title = self._Utf8ToIso(title)
+        if self.addPage(title) is not None:
+            return 'OK'
+        else:
+            return 'KO'
+
+    def _node_render(self, item):
+        page = item['page']
+        content = '<a href="%s">' % page.absolute_url()
+        content += page.title_or_id()
+        content += '</a>'
+
+        children = item['children']
+        if len(children) > 0:
+            content += '<ul>'
+            for child in children:
+                content += '<li>'
+                content += self._node_render(child)
+                content += '</li>'
+            content += '</ul>'
+        return content
+
+    security.declareProtected(View, 'jrender')
+    def jrender(self, REQUEST=None):
+        """ renders the page content """
+        REQUEST.response.setHeader('content-type',
+                                   'text/plain; charset=ISO-8859-15')
+        content = '<ul>'
+        items = self.getSummary()
+        for item in items:
+            content += '<li>'
+            content += self._node_render(item)
+            content += '</li>'
+        content += '</ul>'
+        return content
+
+    #
     # ZMI
     #
 

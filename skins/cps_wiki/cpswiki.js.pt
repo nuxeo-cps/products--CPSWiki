@@ -25,7 +25,7 @@ function loadEditMode()
 
   if (currentXMLObject)
   {
-    url = "getSource";
+    url = "jgetSource";
 
     currentXMLObject.open("POST", url, true);
     currentXMLObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -55,10 +55,9 @@ function loadEditModeResult()
     node.innerHTML = content;
 
     // change "edit" into "save"
-    node = document.getElementById("saveButton");
-    node.style.visibility = 'visible';
     node = document.getElementById("editButton");
-    node.style.visibility = 'hidden';
+    node.onclick = saveEditMode;
+    node.src="wikipage_save.png"
     unWaitProcess();
   }
   else
@@ -81,7 +80,7 @@ function saveEditMode()
 
   if (currentXMLObject)
   {
-    url = "edit";
+    url = "jedit";
 
     node = document.getElementById("wikipageEditableContent");
     source = node.value;
@@ -105,8 +104,7 @@ function saveEditModeResult()
   if (currentXMLObject.readyState == 4)
   {
     response = currentXMLObject.responseText;
-    // alert(response); ?????
-    reloadWikiContent();
+    reloadWikiPageContent();
     unWaitProcess();
   }
   else
@@ -119,18 +117,47 @@ function saveEditModeResult()
   }
 }
 
+function reloadWikiPageContentResult()
+{
+  if (currentXMLObject.readyState == 4)
+  {
+    response = currentXMLObject.responseText;
+
+    node = document.getElementById("wikipageContent");
+    node.innerHTML = response;
+
+    node = document.getElementById("editButton");
+    node.onclick = loadEditMode;
+    node.src="wikipage_write.png"
+  }
+}
+
+function reloadWikiPageContent()
+{
+  currentXMLObject = createXMLObject();
+
+  if (currentXMLObject)
+  {
+    url = "jrender";
+    currentXMLObject.open("POST", url, true);
+    currentXMLObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    currentXMLObject.onreadystatechange = reloadWikiPageContentResult;
+    currentXMLObject.send(null);
+  }
+  else
+  {
+    alert("reloadWikiContent: operation not supported");
+  }
+}
+
+
 function reloadWikiContentResult()
 {
   if (currentXMLObject.readyState == 4)
   {
     response = currentXMLObject.responseText;
-    node = document.getElementById("wikipageContent");
+    node = document.getElementById("wikiContent");
     node.innerHTML = response;
-    // change "edit" into "save"
-    node = document.getElementById("saveButton");
-    node.style.visibility = 'hidden';
-    node = document.getElementById("editButton");
-    node.style.visibility = 'visible';
   }
 }
 
@@ -140,7 +167,7 @@ function reloadWikiContent()
 
   if (currentXMLObject)
   {
-    url = "render";
+    url = "jrender";
     currentXMLObject.open("POST", url, true);
     currentXMLObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     currentXMLObject.onreadystatechange = reloadWikiContentResult;
@@ -151,6 +178,98 @@ function reloadWikiContent()
     alert("reloadWikiContent: operation not supported");
   }
 }
+
+
+function seePageAdder()
+{
+  node = document.getElementById("pageTitle");
+  helper = document.getElementById("title_helper");
+  title = document.getElementById("title");
+
+  if (node.style.visibility == 'hidden')
+  {
+    node.style.visibility = 'visible';
+    helper.style.visibility = 'visible';
+    title.style.visibility = 'visible';
+  }
+  else
+  {
+    node.style.visibility = 'hidden';
+    helper.style.visibility = 'hidden';
+    title.style.visibility = 'hidden';
+  }
+}
+
+/*
+waits for <enter> key to validate the page
+*/
+
+function pageAdderkeyDown(event)
+{
+  if (!event)
+    event = window.event;
+
+  switch (event.keyCode)
+  {
+    case 13:
+        input_title = document.getElementById("title");
+        input_title.style.visibility = 'visible';
+        addPage(input_title.value);
+        break;
+    default:
+        helper = document.getElementById("title_helper");
+        helper.style.visibility = 'visible';
+        return false;
+  }
+}
+
+
+function addPageResult()
+{
+  if (currentXMLObject.readyState == 4)
+  {
+    response = currentXMLObject.responseText;
+
+    if (response=="OK")
+      reloadWikiContent();
+    else
+      alert("could not add the page");
+
+    unWaitProcess();
+  }
+  else
+  {
+    if (currentXMLObject.readyState==1)
+    {
+      // protecting from "double-send" and making screen changes
+      waitProcess();
+    }
+  }
+
+}
+
+function addPage(name)
+{
+  seePageAdder();
+  currentXMLObject = createXMLObject();
+
+  if (currentXMLObject)
+  {
+    url = "jaddPage";
+    currentXMLObject.open("POST", url, true);
+    currentXMLObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    currentXMLObject.onreadystatechange = addPageResult;
+    currentXMLObject.send("title=" + encodeURIComponent(name));
+  }
+  else
+  {
+    alert("addPage: operation not supported");
+  }
+}
+
+/*
+      Helpers
+*/
 
 function waitProcess()
 {
@@ -179,4 +298,10 @@ function setCursor(obj)
   else
     obj.style.cursor = "pointer";
 }
+
+function gotoUrl(dest)
+{
+  self.location.href = dest;
+}
+
 //-->

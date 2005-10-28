@@ -10,27 +10,33 @@
   </metal:main>
   <metal:block fill-slot="header">
 
-  <div>
-     <div style="float:left">
-       <h1 style="float:left" tal:content="here/title_or_id"/>
+     <table width="100%">
+       <tr>
+         <td align="left">
 
-     </div>
-     <div style="float:right">
-     <span id="redlite"
-              style="float:left;visibility: hidden;background-color:red;width: 10px; height: 10px"/>
-        <img id="editButton" style="float:right;visibility: visible"
-              onclick="loadEditMode()"
-              onmouseover="setCursor(this)"
-              src="wikipage_write.png"/>
+           <h1 tal:content="here/title_or_id"/>
 
-        <img id="saveButton" style="float:right;visibility: hidden"
-              onclick="saveEditMode()"
-              onmouseover="setCursor(this)"
-              src="wikipage_save.png"/>
+         </td>
+         <td align="left">
+           <div id="redlite"
+                style="visibility: hidden;background-color:red;width: 10px; height: 10px"/>
+         </td>
+         <td align="right">
 
-     </div>
-  </div>
-  <div style="clear:both">
+            <img id="goHome" style="visibility: visible"
+                onmouseover="setCursor(this)"
+                onclick="gotoUrl('../cps_wiki_view')"
+                src="wikipage_home.png"/>
+
+            <img id="editButton"
+                onclick="loadEditMode()"
+                onmouseover="setCursor(this)"
+                src="wikipage_write.png"/>
+
+          </td>
+        </tr>
+     </table>
+
   </metal:block>
 
   <metal:block fill-slot="main"

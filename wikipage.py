@@ -369,6 +369,42 @@ class WikiPage(CPSBaseFolder):
         self._potential_linked_pages = None
 
     #
+    # utf8 I/O for AJAX - XXX need to be moved in a view
+    #
+    def _Utf8ToIso(self, value, codec='ISO-8859-15'):
+        if isinstance(value, str):
+            uvalue = value.decode('utf-8', 'replace')
+            return uvalue.encode(codec)
+        else:
+            return value
+
+    security.declareProtected(ModifyPortalContent, 'jedit')
+    def jedit(self, title=None, source=None, REQUEST=None):
+        """ prevents uf8 junk
+
+        if edited from AJAX for example, we get a string
+        that contains unicode"""
+        if title is not None:
+            title = self._Utf8ToIso(title)
+        if source is not None:
+            source = self._Utf8ToIso(source)
+        return self.edit(title, source)
+
+    security.declareProtected(View, 'jrender')
+    def jrender(self, REQUEST):
+        """ prevents uf8 junk """
+        REQUEST.response.setHeader('content-type',
+                                   'text/plain; charset=ISO-8859-15')
+        return self.render()
+
+    security.declareProtected(View, 'jgetSource')
+    def jgetSource(self, REQUEST):
+        """ prevents uf8 junk """
+        REQUEST.response.setHeader('content-type',
+                                   'text/plain; charset=ISO-8859-15')
+        return self.getSource()
+
+    #
     # ZMI
     #
 

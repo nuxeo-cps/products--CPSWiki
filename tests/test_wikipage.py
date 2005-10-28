@@ -253,6 +253,12 @@ class WikiPageTests(WikiTestCase):
         self.assert_(page1.uploadFile('nnn', None) == False)
         self.assert_(page1.uploadFile(None, None) == False)
 
+    def test_jedit(self):
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+        page1 = wiki.addPage('page1')
+        page1.jedit(source='tÃ©tÃ©tÃ©')
+        self.assertEquals(page1.render(), 'tétété')
 
 def test_suite():
     """
