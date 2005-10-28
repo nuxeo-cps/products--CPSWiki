@@ -9,7 +9,7 @@
     <a tal:condition="nolink" tal:attributes="href python:'cps_wiki_full_view#'+page.title_or_id()">
       <span tal:replace="python:page.title_or_id()"/>
     </a>
-    <ul tal:condition="children">
+    <ul tal:condition="children" class="wikiMenu">
       <li tal:repeat="item children">
         <metal:block metal:use-macro="here/cps_wiki_lib/macros/wikinode"/>
       </li>

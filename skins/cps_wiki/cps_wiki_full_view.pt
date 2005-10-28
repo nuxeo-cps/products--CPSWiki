@@ -1,21 +1,41 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
-  <metal:block fill-slot="main">
+
+  <metal:main fill-slot="css_slot">
+    <link rel="Stylesheet" type="text/css" href=""
+      tal:attributes="href string:${base_url}wiki.css" />
+  </metal:main>
+
+  <metal:block fill-slot="header">
     <a name="_summary"></a>
-    <ul>
+  </metal:block>
+
+
+  <metal:block fill-slot="main">
+  <div class="wikiTitle" style="padding-bottom: 10px">
+      <h1 tal:content="here/title_or_id"/>
+    <ul class="wikiMenu">
       <li tal:repeat="item python:here.getSummary()"
            tal:define="nolink python:1">
          <metal:block metal:use-macro="here/cps_wiki_lib/macros/wikinode"/>
       </li>
     </ul>
-    <div tal:repeat="item here/objectItems" class="group">
+   </div>
+
+    <div
+         tal:repeat="item here/objectItems" style="margin-bottom:5px">
 
       <tal:block tal:define="content python:item[1].render();
                               id python:item[1].title_or_id()">
         <a tal:attributes="name id"></a>
-        <h4 tal:content="id"/>
+        <h3 tal:content="id"/>
         <p tal:content="structure content"/>
       </tal:block>
-      <a href="cps_wiki_full_view#_summary" i18n:translate="">Back to the top</a>
+      <div style="float:right;margin-top: 5px">
+        [<a href="cps_wiki_full_view#_summary" i18n:translate="">
+          Back to the top&#32;<img src="wikipage_up.png"/>
+        </a>]
+      </div>
+
     </div>
   </metal:block>
 </html>

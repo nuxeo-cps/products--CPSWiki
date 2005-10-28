@@ -1,48 +1,55 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
+  <metal:main fill-slot="css_slot">
+    <link rel="Stylesheet" type="text/css" href=""
+      tal:attributes="href string:${base_url}wiki.css" />
+  </metal:main>
+
   <metal:main fill-slot="javascript_head_slot">
     <script type="text/javascript"
-      tal:attributes="src string:${base_url}/pdlib.js;">
-    </script>
-    <script type="text/javascript"
-      tal:attributes="src string:${base_url}/cpswiki.js;">
+      tal:attributes="src string:${base_url}cpswiki.js">
     </script>
   </metal:main>
 
 
   <metal:block fill-slot="header">
-  <div>
-     <div style="float:left">
-       <h1 style="float:left" tal:content="here/title_or_id"/>
-
-     </div>
-     <div style="float:right">
-     <span id="redlite"
+  <div class="wikiTitle">
+    <table width="100%">
+     <tr>
+       <td align="left">
+         <h1 tal:content="here/title_or_id"/>
+       </td>
+       <td align="right">
+         <span id="redlite"
               style="float:left;visibility: hidden;background-color:red;width: 10px; height: 10px"/>
+       <td align="right">
         <img id="addPageButton" style="float:right;visibility: visible"
               onclick="seePageAdder()"
               onmouseover="setCursor(this)"
               src="wikipage_new.png"/>
+        <div id="pageTitle" style="float:right;visibility: hidden">
+        <div style="margin-right: 20px">
+          <tal:block i18n:translate="label_title">Title:</tal:block>
+          <input name="title" type="text" id="title"
+                 onkeyup="pageAdderkeyDown(event)"/>
+          <center>
+            <div id="title_helper" style="visibility: hidden">
+              [enter] to validate
+            </div>
+          </center>
+        </div>
      </div>
+       </td>
+      </tr>
+     </table>
+
   </div>
 
-  <div id="pageTitle" style="float:right;visibility: hidden">
-    <div style="margin-right: 20px">
 
-        <tal:block i18n:translate="label_title">Title:</tal:block>
-        <input name="title" type="text" id="title"
-               onkeyup="pageAdderkeyDown(event)"/>
-        <center>
-          <div id="title_helper" style="visibility: hidden">
-            [enter] to validate</div>
-        </center>
-    </div>
-  </div>
-  <div style="clear:both"/>
   </metal:block>
 
   <metal:block fill-slot="main">
-    <div id="wikiContent">
-    <ul>
+    <div id="wikiContent" class="cpsskinsBox">
+    <ul class="wikiMenu">
       <li tal:repeat="item python:here.getSummary()">
          <metal:block metal:use-macro="here/cps_wiki_lib/macros/wikinode"/>
       </li>

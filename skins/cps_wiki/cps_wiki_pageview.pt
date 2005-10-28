@@ -1,15 +1,15 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
-
+  <metal:main fill-slot="css_slot">
+    <link rel="Stylesheet" type="text/css" href=""
+      tal:attributes="href string:${base_url}wiki.css" />
+  </metal:main>
   <metal:main fill-slot="javascript_head_slot">
     <script type="text/javascript"
-      tal:attributes="src string:${base_url}/pdlib.js;">
-    </script>
-    <script type="text/javascript"
-      tal:attributes="src string:${base_url}/cpswiki.js;">
+      tal:attributes="src string:${base_url}/cpswiki.js">
     </script>
   </metal:main>
   <metal:block fill-slot="header">
-
+    <div  class="wikiTitle">
      <table width="100%">
        <tr>
          <td align="left">
@@ -36,7 +36,7 @@
           </td>
         </tr>
      </table>
-
+   </div>
   </metal:block>
 
   <metal:block fill-slot="main"
@@ -47,10 +47,11 @@
 
     <div id="wikipageContent" tal:content="structure content"/>
 
-    <div class="group" tal:condition="python:len(files) &gt; 0 or len(backlinks) &gt; 0">
+    <div style="margin-top: 10px; padding-bottom:8px"
+        class="wikiTitle" tal:condition="python:len(files) &gt; 0 or len(backlinks) &gt; 0">
     <tal:block tal:condition="python:len(files) &gt; 0">
         <h4 i18n:translate="">Attached files</h4>
-        <ul>
+        <ul class="wikiMenu">
         <li tal:repeat="element here/objectItems">
             <a tal:attributes="href python:element[1].absolute_url()">
                 <span tal:replace="python:element[1].title_or_id()"/>
@@ -60,7 +61,7 @@
     </tal:block>
     <tal:block tal:condition="python:len(backlinks) &gt; 0">
         <h4 i18n:translate="">BackLinks</h4>
-        <ul>
+        <ul class="wikiMenu">
         <li tal:repeat="link backlinks">
           <tal:block tal:define="link_ob python:wiki[link]">
           <a tal:attributes="href python:link_ob.absolute_url()">
