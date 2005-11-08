@@ -20,7 +20,7 @@
 # $Id:$
 from Products.CMFCore.utils import getToolByName
 
-from wikiparserinterface import IWikiTag
+from interfaces import IWikiTag
 from wikitags import registerTag
 
 class MemberInfos:

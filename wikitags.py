@@ -19,7 +19,7 @@
 #
 # $Id:$
 
-from wikiparserinterface import IWikiTag
+from interfaces import IWikiTag
 
 # no lock used here because the registration process is done
 # at startup

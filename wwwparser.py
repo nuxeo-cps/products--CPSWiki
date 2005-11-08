@@ -2,7 +2,7 @@
 # WikiWikiWeb-style markup
 # contributed by Tres Seaver <tseaver@palladion.com>
 # adapted from ZWiki to CPSWiki by Tarek Ziadé <tz@nuxeo.com>
-from wikiparserinterface import WikiParserInterface
+from interfaces import IWikiParser
 import re
 from urllib import quote
 
@@ -351,7 +351,7 @@ class WWMLTranslator :
 
 class WwwParser(BaseParser):
 
-    __implements__ = (WikiParserInterface, )
+    __implements__ = (IWikiParser, )
 
     translator = WWMLTranslator()
 

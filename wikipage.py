@@ -45,6 +45,7 @@ from Products.CPSCore.CPSBase import CPSBaseFolder
 from Products.CPSCore.CPSBase import CPSBaseDocument
 
 from wikiversionning import VersionContent
+from wikirelations import WikiRelation, ZODBDummyBackEnd
 
 factory_type_information = (
     { 'id': 'Wiki Page',
@@ -132,13 +133,11 @@ class WikiPage(CPSBaseFolder):
         # This is a cache. It contains the last HTML render as a string.
         self._render = None
 
-        # This is a cache. It contains the IDs of the pages this page links to
-        self._linked_pages = None
-
         # This is a cache. It contains the IDs of the pages that can be created
         # from this page.
         self._potential_linked_pages = None
 
+        self._relations = WikiRelation(self, ZODBDummyBackEnd())
 
     def _getCurrentDateStr(self):
         """ gets current date """
@@ -179,65 +178,68 @@ class WikiPage(CPSBaseFolder):
     security.declareProtected(View, 'render')
     def render(self):
         """Render the wiki page source."""
-        if not hasattr(self, '_render'):
-            # Compatibility:
-            # In previous versions of CPSWiki there was no _render
-            self._render = None
         if self._render is None:
-            self._updateCache()
+            self.updateCache()
         return self._render
 
     security.declareProtected(View, 'getLinkedPages')
     def getLinkedPages(self):
         """Return the IDs of the pages this page links to.
         """
-        if not hasattr(self, '_linked_pages'):
-            # Compatibility:
-            # In previous versions of CPSWiki there was no _linked_pages
-            self._linked_pages = None
-        if self._linked_pages is None:
-            self._updateCache()
-        return self._linked_pages
+        return self._relations.isLinkedTo()
 
     security.declareProtected(View, 'getPotentialLinkedPages')
     def getPotentialLinkedPages(self):
         """Return the IDs of the pages that can be created from this page.
         """
-        if not hasattr(self, '_potential_linked_pages'):
-            # Compatibility:
-            # In previous versions of CPSWiki there was no _potential_linked_pages
-            self._potential_linked_pages = None
-        if self._potential_linked_pages is None:
-            self._updateCache()
-        return self._potential_linked_pages
+        return self._relations.isLinkableTo()
 
-    security.declareProtected(View, '_updateCache')
-    def _updateCache(self):
+    security.declareProtected(View, 'updateCache')
+    def updateCache(self):
         """Update all the caches of the page with the current computed values.
         """
         wiki = self.getParent()
         parser = wiki.getParser()
         source = self.getSource()
+
+        # calculate the page
         render, links, potential_links = parser.parseContent(source, wiki)
+
+        # update rendered
         self._render = render
-        self._linked_pages = links
-        self._potential_linked_pages = potential_links
+
+        # update links
+        self._relations.clearAll()
+
+        # link to pages
+        self._relations.addLinksTo(links)
+        for link in links:
+            linked_page = wiki.getPage(link)
+            if linked_page is not None:
+                linked_page.addBackLinksTo([self.id])
+
+        # potential links
+        self._relations.addLinkablesTo(potential_links)
+
+        # back links
+        for page_id, page in wiki.getPages():
+            if page == self:
+                return
+
+            page_links = page.getLinkedPages()
+            if self.id in page_links:
+                self.addBackLinksTo([page_id])
+
+            potential_page_links = page.getPotentialLinkedPages()
+            if self.id in potential_page_links:
+                self.addBackLinksTo([page_id])
+                page.addLinksTo(self.id)
 
     security.declareProtected(View, 'getBackedLinkedPages')
     def getBackedLinkedPages(self):
         """Return the IDs of the pages where this page is linked.
         """
-        back_links = []
-        wiki = self.getParent()
-        for id, object in wiki.objectItems():
-            if object.portal_type != self.portal_type:
-                continue
-            if id == self.id:
-                continue
-            page = object
-            if self.id in page.getLinkedPages():
-                back_links.append(id)
-        return back_links
+        return self._relations.isBackLinkedTo()
 
     security.declareProtected(ModifyPortalContent, 'uploadFile')
     def uploadFile(self, file, REQUEST=None):
@@ -277,6 +279,7 @@ class WikiPage(CPSBaseFolder):
                     source = sanitize(source)
                     tags = self._createVersionTag()
                     self.source.appendVersion(source, tags)
+                    self.updateCache()
                 if title is not None:
                     self.title = title
             finally:
@@ -297,7 +300,7 @@ class WikiPage(CPSBaseFolder):
         # Clearing the cache of the pages that have links to this page
         for id in self.getBackedLinkedPages():
             page = wiki[id]
-            page.clearCache()
+            page.removeBackLinksTo([self.id])
 
     security.declareProtected('View archived revisions', 'getAllDiffs')
     def getAllDiffs(self):
@@ -365,8 +368,6 @@ class WikiPage(CPSBaseFolder):
     security.declareProtected(ModifyPortalContent, 'clearCache')
     def clearCache(self):
         self._render = None
-        self._linked_pages = None
-        self._potential_linked_pages = None
 
     #
     # utf8 I/O for AJAX - XXX need to be moved in a view
@@ -405,9 +406,45 @@ class WikiPage(CPSBaseFolder):
         return self.getSource()
 
     #
+    # public relations APIs (backlinks)
+    #
+    security.declareProtected(ModifyPortalContent, 'addBackLinksTo')
+    def addBackLinksTo(self, ids):
+        self._relations.addBackLinksTo(ids)
+
+    security.declareProtected(ModifyPortalContent, 'removeBackLinksTo')
+    def removeBackLinksTo(self, ids):
+        self._relations.removeBackLinksTo(ids)
+
+    security.declareProtected(ModifyPortalContent, 'addLinksTo')
+    def addLinksTo(self, ids):
+        # remove potential link, if exists
+        self._relations.removeLinkablesTo(ids)
+        # add the link
+        self._relations.addLinksTo(ids)
+        # clear the cache
+        self.clearCache()
+
+    security.declareProtected(ModifyPortalContent, 'removeReference')
+    def removeReference(self, id):
+        self._relations.removeBackLinksTo([id])
+        self._relations.removeLinkablesTo([id])
+        count = self._relations.removeLinksTo([id])
+        if count > 0:
+            self.clearCache()
+
+    security.declareProtected(View, 'getLinksSummary')
+    def getLinksSummary(self):
+        """ summarizes links """
+        summary = {}
+        summary['links'] = self.getLinkedPages()
+        summary['potential_links'] = self.getPotentialLinkedPages()
+        summary['back_links'] = self.getBackedLinkedPages()
+        return summary
+
+    #
     # ZMI
     #
-
     manage_options = (
         {'label': "Edit",
          'action': 'manage_editPageForm'

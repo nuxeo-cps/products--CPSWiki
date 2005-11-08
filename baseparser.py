@@ -29,7 +29,7 @@ import re
 
 from Products.CPSUtil.id import generateId
 
-from wikiparserinterface import WikiParserInterface
+from interfaces import IWikiParser
 from wikitags import renderBrackets
 
 from zLOG import LOG, DEBUG
@@ -70,7 +70,7 @@ TRIPLE_BRACKETED_CONTENT = re.compile(TRIPLE_BRACKETED_CONTENT)
 STRICT_BRACKETED_CONTENT_REGEXP = re.compile(STRICT_BRACKETED_CONTENT)
 
 class BaseParser:
-    __implements__ = (WikiParserInterface,)
+    __implements__ = (IWikiParser,)
 
     wiki = None
     linked_pages = []

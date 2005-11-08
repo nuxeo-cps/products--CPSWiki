@@ -169,7 +169,25 @@ class WikiTests(WikiTestCase):
         page2.edit(source=' dddddd [page5] za [page3] aaaaza ')
 
         summary = wiki.getSummary()
-        self.assertEquals(len(summary), 1)
+        self.assertEquals(len(summary), 2)
+
+    def test_getSummary2(self):
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
+        page1 = wiki.addPage('page1')
+        page1.edit(source=' dddddd [page2] zaaaaaza [page3]')
+        page2 = wiki.addPage('page2')
+        page1.edit(source=' dddddd [page4] zaaaaaza [page7]')
+        page3 = wiki.addPage('page3')
+        page3.edit(source=' dddddd [page1] zaaaaaza [page7]')
+        page4 = wiki.addPage('page4')
+        page7 = wiki.addPage('page7')
+        page7.edit(source=' dddddd [page1] zaaaaaza')
+
+        summary = wiki.getSummary()
+        self.assertEquals(len(summary), 3)
+
+
 
 
     def test_recursiveGetLinks(self):
@@ -203,23 +221,12 @@ class WikiTests(WikiTestCase):
         summary = wiki.getSummary()
 
         self.assert_(page1._render is not None)
-        self.assert_(page1._linked_pages is not None)
-        self.assert_(page1._potential_linked_pages is not None)
-
         self.assert_(page2._render is not None)
-        self.assert_(page2._linked_pages is not None)
-        self.assert_(page2._potential_linked_pages is not None)
 
         wiki.clearCaches()
 
         self.assert_(page1._render is None)
-        self.assert_(page1._linked_pages is None)
-        self.assert_(page1._potential_linked_pages is None)
-
         self.assert_(page2._render is None)
-        self.assert_(page2._linked_pages is None)
-        self.assert_(page2._potential_linked_pages is None)
-
 
     def test_recursiveGetLinks_circular(self):
         # this would lead to a maximum recursion depth exceeded

@@ -140,12 +140,12 @@ class VersionContent:
             version_a += '\n'
         if version_b and not version_b[-1] == '\n':
             version_b += '\n'
-        
+
         dif = Differ()
         result = list(dif.compare(version_a.splitlines(1),
                                   version_b.splitlines(1)))
         result = separator.join(result)
-        # The python difflib inserts lines that highlight what changed when 
+        # The python difflib inserts lines that highlight what changed when
         # things inside a line changed. So far so good, but it starts these
         # lines with a '?', which to most normal people means that there is
         # something questionable going on. Hence, we switch that out for

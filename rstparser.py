@@ -19,7 +19,7 @@
 # $Id$
 import re
 
-from wikiparserinterface import WikiParserInterface
+from interfaces import IWikiParser
 from urllib import quote
 from baseparser import BaseParser
 
@@ -31,7 +31,7 @@ except ImportError:
 
 class RstParser(BaseParser):
 
-    __implements__ = (WikiParserInterface, )
+    __implements__ = (IWikiParser, )
 
     input_encoding = 'iso-8859-15'
     output_encoding = 'iso-8859-15'

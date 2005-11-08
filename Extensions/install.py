@@ -74,10 +74,10 @@ class CPSWikiInstaller(CPSInstaller):
         self.verifyPortalTypes()
         self.updatePortalTree()
         self.setupWorkflows()
-        self.installNewPermissions()
         self.setupTranslations()
         self.finalize()
         self.reindexCatalog()
+        self.updateExistingWikis()
         self.log("CPSWiki Install / Update .........[ S T O P ]  ")
 
     def verifyPortalTypes(self):
@@ -269,32 +269,38 @@ class CPSWikiInstaller(CPSInstaller):
             portal_trees.sections.manage_rebuild()
 
 
-    def installNewPermissions(self):
-        """Installs new permissions
-        """
-        return
-        # Removing old CPSWiki permissions that are now deprecated
-##         deleteWikiPage = 'Delete CPSWiki Page'
-##         editWikiPage = 'Edit CPSWiki Page'
-##         addWikiPage = 'Add CPSWiki Page'
-##         viewWikiPage = 'View CPSWiki Page'
+    def updateWiki(self, wiki):
+        """ upgrade Wiki instances """
+        from Products.CPSWiki.wikipage import WikiPage
+        from Products.CPSWiki.wikirelations import WikiRelation, \
+                                                   ZODBDummyBackEnd
+        if not hasattr(wiki, 'version') or wiki.version != (0, 7):
+            # < 0.6, need to add _relation to all wiki pages
+            # and to upgrade links
+            wiki.version = (0, 7)
+            for id, object in wiki.objectItems():
+                if object.portal_type != WikiPage.portal_type:
+                    continue
+                self.log('upgrading page %s' % object.id)
+                object._relations = WikiRelation(object, ZODBDummyBackEnd())
 
-##         setDefaultRoles(addWikiPage, ('Manager', 'Owner'))
-##         setDefaultRoles(editWikiPage, ('Manager', 'Owner'))
-##         setDefaultRoles(deleteWikiPage, ('Manager', 'Owner'))
-##         setDefaultRoles(viewWikiPage, ('Manager', 'Owner'))
+            self.log('clearing caches and rebuilding relations')
+            count = 0
+            for id, object in wiki.objectItems():
+                if object.portal_type != WikiPage.portal_type:
+                    continue
+                object.updateCache()
+                count += 1
+            self.log('upgraded %d pages for wiki %s' % (count, wiki.id))
 
-##         # Workspace
-##         wiki_ws_perms = [addWikiPage,
-##                          viewWikiPage,
-##                          editWikiPage,
-##                          deleteWikiPage,
-##                          ]
-
-##         for perm in wiki_ws_perms:
-##             self.portal[WORKSPACES_ID].manage_permission(perm, roles, 0)
-##             self.portal[SECTIONS_ID].manage_permission(perm, roles, 0)
-
+    def updateExistingWikis(self):
+        """ look in the portal for Wiki instances """
+        wikis = self.portal.portal_catalog(portal_type='Wiki')
+        for wiki in wikis:
+            wiki_instance = wiki.getObject()
+            if wiki_instance is None:
+                continue
+            self.updateWiki(wiki_instance)
 
 def install(self):
     installer = CPSWikiInstaller(self)

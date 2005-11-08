@@ -126,6 +126,7 @@ class Wiki(CPSBaseFolder):
     >>> wiki.title
     'Wiki Title'
     """
+    version = (0, 7)
     meta_type = 'Wiki'
     portal_type = meta_type
     _properties = CPSBaseFolder._properties + (
@@ -233,18 +234,32 @@ class Wiki(CPSBaseFolder):
             return self[wikipage_id]
         return None
 
+    security.declareProtected(View, 'getPages')
+    def getPages(self):
+        pages = []
+        for id, object in self.objectItems():
+            if object.portal_type == WikiPage.portal_type:
+                pages.append((id, object))
+        return pages
+
     security.declareProtected(DeleteObjects, 'manage_delObjects')
     def manage_delObjects(self, ids=[], REQUEST=None):
         """ used by regular views """
         for id in ids:
             page = self.getPage(id)
+            page_id = page.id
             if page is not None:
                 backlinks = page.getBackedLinkedPages()
+                links = page.getLinkedPages()
             else:
                 backlinks = []
+                links = []
 
-            CPSBaseFolder.manage_delObjects(self, ids=[id])
-            self.clearCaches(backlinks)
+            CPSBaseFolder.manage_delObjects(self, ids=[page_id])
+            for backlink in backlinks + links:
+                linked_page = self.getPage(backlink)
+                if linked_page is not None:
+                    linked_page.removeReference(page_id)
 
         if REQUEST is not None:
             psm = 'psm_page_deleted'
@@ -257,9 +272,14 @@ class Wiki(CPSBaseFolder):
         """
         page = self.getPage(title_or_id)
         if page is not None:
+            page_id = page.id
             backlinks = page.getBackedLinkedPages()
-            CPSBaseFolder.manage_delObjects(self, [page.id])
-            self.clearCaches(backlinks)
+            links = page.getLinkedPages()
+            CPSBaseFolder.manage_delObjects(self, [page_id])
+            for backlink in backlinks + links:
+                linked_page = self.getPage(backlink)
+                if linked_page is not None:
+                    linked_page.removeReference(page_id)
 
         if REQUEST is not None:
             psm = 'psm_page_deleted'
@@ -282,15 +302,11 @@ class Wiki(CPSBaseFolder):
         wikipage = self[wikipage_id]
 
         # Clearing the cache of the pages that have a reference to this page.
-        for id, object in self.objectItems():
-            if object.portal_type != WikiPage.portal_type:
-                continue
-            page = self[id]
+        for id, page in self.getPages():
             potential_links = page.getPotentialLinkedPages()
-            #LOG(LOG_KEY, TRACE, "page %s has potential_links = %s"
-            #    % (page_id, potential_links))
-            if potential_links:
-                page.clearCache()
+            if wikipage_id in potential_links:
+                page.addLinksTo([wikipage_id])
+                wikipage.addBackLinksTo([id])
 
         # Redirecting to the edit view of the newly created page
         if REQUEST is not None:
@@ -328,28 +344,48 @@ class Wiki(CPSBaseFolder):
         """ creates the summary tree """
         # first of all, let's find the first layer
         # of pages by sorting pages with their backlink count
+        def _visitPage(child, list_):
+            if child['page'] not in list_:
+                list_.append(child['page'])
+            for grandchild in child['children']:
+                if grandchild['page'] not in list_:
+                    _visitPage(grandchild, list_)
+
         sorted_list = []
-        for id, object in self.objectItems():
-            if object.portal_type != WikiPage.portal_type:
-                continue
-            page = self[id]
+        pages_to_visit = len(self.getPages())
+        for id, page in self.getPages():
             element = (len(page.getLinkedPages()),
                        len(page.getBackedLinkedPages()), page)
             sorted_list.append(element)
+
         if len(sorted_list) == 0:
             return []
         sorted_list.sort()
+        sorted_list.reverse()
 
         # Now constructing the tree
         tree = []
-        for item in sorted_list:
-            if item[1] > 0:
-                continue
-            element = {}
-            element['page'] = item[2]
-            children = self._recursiveGetLinks(item[2], [])
-            element['children'] = children
-            tree.append((len(children), element))
+        level = 0
+        pages_visited = []
+
+        while len(pages_visited) < pages_to_visit:
+            for item in sorted_list:
+                if item[2] in pages_visited:
+                    continue
+                element = {}
+                element['page'] = item[2]
+                children = self._recursiveGetLinks(item[2], [])
+                kept_children = []
+                for child in children:
+                    if child['page'] not in pages_visited:
+                        kept_children.append(child)
+                        _visitPage(child, pages_visited)
+
+                element['children'] = kept_children
+                tree.append((len(kept_children), element))
+                pages_visited.append(item[2])
+
+
         tree_first_level = [node[1] for node in tree]
         tree_first_level.sort(lambda x, y: cmp(x['page'].title, y['page'].title))
         return tree_first_level
@@ -360,18 +396,15 @@ class Wiki(CPSBaseFolder):
         pages.
         """
         if ids == []:
-            elements = self.objectItems()
+            elements = [page for id, page in self.getPages()]
         else:
             elements = []
             for id in ids:
                 back_page = self.getPage(id)
                 if back_page is not None:
-                    elements.append((id, back_page))
+                    elements.append(back_page)
 
-        for id, object in elements:
-            if object.portal_type != WikiPage.portal_type:
-                continue
-            page = self[id]
+        for page in elements:
             page.clearCache()
 
     security.declareProtected(ModifyPortalContent, 'changeProperties')

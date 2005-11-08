@@ -21,7 +21,7 @@
 from cStringIO import StringIO
 from Products.CMFCore.utils import getToolByName
 
-from wikiparserinterface import IWikiTag
+from interfaces import IWikiTag
 from wikitags import registerTag
 from colorize import Parser
 
