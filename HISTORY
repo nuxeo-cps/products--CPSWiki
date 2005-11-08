@@ -1,4 +1,20 @@
 *******************************************
+** CPSWiki V0.7.0 [R1 build 2005/11/08-16:56 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 29274
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- using a relation indexer
+
+*******************************************
 ** CPSWiki V0.6.0 [R1 build 2005/11/07-15:33 by fguillaume]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 29136
 Requires:
