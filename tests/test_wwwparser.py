@@ -28,10 +28,10 @@ class WikiParserTest(ZopeTestCase):
 
     def test_parsing(self):
         parser = WwwParser()
+
         res = parser.parseContent("qzp '''strong''' ideee", None)
         self.assertEquals(res, ('qzp <STRONG>strong</STRONG> ideee', [], []))
 
-        parser = WwwParser()
         res = parser.parseContent("qzpijdspjvd http://foo.bar vjpdsovj", None)
         self.assertEquals(res,
           ('qzpijdspjvd <a href="http://foo.bar">http://foo.bar</a> vjpdsovj',
