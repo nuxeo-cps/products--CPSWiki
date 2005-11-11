@@ -17,6 +17,7 @@
 # 02111-1307, USA.
 #
 # $Id$
+
 import unittest
 #from Testing.ZopeTestCase.doctest import DocTestSuite
 from Testing.ZopeTestCase import ZopeTestCase, _print
@@ -25,18 +26,17 @@ from Products.CPSWiki.wiki import Wiki
 
 class WikiParserTest(ZopeTestCase):
 
-
     def test_parsing(self):
         parser = WwwParser()
         res = parser.parseContent("qzp '''strong''' ideee", None)
         self.assertEquals(res, ('qzp <STRONG>strong</STRONG> ideee', [], []))
 
-    def test_parsing2(self):
         parser = WwwParser()
         res = parser.parseContent("qzpijdspjvd http://foo.bar vjpdsovj", None)
         self.assertEquals(res,
           ('qzpijdspjvd <a href="http://foo.bar">http://foo.bar</a> vjpdsovj',
            [], []))
+
 
 def test_suite():
     """
