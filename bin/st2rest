@@ -18,7 +18,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 #
-# $Id: install.py 18033 2005-04-12 14:09:45Z madarche $
+# $Id$
 """A script that converts wiki pages using the structuredtext syntax into wiki
 pages using the reStructuredText syntax.
 
