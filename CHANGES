@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Fixed #1127, thanks to Laurent Pelecq
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Added unit tests for the reStructuredText and www parsers that don't recognize

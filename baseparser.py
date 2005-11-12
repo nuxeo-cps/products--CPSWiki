@@ -64,7 +64,7 @@ TRIPLE_BRACKETED_CONTENT = r'(?s)\{\{\{.*?\}\}\}'
 # BRACKETED_CONTENT and URL.
 WIKILINK  = r'!?(%s|%s|%s|%s|%s)' % (WIKINAME1, WIKINAME2, TRIPLE_BRACKETED_CONTENT,
                                      BRACKETED_CONTENT, URL)
-WIKILINK_REGEXP = re.compile(WIKILINK)
+WIKILINK_REGEXP = re.compile(WIKILINK, re.S)
 BRACKETED_CONTENT_REGEXP = re.compile(BRACKETED_CONTENT)
 TRIPLE_BRACKETED_CONTENT = re.compile(TRIPLE_BRACKETED_CONTENT)
 STRICT_BRACKETED_CONTENT_REGEXP = re.compile(STRICT_BRACKETED_CONTENT)
@@ -87,7 +87,7 @@ class BaseParser:
         self.potential_linked_pages = []
         # A regexp can be with either a replacement string or a replacement
         # function.
-        render = WIKILINK_REGEXP.sub(self._wikilinkReplace, content, re.S)
+        render = WIKILINK_REGEXP.sub(self._wikilinkReplace, content)
         return render, self.linked_pages, self.potential_linked_pages
 
     def _wikilinkReplace(self, match):

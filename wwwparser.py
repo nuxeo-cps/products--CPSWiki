@@ -361,9 +361,9 @@ class WwwParser(BaseParser):
     def _translate_WWML(self, text):
         """ calls WWMLTranslator with given text """
         # XXX change this, not reliable on linux
-        lines = text.split('\r\n')
+        lines = text.split('\n')
         lines = self.translator.translate(lines)
-        text = '\r\n'.join(lines)
+        text = '\n'.join(lines)
         return text
 
     def parseContent(self, content, wiki):

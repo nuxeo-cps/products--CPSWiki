@@ -38,32 +38,22 @@ class WikiParserTest(ZopeTestCase):
           ('qzpijdspjvd <a href="http://foo.bar">http://foo.bar</a> vjpdsovj',
            [], []))
 
-        res = parser.parseContent("""
-http://www.cps-project.org/
-http://www.cps-project.org/
-http://www.cps-project.org/
-http://www.cps-project.org/
-http://www.cps-project.org/
-http://www.cps-project.org/
-http://www.cps-project.org/
+        waited = ('http://www.cps-project.org/\n'
+                  'http://www.cps-project.org/\n'
+                  'http://www.cps-project.org/\n'
+                  'http://www.cps-project.org/\n'
+                  'http://www.cps-project.org/\n'
+                  'http://www.cps-project.org/\n'
+                  'http://www.cps-project.org/\n'
+                  '\n'
+                  'CpsProject\n')
 
-CpsProject
-""", wiki)
+        res = parser.parseContent(waited, wiki)
+
         self.assertEquals(res[1], [])
         self.assertEquals(res[2], ['CpsProject'])
 
-        res = parser.parseContent("""
-http://www.cps-project.org/
-http://www.cps-project.org/
-http://www.cps-project.org/
-http://www.cps-project.org/
-http://www.cps-project.org/
-http://www.cps-project.org/
-http://www.cps-project.org/
-http://www.cps-project.org/
-
-CpsProject
-""", wiki)
+        res = parser.parseContent(waited, wiki)
         self.assertEquals(res[1], [])
         self.assertEquals(res[2], ['CpsProject'])
 
