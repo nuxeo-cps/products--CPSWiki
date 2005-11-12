@@ -30,14 +30,13 @@ class WikiParserTest(ZopeTestCase):
         wiki = Wiki('wiki')
         parser = RstParser()
 
-        res = parser.parseContent("""
-Title
------
-
-Some content.
-
-""", None)
-        self.assertEquals(res, ("""<h2 class="title">Title</h2>\n<p>Some content.</p>\n""", [], []))
+        res = parser.parseContent("Title\n"
+                                  "-----\n"
+                                  "\n"
+                                  "Some content.\n"
+                                  "\n", None)
+        self.assertEquals(res, ('<h2 class="title">Title</h2>\n<p>'
+                                'Some content.</p>\n', [], []))
 
         res = parser.parseContent("This web site http://foo.bar that is", wiki)
         self.assertEquals(res, ('<p>This web site <a class="reference" '
