@@ -9,5 +9,6 @@ Bug fixes:
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Added unit tests for the reStructuredText parser that doesn't recognize some
-  wiki links in some circumstances (not finished).
+- Added unit tests for the reStructuredText and www parsers that don't recognize
+  some wiki links in some special circumstances (some special number of
+  preceding http links).

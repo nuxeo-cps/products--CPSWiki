@@ -27,15 +27,45 @@ from Products.CPSWiki.wiki import Wiki
 class WikiParserTest(ZopeTestCase):
 
     def test_parsing(self):
+        wiki = Wiki('wiki')
         parser = WwwParser()
 
-        res = parser.parseContent("qzp '''strong''' ideee", None)
+        res = parser.parseContent("qzp '''strong''' ideee", wiki)
         self.assertEquals(res, ('qzp <STRONG>strong</STRONG> ideee', [], []))
 
-        res = parser.parseContent("qzpijdspjvd http://foo.bar vjpdsovj", None)
+        res = parser.parseContent("qzpijdspjvd http://foo.bar vjpdsovj", wiki)
         self.assertEquals(res,
           ('qzpijdspjvd <a href="http://foo.bar">http://foo.bar</a> vjpdsovj',
            [], []))
+
+        res = parser.parseContent("""
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+
+CpsProject
+""", wiki)
+        self.assertEquals(res[1], [])
+        self.assertEquals(res[2], ['CpsProject'])
+
+        res = parser.parseContent("""
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+
+CpsProject
+""", wiki)
+        self.assertEquals(res[1], [])
+        self.assertEquals(res[2], ['CpsProject'])
 
 
 def test_suite():

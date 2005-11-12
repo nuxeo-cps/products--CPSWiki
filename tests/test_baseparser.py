@@ -103,6 +103,36 @@ class WikiParserTest(ZopeTestCase):
         self.assertEquals(res[0],
           'qzpijd [[Detaxe]<a href="http://xxx/addPage?title=Detaxe">?</a>] dsvjpdsovj')
 
+        res = parser.parseContent("""
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+
+CpsProject
+""", wiki)
+        self.assertEquals(res[1], [])
+        self.assertEquals(res[2], ['CpsProject'])
+
+        res = parser.parseContent("""
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+
+CpsProject
+""", wiki)
+        self.assertEquals(res[1], [])
+        self.assertEquals(res[2], ['CpsProject'])
+
+
     def test_triple_parsing(self):
         wiki = Wiki('wiki')
         parser = BaseParser()
@@ -122,6 +152,7 @@ class WikiParserTest(ZopeTestCase):
 
         res = parser.parseContent(text, wiki)
         self.assert_(len(res[0]) >= len(text))
+
 
 def test_suite():
     """

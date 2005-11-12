@@ -27,7 +27,9 @@ from Products.CPSWiki.wiki import Wiki
 class WikiParserTest(ZopeTestCase):
 
     def testParsing(self):
+        wiki = Wiki('wiki')
         parser = RstParser()
+
         res = parser.parseContent("""
 Title
 -----
@@ -37,10 +39,39 @@ Some content.
 """, None)
         self.assertEquals(res, ("""<h2 class="title">Title</h2>\n<p>Some content.</p>\n""", [], []))
 
-        res = parser.parseContent("This web site http://foo.bar that is", None)
+        res = parser.parseContent("This web site http://foo.bar that is", wiki)
         self.assertEquals(res,
           ("""<p>This web site <a class="reference" href="http://foo.bar"><a href="http://foo.bar">http://foo.bar</a></a> that is</p>\n""",
            [], []))
+
+        res = parser.parseContent("""
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+
+CpsProject
+""", wiki)
+        self.assertEquals(res[1], [])
+        self.assertEquals(res[2], ['CpsProject'])
+
+        res = parser.parseContent("""
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+http://www.cps-project.org/
+
+CpsProject
+""", wiki)
+        self.assertEquals(res[1], [])
+        self.assertEquals(res[2], ['CpsProject'])
 
 
 def test_suite():
