@@ -126,7 +126,6 @@ class Wiki(CPSBaseFolder):
     >>> wiki.title
     'Wiki Title'
     """
-    version = (0, 7)
     meta_type = 'Wiki'
     portal_type = meta_type
     _properties = CPSBaseFolder._properties + (
@@ -145,6 +144,7 @@ class Wiki(CPSBaseFolder):
     def __init__(self, id, **kw):
         CPSBaseFolder.__init__(self, id, **kw)
         self.locker = LockerList()
+        self.version = (0, 7)
 
     def _getCurrentUser(self):
         mt = getToolByName(self, 'portal_membership')
