@@ -252,6 +252,13 @@ class WikiTests(WikiTestCase):
         wiki.changeProperties(parser='html')
         self.assertEquals(wiki.parser, 'html')
 
+    def test_instanceversion(self):
+        # making sure wiki versions are independant
+        wiki_1 = Wiki('wiki1')
+        wiki_1.version= (0, 6)
+        wiki_2 = Wiki('wiki2')
+        wiki_2.version = (0, 3)
+        self.assertNotEquals(wiki_1.version, wiki_2.version)
 
 def test_suite():
     """
