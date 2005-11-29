@@ -74,3 +74,12 @@ msgstr ""
 
 msgid "cpswiki_pycode_help"
 msgstr ""
+
+msgid "cps_wikipage_edit"
+msgstr ""
+
+msgid "cps_wikipage_home"
+msgstr ""
+
+msgid "cpswiki_page_add"
+msgstr ""

@@ -109,6 +109,7 @@ function saveEditModeResult()
   }
   else
   {
+
     if (currentXMLObject.readyState==1)
     {
       // protecting from "double-send" and making screen changes

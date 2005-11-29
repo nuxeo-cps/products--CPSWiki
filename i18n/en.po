@@ -117,3 +117,12 @@ msgstr ""
 "   <p>{{{pycode:"
 "       some python code"
 "   }}}</p>"
+
+msgid "cps_wikipage_edit"
+msgstr "Edit page"
+
+msgid "cps_wikipage_home"
+msgstr "Go home"
+
+msgid "cpswiki_page_add"
+msgstr "Add page"

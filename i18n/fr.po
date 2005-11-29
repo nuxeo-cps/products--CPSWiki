@@ -118,3 +118,12 @@ msgstr ""
 "       du code python"
 "   }}}</p>"
 
+msgid "cps_wikipage_edit"
+msgstr "Editer la page"
+
+msgid "cps_wikipage_home"
+msgstr "Retour au sommaire"
+
+msgid "cpswiki_page_add"
+msgstr "Ajouter une page"
+
