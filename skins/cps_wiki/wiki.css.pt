@@ -1,8 +1,10 @@
-<dtml-comment>
+<tal:block condition="nothing">
 CSS directives conforming to the CSS 2.1 spec.
 Those CSS directives are suppported by user agents such as Mozilla/Firefox, MSIE6, MSIE5.x, etc.
-$Id: default.css.dtml 28546 2005-10-23 01:46:45Z atchertchian $
-</dtml-comment>
+$Id$
+</tal:block>
+
+<tal:block define="dummy python:request.RESPONSE.setHeader('Content-Type', 'text/css')"/>
 
 ul {
   list-style-image: url("bullet.png");
@@ -25,10 +27,10 @@ div.wikiTitle {
   background-color: #eeeeee;
   margin-bottom: 10px;
   margin-left: 0;
+  <tal:block condition="python:modules['Products.CPSUtil.integration'].isUserAgentGecko(request)">
   -moz-border-radius-topleft: 12px;
   -moz-border-radius-topright: 12px;
   -moz-border-radius-bottomleft: 12px;
   -moz-border-radius-bottomright: 12px;
+  </tal:block>
 }
-
-
