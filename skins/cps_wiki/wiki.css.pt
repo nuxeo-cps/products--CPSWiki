@@ -7,7 +7,6 @@ $Id$
 <tal:block define="dummy python:request.RESPONSE.setHeader('Content-Type', 'text/css')"/>
 
 ul {
-  list-style-image: url("bullet.png");
   margin-left: 2em;
   padding-left: 0;
 }
