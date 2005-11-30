@@ -20,30 +20,31 @@
           <td align="right">
             <span id="redlite"
               style="float:left;visibility: hidden;background-color:red;width: 10px; height: 10px"/>
-       <td align="right">
-        <tal:block tal:condition="python:mtool.checkPermission('Modify portal content', here)">
-          <img id="addPageButton" style="float:right;visibility: visible"
-               onclick="seePageAdder()"
-               onmouseover="setCursor(this)"
-               alt="cpswiki_page_add"
-               i18n:attributes="alt"
-               src="wikipage_new.png"/>
-          <div id="pageTitle" style="float:right;visibility: hidden">
-            <div style="margin-right: 20px">
-              <tal:block i18n:translate="label_title">Title:</tal:block>
-                <input name="title" type="text" id="title"
-                    onkeyup="pageAdderkeyDown(event)"/>
-                <div id="title_helper" style="visibility: hidden">
-                [enter] to validate
+            <td align="right">
+              <tal:block tal:condition="python:mtool.checkPermission('Modify portal content', here)">
+                <img id="addPageButton" style="float:right;visibility: visible"
+                  onclick="seePageAdder()"
+                  onmouseover="setCursor(this)"
+                  alt="cpswiki_page_add"
+                  title="cpswiki_page_add"
+                  i18n:attributes="alt; title"
+                  src="wikipage_new.png"/>
+                <div id="pageTitle" style="float:right;visibility: hidden">
+                  <div style="margin-right: 20px">
+                    <tal:block i18n:translate="label_title">Title:</tal:block>
+                    <input name="title" type="text" id="title"
+                      onkeyup="pageAdderkeyDown(event)"/>
+                    <div id="title_helper" style="visibility: hidden">
+                      [enter] to validate
+                    </div>
+                  </div>
                 </div>
-            </div>
-          </div>
-        </tal:block>
-       </td>
-      </tr>
-     </table>
+              </tal:block>
+            </td>
+        </tr>
+      </table>
 
-  </div>
+    </div>
 
   </metal:block>
 

@@ -27,7 +27,8 @@
                 onclick="gotoUrl('../cps_wiki_view')"
                 src="wikipage_home.png"
                 alt="cps_wikipage_home"
-                i18n:attributes="alt"/>
+                title="cps_wikipage_home"
+                i18n:attributes="alt; title"/>
             <tal:block
               tal:condition="python:mtool.checkPermission('Modify portal content', here)">
                 <img id="editButton"
@@ -35,7 +36,8 @@
                     onmouseover="setCursor(this)"
                     src="wikipage_write.png"
                     alt="cps_wikipage_edit"
-                    i18n:attributes="alt"/>
+                    title="cps_wikipage_edit"
+                    i18n:attributes="alt; title"/>
             </tal:block>
           </td>
         </tr>
