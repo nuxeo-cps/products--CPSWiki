@@ -2,8 +2,8 @@
   <metal:block fill-slot="main">
     <form action="addPage" method="post">
       <p>
-        <tal:block i18n:translate="label_title">Title:</tal:block>
-        <input name="title" type="text"/>
+        <label for="wikipageTitle" i18n:translate="label_title">Title:</label>
+        <input id="wikipageTitle" name="title" type="text"/>
         <button type="submit" i18n:translate="button_add">Add</button>
       </p>
     </form>
