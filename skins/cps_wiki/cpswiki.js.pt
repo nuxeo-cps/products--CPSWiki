@@ -1,4 +1,3 @@
-<!--
 /*
     Loading
 */
@@ -305,4 +304,3 @@ function gotoUrl(dest)
   self.location.href = dest;
 }
 
-//-->
