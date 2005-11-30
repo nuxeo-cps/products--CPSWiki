@@ -31,8 +31,8 @@
                   src="wikipage_new.png"/>
                 <div id="pageTitle" style="float:right;visibility: hidden">
                   <div style="margin-right: 20px">
-                    <tal:block i18n:translate="label_title">Title:</tal:block>
-                    <input name="title" type="text" id="title"
+                    <label for="wikipageTitle" i18n:translate="label_title">Title:</label>
+                    <input id="wikipageTitle" name="title" type="text" id="title"
                       onkeyup="pageAdderkeyDown(event)"/>
                     <div id="title_helper" style="visibility: hidden">
                       [enter] to validate
