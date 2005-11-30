@@ -187,7 +187,23 @@ class WikiTests(WikiTestCase):
         summary = wiki.getSummary()
         self.assertEquals(len(summary), 3)
 
+    def test_getSummary3(self):
+        wiki = Wiki('wiki')
+        wiki._getCurrentUser = self._getCurrentUser
 
+        page1 = wiki.addPage('A page')
+        page1.edit(source="WikiPage")
+        page1.render()
+        page1.getLinksSummary()
+
+        page2 = wiki.addPage('WikiPage')
+        page2.edit(source="Some text there.")
+        page2.render()
+        page2.getLinksSummary()
+        page2.delete()
+
+        summary = wiki.getSummary()
+        self.assertEquals(len(summary), 1)
 
 
     def test_recursiveGetLinks(self):

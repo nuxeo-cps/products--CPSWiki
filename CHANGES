@@ -8,6 +8,7 @@ Bug fixes:
 ~~~~~~~~~~
 - Fixed #1127 about wiki links parsing, thanks to Laurent Pelecq.
 - Fixed the wiki version tag, that would mess up upgrades.
+- Fixed a page deletion bug.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Added unit tests for the reStructuredText and www parsers that don't recognize

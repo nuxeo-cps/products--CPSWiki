@@ -103,6 +103,8 @@ class WikiPageTests(WikiTestCase):
         page = wiki.addPage('my page')
         page.delete()
         self.assert_(wiki.getPage('my page') is None)
+        self.assert_(wiki.getSummary() is not None)
+
 
     def test_versionning(self):
         wiki = Wiki('wiki')
@@ -259,6 +261,7 @@ class WikiPageTests(WikiTestCase):
         page1 = wiki.addPage('page1')
         page1.jedit(source='tÃ©tÃ©tÃ©')
         self.assertEquals(page1.render(), '<p>tétété</p>\n')
+
 
 def test_suite():
     """

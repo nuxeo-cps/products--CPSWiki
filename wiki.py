@@ -328,7 +328,9 @@ class Wiki(CPSBaseFolder):
         pages = page.getLinkedPages()
 
         for cpage in pages:
-            object = self[cpage]
+            object = getattr(self, cpage, None)
+            if object is None:
+                continue
             if object.id == page.id or object in called:
                 continue
             element = {}
