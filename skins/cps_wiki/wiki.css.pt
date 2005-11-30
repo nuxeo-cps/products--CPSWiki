@@ -11,13 +11,13 @@ ul {
   padding-left: 0;
 }
 
-
 li {
   margin-left: 0;
   padding-left: 0;
 }
 
 div.wikiTitle {
+  width: 96%;
   padding: 0 1em 0 1em;
   border: 1px solid #336699;
   background-color: #eeeeee;
@@ -29,4 +29,10 @@ div.wikiTitle {
   -moz-border-radius-bottomleft: 12px;
   -moz-border-radius-bottomright: 12px;
   </tal:block>
+}
+
+#redlite {
+  background-color: #ff0000;
+  width: 10px;
+  height: 10px;
 }

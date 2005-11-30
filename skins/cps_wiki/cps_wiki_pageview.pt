@@ -9,40 +9,37 @@
     </script>
   </metal:main>
   <metal:block fill-slot="header">
-    <div  class="wikiTitle">
-     <table width="100%">
-       <tr>
-         <td align="left">
-
-           <h1 tal:content="here/title_or_id"/>
-
-         </td>
-         <td align="left">
-           <div id="redlite"
-                style="visibility: hidden;background-color:red;width: 10px; height: 10px"/>
-         </td>
-         <td align="right">
+    <div class="wikiTitle">
+      <table>
+        <tr>
+          <td align="left">
+            <h1 tal:content="here/title_or_id"/>
+          </td>
+          <td align="left">
+            <div id="redlite" style="visibility: hidden;"/>
+          </td>
+          <td align="right">
             <img id="goHome" style="visibility: visible"
-                onmouseover="setCursor(this)"
-                onclick="gotoUrl('../cps_wiki_view')"
-                src="wikipage_home.png"
-                alt="cps_wikipage_home"
-                title="cps_wikipage_home"
-                i18n:attributes="alt; title"/>
+              onmouseover="setCursor(this)"
+              onclick="gotoUrl('../cps_wiki_view')"
+              src="wikipage_home.png"
+              alt="cps_wikipage_home"
+              title="cps_wikipage_home"
+              i18n:attributes="alt; title"/>
             <tal:block
-              tal:condition="python:mtool.checkPermission('Modify portal content', here)">
-                <img id="editButton"
-                    onclick="loadEditMode()"
-                    onmouseover="setCursor(this)"
-                    src="wikipage_write.png"
-                    alt="cps_wikipage_edit"
-                    title="cps_wikipage_edit"
-                    i18n:attributes="alt; title"/>
+              condition="python:mtool.checkPermission('Modify portal content', here)">
+              <img id="editButton"
+                onclick="loadEditMode()"
+                onmouseover="setCursor(this)"
+                src="wikipage_write.png"
+                alt="cps_wikipage_edit"
+                title="cps_wikipage_edit"
+                i18n:attributes="alt; title"/>
             </tal:block>
           </td>
         </tr>
-     </table>
-   </div>
+      </table>
+    </div>
   </metal:block>
 
   <metal:block fill-slot="main"
