@@ -5,7 +5,7 @@
   </metal:main>
   <metal:main fill-slot="javascript_head_slot">
     <script type="text/javascript"
-      tal:attributes="src string:${base_url}/cpswiki.js">
+      tal:attributes="src string:${base_url}cpswiki.js">
     </script>
   </metal:main>
   <metal:block fill-slot="header">
