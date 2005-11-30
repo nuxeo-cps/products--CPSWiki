@@ -1,7 +1,7 @@
 # -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
 # Authors:
-# Tarek Ziadï¿œ<tz@nuxeo.com>
+# Tarek Ziadé <tz@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -297,11 +297,6 @@ class WikiPage(CPSBaseFolder):
         wiki = self.getParent()
         wiki.deletePage(self.id, REQUEST)
 
-        # Clearing the cache of the pages that have links to this page
-        for id in self.getBackedLinkedPages():
-            page = wiki[id]
-            page.removeBackLinksTo([self.id])
-
     security.declareProtected('View archived revisions', 'getAllDiffs')
     def getAllDiffs(self):
         """Renders a list of differences with last diff first."""
@@ -427,6 +422,7 @@ class WikiPage(CPSBaseFolder):
 
     security.declareProtected(ModifyPortalContent, 'removeReference')
     def removeReference(self, id):
+        """Remove links and backlinks to the given page id."""
         self._relations.removeBackLinksTo([id])
         self._relations.removeLinkablesTo([id])
         count = self._relations.removeLinksTo([id])
