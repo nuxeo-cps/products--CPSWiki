@@ -45,7 +45,7 @@ from Products.CPSCore.CPSBase import CPSBaseFolder
 from Products.CPSCore.CPSBase import CPSBaseDocument
 
 from wikiversionning import VersionContent
-from wikirelations import WikiRelation, ZODBDummyBackEnd
+from wikirelations import WikiRelation, ZODBBackend
 
 factory_type_information = (
     { 'id': 'Wiki Page',
@@ -137,7 +137,7 @@ class WikiPage(CPSBaseFolder):
         # from this page.
         self._potential_linked_pages = None
 
-        self._relations = WikiRelation(self, ZODBDummyBackEnd())
+        self._relations = WikiRelation(self, ZODBBackend())
 
     def _getCurrentDateStr(self):
         """ gets current date """
@@ -283,7 +283,7 @@ class WikiPage(CPSBaseFolder):
                 if title is not None:
                     self.title = title
             finally:
-                self.unLockPage(REQUEST)
+                self.unLock(REQUEST)
 
             if REQUEST is not None:
                 psm = 'psm_content_changed'
@@ -348,14 +348,14 @@ class WikiPage(CPSBaseFolder):
                 # page locked by someone else
                 return True, 'Page locked.'
 
-    security.declareProtected(ModifyPortalContent, 'lockPage')
-    def lockPage(self, REQUEST=None):
+    security.declareProtected(ModifyPortalContent, 'lock')
+    def lock(self, REQUEST=None):
         """Lock the page."""
         wiki = self.getParent()
         return wiki.lockPage(self, REQUEST)
 
-    security.declareProtected(ModifyPortalContent, 'unLockPage')
-    def unLockPage(self, REQUEST=None):
+    security.declareProtected(ModifyPortalContent, 'unLock')
+    def unLock(self, REQUEST=None):
         """Unlock the page."""
         wiki = self.getParent()
         return wiki.unLockPage(self, REQUEST)

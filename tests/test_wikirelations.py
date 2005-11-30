@@ -19,15 +19,15 @@
 # $Id: test_wikiversionning.py 28598 2005-10-25 10:05:37Z lregebro $
 
 import unittest
-from Products.CPSWiki.wikirelations import WikiRelation, DummyBackEnd
+from Products.CPSWiki.wikirelations import WikiRelation, MemoryBackend
 
 class FakeWikiPage:
     id = 'ok'
 
 class WikiRelationsTest(unittest.TestCase):
 
-    def test_DummyBackEnd(self):
-        backend = DummyBackEnd()
+    def test_MemoryBackend(self):
+        backend = MemoryBackend()
         rel = backend.getRelationsFor('page1', 'linked_to')
         self.assertEquals(rel, [])
 

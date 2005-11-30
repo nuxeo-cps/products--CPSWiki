@@ -150,7 +150,7 @@ class WikiPageTests(WikiTestCase):
 
         page = wiki.addPage('my page')
         self.assert_(page.edit(source='hello'))
-        page.lockPage()    # user locks the page (done by template)
+        page.lock()    # user locks the page (done by template)
 
         # second user comes
         wiki._getCurrentUser = self._getCurrentUser2

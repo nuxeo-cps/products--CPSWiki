@@ -273,7 +273,7 @@ class CPSWikiInstaller(CPSInstaller):
         """ upgrade Wiki instances """
         from Products.CPSWiki.wikipage import WikiPage
         from Products.CPSWiki.wikirelations import WikiRelation, \
-                                                   ZODBDummyBackEnd
+                                                   ZODBBackend
         if not hasattr(wiki, 'version') or wiki.version != (0, 7):
             # < 0.6, need to add _relation to all wiki pages
             # and to upgrade links
@@ -282,7 +282,7 @@ class CPSWikiInstaller(CPSInstaller):
                 if object.portal_type != WikiPage.portal_type:
                     continue
                 self.log('upgrading page %s' % object.id)
-                object._relations = WikiRelation(object, ZODBDummyBackEnd())
+                object._relations = WikiRelation(object, ZODBBackend())
 
             self.log('clearing caches and rebuilding relations')
             count = 0

@@ -21,7 +21,7 @@
 from ZODB.PersistentMapping import PersistentMapping
 from interfaces import IWikiRelation, IWikiRelationGraph
 
-class DummyBackEnd:
+class MemoryBackend:
 
     __implements__ = (IWikiRelationGraph,)
 
@@ -55,7 +55,7 @@ class DummyBackEnd:
                 count += 1
         return count
 
-class ZODBDummyBackEnd(DummyBackEnd):
+class ZODBBackend(MemoryBackend):
     def __init__(self):
         self._triplets = PersistentMapping()
 
@@ -68,7 +68,7 @@ class WikiRelation:
     """
     __implements__ = (IWikiRelation,)
 
-    def __init__(self, wikipage, backend=DummyBackEnd()):
+    def __init__(self, wikipage, backend=MemoryBackend()):
         self._backend = backend
         self._wikipage = wikipage
         self._isLinkedTo = '<is_linked_to>'

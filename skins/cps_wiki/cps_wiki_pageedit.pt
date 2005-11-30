@@ -3,7 +3,7 @@
                tal:define="wiki here/getParent;
                            parser_type wiki/parser;
                            source here/getSource;">
-    <tal:block tal:define="locked python:here.lockPage(request)">
+    <tal:block tal:define="locked python:here.lock(request)">
         <tal:block tal:condition="not:locked">
             <div class="message" i18n:translate="">
                 The page is locked by someone else, you
