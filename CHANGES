@@ -3,16 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Added AJAX functionalities to create and edit wiki pages faster and with less
-  load on the server.
+-
 Bug fixes:
 ~~~~~~~~~~
-- Fixed #1127 about wiki links parsing, thanks to Laurent Pelecq.
-- Fixed the wiki version tag, that would mess up upgrades.
-- Fixed a page deletion bug.
-- Fixed external JavaScript URL.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Added unit tests for the reStructuredText and www parsers that don't recognize
-  some wiki links in some special circumstances (some special number of
-  preceding http links).
+-
