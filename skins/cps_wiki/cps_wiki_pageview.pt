@@ -10,7 +10,7 @@
   </metal:main>
   <metal:block fill-slot="header">
     <div class="wikiTitle">
-      <table>
+      <table width="100%">
         <tr>
           <td align="left">
             <h1 tal:content="here/title_or_id"/>

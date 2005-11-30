@@ -18,8 +18,7 @@
             <h1 tal:content="here/title_or_id"/>
           </td>
           <td align="right">
-            <span id="redlite"
-              style="float:left;visibility: hidden;background-color:red;width: 10px; height: 10px"/>
+            <span id="redlite" style="float:left; visibility: hidden;"/>
             <td align="right">
               <tal:block tal:condition="python:mtool.checkPermission('Modify portal content', here)">
                 <img id="addPageButton" style="float:right;visibility: visible"
