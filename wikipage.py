@@ -286,7 +286,7 @@ class WikiPage(CPSBaseFolder):
                 self.unLockPage(REQUEST)
 
             if REQUEST is not None:
-                psm = 'Content changed.'
+                psm = 'psm_content_changed'
                 REQUEST.RESPONSE.\
                     redirect("cps_wiki_pageview?portal_status_message=%s" % psm)
             return True
