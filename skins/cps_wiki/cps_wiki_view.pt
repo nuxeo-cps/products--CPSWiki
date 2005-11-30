@@ -32,7 +32,7 @@
                 <div id="pageTitle" style="float:right;visibility: hidden">
                   <div style="margin-right: 20px">
                     <label for="wikipageTitle" i18n:translate="label_title">Title:</label>
-                    <input id="wikipageTitle" name="title" type="text" id="title"
+                    <input id="wikipageTitle" name="title" type="text"
                       onkeyup="pageAdderkeyDown(event)"/>
                     <div id="title_helper" style="visibility: hidden">
                       [enter] to validate

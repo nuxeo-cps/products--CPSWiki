@@ -1,9 +1,18 @@
-<tal:block define="dummy python:request.RESPONSE.setHeader('Content-Type', 'text/javascript')"/>
+<dtml-comment>
+JavaScript for the AJAX of the wiki pages.
+$Id$
+</dtml-comment>
+
+<dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+1" >
+<dtml-call "REQUEST.RESPONSE.setHeader('Content-Type', 'text/javascript')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Last-Modified', last_modified.toZone('GMT').rfc822())">
+<dtml-call "REQUEST.RESPONSE.setHeader('Cache-Control', 'max-age=36000, must-revalidate')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Expires', expires.toZone('GMT').rfc822())" >
+</dtml-let>
 
 /*
     Loading
 */
-
 function createXMLObject()
 {
   if (window.XMLHttpRequest) // Firefox
@@ -47,10 +56,10 @@ function loadEditModeResult()
     node = document.getElementById("wikipageContent");
 
     var content = new Array();
-    content.push('&lt;textarea id="wikipageEditableContent" name="source" rows="30" cols="80"');
-    content.push('style="width: 100%; font-family: monospace !important;"&gt;');
+    content.push('<textarea id="wikipageEditableContent" name="source" rows="30" cols="80"');
+    content.push('style="width: 100%; font-family: monospace !important;">');
     content.push(response);
-    content.push('&lt;/textarea&gt;');
+    content.push('</textarea>');
     content = content.join("");
 
     node.innerHTML = content;
@@ -58,7 +67,7 @@ function loadEditModeResult()
     // change "edit" into "save"
     node = document.getElementById("editButton");
     node.onclick = saveEditMode;
-    node.src="wikipage_save.png"
+    node.src = "wikipage_save.png"
     unWaitProcess();
   }
   else
@@ -186,7 +195,7 @@ function seePageAdder()
 {
   node = document.getElementById("pageTitle");
   helper = document.getElementById("title_helper");
-  title = document.getElementById("title");
+  title = document.getElementById("wikipageTitle");
 
   if (node.style.visibility == 'hidden')
   {
@@ -213,7 +222,7 @@ function pageAdderkeyDown(event)
   switch (event.keyCode)
   {
     case 13:
-        input_title = document.getElementById("title");
+        input_title = document.getElementById("wikipageTitle");
         input_title.style.visibility = 'visible';
         addPage(input_title.value);
         break;
@@ -301,4 +310,3 @@ function setCursor(obj) {
 function gotoUrl(dest) {
     self.location.href = dest;
 }
-
