@@ -1,3 +1,5 @@
+<tal:block define="dummy python:request.RESPONSE.setHeader('Content-Type', 'text/javascript')"/>
+
 /*
     Loading
 */
@@ -45,10 +47,10 @@ function loadEditModeResult()
     node = document.getElementById("wikipageContent");
 
     var content = new Array();
-    content.push('<textarea id="wikipageEditableContent" name="source" rows="30" cols="80"');
-    content.push('style="width: 100%; font-family: monospace !important;">');
+    content.push('&lt;textarea id="wikipageEditableContent" name="source" rows="30" cols="80"');
+    content.push('style="width: 100%; font-family: monospace !important;"&gt;');
     content.push(response);
-    content.push('</textarea>');
+    content.push('&lt;/textarea&gt;');
     content = content.join("");
 
     node.innerHTML = content;
@@ -201,9 +203,8 @@ function seePageAdder()
 }
 
 /*
-waits for <enter> key to validate the page
+Waits for enter key to validate the page
 */
-
 function pageAdderkeyDown(event)
 {
   if (!event)
@@ -283,24 +284,21 @@ function unWaitProcess()
   node.style.visibility = 'hidden';
 }
 
-function setCursor(obj)
-{
-  if (navigator.appName == "Microsoft Internet Explorer")
-  {
-    isIE = true;
-  }
-  else
-    isIE = false;
+function setCursor(obj) {
+    var isIE = false;
+    if (navigator.appName == "Microsoft Internet Explorer") {
+        isIE = true;
+    }
 
-  // Change the mouse cursor to hand or pointer
-  if (isIE)
-    obj.style.cursor = "hand";
-  else
-    obj.style.cursor = "pointer";
+    // Change the mouse cursor to hand or pointer
+    if (isIE) {
+        obj.style.cursor = "hand";
+    } else {
+        obj.style.cursor = "pointer";
+    }
 }
 
-function gotoUrl(dest)
-{
-  self.location.href = dest;
+function gotoUrl(dest) {
+    self.location.href = dest;
 }
 
