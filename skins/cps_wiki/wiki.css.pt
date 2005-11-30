@@ -18,14 +18,11 @@ li {
 }
 
 div.wikiTitle {
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 0 1em 0 1em;
   border: 1px solid #336699;
   background-color: #eeeeee;
-  margin-bottom: 10px;
   margin-left: 0;
+  margin-bottom: 1em;
   <tal:block condition="python:modules['Products.CPSUtil.integration'].isUserAgentGecko(request)">
   -moz-border-radius-topleft: 12px;
   -moz-border-radius-topright: 12px;
