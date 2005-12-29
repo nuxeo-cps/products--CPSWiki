@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"POT-Creation-Date: 2005-06-23 17:31default\n"
+"POT-Creation-Date: 2005-12-29 16:43default\n"
 "PO-Revision-Date: 2005-09-29 15:01-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -29,10 +29,12 @@ msgstr ""
 msgid "Attached files"
 msgstr "Arquivos anexados"
 
-#.   <a href="cps_wiki_full_view#_summary">Back to the top</a>
+#.   <a href="cps_wiki_full_view#_summary">
+#.             Back to the top&#32;<img src="wikipage_up.png" />
+#.           </a>
 #: from ../skins/cps_wiki/cps_wiki_full_view.pt
-msgid "Back to the top"
-msgstr "Volta para o topo"
+msgid "Back to the top&#32;<img src=\"wikipage_up.png\" />"
+msgstr ""
 
 #.   <h4>BackLinks</h4>
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
@@ -47,7 +49,47 @@ msgstr "Links Anteriores"
 msgid ""
 "The page is locked by someone else, you can read it but not write to it at "
 "this time."
-msgstr "Esta página está bloqueada por alguém; você pode lê-la mas não escrever nela neste momento."
+msgstr ""
+"Esta página está bloqueada por alguém; você pode lê-la mas não escrever nela "
+"neste momento."
+
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" onclick="loadEditMode()" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "cps_wikipage_edit"
+msgstr ""
+
+#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "cps_wikipage_home"
+msgstr ""
+
+#.   <input name="changeProperties:method" type="submit" class="standalone" value="cpswiki_button_submit">
+#.       </input>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+msgid "cpswiki_button_submit"
+msgstr ""
+
+#.   <span>cpswiki_choose_parser</span>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+msgid "cpswiki_choose_parser"
+msgstr ""
+
+#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" onclick="seePageAdder()" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
+#: from ../skins/cps_wiki/cps_wiki_view.pt
+msgid "cpswiki_page_add"
+msgstr ""
+
+#.   <h1>Special tags</h1>
+#: from ../skins/cps_wiki/cps_wiki_help.pt
+msgid "cpswiki_specialtags"
+msgstr ""
+
+#.   <p class="message">
+#.         We need a confirmation to delete this page.
+#.       </p>
+#: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
+msgid "description_confirm_page_delete"
+msgstr ""
 
 #.   <button type="submit" name="upload">upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
@@ -69,5 +111,29 @@ msgstr "História"
 msgid "action_full_view"
 msgstr "Visão expandida"
 
+msgid "Back to the top"
+msgstr "Volta para o topo"
+
 msgid "File uploaded."
 msgstr "Arquivo enviado"
+
+# Status messages (psm)
+# ######################
+msgid "psm_page_deleted"
+msgstr ""
+
+msgid "psm_properties_changed"
+msgstr ""
+
+msgid "action_properties"
+msgstr ""
+
+#, fuzzy
+msgid "action_syntax_help"
+msgstr "Syntax help"
+
+msgid "cpswiki_member_help"
+msgstr ""
+
+msgid "cpswiki_pycode_help"
+msgstr ""

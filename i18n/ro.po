@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ro\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-27 12:27default\n"
+"POT-Creation-Date: 2005-12-29 16:43default\n"
 "PO-Revision-Date: 2005-04-04 17:31+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -23,9 +23,11 @@ msgstr ""
 msgid "Attached files"
 msgstr ""
 
-#.   <a href="cps_wiki_full_view#_summary">Back to the top</a>
+#.   <a href="cps_wiki_full_view#_summary">
+#.             Back to the top&#32;<img src="wikipage_up.png" />
+#.           </a>
 #: from ../skins/cps_wiki/cps_wiki_full_view.pt
-msgid "Back to the top"
+msgid "Back to the top&#32;<img src=\"wikipage_up.png\" />"
 msgstr ""
 
 #.   <h4>BackLinks</h4>
@@ -41,6 +43,37 @@ msgstr ""
 msgid ""
 "The page is locked by someone else, you can read it but not write to it at "
 "this time."
+msgstr ""
+
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" onclick="loadEditMode()" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "cps_wikipage_edit"
+msgstr ""
+
+#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "cps_wikipage_home"
+msgstr ""
+
+#.   <input name="changeProperties:method" type="submit" class="standalone" value="cpswiki_button_submit">
+#.       </input>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+msgid "cpswiki_button_submit"
+msgstr ""
+
+#.   <span>cpswiki_choose_parser</span>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+msgid "cpswiki_choose_parser"
+msgstr ""
+
+#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" onclick="seePageAdder()" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
+#: from ../skins/cps_wiki/cps_wiki_view.pt
+msgid "cpswiki_page_add"
+msgstr ""
+
+#.   <h1>Special tags</h1>
+#: from ../skins/cps_wiki/cps_wiki_help.pt
+msgid "cpswiki_specialtags"
 msgstr ""
 
 #.   <p class="message">
@@ -70,10 +103,28 @@ msgstr ""
 msgid "action_full_view"
 msgstr ""
 
+msgid "Back to the top"
+msgstr ""
+
 msgid "File uploaded."
 msgstr ""
 
 # Status messages (psm)
 # ######################
 msgid "psm_page_deleted"
+msgstr ""
+
+msgid "psm_properties_changed"
+msgstr ""
+
+msgid "action_properties"
+msgstr ""
+
+msgid "action_syntax_help"
+msgstr ""
+
+msgid "cpswiki_member_help"
+msgstr ""
+
+msgid "cpswiki_pycode_help"
 msgstr ""
