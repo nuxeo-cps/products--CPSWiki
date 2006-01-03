@@ -1,4 +1,8 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
+  <metal:main fill-slot="style_slot">
+    <link rel="Stylesheet" type="text/css" href=""
+      tal:attributes="href string:${base_url}schemas.css" />
+  </metal:main>
   <metal:block fill-slot="main"
                tal:define="wiki here/getParent;
                            parser_type wiki/parser;
@@ -15,7 +19,7 @@
       <tal:block condition="python:parser_type != 'html'">
         <p>
           <textarea name="source" rows="30" cols="80"
-            style="width: 100%; font-family: monospace !important;"
+            class="monospaceFont"
             tal:content="source">
           </textarea>
         </p>
