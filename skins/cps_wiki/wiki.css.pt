@@ -31,8 +31,11 @@ div.wikiTitle {
   </tal:block>
 }
 
-#redlite {
-  background-color: #ff0000;
-  width: 10px;
-  height: 10px;
+#ajax_psm {
+  background: #ffac0b;
+  color: white;
+  padding: 8px;
+  border: 1px solid black;
+  font-weight: bold;
 }
+

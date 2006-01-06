@@ -83,3 +83,6 @@ msgstr ""
 
 msgid "cpswiki_page_add"
 msgstr ""
+
+msgid "cpswiki_ajax_transferring"
+msgstr ""

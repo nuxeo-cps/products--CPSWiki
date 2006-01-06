@@ -132,3 +132,7 @@ msgstr ""
 msgid "cpswiki_pycode_help"
 msgstr ""
 "colorise le codeusage:<br/>   <p>{{{pycode:       du code python   }}}</p>"
+
+msgid "cpswiki_ajax_transferring"
+msgstr "Transfert en cours..."
+

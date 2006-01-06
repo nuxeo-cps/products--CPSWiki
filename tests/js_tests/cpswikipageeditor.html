@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The Title</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <script src="prototype.js" type="text/javascript"></script>
+  <script src="effects.js" type="text/javascript"></script>
+  <script src="../../skins/cps_wiki/cpswiki.js.dtml" type="text/javascript"></script>
+  <script src="unittest.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="test.css" type="text/css" />
+  <style type="text/css" media="screen">
+  /* <![CDATA[ */
+    #div_absolute_test { position: absolute }
+  /* ]]> */
+  </style>
+
+</head>
+<body>
+<h1>CPSWikiEditor Unit Tests</h1>
+<p>
+  Test of CPSWikiEditor
+</p>
+
+<!-- simulate a cpswiki page -->
+<div id="redlite" style="background-color: red">Warning</div>
+<div id="wikipageContent" style="broder: 1px solid black">
+The page content
+</div>
+<img id="editButton"/>
+
+
+<!-- Log output -->
+<div id="testlog"> </div>
+
+<!-- Tests follow -->
+<script type="text/javascript" charset="utf-8">
+// <![CDATA[
+  new Test.Unit.Runner({
+    setup: function() {
+      this.idle = 100;
+    },
+
+    testInitialization: function() { with(this) {
+      var editor = new CPSWikiPageEditor("wikipageContent", "wikiContent",
+                                         "getsource", "setsource", "render",
+                                         "editButton", "redlite");
+      assertInstanceOf(CPSWikiPageEditor, editor);
+    }},
+
+    testPrepareEditContent: function()  { with(this) {
+      var editor = new CPSWikiPageEditor("wikipageContent", "wikiContent",
+                                         "getsource", "setsource", "render",
+                                         "editButton", "redlite");
+      wait(this.idle, function() {
+         var result = editor.prepareEditContent("content");
+         assertEqual(result.length, 134);
+      });
+    }},
+  }, "testlog");
+// ]]>
+</script>
+
+</body>
+</html>

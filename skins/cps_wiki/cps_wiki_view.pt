@@ -5,6 +5,10 @@
   </metal:main>
 
   <metal:main fill-slot="javascript_head_slot">
+    <script type="text/javascript" src="prototype.js"
+      tal:attributes="src string:${base_url}prototype.js"></script>
+    <script type="text/javascript" src="effects.js"
+      tal:attributes="src string:${base_url}effects.js"></script>
     <script type="text/javascript"
       tal:attributes="src string:${base_url}cpswiki.js">
     </script>
@@ -18,22 +22,23 @@
             <h1 tal:content="here/title_or_id"/>
           </td>
           <td align="right">
-            <span id="redlite" style="float:left; visibility: hidden;"/>
+            <div id="ajax_psm" style="display:none"
+              i18:translate="cpswiki_ajax_transferring">
+              Transferring
+            </div>
             <td align="right">
               <tal:block tal:condition="python:mtool.checkPermission('Modify portal content', here)">
                 <img id="addPageButton" style="float:right;visibility: visible"
-                  onclick="seePageAdder()"
                   onmouseover="setCursor(this)"
                   alt="cpswiki_page_add"
                   title="cpswiki_page_add"
                   i18n:attributes="alt; title"
                   src="wikipage_new.png"/>
-                <div id="pageTitle" style="float:right;visibility: hidden">
+                <div id="pageTitle" style="float:right;display:none">
                   <div style="margin-right: 20px">
                     <label for="wikipageTitle" i18n:translate="label_title">Title:</label>
-                    <input id="wikipageTitle" name="title" type="text"
-                      onkeyup="pageAdderkeyDown(event)"/>
-                    <div id="title_helper" style="visibility: hidden">
+                    <input id="wikipageTitle" name="title" type="text"/>
+                    <div id="titleHelper">
                       [enter] to validate
                     </div>
                   </div>
@@ -49,13 +54,18 @@
 
   <metal:block fill-slot="main">
     <tal:block tal:define="items python:here.getSummary()">
-      <div id="wikiContent" class="cpsskinsBox" tal:condition="items">
-        <ul class="wikiMenu">
+      <div id="wikiContent" class="cpsskinsBox">
+        <ul class="wikiMenu"  tal:condition="items">
           <li tal:repeat="item items">
             <metal:block metal:use-macro="here/cps_wiki_lib/macros/wikinode"/>
           </li>
         </ul>
       </div>
     </tal:block>
+    <script langage="javascript">
+      var editor = new CPSWikiEditor("jaddPage", "jrender", "wikiContent",
+                                     "pageTitle", "titleHelper",
+                                     "wikipageTitle", "ajax_psm", "addPageButton");
+    </script>
   </metal:block>
 </html>

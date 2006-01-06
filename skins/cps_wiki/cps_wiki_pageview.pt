@@ -4,6 +4,10 @@
       tal:attributes="href string:${base_url}wiki.css" />
   </metal:main>
   <metal:main fill-slot="javascript_head_slot">
+    <script type="text/javascript" src="prototype.js"
+      tal:attributes="src string:${base_url}prototype.js"></script>
+    <script type="text/javascript" src="effects.js"
+      tal:attributes="src string:${base_url}effects.js"></script>
     <script type="text/javascript"
       tal:attributes="src string:${base_url}cpswiki.js">
     </script>
@@ -16,7 +20,10 @@
             <h1 tal:content="here/title_or_id"/>
           </td>
           <td align="left">
-            <div id="redlite" style="visibility: hidden;"/>
+            <div id="ajax_psm" style="display:none"
+              i18:translate="cpswiki_ajax_transferring">
+              Transferring
+            </div>
           </td>
           <td align="right">
             <img id="goHome" style="visibility: visible"
@@ -29,7 +36,6 @@
             <tal:block
               condition="python:mtool.checkPermission('Modify portal content', here)">
               <img id="editButton"
-                onclick="loadEditMode()"
                 onmouseover="setCursor(this)"
                 src="wikipage_write.png"
                 alt="cps_wikipage_edit"
@@ -49,6 +55,12 @@
                              files here/objectItems">
 
     <div id="wikipageContent" tal:content="structure content"/>
+
+    <script langage="javascript">
+      var editor = new CPSWikiPageEditor("wikipageContent", "wikiContent",
+                                         "jgetSource", "jedit", "jrender",
+                                         "editButton", "ajax_psm");
+    </script>
 
     <div style="margin-top: 10px; padding-bottom:8px"
         class="wikiTitle" tal:condition="python:len(files) &gt; 0 or len(backlinks) &gt; 0">
