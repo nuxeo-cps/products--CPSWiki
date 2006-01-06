@@ -23,6 +23,10 @@ try:
     from Products.CMFCore.permissions import AddPortalContent
 except ImportError: # CPS 3.2
     from Products.CMFCore.CMFCorePermissions import AddPortalContent
+from Products.GenericSetup import profile_registry
+from Products.GenericSetup import EXTENSION
+
+from Products.CPSDefault.interfaces import ICPSSite
 
 import wiki, wikipage
 
@@ -54,3 +58,11 @@ def initialize(context):
                 extra_constructors=contentConstructors,
                 fti=fti
                 ).initialize(context)
+    profile_registry.registerProfile(
+        'default',
+        'CPS Wiki',
+        "Wiki product for CPS.",
+        'profiles/default',
+        'CPSWiki',
+        EXTENSION,
+        for_=ICPSSite)

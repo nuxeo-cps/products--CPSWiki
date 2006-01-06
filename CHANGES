@@ -11,3 +11,4 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - CPS css_slot was renamed style_slot to comply with later CMF/Zope 3 standard.
+- Added extension profile
