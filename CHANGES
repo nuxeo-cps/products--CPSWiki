@@ -3,14 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Added cinematics on ajax features
+-
 Bug fixes:
 ~~~~~~~~~~
-- Fixed #671: The text area used for editing wiki pages should use monospaced
-  font.
+-
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- CPS css_slot was renamed style_slot to comply with later CMF/Zope 3 standard.
-- Added extension profile
-- The javascript layer is now fully based on prototype/scriptaculous
-
+-

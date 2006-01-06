@@ -1,4 +1,24 @@
 *******************************************
+** CPSWiki V0.9.0 [R1 build 2006/01/06-17:00 by tziade]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 31400
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added cinematics on ajax features
+Bug fixes:
+~~~~~~~~~~
+- Fixed #671: The text area used for editing wiki pages should use monospaced
+  font.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- CPS css_slot was renamed style_slot to comply with later CMF/Zope 3 standard.
+- Added extension profile
+- The javascript layer is now fully based on prototype/scriptaculous
+
+
+*******************************************
 ** CPSWiki V0.8.0 [R1 build 2005/11/30-17:36 by madarche]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 30155
 Requires:
