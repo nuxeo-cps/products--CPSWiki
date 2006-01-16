@@ -26,7 +26,7 @@ except ImportError: # CPS 3.2
 from Products.GenericSetup import profile_registry
 from Products.GenericSetup import EXTENSION
 
-from Products.CPSDefault.interfaces import ICPSSite
+from Products.CPSCore.interfaces import ICPSSite
 
 import wiki, wikipage
 
