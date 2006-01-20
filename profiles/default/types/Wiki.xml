@@ -17,7 +17,6 @@
  <property name="cps_is_searchable">False</property>
  <property name="cps_proxy_type"></property>
  <property name="cps_display_as_document_in_listing">True</property>
- <property name="cps_is_portalbox">False</property>
  <alias from="(Default)" to="cps_wiki_view"/>
  <alias from="view" to="cps_wiki_view"/>
  <action title="action_view" action_id="view" category="object"
