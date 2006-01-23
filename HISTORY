@@ -1,4 +1,20 @@
 *******************************************
+** CPSWiki V0.9.1 [R1 build 2006/01/23-17:32 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 31976
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Removed dependency to CPSBoxes property cps_is_portalbox in profile
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSWiki V0.9.0 [R1 build 2006/01/06-17:00 by tziade]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 31400
 Requires:
