@@ -21,7 +21,7 @@
           </td>
           <td align="left">
             <div id="ajax_psm" style="display:none"
-              i18:translate="cpswiki_ajax_transferring">
+              i18n:translate="cpswiki_ajax_transferring">
               Transferring
             </div>
           </td>
@@ -56,7 +56,7 @@
 
     <div id="wikipageContent" tal:content="structure content"/>
 
-    <script langage="javascript">
+    <script type="text/javascript">
       var editor = new CPSWikiPageEditor("wikipageContent", "wikiContent",
                                          "jgetSource", "jedit", "jrender",
                                          "editButton", "ajax_psm");

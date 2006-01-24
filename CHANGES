@@ -6,7 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
--
+- Fixed HTML validity.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Switched the CSS back to DTML as it is done in CPSDefault.
+- Switched the CSS back to DTML as it is done in Chesterfield.

@@ -23,7 +23,7 @@
           </td>
           <td align="right">
             <div id="ajax_psm" style="display:none"
-              i18:translate="cpswiki_ajax_transferring">
+              i18n:translate="cpswiki_ajax_transferring">
               Transferring
             </div>
             <td align="right">
@@ -62,7 +62,7 @@
         </ul>
       </div>
     </tal:block>
-    <script langage="javascript">
+    <script type="text/javascript">
       var editor = new CPSWikiEditor("jaddPage", "jrender", "wikiContent",
                                      "pageTitle", "titleHelper",
                                      "wikipageTitle", "ajax_psm", "addPageButton");
