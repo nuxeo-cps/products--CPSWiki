@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<object name="sections" meta_type="CPS Tree Cache">
- <property name="type_names">
+<object>
+ <property name="type_names" purge="False">
   <element value="Wiki"/>
  </property>
 </object>
