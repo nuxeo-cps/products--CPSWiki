@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <roots>
-  <root name="sections" local_workflows="sections_workflows"/>
-  <root name="workspaces" local_workflows="workspaces_workflows"/>
-  <root name="members" local_workflows="workspaces_workflows"/>
+ <object name="members"/>
+ <object name="sections"/>
+ <object name="workspaces"/>
 </roots>
