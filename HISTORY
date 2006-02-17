@@ -1,4 +1,21 @@
 *******************************************
+** CPSWiki V0.10.0 [R1 build 2006/02/17-20:29 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 32986
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fixed HTML validity.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Switched the CSS back to DTML as it is done in Chesterfield.
+- GenericSetup
+
+*******************************************
 ** CPSWiki V0.9.1 [R1 build 2006/01/23-17:32 by fermigier]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 31976
 Requires:
