@@ -12,98 +12,94 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
 "POT-Creation-Date: 2006-01-03 14:55default\n"
-"PO-Revision-Date: 2005-05-27 10:57+0100\n"
-"Last-Translator: Jesús <jesusmartin@lasalle.es>\n"
+"PO-Revision-Date: 2006-02-21 16:56+0100\n"
+"Last-Translator: Jesús Martín <jesusmartin@lasalle.es>\n"
 "Language-Team: español <jesusmartin@lasalle.es>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language-Code: es\n"
-"Language-Name: Spanish\n"
 "Preferred-encodings: utf-8 latin1\n"
-"Domain: default\n"
 "X-Generator: KBabel 1.3.1\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Domain: default\n"
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: Spain\n"
 
 #.   <h4>Attached files</h4>
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "Attached files"
-msgstr ""
+msgstr "Archivos adjuntos"
 
 #.   <a href="cps_wiki_full_view#_summary">
 #.             Back to the top&#32;<img src="wikipage_up.png" />
 #.           </a>
 #: from ../skins/cps_wiki/cps_wiki_full_view.pt
 msgid "Back to the top&#32;<img src=\"wikipage_up.png\" />"
-msgstr ""
+msgstr "Volver al índice&#32;<img src=\"wikipage_up.png\" />"
 
 #.   <h4>BackLinks</h4>
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "BackLinks"
-msgstr ""
+msgstr "Enlaces anteriores"
 
 #.   <div class="message">
 #.                   The page is locked by someone else, you
 #.                   can read it but not write to it at this time.
 #.               </div>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid ""
-"The page is locked by someone else, you can read it but not write to it at "
-"this time."
-msgstr ""
+msgid "The page is locked by someone else, you can read it but not write to it at this time."
+msgstr "La página está siendo utilizada por alguien más. Puedes leer, pero no escribir mientras el otro usuario la esté editando."
 
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" onclick="loadEditMode()" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
-msgstr ""
+msgstr "Editar página"
 
 #.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_home"
-msgstr ""
+msgstr "Página de inicio"
 
 #.   <input name="changeProperties:method" type="submit" class="standalone" value="cpswiki_button_submit">
 #.       </input>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_button_submit"
-msgstr ""
+msgstr "Modificar"
 
 #.   <span>cpswiki_choose_parser</span>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_choose_parser"
-msgstr ""
+msgstr "\"Parser\" (analizador) en uso"
 
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" onclick="seePageAdder()" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
-msgstr ""
+msgstr "Añadir una página"
 
 #.   <h1>Special tags</h1>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
-msgstr ""
+msgstr "Etiquetas especiales"
 
 #.   <p class="message">
 #.         We need a confirmation to delete this page.
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
-msgstr ""
+msgstr "Necesitamos una confirmación antes de borrar esta página"
 
 #.   <button type="submit" name="upload">upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
 msgid "upload file"
-msgstr ""
+msgstr "Subir un archivo"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Documento Wiki"
 
 msgid "portal_type_CPSWiki_description"
-msgstr ""
-"Tipo especial de documento. Todos los usuarios que tengan acceso a él, "
-"podrán modificarlo en línea, guardándose un historial de todos los cambios."
+msgstr "Tipo especial de documento. Todos los usuarios que tengan acceso a él, podrán modificarlo en línea, guardándose un historial de todos los cambios."
 
 msgid "action_add_page"
 msgstr "Añadir una página"
@@ -112,31 +108,34 @@ msgid "action_history"
 msgstr "Historial"
 
 msgid "action_full_view"
-msgstr ""
+msgstr "Ver todo"
 
 msgid "Back to the top"
-msgstr ""
+msgstr "Volver al índice"
 
 msgid "File uploaded."
-msgstr ""
+msgstr "Archivo subido"
 
 # Status messages (psm)
 # ######################
 msgid "psm_page_deleted"
-msgstr ""
+msgstr "Página borrada"
 
 msgid "psm_properties_changed"
-msgstr ""
+msgstr "Propiedades cambiadas"
 
 msgid "action_properties"
-msgstr ""
+msgstr "Propiedades"
 
-#, fuzzy
 msgid "action_syntax_help"
-msgstr "Syntax help"
+msgstr "Ayuda en la sintaxis"
 
 msgid "cpswiki_member_help"
-msgstr ""
+msgstr "renderiza un enlace a una entrada de directorio de un miembro. Uso: <i>[member:member id, texto]</i><br/>Si el texto es dado, suele ser mostrado en el enlace<br/>ejemplo: <i>[member:manager, El administrador del Wiki]</i>"
 
 msgid "cpswiki_pycode_help"
-msgstr ""
+msgstr "colorea el código:<br/>   <p>{{{pycode:       some python code   }}}</p>"
+
+msgid "cpswiki_ajax_transferring"
+msgstr "Transfiriendo..."
+
