@@ -1,4 +1,20 @@
 *******************************************
+** CPSWiki V0.11.0 [R1 build 2006/03/03-17:47 by ben]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 33914
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- update po
+
+*******************************************
 ** CPSWiki V0.10.0 [R1 build 2006/02/17-20:29 by fermigier]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 32986
 Requires:
