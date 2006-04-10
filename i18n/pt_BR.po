@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "POT-Creation-Date: 2006-01-03 14:55default\n"
-"PO-Revision-Date: 2005-09-29 15:01-0300\n"
+"PO-Revision-Date: 2006-04-07 15:06-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr "Arquivos anexados"
 #.           </a>
 #: from ../skins/cps_wiki/cps_wiki_full_view.pt
 msgid "Back to the top&#32;<img src=\"wikipage_up.png\" />"
-msgstr ""
+msgstr "Voltar ao topo&#32;<img src=\"wikipage_up.png\" />"
 
 #.   <h4>BackLinks</h4>
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
@@ -56,40 +56,40 @@ msgstr ""
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" onclick="loadEditMode()" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
-msgstr ""
+msgstr "Editar"
 
 #.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_home"
-msgstr ""
+msgstr "Página Inicial"
 
 #.   <input name="changeProperties:method" type="submit" class="standalone" value="cpswiki_button_submit">
 #.       </input>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_button_submit"
-msgstr ""
+msgstr "Submeter"
 
 #.   <span>cpswiki_choose_parser</span>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_choose_parser"
-msgstr ""
+msgstr "Escolher analisador"
 
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" onclick="seePageAdder()" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
-msgstr ""
+msgstr "Adicionar"
 
 #.   <h1>Special tags</h1>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
-msgstr ""
+msgstr "Rótulos especiais"
 
 #.   <p class="message">
 #.         We need a confirmation to delete this page.
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
-msgstr ""
+msgstr "Precisamos uma confirmação para remover esta página."
 
 #.   <button type="submit" name="upload">upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
@@ -120,20 +120,28 @@ msgstr "Arquivo enviado"
 # Status messages (psm)
 # ######################
 msgid "psm_page_deleted"
-msgstr ""
+msgstr "Removida"
 
 msgid "psm_properties_changed"
-msgstr ""
+msgstr "Modificada"
 
 msgid "action_properties"
-msgstr ""
+msgstr "Propriedades"
 
-#, fuzzy
 msgid "action_syntax_help"
-msgstr "Syntax help"
+msgstr "Ajuda de sintaxe"
 
 msgid "cpswiki_member_help"
 msgstr ""
+"mostra um link para uma entrada do diretório de membros. uso:  <i>[member:id "
+"do membro,texto]</i><br/>Se 'texto' é fornecido, ele é utilizado para ser "
+"mostrado no link. <br/> exemplo: <i>[member:manager, O Administrador do Wiki]"
+"</i>"
 
 msgid "cpswiki_pycode_help"
 msgstr ""
+"colore os códigos usados:<br/>   <p>{{{pycode:       algum código python }}}"
+"</p>"
+
+msgid "cpswiki_ajax_transferring"
+msgstr "transferindo"
