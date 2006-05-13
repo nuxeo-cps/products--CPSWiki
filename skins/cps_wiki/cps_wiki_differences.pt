@@ -1,0 +1,11 @@
+<html metal:use-macro="here/content_lib_master/macros/master">
+  <metal:block fill-slot="main"
+               tal:define="wiki here/getParent;
+                           v1 request/version_1;
+                           v2 request/version_2;
+                           diff python:here.getDiffs(v1, v2)">
+
+    <h2>Differences between v.<span tal:replace="v1"/> and v.<span tal:replace="v2"/></h2>
+    <pre tal:content="structure diff"/>
+  </metal:block>
+</html>

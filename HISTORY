@@ -1,0 +1,400 @@
+*******************************************
+** CPSWiki V0.11.0 [R1 build 2006/03/03-17:47 by ben]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 33914
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- update po
+
+*******************************************
+** CPSWiki V0.10.0 [R1 build 2006/02/17-20:29 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 32986
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fixed HTML validity.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Switched the CSS back to DTML as it is done in Chesterfield.
+- GenericSetup
+
+*******************************************
+** CPSWiki V0.9.1 [R1 build 2006/01/23-17:32 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 31976
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Removed dependency to CPSBoxes property cps_is_portalbox in profile
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSWiki V0.9.0 [R1 build 2006/01/06-17:00 by tziade]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 31400
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added cinematics on ajax features
+Bug fixes:
+~~~~~~~~~~
+- Fixed #671: The text area used for editing wiki pages should use monospaced
+  font.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- CPS css_slot was renamed style_slot to comply with later CMF/Zope 3 standard.
+- Added extension profile
+- The javascript layer is now fully based on prototype/scriptaculous
+
+
+*******************************************
+** CPSWiki V0.8.0 [R1 build 2005/11/30-17:36 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 30155
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added AJAX functionalities to create and edit wiki pages faster and with less
+  load on the server.
+Bug fixes:
+~~~~~~~~~~
+- Fixed #1127 about wiki links parsing, thanks to Laurent Pelecq.
+- Fixed the wiki version tag, that would mess up upgrades.
+- Fixed a page deletion bug.
+- Fixed external JavaScript URL.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Added unit tests for the reStructuredText and www parsers that don't recognize
+  some wiki links in some special circumstances (some special number of
+  preceding http links).
+
+*******************************************
+** CPSWiki V0.7.0 [R1 build 2005/11/08-16:56 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 29274
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- using a relation indexer
+
+*******************************************
+** CPSWiki V0.6.0 [R1 build 2005/11/07-15:33 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 29136
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Unspecified changes :(
+
+*******************************************
+** CPSWiki V0.5.1 [R1 build 2005/10/25-15:18 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 28619
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Displayed the last diff first in the differences page.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSWiki V0.5.0 [R1 build 2005/10/25-10:10 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 28601
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- pluggable tags
+- cps tag: link to a member entry
+- commmon tag: code colorizer
+	
+Bug fixes:
+~~~~~~~~~~
+- The differences display was unreadable (#829).
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSWiki V0.4.3 [R1 build 2005/10/01-15:09 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 27804
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Made CPSWiki usable with older versions of CPS (as old as CPS 3.2).
+- Updated Brazilian Portuguese translations (Thanks to Mario Olimpio de Menezes
+  <mario [at] curiango.ipen.br>)
+Bug fixes:
+~~~~~~~~~~
+- Improved the cache clearing when deleting a page.
+- Made it possible to change the title of a page from the ZMI. It may fix #905.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Add a unit test about non-wiki-pages content present in a wiki
+
+*******************************************
+** CPSWiki V0.4.2 [R1 build 2005/09/29-16:20 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 27729
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fixed a bug in the clearCaches and appPage method that was happening when a
+  wiki did contain other objects than wiki pages.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSWiki V0.4.1 [R1 build 2005/09/29-12:21 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 27709
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Added the possibility to view and edit the source of a wiki page in the ZMI,
+  fixes #676.
+- Made the deletion of a wiki page be a POST requests, fixes #835.
+- Added potential linked pages in the wiki page cache, this fixes #833.
+- Made the wiki raise an exception if asked to create a page that does already
+  exists.
+- Added missing InitializeClass statements for the Wiki and WikiPage classes.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Optimized the regexps in baseparser.py by compiling them first.
+- Changed the API of the WikiPage (especially the render method) to make it
+  manage its cache better.
+
+*******************************************
+** CPSWiki V0.4.0 [R1 build 2005/09/21-15:29 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 27306
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fixed bug that was causing an "unexpected end of regular expression" when text
+  like [[mylink]] was used.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Adapted to new CPSUtil.id.generateId default values.
+
+*******************************************
+** CPSWiki V0.3.0 [R1 build 2005/08/05-15:39 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 25562
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added the pt_BR translation.
+Bug fixes:
+~~~~~~~~~~
+- Taking advantage of the new centralized CPSI18n.tests.translations module.
+- Fixed the security assertion on the uploadFile method. Fixes #791.
+- Modified some ZPT files so that they are valid XHTML 1.0 Strict. This is a
+  work in progress to fix #773 "Using XHTML 1.0 Strict by default for CPS
+  sites".
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSWiki V0.2.0 [R1 build 2005/06/14-15:57 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 23910
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added the st2rest utility script for converting wiki pages using the
+  structuredtext syntax into wiki pages using the reStructuredText syntax.
+  This script is contributed by Laurent Pelecq <laurent.pelecq@soleil.org>
+Bug fixes:
+~~~~~~~~~~
+- Made CPSWiki fully take advantage of the CPSUtil.id.generatedId method now
+  fixed.
+- Made CPSWiki wiki objects be able to hold not only pages objects (the code was
+  making assumption that all contained objects were page objects).
+- Made CPSWiki table of content be alphabetically sorted. Fixed #691.
+- Made the "_recursiveGetLinks" methods avoid too long recursive loops, even if
+  the current implementation is not as good as it should.
+- Made the wiki generated summary be valid XHTML.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Moved product skin in skins/cps_wiki and ZMI pages in zmi as it should be.
+- Renamed ZPT files so they have the .pt suffix as they should have, instead of
+  the .zpt suffix.
+
+*******************************************
+** CPSWiki V0.1.1 [R1 build 2005/06/02-09:36 by fguillaume]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 22058
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added a "folder_contents" action on wikis.
+Bug fixes:
+~~~~~~~~~~
+- Improved quality of the .po files.
+- Fixed handling of input encoding for restructured-text wiki pages.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSWiki V0.1.0 [R1 build 2005/05/25-09:17 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 21807
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Front page is an automatic summary of all pages.
+- Added a full view where the whole wiki content is displayed.
+- Added backlinks.
+- Added file attachments.
+Bug fixes:
+~~~~~~~~~~
+- Used monospaced font for the wiki text areas used for edition.
+  This fixes #671: "The text area used for editing wiki pages should use
+  fixed-size font".
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSWiki V0.0.4 [R1 build 2005/04/12-15:22 by madarche]
+
+Requires:
+~~~~~~~~~
+- CPSDefault > 3.32.1
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Renamed addWikiPage to addPage in page adder template (page adding would fail)
+- Made the wiki use the CMF and CPS already existing roles and permissions and
+  modified the workflows accordingly.
+  Fixes #563 ("CPSWiki is unusable in sections. Which use cases for CPSWiki in
+  sections and in general?")
+- Made the portal types of CPSWiki follow the Zope, CMF and CPS naming
+  conventions: "CPS Wiki" -> "Wiki", "CPS Wiki Page" -> "Wiki Page".
+- Added security checks on WikiPage methods.
+- Made the methods of Wiki and WikiPage named in a more object oriented manner.
+- Added missing permissions in the workflow definitions.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSWiki V0.0.3 [R1 build 2005/03/30-09:21 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Specified that CPS expects an output in 'iso-8859-15' encoding.
+- Specified that the initial header level has to be h2 since the wiki page uses
+  h1. By default restructured text produces an initial header level h3.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSWiki V0.0.2 [R1 build 2005/03/23-08:09 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added locking capabilities.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Added unit tests for the encoding problems with the restructuredtext parser
+  that are not fixed yet.
+
+*******************************************
+** CPSWiki V0.0.1 [R1 build 2005/03/19-08:53 by madarche]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Removed the useless dummy parser
+- Removed warning (CMFCore.permissions + file encoding)
+- Added i18n for the "Save" button.
+- Made the default parser be the "restructuredtext" parser.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Made CPSWiki depend on the CPSUtil.html module for HTML sanitizing for the
+  sake of factorization.
+

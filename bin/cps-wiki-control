@@ -1,0 +1,700 @@
+#! /usr/bin/python
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2005 Laurent Pelecq <laurent.pelecq@soleil.org>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+# $Id$
+"""A script to access CPSWiki site.
+
+Known bugs:
+  * Long names are not properly handled (they are truncated by CPS).
+"""
+
+import sys, os
+import optparse
+
+import string, re
+import time
+import filecmp
+
+import urlparse
+import urllib
+import urllib2
+import cookielib
+import httplib # For error codes only
+import HTMLParser
+
+joinpath = os.path.join
+isfile = os.path.isfile
+
+### Version
+
+version = "1.0"
+
+### Functions
+
+def warn(msg):
+    sys.stderr.write(msg)
+
+def die(msg, status=1):
+    warn(msg)
+    sys.exit(status)
+
+def noop(msg):
+    pass
+
+### Parsing command line
+
+usage="""%prog [OPTIONS] ARGS
+
+Possible commands are:
+
+  create   WIKI_URL PAGE_NAME [INPUT_FILE]
+     Create a page. If the page already exist, an error is reported.
+
+  modify   WIKI_URL PAGE_NAME INPUT_FILE
+     Modify a page. If the page doesn't exist, it is created.
+
+  delete   WIKI_URL PAGE_NAME ...
+
+  fetch    WIKI_URL PAGE_NAME [OUTPUT_FILE]
+     Fetch a single wiki page. Print page on standard output if
+     OUTPUT_FILE is omitted.
+
+  upload   WIKI_URL PAGES_DIR
+     Create or modify pages. For each file in PAGES_DIR, the corresponding
+     page is created or modified.
+
+  download WIKI_URL PAGE_NAME DEST_DIR
+     Recursively retrieves wiki pages.
+
+  backup WIKI_URL PAGE_NAME DEST_DIR
+     Recursively retrieves wiki pages while keeping the history.
+
+Manipulate wiki pages. When command takes a directory as argument, all
+files in that directory are considered as pages. Their names must be
+equal to the corresponding page name.
+"""
+
+option_parser = optparse.OptionParser(usage=usage,
+                                      version="%%prog %s"%(version))
+
+option_parser.add_option("-C", "--cookie-file",
+                         dest="cookie_file", action="store", default=None,
+                         help="cookie file to share between calls.")
+
+option_parser.add_option("--debug",
+                         dest="debug", action="store_true", default=False,
+                         help="debug mode, for developers only")
+
+option_parser.add_option("--trace",
+                         dest="trace", action="store_true", default=False,
+                         help="trace mode, for developers only")
+
+option_parser.add_option("-v", "--verbose",
+                         dest="verbose", action="store_true", default=False,
+                         help="print status messages to stdout")
+
+option_parser.add_option("-u", "--http-user",
+                         dest="http_user", action="store", default=None,
+                         metavar="USER", help="user name for authentification")
+
+option_parser.add_option("-p", "--http-password",
+                         dest="http_password", action="store", default=None,
+                         metavar="PW",
+                         help="password for authentification (UNSAFE)")
+
+try:
+    options, args = option_parser.parse_args()
+except optparse.OptionError:
+    die('Error: %s\n'%(sys.exc_info()[1]))
+
+verbose = noop
+if options.verbose:
+    verbose = warn
+
+### HTTP
+
+if options.trace:
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+
+def log(title, *msgs):
+    if options.trace:
+        remaining = 50 - len(title)
+        print '== %s %-.*s'%(title, remaining, '='*40)
+        for msg in msgs:
+            print msg
+
+def log_request(title, request, *extra_args):
+    args = [ title, 'Type: %s'%(request.type) ]
+    if request.host:
+        if request.port:
+            args.append('Host: %s:%s'%(request.host, request.port))
+        else:
+            args.append('Host: %s'%(request.host))
+    if request.data:
+        args.append('Data: %s'%(request.data))
+    headers = request.header_items()
+    if headers:
+        args.append('Headers:')
+        for hname, hval in headers:
+            args.append('  %s: %s'%(hname, hval))
+    apply(log, tuple(args) + extra_args)
+
+def log_response(title, response):
+    log('%s (%s)'%(title, response.msg), str(response.info()))
+
+def log_cookie(title, cookie):
+    if (len(cookie) > 0):
+        log(title, str(cookie))
+    else:
+        log(title, 'No cookies')
+
+
+class HTTPCookieProcessor(urllib2.HTTPCookieProcessor):
+
+    def __init__(self, cookiejar=None):
+        urllib2.HTTPCookieProcessor.__init__(self, cookiejar)
+
+    def http_request(self, request):
+        req = urllib2.HTTPCookieProcessor.http_request(self, request)
+        log_request('Cookie request', req)
+        log_cookie('Cookie', self.cookiejar)
+        return req
+
+    def http_response(self, request, response):
+        resp = urllib2.HTTPCookieProcessor.http_response(self, request, response)
+        log_request('Cookie request', request)
+        log_response('Cookie response', resp or response)
+        log_cookie('Cookie', self.cookiejar)
+        return resp
+
+    https_request = http_request
+    https_response = http_response
+
+
+class HTTPHandler(urllib2.HTTPHandler):
+
+    def http_open(self, request):
+        log_request('HTTP open', request)
+        resp = urllib2.HTTPHandler.http_open(self, request)
+        log_response('HTTP open', resp)
+        return resp
+
+    def http_request(self, request):
+        req = urllib2.HTTPHandler.http_request(self, request)
+        log_request('HTTP request', req or request)
+        return req
+
+
+class HTTPErrorProcessor(urllib2.HTTPErrorProcessor):
+
+    def http_response(self, request, response):
+        log_response('HTTP Response', response)
+        return urllib2.HTTPErrorProcessor.http_response(self, request, response)
+
+    https_response = http_response
+
+
+class HTTPRedirectHandler(urllib2.HTTPRedirectHandler):
+
+    """Redirect handler that can handle URL with parameters."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        (scheme, netloc, base_url, params, query,
+         fragment) = urlparse.urlparse(newurl)
+        if query:
+            newurl = urlparse.urlunparse((scheme, netloc, base_url,
+                                          params, None, fragment))
+        newreq = urllib2.HTTPRedirectHandler.redirect_request(self, req, fp,
+                                                              code, msg,
+                                                              headers, newurl)
+        if query:
+            newreq.add_data(query)
+        log_request('Redirect request', newreq, 'New URL: %s'%(newurl))
+        return newreq
+
+### HTTP
+
+class WikiLinkList(list):
+
+    """List that finds wiki links in text."""
+
+    U = 'A-Z\xc0-\xdf'
+    L = 'a-z\xe0-\xff'
+    b = '(?<![%s0-9])' % (U+L)
+    bracketedexpr = r'\[([^\n\]]+)\]'
+    wikiname1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (b,U,L,U,U+L)
+    wikiname2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (b,U,U,L,U+L)
+    wikilink  = r'(?:%s|%s|%s)' % (wikiname1,wikiname2,bracketedexpr)
+    wikilink_re = re.compile(wikilink)
+
+    def __call__(self, line):
+        """Apply a function to all wiki link in a line."""
+
+    def findall(self, s):
+        for m in self.wikilink_re.finditer(s):
+            self.append(m.group(1) or m.group(0))
+
+
+class HTMLParserError(Exception):
+    pass
+
+
+class HTMLTextareaParser(HTMLParser.HTMLParser):
+
+    """Parse HTML page that is assumed to contain only one textarea and
+    record the text inside."""
+
+    entity = { 'lt': '<', 'gt': '>', 'amp': '&' }
+
+    def __init__(self):
+        HTMLParser.HTMLParser.__init__(self)
+        self.text = ''
+        self.in_textarea = False
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'textarea':
+            self.in_textarea = True
+
+    def handle_endtag(self, tag):
+        if tag == 'textarea':
+            self.in_textarea = False
+
+    def handle_data(self, data):
+        if self.in_textarea:
+            self.text += data
+
+    def handle_entityref(self, name):
+        if self.in_textarea:
+            if name in self.entity:
+                self.text += self.entity[name]
+            else:
+                raise HTMLParserError("unknown entity: %s"%(name))
+
+    def handle_charref(self, name):
+        if self.in_textarea:
+            try:
+                self.text += chr(int(name, 16))
+            except:
+                raise HTMLParserError("invalid char ref: %s"%(name))
+
+### Main
+
+class HttpRequester:
+
+    headers = { 'User-agent' : 'Mozilla/5.0 (compatible)' }
+
+    def __init__(self, cookiejar=None):
+        cookie_proc = HTTPCookieProcessor(cookiejar)
+        redirect_handler = HTTPRedirectHandler()
+        self.opener = urllib2.build_opener(redirect_handler, cookie_proc)
+        self.data = None
+        self.resp_url = None
+
+    def __call__(self, url, **query):
+        data = None
+        verbose("Request: %s\n"%(url))
+        if query:
+            data = urllib.urlencode(query)
+        try:
+            req = urllib2.Request(url, data=data, headers=self.headers)
+            resp = self.opener.open(req)
+            self.resp_url = resp.url
+            self.data = resp.read()
+        except urllib2.HTTPError, ex:
+            verbose("Status: %s\n"%(ex))
+            return ex.code
+        verbose("Status: OK\n")
+        return httplib.OK
+
+
+class WikiControl:
+
+    """Create, modify, delete and fetch Wiki pages."""
+
+    latin1 = urllib.unquote("%22%27/%5C%3A%3B%20%26%C0%C1%C2%C3%C4%C5%C7"
+                            "%C8%C9%CA%CB%CC%CD%CE%CF%D1%D2%D3%D4%D5%D6%D8"
+                            "%D9%DA%DB%DC%DD%E0%E1%E2%E3%E4%E5%E7%E8%E9%EA"
+                            "%EB%EC%ED%EE%EF%F1%F2%F3%F4%F5%F6%F8%F9%FA%FB"
+                            "%FC%FD%FF")
+
+    ascii = "--------AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy"
+
+    SAFE_CHARS_TRANSLATIONS = string.maketrans(latin1, ascii)
+
+    max_chars = 24
+
+    def __init__(self, wiki_url, cookie_file=None):
+        self.wiki_url = wiki_url
+        cookiejar = None
+        if cookie_file:
+            cookiejar = cookielib.LWPCookieJar(cookie_file)
+            if isfile(cookie_file):
+                verbose('Loading cookies from %s\n'%(cookie_file))
+                cookiejar.load()
+        self.cookiejar = cookiejar
+        self.request = HttpRequester(cookiejar)
+
+    def close(self):
+        if self.cookiejar:
+            self.cookiejar.save()
+
+    def authentificate(self, http_user, http_password=None):
+        """Fill the site authentification form."""
+        if not http_password:
+            import getpass
+            http_password = getpass.getpass("Password for %s: "%(http_user))
+        login_url = self.join_url(self.wiki_url, 'login_form')
+        status = self.request(login_url)
+        if status == httplib.OK:
+            login_url = self.request.resp_url
+            scheme = urlparse.urlparse(login_url)[0]
+            self.wiki_url = self.replace_url_scheme(scheme, self.wiki_url)
+            status = self.request(login_url, __ac_name=http_user,
+                                  __ac_password=http_password,
+                                  __ac_persistent=0)
+            if status != httplib.OK:
+                raise Exception("%s: authentification failed"%(http_user))
+
+    def check_auth(self, status):
+        if status == httplib.OK and self.request.resp_url:
+            path = urlparse.urlparse(self.request.resp_url)[2]
+            if path.endswith('/login_form'):
+                raise Exception('authentification required')
+
+    def replace_url_scheme(self, scheme, url):
+        """Replace URL scheme, ex: http -> https."""
+        new_url = (scheme,) + urlparse.urlparse(url)[1:]
+        return urlparse.urlunparse(new_url)
+
+    def join_url(self, base_url, *rel_urls):
+        return "%s/%s"%(base_url, "/".join(rel_urls))
+
+    def page_url(self, page_name):
+        id = page_name.translate(self.SAFE_CHARS_TRANSLATIONS)
+        return self.join_url(self.wiki_url, id[:self.max_chars])
+
+    def read_file(self, input_file):
+        """Read a file and return the content."""
+        text = ''
+        fd = file(input_file)
+        try:
+            text = fd.read()
+        finally:
+            fd.close()
+        return text
+
+    def __set_page(self, page_name, input_file, is_new):
+        """Create or modify page.
+
+        If IS_NEW is True, an exception is raised if page exists."""
+        content = ''
+        if input_file:
+            content = self.read_file(input_file)
+
+        page_url = self.page_url(page_name)
+
+        status = self.request(page_url)
+
+        if status == httplib.OK:
+            if is_new:
+                raise Exception("%s: page exists"%(page_name))
+        elif status == httplib.NOT_FOUND:
+            create_url = self.join_url(self.wiki_url, "addPage")
+            verbose("Creating page %s\n"%(page_name))
+            status = self.request(create_url, title=page_name)
+            self.check_auth(status)
+
+        verbose("Editing page %s\n"%(page_name))
+        edit_url = self.join_url(page_url, "edit")
+        status = self.request(edit_url, source=content)
+        self.check_auth(status)
+        if status != httplib.OK:
+            raise Exception("%s: modification failed"%(page_name))
+
+    def create_page(self, page_name, input_file=None):
+        """Create a page.
+
+        If no input file is provided, the page is empty."""
+        self.__set_page(page_name, input_file, is_new=True)
+
+    def modify_page(self, page_name, input_file):
+        """Modify a page by copying the input file content.
+
+        If the page doesn't exist, it is created."""
+        self.__set_page(page_name, input_file, is_new=False)
+
+    def delete_page(self, page_name):
+        """Delete a page."""
+        page_url = self.page_url(page_name)
+        delete_url = self.join_url(page_url, "delete")
+        verbose("Deleting page %s\n"%(page_name))
+        status = self.request(delete_url)
+        self.check_auth(status)
+
+        if status == httplib.NOT_FOUND:
+            raise Exception("%s: page doesn't exists"%(page_name))
+
+    def __fetch_page(self, page_name):
+        """Fetch page content and return it as text."""
+        page_url = self.page_url(page_name)
+        edit_url = self.join_url(page_url, "cps_wiki_pageedit")
+        verbose("Fetching page %s\n"%(page_name))
+        status = self.request(edit_url)
+        self.check_auth(status)
+
+        if status == httplib.NOT_FOUND:
+            raise Exception("%s: page doesn't exists"%(page_name))
+
+        html_parser = HTMLTextareaParser()
+        html_parser.feed(self.request.data)
+        html_parser.close()
+
+        return html_parser.text
+
+    def write_page(self, page_name, outfd=sys.stdout):
+        """Fetch page and write it into stream.
+
+        It returns the list of links."""
+        text = self.__fetch_page(page_name)
+        outfd.write(text)
+        return text
+
+    def save_page(self, page_name, output_file):
+        """Fetch page content and save it into file."""
+        text = None
+        outfd = file(output_file, "w")
+        try:
+            try:
+                text = self.write_page(page_name, outfd)
+            finally:
+                outfd.close()
+        except:
+            os.unlink(output_file)
+            raise
+        return text
+
+    def fetch_wiki(self, front_page_name, dest_dir):
+        """Recursively fetch all pages.
+
+        Attachements are not saved."""
+        pages = WikiLinkList([ front_page_name ])
+        downloaded = {}
+        while pages:
+            page_name = pages.pop()
+            if page_name in downloaded:
+                continue
+            output_file = joinpath(dest_dir, page_name)
+            try:
+                text = self.save_page(page_name, output_file)
+                downloaded[page_name] = True
+                pages.findall(text)
+            except Exception, ex:
+                warn("Error: %s\n"%(ex))
+                if options.debug:
+                    raise
+
+
+class WikiBackup:
+
+    """Backup wiki pages.
+
+    History is preserved."""
+
+    backup_dir_fmt = '%02d-%03d-%03d'
+
+    backup_dir_re = re.compile(r'(?P<year>\d{2})-(?P<yday>\d{3})-(?P<index>\d{3})$')
+
+    def __init__(self, control):
+        self.control = control
+
+    def get_directories(self, dest_dir):
+        """Return the directory where the last backup occured and the
+        directory for the next backup."""
+        last_year = None
+        last_yday = 0
+        last_index = 0
+        for dir in os.listdir(dest_dir):
+            m = self.backup_dir_re.match(dir)
+            if m:
+                year = int(m.group('year'))
+                yday = int(m.group('yday'))
+                index = int(m.group('index'))
+                if year > last_year:
+                    last_year = year
+                    last_yday = yday
+                    last_index = index
+                elif yday > last_yday:
+                    last_yday = yday
+                    last_index = index
+                elif yday == last_yday and index > last_index:
+                    last_index = index
+
+        now = time.localtime()
+        year = now.tm_year % 100
+        yday = now.tm_yday
+        index = 1
+        if last_year == year and last_yday == yday:
+            index = last_index + 1
+        next_dir = joinpath(dest_dir, self.backup_dir_fmt%(year, yday, index))
+        if last_year == None:
+            return None, next_dir
+        prev_dir = joinpath(dest_dir,
+                            self.backup_dir_fmt%(last_year, last_yday,
+                                                 last_index))
+        return prev_dir, next_dir
+
+    def process(self, page_name, dest_dir):
+        prev_dir, next_dir = self.get_directories(dest_dir)
+        os.mkdir(next_dir)
+        self.control.fetch_wiki(page_name, next_dir)
+        if prev_dir:
+            for filename in os.listdir(next_dir):
+                prev_file = joinpath(prev_dir, filename)
+                next_file = joinpath(next_dir, filename)
+                if isfile(prev_file) and filecmp.cmp(prev_file, next_file):
+                    # Create a hard link for identical files
+                    verbose("Linking %s to %s\n"%(prev_file, next_file))
+                    os.unlink(next_file)
+                    os.link(prev_file, next_file)
+
+    __call__ = process
+
+
+class WikiDelete:
+
+    """Delete wiki page.
+
+    Only discard the second argument for consistency with other actions."""
+
+    def __init__(self, control):
+        self.control = control
+
+    def process(self, page_name, ignored):
+        self.control.delete_page(page_name)
+
+    __call__ = process
+
+
+class WikiFetch:
+
+    """Fetch wiki page."""
+
+    def __init__(self, control):
+        self.control = control
+
+    def process(self, page_name, dest_file):
+        if not dest_file:
+            print self.control.write_page(page_name)
+        else:
+            self.control.save_page(page_name, dest_file)
+
+    __call__ = process
+
+
+class Args:
+
+    arity = {
+        'create':   { 'min': 3, 'max': 4 },
+        'modify':   { 'min': 4, 'max': 4 },
+        'delete':   { 'min': 3 },
+        'fetch' :   { 'min': 3, 'max': 4 },
+        'upload':   { 'min': 3, 'max': 3 },
+        'download': { 'min': 4, 'max': 4 },
+        'backup':   { 'min': 4, 'max': 4 }
+        }
+
+    def __init__(self, *args):
+        nargs = len(args)
+        if len(args) < 2:
+            raise Exception("too few arguments")
+        self.action = action = args[0]
+        self.wiki_url = args[1]
+        if not action in self.arity:
+            raise Exception('%s: unknown action'%(action))
+        else:
+            arity = self.arity[action]
+            if 'min' in arity and nargs < arity['min']:
+                raise Exception("too few arguments")
+            elif 'max' in arity and nargs > arity['max']:
+                raise Exception("too many arguments")
+        self.pages = {}
+        if action == 'delete':
+            for page_name in args[2:]:
+                self.pages[page_name] = True
+        elif action == 'upload':
+            dir = args[2]
+            for filename in os.listdir(dir):
+                pagename = os.path.splitext(filename)[0]
+                self.pages[pagename] = joinpath(dir, filename)
+        else:
+            filename = None
+            if nargs == 4:
+                filename = args[3]
+            self.pages[args[2]] = filename
+
+
+def main(args, options):
+
+    try:
+
+        args = Args(*args)
+
+        control = WikiControl(args.wiki_url, options.cookie_file)
+
+        if options.http_user:
+            control.authentificate(options.http_user, options.http_password)
+
+        process = None
+        if args.action == 'create':
+            process = control.create_page
+        elif args.action == 'modify' or args.action == 'upload':
+            process = control.modify_page
+        elif args.action == 'download':
+            process = control.fetch_wiki
+        elif args.action == 'backup':
+            process = WikiBackup(control)
+        elif args.action == 'delete':
+            process = WikiDelete(control)
+        elif args.action == 'fetch':
+            process = WikiFetch(control)
+
+        if process:
+            for page_name in args.pages:
+                process(page_name, args.pages[page_name])
+
+        control.close()
+    except:
+        if options.debug:
+            import traceback
+            traceback.print_exc()
+        else:
+            warn('Error: %s\n'%(sys.exc_info()[1]))
+        return 1
+
+    return 0
+
+
+exit_code = main(args, options)
+
+sys.exit(exit_code)
+
+#  Local Variables: ***
+#  mode: python ***
+#  End: ***

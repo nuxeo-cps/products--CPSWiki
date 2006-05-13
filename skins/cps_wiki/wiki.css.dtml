@@ -1,0 +1,46 @@
+<dtml-comment>
+CSS directives conforming to the CSS 2.1 spec.
+Those CSS directives are suppported by user agents such as Mozilla/Firefox, MSIE6, MSIE5.x, etc.
+$Id$
+</dtml-comment>
+
+<dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+1" >
+<dtml-call "REQUEST.RESPONSE.setHeader('Content-Type', 'text/css')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Last-Modified', last_modified.toZone('GMT').rfc822())">
+<dtml-call "REQUEST.RESPONSE.setHeader('Cache-Control', 'max-age=36000, must-revalidate')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Expires', expires.toZone('GMT').rfc822())" >
+</dtml-let>
+
+ul {
+  margin-left: 2em;
+  padding-left: 0;
+}
+
+li {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+div.wikiTitle {
+  width: 96%;
+  padding: 0 1em 0 1em;
+  border: 1px solid #336699;
+  background-color: #eeeeee;
+  margin-left: 0;
+  margin-bottom: 1em;
+  <dtml-if "isUserAgentGecko(REQUEST)">
+  -moz-border-radius-topleft: 12px;
+  -moz-border-radius-topright: 12px;
+  -moz-border-radius-bottomleft: 12px;
+  -moz-border-radius-bottomright: 12px;
+  </dtml-if>
+}
+
+#ajax_psm {
+  background: #ffac0b;
+  color: white;
+  padding: 8px;
+  border: 1px solid black;
+  font-weight: bold;
+}
+

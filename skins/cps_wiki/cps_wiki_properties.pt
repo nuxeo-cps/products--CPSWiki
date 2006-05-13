@@ -1,0 +1,28 @@
+<html metal:use-macro="here/content_lib_master/macros/master">
+  <metal:block fill-slot="main">
+    <form action="." method="post">
+      <div class="group">
+        <table summary="wiki properties" cellpadding="2" cellspacing="2">
+          <tr>
+            <td align="right" valign="top">
+              <div class="dlabel">
+                <span i18n:translate="">cpswiki_choose_parser</span>&nbsp;:
+              </div>
+            </td>
+            <td colspan="3" valign="top">
+              <select name="parser" tal:define="all_parsers here/all_parsers;
+                                                current here/parser">
+               <tal:block tal:repeat="one_parser all_parsers">
+                 <option tal:content="one_parser"
+                         tal:attributes="selected python:test(current==one_parser, 'selected', '')"/>
+                </tal:block>
+              </select>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <input i18n:attributes="value" name="changeProperties:method" class="standalone"
+             value="cpswiki_button_submit" type="submit">
+    </form>
+  </metal:block>
+</html>

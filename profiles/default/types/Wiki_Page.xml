@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<object name="Wiki Page" meta_type="Factory-based Type Information"
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <property name="title">portal_type_CPSWikiPage_title</property>
+ <property name="description">portal_type_CPSWikiPage_description</property>
+ <property name="content_icon">wikipage.png</property>
+ <property name="content_meta_type">Wiki Page</property>
+ <property name="product">CPSWiki</property>
+ <property name="factory">manage_addWikiPage</property>
+ <property name="immediate_view">cps_wiki_pageview</property>
+ <property name="global_allow">True</property>
+ <property name="filter_content_types">False</property>
+ <property name="allowed_content_types"/>
+ <property name="allow_discussion">False</property>
+ <property name="cps_is_searchable">False</property>
+ <property name="cps_proxy_type"></property>
+ <property name="cps_display_as_document_in_listing">True</property>
+ <alias from="(Default)" to="cps_wiki_pageview"/>
+ <alias from="view" to="cps_wiki_pageview"/>
+ <action title="action_view" action_id="view" category="object"
+    condition_expr="" url_expr="string:${object_url}/cps_wiki_pageview"
+    visible="True">
+  <permission value="View"/>
+ </action>
+ <action title="action_edit" action_id="edit" category="object"
+    condition_expr="" url_expr="string:${object_url}/cps_wiki_pageedit"
+    visible="True">
+  <permission value="Modify portal content"/>
+ </action>
+ <action title="action_history" action_id="history" category="object"
+    condition_expr="" url_expr="string:${object_url}/cps_wiki_pagehistory"
+    visible="True">
+  <permission value="View archived revisions"/>
+ </action>
+ <action title="action_delete" action_id="delete" category="object"
+    condition_expr="" url_expr="string:${object_url}/cps_wiki_pagedelete"
+    visible="True">
+  <permission value="Delete objects"/>
+ </action>
+ <action title="action_syntax_help" action_id="syntax_help" category="object"
+    condition_expr="" url_expr="string:${object_url}/cps_wiki_help"
+    visible="True">
+  <permission value="View"/>
+ </action>
+</object>

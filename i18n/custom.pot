@@ -1,0 +1,88 @@
+# Gettext Message File for default.
+# Your Name <your@email>, Year
+msgid ""
+msgstr ""
+"Project-Id-Version: default\n"
+"POT-Creation-Date: 2003-10-03 15:24default\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Your Name <your@email>\n"
+"Language-Team: Name <email>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: LL\n"
+"Language-name: Language\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: default\n"
+
+msgid "portal_type_CPSWiki_title"
+msgstr ""
+
+msgid "portal_type_CPSWiki_description"
+msgstr ""
+
+msgid "action_add_page"
+msgstr ""
+
+msgid "action_history"
+msgstr ""
+
+msgid "action_full_view"
+msgstr ""
+
+msgid "Back to the top"
+msgstr ""
+
+msgid "BackLinks"
+msgstr ""
+
+msgid "upload file"
+msgstr ""
+
+msgid "File uploaded."
+msgstr ""
+
+msgid "Attached files"
+msgstr ""
+
+# Status messages (psm)
+#######################
+msgid "psm_page_deleted"
+msgstr ""
+
+msgid "psm_properties_changed"
+msgstr ""
+
+msgid "cpswiki_choose_parser"
+msgstr ""
+
+msgid "cpswiki_button_submit"
+msgstr ""
+
+msgid "action_properties"
+msgstr ""
+
+msgid "action_syntax_help"
+msgstr ""
+
+msgid "cpswiki_specialtags"
+msgstr ""
+
+msgid "cpswiki_member_help"
+msgstr ""
+
+msgid "cpswiki_pycode_help"
+msgstr ""
+
+msgid "cps_wikipage_edit"
+msgstr ""
+
+msgid "cps_wikipage_home"
+msgstr ""
+
+msgid "cpswiki_page_add"
+msgstr ""
+
+msgid "cpswiki_ajax_transferring"
+msgstr ""

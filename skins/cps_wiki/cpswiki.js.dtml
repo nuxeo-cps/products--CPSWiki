@@ -1,0 +1,230 @@
+/*
+<dtml-comment>
+JavaScript for the AJAX of the wiki pages.
+$Id$
+</dtml-comment>
+<dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+1" >
+<dtml-call "REQUEST.RESPONSE.setHeader('Content-Type', 'text/javascript')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Last-Modified', last_modified.toZone('GMT').rfc822())">
+<dtml-call "REQUEST.RESPONSE.setHeader('Cache-Control', 'max-age=36000, must-revalidate')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Expires', expires.toZone('GMT').rfc822())" >
+</dtml-let>
+*/
+
+/* CPSWikipageEditor
+
+ let the user directly edit a wiki page
+
+ o loadEditMode: switch the page in edit mode
+ o saveEditMode: sends the content to the server
+                 and upgrade the page
+*/
+
+var CPSWikiPageEditor = Class.create();
+
+CPSWikiPageEditor.prototype = {
+  initialize: function(container_id, content_id, server_getsource,
+                       server_setsource, server_render, edit_button_id,
+                       waiter) {
+
+    if ($(container_id)) {
+      this.container_id = container_id;
+      this.content_id = content_id;
+      this.server_getsource = server_getsource;
+      this.server_setsource = server_setsource;
+      this.server_render = server_render;
+      this.edit_button_id = edit_button_id;
+      this.waiter = waiter;
+      $(this.edit_button_id).onclick = this.loadEditMode.bindAsEventListener(this);
+      this.enabled = true;
+    }
+    else {
+      this.enabled = false;
+    }
+  },
+
+  loadEditMode: function() {
+    if (this.enabled) {
+      this.waitProcess();
+      var loadEditModeResultBn = this.loadEditModeResult.bind(this);
+      var options = {onComplete: loadEditModeResultBn};
+      this.sender = new Ajax.Request(this.server_getsource, options);
+    }
+  },
+
+  prepareEditContent: function(text) {
+    var content = new Array();
+    content.push('<textarea id="' + this.content_id + '"');
+    content.push(' name="source" rows="30" cols="80"');
+    content.push('style="width: 100%; font-family: monospace !important;">');
+    content.push(text);
+    content.push('</textarea>');
+    return content.join("");
+  },
+
+  loadEditModeResult: function(originalRequest) {
+    result = this.prepareEditContent(originalRequest.responseText);
+    $(this.container_id).innerHTML = result;
+    // change "edit" into "save"
+    $(this.edit_button_id).onclick = this.saveEditMode.bindAsEventListener(this);
+    $(this.edit_button_id).src = "wikipage_save.png"
+    this.unWaitProcess();
+  },
+
+  waitProcess: function() {
+    if ($(this.waiter)) {
+      Effect.Appear($(this.waiter), {duration:0.5, queue:'end'});
+      $(this.edit_button_id).style.visibility = 'hidden';
+    }
+  },
+
+  unWaitProcess: function() {
+    if ($(this.waiter)) {
+      Effect.Fade($(this.waiter), {duration:0.5, queue:'end'});
+      $(this.edit_button_id).style.visibility = 'visible';
+    }
+  },
+
+  saveEditMode: function() {
+    if (this.enabled) {
+      this.waitProcess();
+      var saveEditModeResultBn = this.saveEditModeResult.bind(this);
+      var source = $(this.content_id).value;
+      var params = new Array();
+      params.push("source=" + encodeURIComponent(source));
+      params = params.join("&");
+      var options = {parameters: params, onComplete: saveEditModeResultBn};
+      this.sender = new Ajax.Request(this.server_setsource, options);
+    }
+  },
+
+  saveEditModeResult: function(originalRequest) {
+    response = originalRequest.responseText;
+    // XXX todo: pop an error if result is false
+    this.reloadWikiPageContent();
+  },
+
+  reloadWikiPageContent: function() {
+    var reloadWikiPageContentResultBn = this.reloadWikiPageContentResult.bind(this);
+    var options = {onComplete: reloadWikiPageContentResultBn};
+    this.sender = new Ajax.Request(this.server_render, options);
+  },
+
+  reloadWikiPageContentResult: function(originalRequest) {
+    $(this.container_id).innerHTML = originalRequest.responseText;
+    $(this.edit_button_id).onclick = this.loadEditMode.bindAsEventListener(this);
+    $(this.edit_button_id).src = "wikipage_write.png";
+    this.unWaitProcess();
+  }
+}
+
+/* wiki */
+var CPSWikiEditor = Class.create();
+
+CPSWikiEditor.prototype = {
+
+  initialize: function(server_addpage, server_render, wikicontent_id,
+                       page_title, title_helper,
+                       wikipage_title, waiter, add_button) {
+    if ($(page_title) && $(add_button) && $(wikipage_title)) {
+      this.server_addpage = server_addpage;
+      this.page_title = page_title;
+      this.title_helper = title_helper;
+      this.wikipage_title = wikipage_title;
+      this.wikicontent_id = wikicontent_id;
+      this.waiter = waiter;
+      this.server_render = server_render;
+      this.enabled = true;
+      this.add_button = add_button;
+      $(this.add_button).onclick = this.seePageAdder.bindAsEventListener(this);
+      $(this.wikipage_title).onkeyup = this.pageAdderkeyDown.bindAsEventListener(this);
+    }
+    else
+      this.enabled = false;
+  },
+
+  waitProcess: function() {
+    if ($(this.waiter)) {
+      Effect.Appear($(this.waiter), {duration:0.2, queue:'end'});
+    }
+  },
+
+  unWaitProcess: function() {
+    if ($(this.waiter)) {
+      Effect.Fade($(this.waiter), {duration:0.2, queue:'end'});
+    }
+  },
+
+  hidePageAdder: function() {
+    Effect.Fade($(this.page_title), {duration:0.5, queue:'end'});
+  },
+
+  seePageAdder: function() {
+    Effect.Appear($(this.page_title), {duration:0.5, queue:'end'});
+    $(this.wikipage_title).focus();
+  },
+
+  pageAdderkeyDown: function(event) {
+    if (!event)
+        event = window.event;
+    switch (event.keyCode) {
+      case 13:
+        input_title = document.getElementById("wikipageTitle");
+        this.addPage($(this.wikipage_title).value);
+        break;
+    default:
+        this.seePageAdder();
+        return false;
+    }
+  },
+
+  addPage: function(name) {
+    this.waitProcess();
+    var addPageResultBn = this.addPageResult.bind(this);
+    var params = "title=" + encodeURIComponent(name);
+    var options = {parameters: params, onComplete: addPageResultBn};
+    this.sender = new Ajax.Request(this.server_addpage, options);
+  },
+
+  addPageResult: function(originalRequest) {
+    response = originalRequest.responseText;
+    if (response=="OK") {
+      this.reloadWikiContent();
+      $(this.wikipage_title).value = '';
+    }
+    else
+      alert("could not add the page");
+  },
+
+  reloadWikiContent: function() {
+    var reloadWikiContentResultBn = this.reloadWikiContentResult.bind(this);
+    var options = {onComplete: reloadWikiContentResultBn};
+    this.sender = new Ajax.Request(this.server_render, options);
+  },
+
+  reloadWikiContentResult: function(originalRequest) {
+    $(this.wikicontent_id).innerHTML = originalRequest.responseText;
+    this.unWaitProcess();
+    this.hidePageAdder();
+  }
+}
+
+
+/* Common helpers */
+function gotoUrl(dest) {
+  self.location.href = dest;
+}
+
+function setCursor(obj) {
+  var isIE = false;
+  if (navigator.appName == "Microsoft Internet Explorer") {
+     isIE = true;
+  }
+
+  // Change the mouse cursor to hand or pointer
+  if (isIE) {
+      obj.style.cursor = "hand";
+  } else {
+    obj.style.cursor = "pointer";
+  }
+}

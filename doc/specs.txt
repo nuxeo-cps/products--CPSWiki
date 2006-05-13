@@ -1,0 +1,180 @@
+=======================
+Specs notes for CPSWiki
+=======================
+
+:Revision: $Id$*
+
+.. sectnum::    :depth: 4
+.. contents::   :depth: 4
+
+
+Goals
+=====
+
+CPSWiki aims to provide a light, flexible Wiki for CPS, with all
+features a wiki can give.
+
+
+Features
+========
+
+- Automatic front page, based on the wiki content
+
+- Automatic summary, based on the wiki content, that gathers all
+  content in one HTML page.
+
+- Page locking to avoid conflicts, the lock is done with a heartbeat technique
+
+- Several wiki page parser engine for rendering:
+
+  + HTML
+  + reST
+  + wikiwikiweb
+
+  based on a plugin framework, parsers are extensible.
+
+- Internal page caching
+
+- Ability to upload files into pages
+
+
+TODO
+====
+
+- Wiki objects should be BTree folders
+- add a js warning on page deletion
+- add UI to change page title
+- add a merge proposal when a user tries to commit after a lock timeout
+- add a link on history page so the user can restore a version
+- add UI to manage Wiki parser selection
+- add UI to add content in a wikipage (it's already folder so it's
+  just a form away)
+- add a zcatalog dedicated to the wiki -> until then, need to
+  index content in general portal_catalog
+- making something better on container view
+- add UI to easily call CPSSubcription for wiki notifications
+- add UI to import ZWiki pages
+- add a PDF export
+- setup RDF relations between pages, so relations can be made
+  between pages, using keywords
+- ...
+
+
+Useful links
+============
+
+Report bugs and other things here: http://svn.nuxeo.org/trac/pub
+
+
+Other Wiki software or services
+===============================
+
+- XWiki
+
+  http://www.xwiki.org/xwiki/bin/view/Main/WebHome
+
+  XWiki is a WikiWiki clone written in Java which supports many popular
+  features of other Wikis like:
+
+  + Wiki syntax (uses Radeox engine)
+  + Content management (view/edit/preview/save)
+  + Version Control
+  + Attachments
+  + Rights Management
+  + Full-text Search
+
+  It also has many advanced features that many other wiki engines lack:
+
+  + Document Templates to ease creation of common documents.
+  + Relational Database storage using Hibernate.
+  + Design Engine for Meta-Data and Forms.
+  + In-place (in-line) editing of form information in pages.
+  + Powerful programming API in documents (Velocity or Groovy)
+  + Search API for more detailed searching in the Meta-Data.
+  + Plugin System in Java.
+  + Plugin compatibility layer in Perl with some TWiki plugins.
+  + Scalability and Performance using J2EE.
+  + Complete Skin System (templates content as well as CSS).
+  + RSS output and display of external RSS feeds
+  + Multi-Lingual capabilities
+  + XML/RPC Remote API
+  + Portlet Integration
+  + Integrated Statistics
+  + PDF Export
+  + WYSIWYG HTML Editing
+
+- Confluence (Java/Servlet-based)
+
+  Has macros: see
+  http://confluence.atlassian.com/display/DOC/Guide+to+Confluence+Macros
+
+  Interesting AJAX-style task manager:
+  http://confluence.atlassian.com/display/DOC/Dynamic+Tasklist+Macro
+
+- TWiki
+
+- MoinMoin
+
+- Jot
+
+  Commercial product
+
+  http://www.jot.com/
+
+- Socialtext
+
+  Another commercial product
+
+  http://www.socialtext.com
+
+- SnipSnap
+
+  Integrates Blog and Wiki
+
+- ZWiki
+
+- Platypus / Pytypus
+
+  Platypus Wiki is a project to develop an enhanced Wiki Wiki Web
+  with ideas borrowed from the Semantic Web.
+
+  It offers a simple user interface to create wiki pages with
+  metadata based on W3C standards.
+
+  It uses RDF (Resource Description Framework), RDF Schema and OWL
+  (Web Ontology Language) to create ontologies and manage
+  metadata.
+
+  + http://platypuswiki.sourceforge.net/
+  + http://www.pytypus.org/ (broken right now)
+  + Source on http://cvs.sourceforge.net/viewcvs.py/pytypus/server/
+
+- Instiki
+
+  Ruby-based
+
+  http://instiki.org/
+
+- Others:
+
+  + http://c2.com/cgi-bin/wiki?TopTenWikiEngines
+  + http://wiki.splitbrain.org/wiki:compare?s=compare
+  + http://platypuswiki.sourceforge.net/whatis/related/index.html
+  + http://c2.com/cgi/wiki?WikiWikiClones
+  + http://c2.com/cgi/wiki?WikiEngines
+
+
+References
+==========
+
+- `How To Use Wikis For Business (InformationWeek)
+  <http://informationweek.com/shared/printableArticle.jhtml?articleID=167600331>`_
+
+
+.. Emacs
+.. Local Variables:
+.. mode: rst
+.. End:
+.. Vim
+.. vim: set filetype=rst:
+

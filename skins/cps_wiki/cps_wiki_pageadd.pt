@@ -1,0 +1,11 @@
+<html metal:use-macro="here/content_lib_master/macros/master">
+  <metal:block fill-slot="main">
+    <form action="addPage" method="post">
+      <p>
+        <label for="wikipageTitle" i18n:translate="label_title">Title:</label>
+        <input id="wikipageTitle" name="title" type="text"/>
+        <button type="submit" i18n:translate="button_add">Add</button>
+      </p>
+    </form>
+  </metal:block>
+</html>

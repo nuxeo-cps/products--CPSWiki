@@ -1,0 +1,44 @@
+<html metal:use-macro="here/content_lib_master/macros/master">
+  <metal:main fill-slot="style_slot">
+    <link rel="Stylesheet" type="text/css" href=""
+      tal:attributes="href string:${base_url}schemas.css" />
+  </metal:main>
+  <metal:block fill-slot="main"
+               tal:define="wiki here/getParent;
+                           parser_type wiki/parser;
+                           source here/getSource;">
+    <tal:block tal:define="locked python:here.lock(request)">
+        <tal:block tal:condition="not:locked">
+            <div class="message" i18n:translate="">
+                The page is locked by someone else, you
+                can read it but not write to it at this time.
+            </div>
+        </tal:block>
+    </tal:block>
+    <form action="edit" enctype="multipart/form-data" method="post">
+      <tal:block condition="python:parser_type != 'html'">
+        <p>
+          <textarea name="source" rows="30" cols="80"
+            class="monospaceFont"
+            tal:content="source">
+          </textarea>
+        </p>
+      </tal:block>
+      <tal:block condition="python:parser_type == 'html'">
+        <tal:block replace="structure python:here.Epoz(
+            name='source', data=source, lang='en',
+            style='width: 100%; height: 300px; border: 1px solid #a0a0a0; border-style: solid;')" />
+      </tal:block>
+      <p>
+        <button type="submit" i18n:translate="button_change">Save Changes</button>
+      </p>
+    </form>
+
+    <form action="uploadFile" enctype="multipart/form-data" method="post">
+      <p>
+        <input type="file" name="file"/>
+        <button type="submit" name="upload" i18n:translate="">upload file</button>
+      </p>
+    </form>
+  </metal:block>
+</html>

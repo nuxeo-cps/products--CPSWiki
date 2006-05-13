@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<cps-workflow workflow_id="section_wiki_wf"
+              title="CPS Workflow Definition"
+              state_variable="review_state"
+              meta_type="CPS Workflow">
+ <permission>Add portal content</permission>
+ <permission>Modify portal content</permission>
+ <permission>View</permission>
+ <state state_id="work" title="Work">
+  <exit-transition transition_id="create_content"/>
+  <exit-transition transition_id="cut_copy_paste"/>
+  <permission-map name="Add portal content" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
+   <permission-role>SectionManager</permission-role>
+   <permission-role>Contributor</permission-role>
+  </permission-map>
+  <permission-map name="Modify portal content"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
+   <permission-role>SectionManager</permission-role>
+   <permission-role>Contributor</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>SectionManager</permission-role>
+   <permission-role>SectionReviewer</permission-role>
+   <permission-role>SectionReader</permission-role>
+   <permission-role>Contributor</permission-role>
+   <permission-role>Reader</permission-role>
+  </permission-map>
+ </state>
+ <transition transition_id="create" title="Initial creation"
+             new_state="work" trigger="USER"
+             before_script="" after_script="">
+  
+  <guard>
+   <guard-role>Manager</guard-role>
+   <guard-role>SectionManager</guard-role>
+   <guard-role>Contributor</guard-role>
+  </guard>
+  <transition-behavior behavior_id="initial-create"/>
+ </transition>
+ <transition transition_id="create_content"
+             title="Create content" new_state="work"
+             trigger="USER" before_script="" after_script="">
+  
+  <guard>
+   <guard-role>Manager</guard-role>
+   <guard-role>SectionManager</guard-role>
+   <guard-role>Contributor</guard-role>
+  </guard>
+  <transition-behavior behavior_id="allow-sub-create"/>
+  <transition-behavior behavior_id="allow-sub-publishing"/>
+ </transition>
+ <transition transition_id="cut_copy_paste"
+             title="Cut/Copy/Paste" new_state=""
+             trigger="USER" before_script="" after_script="">
+  
+  <guard>
+   <guard-role>Manager</guard-role>
+   <guard-role>SectionManager</guard-role>
+   <guard-role>Contributor</guard-role>
+  </guard>
+  <transition-behavior behavior_id="allow-sub-move"/>
+  <transition-behavior behavior_id="allow-sub-delete"/>
+  <transition-behavior behavior_id="allow-sub-copy"/>
+ </transition>
+</cps-workflow>

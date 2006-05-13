@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<object name="Wiki" meta_type="Factory-based Type Information"
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <property name="title">portal_type_CPSWiki_title</property>
+ <property name="description">portal_type_CPSWiki_description</property>
+ <property name="content_icon">wiki.png</property>
+ <property name="content_meta_type">Wiki</property>
+ <property name="product">CPSWiki</property>
+ <property name="factory">manage_addWiki</property>
+ <property name="immediate_view">cps_wiki_view</property>
+ <property name="global_allow">True</property>
+ <property name="filter_content_types">False</property>
+ <property name="allowed_content_types">
+  <element value="Wiki Page"/>
+ </property>
+ <property name="allow_discussion">False</property>
+ <property name="cps_is_searchable">False</property>
+ <property name="cps_proxy_type"></property>
+ <property name="cps_display_as_document_in_listing">True</property>
+ <alias from="(Default)" to="cps_wiki_view"/>
+ <alias from="view" to="cps_wiki_view"/>
+ <action title="action_view" action_id="view" category="object"
+    condition_expr="" url_expr="string:${object_url}/cps_wiki_view"
+    visible="True">
+  <permission value="View"/>
+ </action>
+ <action title="action_full_view" action_id="full_view" category="object"
+    condition_expr="" url_expr="string:${object_url}/cps_wiki_full_view"
+    visible="True">
+  <permission value="Modify portal content"/>
+ </action>
+ <action title="action_properties" action_id="properties" category="object"
+    condition_expr="" url_expr="string:${object_url}/cps_wiki_properties"
+    visible="True">
+  <permission value="Modify portal content"/>
+ </action>
+ <action title="action_syntax_help" action_id="syntax_help" category="object"
+    condition_expr="" url_expr="string:${object_url}/cps_wiki_help"
+    visible="True">
+  <permission value="View"/>
+ </action>
+ <action title="action_add_page" action_id="add_page" category="object"
+    condition_expr="" url_expr="string:${object_url}/cps_wiki_pageadd"
+    visible="True">
+  <permission value="Add portal content"/>
+ </action>
+ <action title="action_folder_contents" action_id="contents" category="object"
+    condition_expr="" url_expr="string:${object_url}/folder_contents"
+    visible="True">
+  <permission value="Modify portal content"/>
+ </action>
+ <action title="action_local_roles" action_id="localroles" category="object"
+    condition_expr="" url_expr="string:${object_url}/folder_localrole_form"
+    visible="True">
+  <permission value="Change permissions"/>
+ </action>
+</object>
