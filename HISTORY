@@ -1,4 +1,20 @@
 *******************************************
+** CPSWiki V0.11.1 [R1 build 2006/05/19-13:10 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/trunk Revision: 45740
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Updated brazilian portugese translations (thanks to mo.menezes@gmail.com).
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSWiki V0.11.0 [R1 build 2006/03/03-17:47 by ben]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSWiki/trunk Revision: 33914
 Requires:
