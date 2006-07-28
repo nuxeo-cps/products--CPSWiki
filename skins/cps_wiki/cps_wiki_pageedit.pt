@@ -25,9 +25,19 @@
         </p>
       </tal:block>
       <tal:block condition="python:parser_type == 'html'">
-        <tal:block replace="structure python:here.Epoz(
-            name='source', data=source, lang='en',
-            style='width: 100%; height: 300px; border: 1px solid #a0a0a0; border-style: solid;')" />
+        <script type="text/javascript" src=""
+                tal:attributes="src string:${base_url}fckeditor.js">
+        </script>
+        <script type="text/javascript" tal:content="structure string:
+var oFCKeditor = new FCKeditor('source');
+oFCKeditor.BasePath = '${base_url}';
+oFCKeditor.Config['CustomConfigurationsPath'] = 'fckconfig-cps.js';
+oFCKeditor.ToolbarSet='Semantic';
+oFCKeditor.Width = 610;
+oFCKeditor.Height = 410;
+oFCKeditor.Create();
+">
+        </script>
       </tal:block>
       <p>
         <button type="submit" i18n:translate="button_change">Save Changes</button>
