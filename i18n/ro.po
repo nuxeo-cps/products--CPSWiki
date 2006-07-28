@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ro\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-03 14:55default\n"
+"POT-Creation-Date: 2006-07-28 12:13default\n"
 "PO-Revision-Date: 2005-04-04 17:31+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -45,7 +45,7 @@ msgid ""
 "this time."
 msgstr ""
 
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" onclick="loadEditMode()" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
 msgstr ""
@@ -55,18 +55,20 @@ msgstr ""
 msgid "cps_wikipage_home"
 msgstr ""
 
-#.   <input name="changeProperties:method" type="submit" class="standalone" value="cpswiki_button_submit">
-#.       </input>
-#: from ../skins/cps_wiki/cps_wiki_properties.pt
-msgid "cpswiki_button_submit"
+#.   <div style="display:none" id="ajax_psm">
+#.                 Transferring
+#.               </div>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+#: ../skins/cps_wiki/cps_wiki_view.pt
+msgid "cpswiki_ajax_transferring"
 msgstr ""
 
-#.   <span>cpswiki_choose_parser</span>
+#.   <label for="wikiParser">cpswiki_choose_parser</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_choose_parser"
 msgstr ""
 
-#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" onclick="seePageAdder()" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
+#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
 msgstr ""
@@ -115,6 +117,9 @@ msgid "psm_page_deleted"
 msgstr ""
 
 msgid "psm_properties_changed"
+msgstr ""
+
+msgid "cpswiki_button_submit"
 msgstr ""
 
 msgid "action_properties"

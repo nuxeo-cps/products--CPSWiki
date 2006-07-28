@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2006-01-03 14:55default\n"
+"POT-Creation-Date: 2006-07-28 12:13default\n"
 "PO-Revision-Date: 2006-02-21 16:56+0100\n"
 "Last-Translator: Jesús Martín <jesusmartin@lasalle.es>\n"
 "Language-Team: español <jesusmartin@lasalle.es>\n"
@@ -39,10 +39,14 @@ msgstr "Enlaces anteriores"
 #.                   can read it but not write to it at this time.
 #.               </div>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid "The page is locked by someone else, you can read it but not write to it at this time."
-msgstr "La página está siendo utilizada por alguien más. Puedes leer, pero no escribir mientras el otro usuario la esté editando."
+msgid ""
+"The page is locked by someone else, you can read it but not write to it at "
+"this time."
+msgstr ""
+"La página está siendo utilizada por alguien más. Puedes leer, pero no "
+"escribir mientras el otro usuario la esté editando."
 
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" onclick="loadEditMode()" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
 msgstr "Editar página"
@@ -52,18 +56,20 @@ msgstr "Editar página"
 msgid "cps_wikipage_home"
 msgstr "Página de inicio"
 
-#.   <input name="changeProperties:method" type="submit" class="standalone" value="cpswiki_button_submit">
-#.       </input>
-#: from ../skins/cps_wiki/cps_wiki_properties.pt
-msgid "cpswiki_button_submit"
-msgstr "Modificar"
+#.   <div style="display:none" id="ajax_psm">
+#.                 Transferring
+#.               </div>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+#: ../skins/cps_wiki/cps_wiki_view.pt
+msgid "cpswiki_ajax_transferring"
+msgstr "Transfiriendo..."
 
-#.   <span>cpswiki_choose_parser</span>
+#.   <label for="wikiParser">cpswiki_choose_parser</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_choose_parser"
 msgstr "\"Parser\" (analizador) en uso"
 
-#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" onclick="seePageAdder()" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
+#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
 msgstr "Añadir una página"
@@ -89,7 +95,9 @@ msgid "portal_type_CPSWiki_title"
 msgstr "Documento Wiki"
 
 msgid "portal_type_CPSWiki_description"
-msgstr "Tipo especial de documento. Todos los usuarios que tengan acceso a él, podrán modificarlo en línea, guardándose un historial de todos los cambios."
+msgstr ""
+"Tipo especial de documento. Todos los usuarios que tengan acceso a él, "
+"podrán modificarlo en línea, guardándose un historial de todos los cambios."
 
 msgid "action_add_page"
 msgstr "Añadir una página"
@@ -114,6 +122,9 @@ msgstr "Página borrada"
 msgid "psm_properties_changed"
 msgstr "Propiedades cambiadas"
 
+msgid "cpswiki_button_submit"
+msgstr "Modificar"
+
 msgid "action_properties"
 msgstr "Propiedades"
 
@@ -121,11 +132,11 @@ msgid "action_syntax_help"
 msgstr "Ayuda en la sintaxis"
 
 msgid "cpswiki_member_help"
-msgstr "renderiza un enlace a una entrada de directorio de un miembro. Uso: <i>[member:member id, texto]</i><br/>Si el texto es dado, suele ser mostrado en el enlace<br/>ejemplo: <i>[member:manager, El administrador del Wiki]</i>"
+msgstr ""
+"renderiza un enlace a una entrada de directorio de un miembro. Uso: <i>"
+"[member:member id, texto]</i><br/>Si el texto es dado, suele ser mostrado en "
+"el enlace<br/>ejemplo: <i>[member:manager, El administrador del Wiki]</i>"
 
 msgid "cpswiki_pycode_help"
-msgstr "colorea el código:<br/>   <p>{{{pycode:       some python code   }}}</p>"
-
-msgid "cpswiki_ajax_transferring"
-msgstr "Transfiriendo..."
-
+msgstr ""
+"colorea el código:<br/>   <p>{{{pycode:       some python code   }}}</p>"

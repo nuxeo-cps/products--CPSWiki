@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
-"POT-Creation-Date: 2006-01-03 14:55default\n"
+"POT-Creation-Date: 2006-07-28 12:13default\n"
 "PO-Revision-Date: 2004-10-25 11:38+0200\n"
 "Last-Translator: DARCHE <madarche@nuxeo.com>\n"
 "Language-Team: Francais <fr@li.org>\n"
@@ -52,7 +52,7 @@ msgid ""
 "this time."
 msgstr ""
 
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" onclick="loadEditMode()" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
 msgstr "Edit page"
@@ -62,18 +62,20 @@ msgstr "Edit page"
 msgid "cps_wikipage_home"
 msgstr "Go home"
 
-#.   <input name="changeProperties:method" type="submit" class="standalone" value="cpswiki_button_submit">
-#.       </input>
-#: from ../skins/cps_wiki/cps_wiki_properties.pt
-msgid "cpswiki_button_submit"
-msgstr "Modify"
+#.   <div style="display:none" id="ajax_psm">
+#.                 Transferring
+#.               </div>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+#: ../skins/cps_wiki/cps_wiki_view.pt
+msgid "cpswiki_ajax_transferring"
+msgstr "Transferring..."
 
-#.   <span>cpswiki_choose_parser</span>
+#.   <label for="wikiParser">cpswiki_choose_parser</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_choose_parser"
-msgstr "Parser in use"
+msgstr "Used parser :"
 
-#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" onclick="seePageAdder()" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
+#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
 msgstr "Add page"
@@ -124,6 +126,9 @@ msgstr "Page deleted"
 msgid "psm_properties_changed"
 msgstr "Properties changed"
 
+msgid "cpswiki_button_submit"
+msgstr "Modify"
+
 msgid "action_properties"
 msgstr "Properties"
 
@@ -140,6 +145,3 @@ msgid "cpswiki_pycode_help"
 msgstr ""
 "colorizes the codeusage:<br/>   <p>{{{pycode:       some python code   }}}</"
 "p>"
-
-msgid "cpswiki_ajax_transferring"
-msgstr "Transferring..."

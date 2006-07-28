@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"POT-Creation-Date: 2006-01-03 14:55default\n"
+"POT-Creation-Date: 2006-07-28 12:13default\n"
 "PO-Revision-Date: 2006-04-07 15:06-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -53,7 +53,7 @@ msgstr ""
 "Esta página está bloqueada por alguém; você pode lê-la mas não escrever nela "
 "neste momento."
 
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" onclick="loadEditMode()" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
 msgstr "Editar"
@@ -63,18 +63,20 @@ msgstr "Editar"
 msgid "cps_wikipage_home"
 msgstr "Página Inicial"
 
-#.   <input name="changeProperties:method" type="submit" class="standalone" value="cpswiki_button_submit">
-#.       </input>
-#: from ../skins/cps_wiki/cps_wiki_properties.pt
-msgid "cpswiki_button_submit"
-msgstr "Submeter"
+#.   <div style="display:none" id="ajax_psm">
+#.                 Transferring
+#.               </div>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+#: ../skins/cps_wiki/cps_wiki_view.pt
+msgid "cpswiki_ajax_transferring"
+msgstr "transferindo"
 
-#.   <span>cpswiki_choose_parser</span>
+#.   <label for="wikiParser">cpswiki_choose_parser</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_choose_parser"
 msgstr "Escolher analisador"
 
-#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" onclick="seePageAdder()" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
+#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
 msgstr "Adicionar"
@@ -125,6 +127,9 @@ msgstr "Removida"
 msgid "psm_properties_changed"
 msgstr "Modificada"
 
+msgid "cpswiki_button_submit"
+msgstr "Submeter"
+
 msgid "action_properties"
 msgstr "Propriedades"
 
@@ -142,6 +147,3 @@ msgid "cpswiki_pycode_help"
 msgstr ""
 "colore os códigos usados:<br/>   <p>{{{pycode:       algum código python }}}"
 "</p>"
-
-msgid "cpswiki_ajax_transferring"
-msgstr "transferindo"
