@@ -1,0 +1,139 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CPSWiki\n"
+"POT-Creation-Date: 2006-01-03 14:55default\n"
+"PO-Revision-Date: 2006-07-14 19:42+0100\n"
+"Last-Translator: Domènec Arcalís <darcalis@gmail.com>\n"
+"Language-Team: català <darcalis@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Preferred-encodings: latin9 utf-8\n"
+"Language-Code: ca\n"
+"Language-Name: Catalan\n"
+"Domain: default\n"
+"X-Poedit-Language: Catalan\n"
+"X-Poedit-Country: Spain\n"
+
+#.   <h4>Attached files</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "Attached files"
+msgstr "Arxius adjunts"
+
+msgid "Back to the top"
+msgstr "Tornar a l'índex"
+
+#.   <a href="cps_wiki_full_view#_summary">
+#.             Back to the top&#32;<img src="wikipage_up.png" />
+#.           </a>
+#: from ../skins/cps_wiki/cps_wiki_full_view.pt
+msgid "Back to the top&#32;<img src=\"wikipage_up.png\" />"
+msgstr "Tornar a l'índex&#32;<img src=\"wikipage_up.png\" />"
+
+#.   <h4>BackLinks</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "BackLinks"
+msgstr "Enllaços anteriors"
+
+msgid "File uploaded."
+msgstr "Arxiu carregat"
+
+#.   <div class="message">
+#.                   The page is locked by someone else, you
+#.                   can read it but not write to it at this time.
+#.               </div>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid ""
+"The page is locked by someone else, you can read it but not write to it at "
+"this time."
+msgstr ""
+"Algú altre està bloquejant aquesta pàgina. Pot llegir-la, però no escriure-"
+"hi."
+
+msgid "action_add_page"
+msgstr "Afegir una pàgina"
+
+msgid "action_full_view"
+msgstr "Veure-ho tot"
+
+msgid "action_history"
+msgstr "Historial"
+
+msgid "action_properties"
+msgstr "Propietats"
+
+msgid "action_syntax_help"
+msgstr "Ajuda amb la sintaxi"
+
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" onclick="loadEditMode()" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "cps_wikipage_edit"
+msgstr "Editar pàgina"
+
+#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "cps_wikipage_home"
+msgstr "Pàgina inicial"
+
+msgid "cpswiki_ajax_transferring"
+msgstr "Transferint..."
+
+#.   <input name="changeProperties:method" type="submit" class="standalone" value="cpswiki_button_submit">
+#.       </input>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+msgid "cpswiki_button_submit"
+msgstr "Modificar"
+
+#.   <span>cpswiki_choose_parser</span>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+msgid "cpswiki_choose_parser"
+msgstr "\"Parser\" (analitzador) en ús"
+
+msgid "cpswiki_member_help"
+msgstr ""
+"renderitza un enllaç a una entrada de directori d'un membre. Ús: <i>[member:"
+"member id, text]</i><br/>Si es dóna el text, sol mostrar-se a l'enllaç<br/"
+">exemple: <i>[member:manager, L'administrador del Wiki]</i>"
+
+#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" onclick="seePageAdder()" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
+#: from ../skins/cps_wiki/cps_wiki_view.pt
+msgid "cpswiki_page_add"
+msgstr "Afegir una pàgina"
+
+msgid "cpswiki_pycode_help"
+msgstr ""
+"acoloreix el codi:<br/>   <p>{{{pycode:       some python code   }}}</p>"
+
+#.   <h1>Special tags</h1>
+#: from ../skins/cps_wiki/cps_wiki_help.pt
+msgid "cpswiki_specialtags"
+msgstr "Etiquetes especials"
+
+#.   <p class="message">
+#.         We need a confirmation to delete this page.
+#.       </p>
+#: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
+msgid "description_confirm_page_delete"
+msgstr "Necessitem una confirmació per esborrar aquesta pàgina"
+
+msgid "portal_type_CPSWiki_description"
+msgstr ""
+"Tipus especial de document. Tots els usuaris que hi tinguin accés poden "
+"modificar-lo en línia, i es guarda un historial dels canvis."
+
+msgid "portal_type_CPSWiki_title"
+msgstr "Document Wiki"
+
+# Status messages (psm)
+# ######################
+msgid "psm_page_deleted"
+msgstr "Pàgina esborrada"
+
+msgid "psm_properties_changed"
+msgstr "Propietats canviades"
+
+#.   <button type="submit" name="upload">upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "upload file"
+msgstr "Pujar un arxiu"
