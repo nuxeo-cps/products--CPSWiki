@@ -1,4 +1,21 @@
 *******************************************
+** CPSWiki V0.11.2 [R1 build 2006/07/31-13:12 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/trunk Revision: 47588
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- #1702: Added new Catalan translation thanks to Santi Camps.
+Bug fixes:
+~~~~~~~~~~
+- #1644: Epoz broken and still called over cpswiki. The edit page forms are now
+  using FCKEeditor.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
 ** CPSWiki V0.11.1 [R1 build 2006/05/19-13:10 by fermigier]
 ** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/trunk Revision: 45740
 Requires:
