@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ro\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-28 12:13default\n"
+"POT-Creation-Date: 2006-09-11 12:16default\n"
 "PO-Revision-Date: 2005-04-04 17:31+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -45,6 +45,12 @@ msgid ""
 "this time."
 msgstr ""
 
+#.   <button type="submit" name="upload">Upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+#, fuzzy
+msgid "button_upload_file"
+msgstr "Upload file"
+
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
@@ -83,11 +89,6 @@ msgstr ""
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
-msgstr ""
-
-#.   <button type="submit" name="upload">upload file</button>
-#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid "upload file"
 msgstr ""
 
 msgid "portal_type_CPSWiki_title"

@@ -37,9 +37,6 @@ msgstr ""
 msgid "BackLinks"
 msgstr ""
 
-msgid "upload file"
-msgstr ""
-
 msgid "File uploaded."
 msgstr ""
 

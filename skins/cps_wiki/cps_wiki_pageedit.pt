@@ -47,7 +47,8 @@ oFCKeditor.Create();
     <form action="uploadFile" enctype="multipart/form-data" method="post">
       <p>
         <input type="file" name="file"/>
-        <button type="submit" name="upload" i18n:translate="">upload file</button>
+        <button type="submit" name="upload"
+                i18n:translate="button_upload_file">Upload file</button>
       </p>
     </form>
   </metal:block>

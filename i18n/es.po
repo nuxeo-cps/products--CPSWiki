@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2006-07-28 12:13default\n"
+"POT-Creation-Date: 2006-09-11 12:16default\n"
 "PO-Revision-Date: 2006-02-21 16:56+0100\n"
 "Last-Translator: Jesús Martín <jesusmartin@lasalle.es>\n"
 "Language-Team: español <jesusmartin@lasalle.es>\n"
@@ -46,6 +46,11 @@ msgstr ""
 "La página está siendo utilizada por alguien más. Puedes leer, pero no "
 "escribir mientras el otro usuario la esté editando."
 
+#.   <button type="submit" name="upload">Upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "button_upload_file"
+msgstr "Subir un archivo"
+
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
@@ -85,11 +90,6 @@ msgstr "Etiquetas especiales"
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
 msgstr "Necesitamos una confirmación antes de borrar esta página"
-
-#.   <button type="submit" name="upload">upload file</button>
-#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid "upload file"
-msgstr "Subir un archivo"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Documento Wiki"

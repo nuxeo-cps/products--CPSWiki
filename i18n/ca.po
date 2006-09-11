@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2006-07-28 12:13default\n"
+"POT-Creation-Date: 2006-09-11 12:16default\n"
 "PO-Revision-Date: 2006-07-14 19:42+0100\n"
 "Last-Translator: Domènec Arcalís <darcalis@gmail.com>\n"
 "Language-Team: català <darcalis@gmail.com>\n"
@@ -45,6 +45,11 @@ msgstr ""
 "Algú altre està bloquejant aquesta pàgina. Pot llegir-la, però no escriure-"
 "hi."
 
+#.   <button type="submit" name="upload">Upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "button_upload_file"
+msgstr "Pujar un arxiu"
+
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
@@ -84,11 +89,6 @@ msgstr "Etiquetes especials"
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
 msgstr "Necessitem una confirmació per esborrar aquesta pàgina"
-
-#.   <button type="submit" name="upload">upload file</button>
-#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid "upload file"
-msgstr "Pujar un arxiu"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Document Wiki"

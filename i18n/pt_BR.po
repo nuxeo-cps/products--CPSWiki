@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"POT-Creation-Date: 2006-07-28 12:13default\n"
+"POT-Creation-Date: 2006-09-11 12:16default\n"
 "PO-Revision-Date: 2006-04-07 15:06-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -53,6 +53,11 @@ msgstr ""
 "Esta página está bloqueada por alguém; você pode lê-la mas não escrever nela "
 "neste momento."
 
+#.   <button type="submit" name="upload">Upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "button_upload_file"
+msgstr "Enviar arquivo"
+
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
@@ -92,11 +97,6 @@ msgstr "Rótulos especiais"
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
 msgstr "Precisamos uma confirmação para remover esta página."
-
-#.   <button type="submit" name="upload">upload file</button>
-#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid "upload file"
-msgstr "Enviar arquivo"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Wiki"

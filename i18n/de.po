@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki-de CPS-3.3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-28 12:00default\n"
+"POT-Creation-Date: 2006-09-11 12:15default\n"
 "PO-Revision-Date: 2005-10-07 17:13+0200\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: German <rheinland@dzug.org>\n"
@@ -44,6 +44,11 @@ msgstr ""
 "Diese Seite wird gerade von jemand anderem verwendet, Sie können zur Zeit "
 "nur lesen aber nicht schreiben"
 
+#.   <button type="submit" name="upload">Upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "button_upload_file"
+msgstr "Datei hochladen"
+
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
@@ -83,11 +88,6 @@ msgstr ""
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
 msgstr ""
-
-#.   <button type="submit" name="upload">upload file</button>
-#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid "upload file"
-msgstr "Datei hochladen"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Wiki"

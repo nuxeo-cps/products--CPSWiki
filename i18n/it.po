@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki Italian Translation\n"
-"POT-Creation-Date: 2006-07-28 12:13default\n"
+"POT-Creation-Date: 2006-09-11 12:16default\n"
 "PO-Revision-Date: 2005-11-10 09:17+0100\n"
 "Last-Translator: Stefano Schintu <schintu@gmail.com>\n"
 "Language-Team: CPS Italian <schintu@gmail.com>\n"
@@ -40,6 +40,11 @@ msgid ""
 "The page is locked by someone else, you can read it but not write to it at "
 "this time."
 msgstr "La pagina è bloccata da qualcun altro, attualmente puoi solo leggerla."
+
+#.   <button type="submit" name="upload">Upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "button_upload_file"
+msgstr "Carica file"
 
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
@@ -83,11 +88,6 @@ msgstr "Tag speciali"
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
 msgstr "La richiesta di eliminazione richiede una conferma."
-
-#.   <button type="submit" name="upload">upload file</button>
-#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid "upload file"
-msgstr "carica file"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Wiki"
