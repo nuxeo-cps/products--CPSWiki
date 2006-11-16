@@ -1,0 +1,133 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CPSWiki\n"
+"POT-Creation-Date: 2006-07-28 12:13default\n"
+"PO-Revision-Date: 2006-11-16 15:58+0100\n"
+"Last-Translator: Jesus Martin <jesusmartin@lasalle.es>\n"
+"Language-Team: euskara <perikoalkain@lasalle.es>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Preferred-encodings: latin9 utf-8\n"
+"X-Generator: KBabel 1.3.1\n"
+"Language-Code: es\n"
+"Language-Name: Spanish\n"
+"Domain: default\n"
+"X-Poedit-Language: basque\n"
+"X-Poedit-Country: Spain\n"
+
+#.   <h4>Attached files</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "Attached files"
+msgstr "Fitxategi erantsiak"
+
+#.   <a href="cps_wiki_full_view#_summary">
+#.             Back to the top&#32;<img src="wikipage_up.png" />
+#.           </a>
+#: from ../skins/cps_wiki/cps_wiki_full_view.pt
+msgid "Back to the top&#32;<img src=\"wikipage_up.png\" />"
+msgstr "Aurkibidera itzuli &#32;<img src=\"wikipage_up.png\" />"
+
+#.   <h4>BackLinks</h4>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "BackLinks"
+msgstr "Aurreko estekak"
+
+#.   <div class="message">
+#.                   The page is locked by someone else, you
+#.                   can read it but not write to it at this time.
+#.               </div>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "The page is locked by someone else, you can read it but not write to it at this time."
+msgstr "Orrialdean badabil beste norbait ere. Irakur dezakezu baina ezin duzu idatzi beste erabiltzailea editatzen ari den bitartean.  "
+
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "cps_wikipage_edit"
+msgstr "Orrialdea editatu"
+
+#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "cps_wikipage_home"
+msgstr "Hasierako orrialdea"
+
+#.   <div style="display:none" id="ajax_psm">
+#.                 Transferring
+#.               </div>
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+#: ../skins/cps_wiki/cps_wiki_view.pt
+msgid "cpswiki_ajax_transferring"
+msgstr "Tranferitzen..."
+
+#.   <label for="wikiParser">cpswiki_choose_parser</label>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+msgid "cpswiki_choose_parser"
+msgstr "\"Parser\" (aztertzailea) erabiltzen"
+
+#.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
+#: from ../skins/cps_wiki/cps_wiki_view.pt
+msgid "cpswiki_page_add"
+msgstr "Orrialde bat erantsi"
+
+#.   <h1>Special tags</h1>
+#: from ../skins/cps_wiki/cps_wiki_help.pt
+msgid "cpswiki_specialtags"
+msgstr "Etiketa bereziak"
+
+#.   <p class="message">
+#.         We need a confirmation to delete this page.
+#.       </p>
+#: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
+msgid "description_confirm_page_delete"
+msgstr "Berrespen bat behar dugu orrialde hau ezabatu aurretik "
+
+#.   <button type="submit" name="upload">upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+msgid "upload file"
+msgstr "Fitxategi bat igo"
+
+msgid "portal_type_CPSWiki_title"
+msgstr "Wiki dokumentua"
+
+msgid "portal_type_CPSWiki_description"
+msgstr "Dokumentu-mota berezia. Hartara sarbidea duten erabiltzaile guztiek on-line alda dezakete, aldaketa guztien historiala gordez."
+
+msgid "action_add_page"
+msgstr "Orrialde bat erantsi"
+
+msgid "action_history"
+msgstr "Historiala"
+
+msgid "action_full_view"
+msgstr "Dena ikusi"
+
+msgid "Back to the top"
+msgstr "Aurkibidera itzuli"
+
+msgid "File uploaded."
+msgstr "Fitxategia igota."
+
+# Status messages (psm)
+# ######################
+msgid "psm_page_deleted"
+msgstr "Orrialdea ezabatuta"
+
+msgid "psm_properties_changed"
+msgstr "Propietateak aldatuta"
+
+msgid "cpswiki_button_submit"
+msgstr "Aldatu"
+
+msgid "action_properties"
+msgstr "Propietateak"
+
+msgid "action_syntax_help"
+msgstr "Sintaxiserako laguntza"
+
+msgid "cpswiki_member_help"
+msgstr "Kide baten direktorio-sarerrara errendatzen du esteka bat.  Erabilpena: <i>[member:member id, texto]</i><br/>Testua emana bada,<br/> estekan erakutsiko da. Adibidez: <i>[member:manager, Wiki-ren administratzailea]</i>"
+
+msgid "cpswiki_pycode_help"
+msgstr "kodea koloreatu :<br/>   <p>{{{pycode:       some python code   }}}</p>"
+
