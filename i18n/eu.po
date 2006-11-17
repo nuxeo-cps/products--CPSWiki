@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2006-07-28 12:13default\n"
+"POT-Creation-Date: 2006-11-17 11:18default\n"
 "PO-Revision-Date: 2006-11-16 15:58+0100\n"
 "Last-Translator: Jesus Martin <jesusmartin@lasalle.es>\n"
 "Language-Team: euskara <perikoalkain@lasalle.es>\n"
@@ -39,8 +39,18 @@ msgstr "Aurreko estekak"
 #.                   can read it but not write to it at this time.
 #.               </div>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid "The page is locked by someone else, you can read it but not write to it at this time."
-msgstr "Orrialdean badabil beste norbait ere. Irakur dezakezu baina ezin duzu idatzi beste erabiltzailea editatzen ari den bitartean.  "
+msgid ""
+"The page is locked by someone else, you can read it but not write to it at "
+"this time."
+msgstr ""
+"Orrialdean badabil beste norbait ere. Irakur dezakezu baina ezin duzu idatzi "
+"beste erabiltzailea editatzen ari den bitartean.  "
+
+#.   <button type="submit" name="upload">Upload file</button>
+#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
+#, fuzzy
+msgid "button_upload_file"
+msgstr "Subir un archivo"
 
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
@@ -82,16 +92,13 @@ msgstr "Etiketa bereziak"
 msgid "description_confirm_page_delete"
 msgstr "Berrespen bat behar dugu orrialde hau ezabatu aurretik "
 
-#.   <button type="submit" name="upload">upload file</button>
-#: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid "upload file"
-msgstr "Fitxategi bat igo"
-
 msgid "portal_type_CPSWiki_title"
 msgstr "Wiki dokumentua"
 
 msgid "portal_type_CPSWiki_description"
-msgstr "Dokumentu-mota berezia. Hartara sarbidea duten erabiltzaile guztiek on-line alda dezakete, aldaketa guztien historiala gordez."
+msgstr ""
+"Dokumentu-mota berezia. Hartara sarbidea duten erabiltzaile guztiek on-line "
+"alda dezakete, aldaketa guztien historiala gordez."
 
 msgid "action_add_page"
 msgstr "Orrialde bat erantsi"
@@ -126,8 +133,11 @@ msgid "action_syntax_help"
 msgstr "Sintaxiserako laguntza"
 
 msgid "cpswiki_member_help"
-msgstr "Kide baten direktorio-sarerrara errendatzen du esteka bat.  Erabilpena: <i>[member:member id, texto]</i><br/>Testua emana bada,<br/> estekan erakutsiko da. Adibidez: <i>[member:manager, Wiki-ren administratzailea]</i>"
+msgstr ""
+"Kide baten direktorio-sarerrara errendatzen du esteka bat.  Erabilpena: <i>"
+"[member:member id, texto]</i><br/>Testua emana bada,<br/> estekan erakutsiko "
+"da. Adibidez: <i>[member:manager, Wiki-ren administratzailea]</i>"
 
 msgid "cpswiki_pycode_help"
-msgstr "kodea koloreatu :<br/>   <p>{{{pycode:       some python code   }}}</p>"
-
+msgstr ""
+"kodea koloreatu :<br/>   <p>{{{pycode:       some python code   }}}</p>"
