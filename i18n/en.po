@@ -101,7 +101,7 @@ msgid "portal_type_CPSWiki_title"
 msgstr "Wiki"
 
 msgid "portal_type_CPSWiki_description"
-msgstr "Holds customizable pages"
+msgstr "A container of pages easily modifiable online through wiki dialects"
 
 msgid "action_add_page"
 msgstr "Add page"

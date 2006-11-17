@@ -94,7 +94,7 @@ msgid "portal_type_CPSWiki_title"
 msgstr "Wiki"
 
 msgid "portal_type_CPSWiki_description"
-msgstr "contient des pages modifiables en ligne"
+msgstr "Un conteneur de pages facilement modifiables en ligne à l'aide de dialectes wiki"
 
 msgid "action_add_page"
 msgstr "Ajouter une page"

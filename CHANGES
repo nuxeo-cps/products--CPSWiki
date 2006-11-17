@@ -6,6 +6,7 @@ New features:
 -
 Bug fixes:
 ~~~~~~~~~~
+- Fixed #1505 : Make the portal types description consistent.
 - Better translations (easier to re-use).
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
