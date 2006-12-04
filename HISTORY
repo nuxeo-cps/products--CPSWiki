@@ -1,3 +1,24 @@
+===========================================================
+Package: CPSWiki 0.11.3
+===========================================================
+First release built by: madarche at: 2006-12-04T15:34:17
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/tags/0.11.3
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/trunk@50420
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Fixed #1505 : Make the portal types description consistent.
+- Better translations (easier to re-use).
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
 *******************************************
 ** CPSWiki V0.11.2 [R1 build 2006/07/31-13:12 by fermigier]
 ** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/trunk Revision: 47588
