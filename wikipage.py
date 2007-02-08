@@ -1,5 +1,5 @@
 # -*- coding: ISO-8859-15 -*-
-# (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2005-2007 Nuxeo SAS <http://nuxeo.com>
 # Authors:
 # Tarek Ziadé <tz@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
@@ -40,7 +40,9 @@ except ImportError: # CPS <= 3.2
          View, ModifyPortalContent, DeleteObjects
 
 from Products.CMFCore.utils import getToolByName
+
 from Products.CPSUtil.html import sanitize
+from Products.CPSCore.EventServiceTool import getPublicEventService
 from Products.CPSCore.CPSBase import CPSBaseFolder
 from Products.CPSCore.CPSBase import CPSBaseDocument
 
@@ -272,24 +274,29 @@ class WikiPage(CPSBaseFolder):
                 REQUEST.RESPONSE.\
                     redirect("cps_wiki_pageedit?portal_status_message=%s" % psm)
             return False
-        else:
-            self.clearCache()
-            try:
-                if source is not None:
-                    source = sanitize(source)
-                    tags = self._createVersionTag()
-                    self.source.appendVersion(source, tags)
-                    self.updateCache()
-                if title is not None:
-                    self.title = title
-            finally:
-                self.unLock(REQUEST)
 
-            if REQUEST is not None:
-                psm = 'psm_content_changed'
-                REQUEST.RESPONSE.\
-                    redirect("cps_wiki_pageview?portal_status_message=%s" % psm)
-            return True
+        self.clearCache()
+        try:
+            if source is not None:
+                source = sanitize(source)
+                tags = self._createVersionTag()
+                self.source.appendVersion(source, tags)
+                self.updateCache()
+            if title is not None:
+                self.title = title
+        finally:
+            self.unLock(REQUEST)
+
+#        comments = "title = %s, source = %s" % (title, source)
+#        getPublicEventService(context).notifyEvent('workflow_modify', self,
+#                                                   {'comments': comments,
+#                                                    })
+
+        if REQUEST is not None:
+            psm = 'psm_content_changed'
+            REQUEST.RESPONSE.\
+                redirect("cps_wiki_pageview?portal_status_message=%s" % psm)
+        return True
 
     security.declareProtected(DeleteObjects, 'delete')
     def delete(self, REQUEST=None):
