@@ -26,13 +26,6 @@
             </div>
           </td>
           <td align="right">
-            <img id="goHome" style="visibility: visible"
-              onmouseover="setCursor(this)"
-              onclick="gotoUrl('../cps_wiki_view')"
-              src="wikipage_home.png"
-              alt="cps_wikipage_home"
-              title="cps_wikipage_home"
-              i18n:attributes="alt; title"/>
             <tal:block
               condition="python:mtool.checkPermission('Modify portal content', here)">
               <img id="editButton"
