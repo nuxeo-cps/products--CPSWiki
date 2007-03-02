@@ -1,5 +1,5 @@
 # -*- coding: ISO-8859-15 -*-
-# (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2005-2007 Nuxeo SAS <http://nuxeo.com>
 # Authors:
 # Tarek Ziadé <tz@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
@@ -34,8 +34,10 @@ except ImportError: # CPS <= 3.2
          ChangePermissions, ManagePortal
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.utils import getToolByName
-from Products.CPSCore.CPSBase import CPSBaseFolder
+
 from Products.CPSUtil.id import generateId
+from Products.CPSCore.EventServiceTool import getPublicEventService
+from Products.CPSCore.CPSBase import CPSBaseFolder
 
 from wikipage import WikiPage
 from wikiparsers import parsers, generateParser
@@ -281,10 +283,13 @@ class Wiki(CPSBaseFolder):
                 if linked_page is not None:
                     linked_page.removeReference(page_id)
 
+            getPublicEventService(self).notifyEvent('workflow_delete', page,
+                                                    {'comments': '',
+                                                     })
         if REQUEST is not None:
             psm = 'psm_page_deleted'
-            REQUEST.RESPONSE.redirect(self.absolute_url()+\
-                '?portal_status_message=%s' % psm)
+            REQUEST.RESPONSE.redirect(self.absolute_url()
+                                      + '?portal_status_message=%s' % psm)
 
     security.declareProtected(AddPortalContent, 'addPage')
     def addPage(self, title, REQUEST=None):
@@ -307,6 +312,10 @@ class Wiki(CPSBaseFolder):
             if wikipage_id in potential_links:
                 page.addLinksTo([wikipage_id])
                 wikipage.addBackLinksTo([id])
+
+        getPublicEventService(self).notifyEvent('workflow_create', wikipage,
+                                                {'comments': '',
+                                                 })
 
         # Redirecting to the edit view of the newly created page
         if REQUEST is not None:

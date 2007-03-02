@@ -269,7 +269,7 @@ class WikiPage(CPSBaseFolder):
         """Edit the page."""
         is_locked, psm = self._verifyLocks(REQUEST)
         if is_locked:
-            # TODO: Propose a merge
+            # TODO : Propose a merge
             if REQUEST is not None:
                 REQUEST.RESPONSE.\
                     redirect("cps_wiki_pageedit?portal_status_message=%s" % psm)
@@ -287,15 +287,18 @@ class WikiPage(CPSBaseFolder):
         finally:
             self.unLock(REQUEST)
 
-#        comments = "title = %s, source = %s" % (title, source)
-#        getPublicEventService(context).notifyEvent('workflow_modify', self,
-#                                                   {'comments': comments,
-#                                                    })
+        version_number_current = self.source.getVersionCount() - 1
+        version_number_previous = version_number_current - 1
+        diff = self.getDiffs(version_number_previous, version_number_current)
+        comments = '\n\n' + diff
+        getPublicEventService(self).notifyEvent('workflow_modify', self,
+                                                {'comments': comments,
+                                                 })
 
         if REQUEST is not None:
             psm = 'psm_content_changed'
-            REQUEST.RESPONSE.\
-                redirect("cps_wiki_pageview?portal_status_message=%s" % psm)
+            REQUEST.RESPONSE.redirect(
+                'cps_wiki_pageview?portal_status_message=%s' % psm)
         return True
 
     security.declareProtected(DeleteObjects, 'delete')
