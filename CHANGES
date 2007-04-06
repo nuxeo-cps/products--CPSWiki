@@ -3,10 +3,10 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- Added #572 : Plug CPSSubscriptions in CPSWiki for email notifications.
+-
 Bug fixes
 ~~~~~~~~~
-- Usability improvement : removed useless wiki home link.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
