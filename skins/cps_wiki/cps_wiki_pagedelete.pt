@@ -5,7 +5,8 @@
     </p>
     <form action="delete" method="post">
       <p>
-        <button type="submit" i18n:translate="button_delete">Delete</button>
+        <button type="submit" class="destructive"
+          i18n:translate="button_delete">Delete</button>
       </p>
     </form>
   </metal:block>
