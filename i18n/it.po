@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki Italian Translation\n"
-"POT-Creation-Date: 2006-11-17 11:18default\n"
+"POT-Creation-Date: 2007-04-25 12:24default\n"
 "PO-Revision-Date: 2005-11-10 09:17+0100\n"
 "Last-Translator: Stefano Schintu <schintu@gmail.com>\n"
 "Language-Team: CPS Italian <schintu@gmail.com>\n"
@@ -52,12 +52,6 @@ msgstr "Carica file"
 msgid "cps_wikipage_edit"
 msgstr "Editer la page"
 
-#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-#, fuzzy
-msgid "cps_wikipage_home"
-msgstr "Retour au sommaire"
-
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
 #.               </div>
@@ -82,7 +76,7 @@ msgstr "Ajouter une page"
 msgid "cpswiki_specialtags"
 msgstr "Tag speciali"
 
-#.   <p class="message">
+#.   <p>
 #.         We need a confirmation to delete this page.
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
@@ -137,3 +131,7 @@ msgstr ""
 msgid "cpswiki_pycode_help"
 msgstr ""
 "colora il codice:<br/>   <p>{{{pycode:       del codice python   }}}</p>"
+
+#, fuzzy
+msgid "cps_wikipage_home"
+msgstr "Retour au sommaire"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ro\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-17 11:18default\n"
+"POT-Creation-Date: 2007-04-25 12:24default\n"
 "PO-Revision-Date: 2005-04-04 17:31+0300\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -56,11 +56,6 @@ msgstr "Upload file"
 msgid "cps_wikipage_edit"
 msgstr ""
 
-#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "cps_wikipage_home"
-msgstr ""
-
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
 #.               </div>
@@ -84,7 +79,7 @@ msgstr ""
 msgid "cpswiki_specialtags"
 msgstr ""
 
-#.   <p class="message">
+#.   <p>
 #.         We need a confirmation to delete this page.
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
@@ -133,4 +128,7 @@ msgid "cpswiki_member_help"
 msgstr ""
 
 msgid "cpswiki_pycode_help"
+msgstr ""
+
+msgid "cps_wikipage_home"
 msgstr ""

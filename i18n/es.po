@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2006-11-17 11:18default\n"
+"POT-Creation-Date: 2007-04-25 12:24default\n"
 "PO-Revision-Date: 2006-02-21 16:56+0100\n"
 "Last-Translator: Jesús Martín <jesusmartin@lasalle.es>\n"
 "Language-Team: español <jesusmartin@lasalle.es>\n"
@@ -56,11 +56,6 @@ msgstr "Subir un archivo"
 msgid "cps_wikipage_edit"
 msgstr "Editar página"
 
-#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "cps_wikipage_home"
-msgstr "Página de inicio"
-
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
 #.               </div>
@@ -84,7 +79,7 @@ msgstr "Añadir una página"
 msgid "cpswiki_specialtags"
 msgstr "Etiquetas especiales"
 
-#.   <p class="message">
+#.   <p>
 #.         We need a confirmation to delete this page.
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
@@ -140,3 +135,6 @@ msgstr ""
 msgid "cpswiki_pycode_help"
 msgstr ""
 "colorea el código:<br/>   <p>{{{pycode:       some python code   }}}</p>"
+
+msgid "cps_wikipage_home"
+msgstr "Página de inicio"

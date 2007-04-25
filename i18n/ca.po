@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2006-11-17 11:18default\n"
+"POT-Creation-Date: 2007-04-25 12:24default\n"
 "PO-Revision-Date: 2006-07-14 19:42+0100\n"
 "Last-Translator: Domènec Arcalís <darcalis@gmail.com>\n"
 "Language-Team: català <darcalis@gmail.com>\n"
@@ -55,11 +55,6 @@ msgstr "Pujar un arxiu"
 msgid "cps_wikipage_edit"
 msgstr "Editar pàgina"
 
-#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "cps_wikipage_home"
-msgstr "Pàgina inicial"
-
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
 #.               </div>
@@ -83,7 +78,7 @@ msgstr "Afegir una pàgina"
 msgid "cpswiki_specialtags"
 msgstr "Etiquetes especials"
 
-#.   <p class="message">
+#.   <p>
 #.         We need a confirmation to delete this page.
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
@@ -139,3 +134,6 @@ msgstr ""
 msgid "cpswiki_pycode_help"
 msgstr ""
 "acoloreix el codi:<br/>   <p>{{{pycode:       some python code   }}}</p>"
+
+msgid "cps_wikipage_home"
+msgstr "Pàgina inicial"

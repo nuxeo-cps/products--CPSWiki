@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
-"POT-Creation-Date: 2006-11-17 11:18default\n"
+"POT-Creation-Date: 2007-04-25 12:24default\n"
 "PO-Revision-Date: 2004-10-25 11:38+0200\n"
 "Last-Translator: DARCHE <madarche@nuxeo.com>\n"
 "Language-Team: Francais <fr@li.org>\n"
@@ -55,11 +55,6 @@ msgstr "Charger fichier"
 msgid "cps_wikipage_edit"
 msgstr "Editer la page"
 
-#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "cps_wikipage_home"
-msgstr "Retour au sommaire"
-
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
 #.               </div>
@@ -83,7 +78,7 @@ msgstr "Ajouter une page"
 msgid "cpswiki_specialtags"
 msgstr "Marqueurs spéciaux"
 
-#.   <p class="message">
+#.   <p>
 #.         We need a confirmation to delete this page.
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
@@ -139,3 +134,6 @@ msgstr ""
 msgid "cpswiki_pycode_help"
 msgstr ""
 "colorise le codeusage:<br/>   <p>{{{pycode:       du code python   }}}</p>"
+
+msgid "cps_wikipage_home"
+msgstr "Retour au sommaire"
