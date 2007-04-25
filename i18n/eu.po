@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2007-04-25 12:24default\n"
+"POT-Creation-Date: 2007-04-25 12:25default\n"
 "PO-Revision-Date: 2006-11-16 15:58+0100\n"
 "Last-Translator: Jesus Martin <jesusmartin@lasalle.es>\n"
 "Language-Team: euskara <perikoalkain@lasalle.es>\n"
