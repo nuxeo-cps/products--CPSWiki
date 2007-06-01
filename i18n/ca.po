@@ -1,20 +1,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2007-04-25 12:25default\n"
-"PO-Revision-Date: 2006-07-14 19:42+0100\n"
-"Last-Translator: Domènec Arcalís <darcalis@gmail.com>\n"
-"Language-Team: català <darcalis@gmail.com>\n"
+"POT-Creation-Date: 2006-11-17 11:18default\n"
+"PO-Revision-Date: 2007-05-31 13:12+0100\n"
+"Language-Team: valencià/català. <juangus@lasalle.es>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Preferred-encodings: latin9 utf-8\n"
-"Language-Code: ca\n"
-"Language-Name: Catalan\n"
 "Domain: default\n"
+"Language-Code: ca\n"
+"Language-Name: valencià/català\n"
 "X-Poedit-Language: Catalan\n"
-"X-Poedit-Country: Spain\n"
+"X-Poedit-Country: SPAIN\n"
 
 #.   <h4>Attached files</h4>
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
@@ -38,12 +37,8 @@ msgstr "Enllaços anteriors"
 #.                   can read it but not write to it at this time.
 #.               </div>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid ""
-"The page is locked by someone else, you can read it but not write to it at "
-"this time."
-msgstr ""
-"Algú altre està bloquejant aquesta pàgina. Pot llegir-la, però no escriure-"
-"hi."
+msgid "The page is locked by someone else, you can read it but not write to it at this time."
+msgstr "Algú altre està bloquejant aquesta pàgina. Pot llegir-la, però no escriure-hi."
 
 #.   <button type="submit" name="upload">Upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
@@ -54,6 +49,11 @@ msgstr "Pujar un arxiu"
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "cps_wikipage_edit"
 msgstr "Editar pàgina"
+
+#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "cps_wikipage_home"
+msgstr "Pàgina inicial"
 
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
@@ -78,7 +78,7 @@ msgstr "Afegir una pàgina"
 msgid "cpswiki_specialtags"
 msgstr "Etiquetes especials"
 
-#.   <p>
+#.   <p class="message">
 #.         We need a confirmation to delete this page.
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
@@ -89,9 +89,7 @@ msgid "portal_type_CPSWiki_title"
 msgstr "Document Wiki"
 
 msgid "portal_type_CPSWiki_description"
-msgstr ""
-"Tipus especial de document. Tots els usuaris que hi tinguin accés poden "
-"modificar-lo en línia, i es guarda un historial dels canvis."
+msgstr "Tipus especial de document. Tots els usuaris que hi tinguin accés poden modificar-lo en línia, i es guarda un historial dels canvis."
 
 msgid "action_add_page"
 msgstr "Afegir una pàgina"
@@ -100,7 +98,7 @@ msgid "action_history"
 msgstr "Historial"
 
 msgid "action_full_view"
-msgstr "Veure-ho tot"
+msgstr "Vore-ho tot"
 
 msgid "Back to the top"
 msgstr "Tornar a l'índex"
@@ -126,14 +124,8 @@ msgid "action_syntax_help"
 msgstr "Ajuda amb la sintaxi"
 
 msgid "cpswiki_member_help"
-msgstr ""
-"renderitza un enllaç a una entrada de directori d'un membre. Ús: <i>[member:"
-"member id, text]</i><br/>Si es dóna el text, sol mostrar-se a l'enllaç<br/"
-">exemple: <i>[member:manager, L'administrador del Wiki]</i>"
+msgstr "renderitza un enllaç a una entrada de directori d'un membre. Ús: <i>[member:member id, text]</i><br/>Si es dóna el text, sol mostrar-se a l'enllaç<br/>exemple: <i>[member:manager, L'administrador del Wiki]</i>"
 
 msgid "cpswiki_pycode_help"
-msgstr ""
-"acoloreix el codi:<br/>   <p>{{{pycode:       some python code   }}}</p>"
+msgstr "acoloreix el codi:<br/>   <p>{{{pycode:       some python code   }}}</p>"
 
-msgid "cps_wikipage_home"
-msgstr "Pàgina inicial"
