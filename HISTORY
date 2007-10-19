@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSWiki 0.13.0
+===========================================================
+First release built by: madarche at: 2007-10-19T12:23:08
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/tags/0.13.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/trunk@52013
+
+Requires
+~~~~~~~~
+- CPSI18n >= 1.0.0
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSWiki 0.12.1
 ===========================================================
 First release built by: madarche at: 2007-04-18T14:56:18
