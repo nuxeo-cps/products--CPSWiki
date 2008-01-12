@@ -3,7 +3,7 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- #1881: Provide an easy mean to resize the widget textareas.
 Bug fixes
 ~~~~~~~~~
 - Added some missing actionicon specifications for the wiki pages.

@@ -3,6 +3,19 @@
     <link rel="Stylesheet" type="text/css" href=""
       tal:attributes="href string:${base_url}schemas.css" />
   </metal:main>
+  <metal:main fill-slot="javascript_head_slot">
+    <script type="text/javascript" src="prototype.js"
+      tal:attributes="src string:${base_url}prototype.js"></script>
+    <script type="text/javascript" src="effects.js"
+      tal:attributes="src string:${base_url}effects.js"></script>
+    <script type="text/javascript" src="cookie.js"
+      tal:attributes="src string:${base_url}cookie.js"></script>
+    <script type="text/javascript"
+      tal:attributes="src string:${base_url}cpsdocument.js">
+    <script type="text/javascript"
+      tal:attributes="src string:${base_url}cpswiki.js">
+    </script>
+  </metal:main>
   <metal:block fill-slot="main"
                tal:define="wiki here/getParent;
                            parser_type wiki/parser;
@@ -19,7 +32,7 @@
       <tal:block condition="python:parser_type != 'html'">
         <p>
           <textarea name="source" rows="30" cols="80"
-            class="monospaceFont"
+            class="monospaceFont resizable"
             tal:content="source">
           </textarea>
         </p>

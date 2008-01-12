@@ -56,7 +56,7 @@ CPSWikiPageEditor.prototype = {
     var content = new Array();
     content.push('<textarea id="' + this.content_id + '"');
     content.push(' name="source" rows="30" cols="80"');
-    content.push('style="width: 100%; font-family: monospace !important;">');
+    content.push(' class="monospaceFont" style="width: 100%;">');
     content.push(text);
     content.push('</textarea>');
     return content.join("");
