@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSWiki 0.14.0
+===========================================================
+First release built by: madarche at: 2008-01-15T12:21:17
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/tags/0.14.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/trunk@52414
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- #1881: Provide an easy mean to resize the widget textareas.
+Bug fixes
+~~~~~~~~~
+- Added some missing actionicon specifications for the wiki pages.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSWiki 0.13.0
 ===========================================================
 First release built by: madarche at: 2007-10-19T12:23:08
