@@ -72,7 +72,7 @@ msgstr ""
 msgid "cpswiki_pycode_help"
 msgstr ""
 
-msgid "cps_wikipage_edit"
+msgid "action_edit_ajax"
 msgstr ""
 
 msgid "cps_wikipage_home"

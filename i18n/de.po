@@ -49,9 +49,9 @@ msgstr ""
 msgid "button_upload_file"
 msgstr "Datei hochladen"
 
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "cps_wikipage_edit"
+msgid "action_edit_ajax"
 msgstr ""
 
 #.   <div style="display:none" id="ajax_psm">

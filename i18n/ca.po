@@ -45,9 +45,9 @@ msgstr "Algú altre està bloquejant aquesta pàgina. Pot llegir-la, però no escriu
 msgid "button_upload_file"
 msgstr "Pujar un arxiu"
 
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "cps_wikipage_edit"
+msgid "action_edit_ajax"
 msgstr "Editar pàgina"
 
 #.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />

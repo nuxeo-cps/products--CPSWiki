@@ -31,8 +31,8 @@
               <img id="editButton"
                 onmouseover="setCursor(this)"
                 src="wikipage_write.png"
-                alt="cps_wikipage_edit"
-                title="cps_wikipage_edit"
+                alt="action_edit"
+                title="action_edit_ajax"
                 i18n:attributes="alt; title"/>
             </tal:block>
           </td>

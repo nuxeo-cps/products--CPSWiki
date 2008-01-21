@@ -46,10 +46,10 @@ msgstr "La pagina è bloccata da qualcun altro, attualmente puoi solo leggerla."
 msgid "button_upload_file"
 msgstr "Carica file"
 
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="cps_wikipage_edit" alt="cps_wikipage_edit" id="editButton" />
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="cps_wikipage_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 #, fuzzy
-msgid "cps_wikipage_edit"
+msgid "action_edit_ajax"
 msgstr "Editer la page"
 
 #.   <div style="display:none" id="ajax_psm">
