@@ -1,4 +1,25 @@
 ===========================================================
+Package: CPSWiki 0.14.1
+===========================================================
+First release built by: madarche at: 2008-03-07T18:45:16
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/tags/0.14.1
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/trunk@52640
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Used more explanatory alt and title attributes for the edit wiki page through
+  AJAX action.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSWiki 0.14.0
 ===========================================================
 First release built by: madarche at: 2008-01-15T12:21:17
