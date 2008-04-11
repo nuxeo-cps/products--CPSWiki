@@ -1,12 +1,16 @@
 <?xml version="1.0"?>
 <action-icons>
 
- <action-icon category="object" action_id="history"
-              title="History" priority="260"
-              icon_expr="actionicon_history.png"/>
-
  <action-icon category="object" action_id="delete"
               title="Delete" priority="120"
               icon_expr="actionicon_reject.png"/>
+
+ <action-icon category="object" action_id="syntax_help"
+              title="Syntax help" priority="250"
+              icon_expr="actionicon_syntax_help.png"/>
+
+ <action-icon category="object" action_id="history"
+              title="History" priority="260"
+              icon_expr="actionicon_history.png"/>
 
 </action-icons>
