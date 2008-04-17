@@ -1,5 +1,5 @@
 # -*- coding: ISO-8859-15 -*-
-# (C) Copyright 2005-2007 Nuxeo SAS <http://nuxeo.com>
+# (C) Copyright 2005-2008 Nuxeo SAS <http://nuxeo.com>
 # Authors:
 # Tarek Ziadé <tz@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
@@ -48,49 +48,6 @@ from Products.CPSCore.CPSBase import CPSBaseDocument
 
 from wikiversionning import VersionContent
 from wikirelations import WikiRelation, ZODBBackend
-
-factory_type_information = (
-    { 'id': 'Wiki Page',
-      'meta_type': 'Wiki Page',
-      'description': 'portal_type_CPSWikiPage_description',
-      'icon': 'wikipage.png',
-      'title': 'portal_type_CPSWikiPage_title',
-      'product': 'CPSWiki',
-      'factory': 'manage_addWikiPage',
-      'immediate_view': 'cps_wiki_pageview',
-      'filter_content_types': 0,
-      'allowed_content_types': (),
-      'allow_discussion': 0,
-      'actions': ({'id': 'view',
-                   'name': 'action_view',
-                   'action': 'cps_wiki_pageview',
-                   'permissions': (View,),
-                   },
-                  {'id': 'edit',
-                   'name': 'action_edit',
-                   'action': 'cps_wiki_pageedit',
-                   'permissions': (ModifyPortalContent,),
-                   },
-                   {'id': 'history',
-                   'name': 'action_history',
-                   'action': 'cps_wiki_pagehistory',
-                   'permissions': ('View archived revisions',),
-                   },
-                   {'id': 'delete',
-                   'name': 'action_delete',
-                   'action': 'cps_wiki_pagedelete',
-                   'permissions': (DeleteObjects,),
-                   },
-                   {'id': 'syntax_help',
-                   'name': 'action_syntax_help',
-                   'action': 'cps_wiki_help',
-                   'permissions': (View,),
-                   },
-                  ),
-      'cps_display_as_document_in_listing': 1,
-      },
-    )
-
 
 class ZODBVersionContent(VersionContent):
     """Overrides all VersionContent read / write

@@ -1,5 +1,5 @@
 # -*- coding: ISO-8859-15 -*-
-# (C) Copyright 2005-2007 Nuxeo SAS <http://nuxeo.com>
+# (C) Copyright 2005-2008 Nuxeo SAS <http://nuxeo.com>
 # Authors:
 # Tarek Ziadé <tz@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
@@ -47,59 +47,6 @@ from wikitags import getRegisteredTags as _getRegisteredTags
 from zLOG import LOG, DEBUG, TRACE
 
 LOG_KEY = 'CPSWiki.wiki'
-
-factory_type_information = (
-    { 'id': 'Wiki',
-      'meta_type': 'Wiki',
-      'description': 'portal_type_CPSWiki_description',
-      'icon': 'wiki.png',
-      'title': "portal_type_CPSWiki_title",
-      'product': 'CPSWiki',
-      'factory': 'manage_addWiki',
-      'immediate_view': 'cps_wiki_view',
-      'filter_content_types': 0,
-      'allowed_content_types': ('Wiki Page',),
-      'allow_discussion': 0,
-      'actions': ({'id': 'view',
-                   'name': 'action_view',
-                   'action': 'cps_wiki_view',
-                   'permissions': (View,),
-                   },
-                  {'id': 'full_view',
-                   'name': 'action_full_view',
-                   'action': 'cps_wiki_full_view',
-                   'permissions': (ModifyPortalContent,),
-                   },
-                  {'id': 'properties',
-                   'name': 'action_properties',
-                   'action': 'cps_wiki_properties',
-                   'permissions': (ModifyPortalContent,),
-                   },
-                   {'id': 'syntax_help',
-                   'name': 'action_syntax_help',
-                   'action': 'cps_wiki_help',
-                   'permissions': (View,),
-                   },
-                 {'id': 'add_page',
-                   'name': 'action_add_page',
-                   'action': 'cps_wiki_pageadd',
-                   'permissions': (AddPortalContent,),
-                   },
-                  {'id': 'contents',
-                   'name': 'action_folder_contents',
-                   'action': 'folder_contents',
-                   'permissions': (ModifyPortalContent,),
-                   },
-                  {'id': 'localroles',
-                   'name': 'action_local_roles',
-                   'action': 'folder_localrole_form',
-                   'permissions': (ChangePermissions,)
-                   },
-                  ),
-      'cps_display_as_document_in_listing': 1,
-      },
-    )
-
 
 class WikiLockablePage:
     __implements__ = (ILockableItem,)

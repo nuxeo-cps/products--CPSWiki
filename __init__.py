@@ -1,5 +1,5 @@
 # -*- coding: ISO-8859-15 -*-
-# (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2005-2008 Nuxeo SAS <http://nuxeo.com>
 # Author: Tarek Ziadé <tz@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -34,9 +34,6 @@ import wiki, wikipage
 import wikicpstags
 import wikicommontags
 
-fti = (wiki.factory_type_information +
-       wikipage.factory_type_information)
-
 registerDirectory('skins', globals())
 
 contentClasses = (wiki.Wiki,
@@ -47,8 +44,7 @@ contentConstructors = (wiki.manage_addWiki,
                        wikipage.manage_addWikiPage,
                        )
 
-fti = (wiki.factory_type_information +
-       wikipage.factory_type_information)
+fti = ()
 
 
 def initialize(context):
