@@ -29,7 +29,7 @@
     visible="True">
   <permission value="Modify portal content"/>
  </action>
- <action title="action_properties" action_id="properties" category="object"
+ <action title="action_edit" action_id="modify" category="object"
     condition_expr="" url_expr="string:${object_url}/cps_wiki_properties"
     visible="True">
   <permission value="Modify portal content"/>
