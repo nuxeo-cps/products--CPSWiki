@@ -1,4 +1,26 @@
 ===========================================================
+Package: CPSWiki 1.0.0
+===========================================================
+First release built by: madarche at: 2008-04-18T12:50:27
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/tags/1.0.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/trunk@52765
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Made the font of textarea in wiki page AJAX edition be monospaced. Without
+  monospace font using reStructuredText was very difficult.
+- Added some missing actionicons.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- Ready to be considered for a 1.0.0 release. 
+
+===========================================================
 Package: CPSWiki 0.14.1
 ===========================================================
 First release built by: madarche at: 2008-03-07T18:45:16

@@ -6,9 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- Made the font of textarea in wiki page AJAX edition be monospaced. Without
-  monospace font using reStructuredText was very difficult.
-- Added some missing actionicons.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
-- Ready to be considered for a 1.0.0 release. 
+- 
