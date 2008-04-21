@@ -2,9 +2,13 @@
 <action-icons>
 
   <action-icon category="object" action_id="add_page"
-              title="New page" priority="10"
+              title="New page" priority="0"
               icon_expr="actionicon_add.png"/>
- 
+
+  <action-icon category="object" action_id="full_view"
+              title="action_full_view" priority="16"
+              icon_expr="wiki_full_view.png"/>
+
   <action-icon category="object" action_id="delete"
               title="Delete" priority="120"
               icon_expr="actionicon_reject.png"/>
