@@ -2,11 +2,12 @@
   <metal:block fill-slot="main"
                tal:define="tags here/getRegisteredTags">
     <h1 i18n:translate="cpswiki_specialtags">Special tags</h1>
-    <div tal:repeat="tag tags">
+    <dl>
+    <tal:block repeat="tag tags">
       <tal:block tal:define="tag_id python:tag[0];tagger python:tag[1]">
-        <strong tal:content="tag_id"/>
-        <p i18n:translate="" tal:content="structure tagger"/>
+        <dt tal:content="tag_id"/>
+        <dd i18n:translate="" tal:content="structure tagger"/>
       </tal:block>
-    </div>
+    </tal:block>
   </metal:block>
 </html>
