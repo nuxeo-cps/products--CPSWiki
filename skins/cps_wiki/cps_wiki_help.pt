@@ -1,7 +1,16 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
   <metal:block fill-slot="main"
                tal:define="tags here/getRegisteredTags">
-    <h1 i18n:translate="cpswiki_specialtags">Special tags</h1>
+
+    <h2 i18n:translate="cpswiki_heading_parser_syntax">About the syntax to use
+      and the parser</h2>
+    <tal:content define="cpswiki_help_parser_syntax
+                   python:'cpswiki_parser_syntax_' + context.parser;
+                   mcat nocall:here/translation_service;"
+       content="structure python:mcat(cpswiki_help_parser_syntax)">
+    </tal:content>
+
+    <h2 i18n:translate="cpswiki_specialtags">Special tags</h2>
     <dl>
     <tal:block repeat="tag tags">
       <tal:block tal:define="tag_id python:tag[0];tagger python:tag[1]">

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2006-11-17 11:18default\n"
+"POT-Creation-Date: 2008-05-02 16:39default\n"
 "PO-Revision-Date: 2007-05-31 13:12+0100\n"
 "Language-Team: valencià/català. <juangus@lasalle.es>\n"
 "MIME-Version: 1.0\n"
@@ -37,23 +37,22 @@ msgstr "Enllaços anteriors"
 #.                   can read it but not write to it at this time.
 #.               </div>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid "The page is locked by someone else, you can read it but not write to it at this time."
-msgstr "Algú altre està bloquejant aquesta pàgina. Pot llegir-la, però no escriure-hi."
+msgid ""
+"The page is locked by someone else, you can read it but not write to it at "
+"this time."
+msgstr ""
+"Algú altre està bloquejant aquesta pàgina. Pot llegir-la, però no escriure-"
+"hi."
+
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "action_edit_ajax"
+msgstr "Editar pàgina"
 
 #.   <button type="submit" name="upload">Upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
 msgid "button_upload_file"
 msgstr "Pujar un arxiu"
-
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="cps_wikipage_edit" id="editButton" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "action_edit_ajax"
-msgstr "Editar pàgina"
-
-#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "cps_wikipage_home"
-msgstr "Pàgina inicial"
 
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
@@ -68,28 +67,51 @@ msgstr "Transferint..."
 msgid "cpswiki_choose_parser"
 msgstr "\"Parser\" (analitzador) en ús"
 
+#.   <h2>About the syntax to use
+#.         and the parser</h2>
+#: from ../skins/cps_wiki/cps_wiki_help.pt
+#, fuzzy
+msgid "cpswiki_heading_parser_syntax"
+msgstr "Used parser :"
+
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
 msgstr "Afegir una pàgina"
 
-#.   <h1>Special tags</h1>
+#.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
 msgstr "Etiquetes especials"
 
-#.   <p class="message">
+#.   <p>
 #.         We need a confirmation to delete this page.
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
 msgstr "Necessitem una confirmació per esborrar aquesta pàgina"
 
+#, fuzzy
+msgid "cpswiki_parser_syntax_restructuredtext"
+msgstr "<p>The syntax to use is the reStructuredText syntax</p>"
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_wikiwikiweb"
+msgstr ""
+"<p>The syntax to use is the <a href=\"http://c2.com/cgi/wiki?"
+"TextFormattingRules\">Wiki Wiki Web</a> syntax</p>"
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_html"
+msgstr "<p>The syntax to use is the HTML syntax</p>"
+
 msgid "portal_type_CPSWiki_title"
 msgstr "Document Wiki"
 
 msgid "portal_type_CPSWiki_description"
-msgstr "Tipus especial de document. Tots els usuaris que hi tinguin accés poden modificar-lo en línia, i es guarda un historial dels canvis."
+msgstr ""
+"Tipus especial de document. Tots els usuaris que hi tinguin accés poden "
+"modificar-lo en línia, i es guarda un historial dels canvis."
 
 msgid "action_add_page"
 msgstr "Afegir una pàgina"
@@ -124,8 +146,18 @@ msgid "action_syntax_help"
 msgstr "Ajuda amb la sintaxi"
 
 msgid "cpswiki_member_help"
-msgstr "renderitza un enllaç a una entrada de directori d'un membre. Ús: <i>[member:member id, text]</i><br/>Si es dóna el text, sol mostrar-se a l'enllaç<br/>exemple: <i>[member:manager, L'administrador del Wiki]</i>"
+msgstr ""
+"renderitza un enllaç a una entrada de directori d'un membre. Ús: <i>[member:"
+"member id, text]</i><br/>Si es dóna el text, sol mostrar-se a l'enllaç<br/"
+">exemple: <i>[member:manager, L'administrador del Wiki]</i>"
 
 msgid "cpswiki_pycode_help"
-msgstr "acoloreix el codi:<br/>   <p>{{{pycode:       some python code   }}}</p>"
+msgstr ""
+"acoloreix el codi:<br/>   <p>{{{pycode:       some python code   }}}</p>"
 
+msgid "cps_wikipage_home"
+msgstr "Pàgina inicial"
+
+#, fuzzy
+msgid "python:'cpswiki_parser_syntax' + context.parser"
+msgstr "Add page"

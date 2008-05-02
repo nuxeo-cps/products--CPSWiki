@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"POT-Creation-Date: 2007-04-25 12:25default\n"
+"POT-Creation-Date: 2008-05-02 16:41default\n"
 "PO-Revision-Date: 2006-04-07 15:06-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -53,15 +53,15 @@ msgstr ""
 "Esta página está bloqueada por alguém; você pode lê-la mas não escrever nela "
 "neste momento."
 
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "action_edit_ajax"
+msgstr "Editar"
+
 #.   <button type="submit" name="upload">Upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
 msgid "button_upload_file"
 msgstr "Enviar arquivo"
-
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="cps_wikipage_edit" id="editButton" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "action_edit_ajax"
-msgstr "Editar"
 
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
@@ -76,12 +76,19 @@ msgstr "transferindo"
 msgid "cpswiki_choose_parser"
 msgstr "Escolher analisador"
 
+#.   <h2>About the syntax to use
+#.         and the parser</h2>
+#: from ../skins/cps_wiki/cps_wiki_help.pt
+#, fuzzy
+msgid "cpswiki_heading_parser_syntax"
+msgstr "Escolher analisador"
+
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
 msgstr "Adicionar"
 
-#.   <h1>Special tags</h1>
+#.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
 msgstr "Rótulos especiais"
@@ -92,6 +99,18 @@ msgstr "Rótulos especiais"
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
 msgstr "Precisamos uma confirmação para remover esta página."
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_restructuredtext"
+msgstr "Adicionar"
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_wikiwikiweb"
+msgstr "Escolher analisador"
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_html"
+msgstr "Escolher analisador"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Wiki"
@@ -145,3 +164,7 @@ msgstr ""
 
 msgid "cps_wikipage_home"
 msgstr "Página Inicial"
+
+#, fuzzy
+#~ msgid "python:'cpswiki_parser_syntax' + context.parser"
+#~ msgstr "Adicionar"

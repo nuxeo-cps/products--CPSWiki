@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2006-11-17 11:18default\n"
+"POT-Creation-Date: 2008-05-02 16:41default\n"
 "PO-Revision-Date: 2007-05-01 16:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: Português <luis727@gmail.com>\n"
@@ -46,23 +46,22 @@ msgstr "Links Anteriores"
 #.                   can read it but not write to it at this time.
 #.               </div>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
-msgid "The page is locked by someone else, you can read it but not write to it at this time."
-msgstr "Esta página está bloqueada por alguém; pode lê-la mas não pode escrever neste momento."
+msgid ""
+"The page is locked by someone else, you can read it but not write to it at "
+"this time."
+msgstr ""
+"Esta página está bloqueada por alguém; pode lê-la mas não pode escrever "
+"neste momento."
+
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "action_edit_ajax"
+msgstr "Editar"
 
 #.   <button type="submit" name="upload">Upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
 msgid "button_upload_file"
 msgstr "Enviar arquivo"
-
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="cps_wikipage_edit" id="editButton" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "action_edit_ajax"
-msgstr "Editar"
-
-#.   <img src="wikipage_home.png" style="visibility: visible" onmouseover="setCursor(this)" onclick="gotoUrl('../cps_wiki_view')" title="cps_wikipage_home" alt="cps_wikipage_home" id="goHome" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "cps_wikipage_home"
-msgstr "Página Inicial"
 
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
@@ -77,22 +76,43 @@ msgstr "transferindo"
 msgid "cpswiki_choose_parser"
 msgstr "Escolher analisador"
 
+#.   <h2>About the syntax to use
+#.         and the parser</h2>
+#: from ../skins/cps_wiki/cps_wiki_help.pt
+#, fuzzy
+msgid "cpswiki_heading_parser_syntax"
+msgstr "About the syntax to use and the parser"
+
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
 msgstr "Adicionar"
 
-#.   <h1>Special tags</h1>
+#.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
 msgstr "Rótulos especiais"
 
-#.   <p class="message">
+#.   <p>
 #.         We need a confirmation to delete this page.
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
 msgstr "Precisamos uma confirmação para remover esta página."
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_restructuredtext"
+msgstr "<p>The syntax to use is the reStructuredText syntax</p>"
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_wikiwikiweb"
+msgstr ""
+"<p>The syntax to use is the <a href=\"http://c2.com/cgi/wiki?"
+"TextFormattingRules\">Wiki Wiki Web</a> syntax</p>"
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_html"
+msgstr "<p>The syntax to use is the HTML syntax</p>"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Wiki"
@@ -133,8 +153,16 @@ msgid "action_syntax_help"
 msgstr "Ajuda de sintaxe"
 
 msgid "cpswiki_member_help"
-msgstr "mostra um link para uma entrada do diretório de membros. uso:  <i>[member:id do membro,texto]</i><br/>Se 'texto' é fornecido, ele é utilizado para ser mostrado no link. <br/> exemplo: <i>[member:manager, O Administrador do Wiki]</i>"
+msgstr ""
+"mostra um link para uma entrada do diretório de membros. uso:  <i>[member:id "
+"do membro,texto]</i><br/>Se 'texto' é fornecido, ele é utilizado para ser "
+"mostrado no link. <br/> exemplo: <i>[member:manager, O Administrador do Wiki]"
+"</i>"
 
 msgid "cpswiki_pycode_help"
-msgstr "colore os códigos usados:<br/>   <p>{{{pycode:       algum código python }}}</p>"
+msgstr ""
+"colore os códigos usados:<br/>   <p>{{{pycode:       algum código python }}}"
+"</p>"
 
+msgid "cps_wikipage_home"
+msgstr "Página Inicial"

@@ -16,6 +16,15 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
 
+msgid "cpswiki_parser_syntax_restructuredtext"
+msgstr ""
+
+msgid "cpswiki_parser_syntax_wikiwikiweb"
+msgstr ""
+
+msgid "cpswiki_parser_syntax_html"
+msgstr ""
+
 msgid "portal_type_CPSWiki_title"
 msgstr ""
 

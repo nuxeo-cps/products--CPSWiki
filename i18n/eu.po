@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2007-04-25 12:25default\n"
+"POT-Creation-Date: 2008-05-02 16:41default\n"
 "PO-Revision-Date: 2006-11-16 15:58+0100\n"
 "Last-Translator: Jesus Martin <jesusmartin@lasalle.es>\n"
 "Language-Team: euskara <perikoalkain@lasalle.es>\n"
@@ -46,16 +46,16 @@ msgstr ""
 "Orrialdean badabil beste norbait ere. Irakur dezakezu baina ezin duzu idatzi "
 "beste erabiltzailea editatzen ari den bitartean.  "
 
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "action_edit_ajax"
+msgstr "Orrialdea editatu"
+
 #.   <button type="submit" name="upload">Upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
 #, fuzzy
 msgid "button_upload_file"
 msgstr "Subir un archivo"
-
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="cps_wikipage_edit" id="editButton" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "action_edit_ajax"
-msgstr "Orrialdea editatu"
 
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
@@ -70,12 +70,19 @@ msgstr "Tranferitzen..."
 msgid "cpswiki_choose_parser"
 msgstr "\"Parser\" (aztertzailea) erabiltzen"
 
+#.   <h2>About the syntax to use
+#.         and the parser</h2>
+#: from ../skins/cps_wiki/cps_wiki_help.pt
+#, fuzzy
+msgid "cpswiki_heading_parser_syntax"
+msgstr "About the syntax to use and the parser"
+
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
 msgstr "Orrialde bat erantsi"
 
-#.   <h1>Special tags</h1>
+#.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
 msgstr "Etiketa bereziak"
@@ -86,6 +93,20 @@ msgstr "Etiketa bereziak"
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
 msgstr "Berrespen bat behar dugu orrialde hau ezabatu aurretik "
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_restructuredtext"
+msgstr "<p>The syntax to use is the reStructuredText syntax</p>"
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_wikiwikiweb"
+msgstr ""
+"<p>The syntax to use is the <a href=\"http://c2.com/cgi/wiki?"
+"TextFormattingRules\">Wiki Wiki Web</a> syntax</p>"
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_html"
+msgstr "<p>The syntax to use is the HTML syntax</p>"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Wiki dokumentua"

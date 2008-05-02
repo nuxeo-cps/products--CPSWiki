@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki Italian Translation\n"
-"POT-Creation-Date: 2007-04-25 12:25default\n"
+"POT-Creation-Date: 2008-05-02 16:41default\n"
 "PO-Revision-Date: 2005-11-10 09:17+0100\n"
 "Last-Translator: Stefano Schintu <schintu@gmail.com>\n"
 "Language-Team: CPS Italian <schintu@gmail.com>\n"
@@ -41,16 +41,16 @@ msgid ""
 "this time."
 msgstr "La pagina è bloccata da qualcun altro, attualmente puoi solo leggerla."
 
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+#, fuzzy
+msgid "action_edit_ajax"
+msgstr "Modifier la page rapidement (par AJAX)"
+
 #.   <button type="submit" name="upload">Upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
 msgid "button_upload_file"
 msgstr "Carica file"
-
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="cps_wikipage_edit" id="editButton" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-#, fuzzy
-msgid "action_edit_ajax"
-msgstr "Editer la page"
 
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
@@ -65,13 +65,20 @@ msgstr ""
 msgid "cpswiki_choose_parser"
 msgstr "Parser in uso"
 
+#.   <h2>About the syntax to use
+#.         and the parser</h2>
+#: from ../skins/cps_wiki/cps_wiki_help.pt
+#, fuzzy
+msgid "cpswiki_heading_parser_syntax"
+msgstr "A propos de la syntaxe à utiliser et du parseur"
+
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 #, fuzzy
 msgid "cpswiki_page_add"
 msgstr "Ajouter une page"
 
-#.   <h1>Special tags</h1>
+#.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
 msgstr "Tag speciali"
@@ -82,6 +89,20 @@ msgstr "Tag speciali"
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
 msgstr "La richiesta di eliminazione richiede una conferma."
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_restructuredtext"
+msgstr "<p>La syntaxe à utiliser est la syntaxe reStructuredText</p>"
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_wikiwikiweb"
+msgstr ""
+"<p>La syntaxe à utiliser est la syntaxe <a href=\"http://c2.com/cgi/wiki?"
+"TextFormattingRules\">Wiki Wiki Web</a></p>"
+
+#, fuzzy
+msgid "cpswiki_parser_syntax_html"
+msgstr "<p>La syntaxe à utiliser est la syntaxe HTML</p>"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Wiki"

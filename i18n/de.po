@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki-de CPS-3.3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-25 12:25default\n"
+"POT-Creation-Date: 2008-05-02 16:41default\n"
 "PO-Revision-Date: 2005-10-07 17:13+0200\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: German <rheinland@dzug.org>\n"
@@ -44,15 +44,15 @@ msgstr ""
 "Diese Seite wird gerade von jemand anderem verwendet, Sie können zur Zeit "
 "nur lesen aber nicht schreiben"
 
+#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
+#: from ../skins/cps_wiki/cps_wiki_pageview.pt
+msgid "action_edit_ajax"
+msgstr ""
+
 #.   <button type="submit" name="upload">Upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
 msgid "button_upload_file"
 msgstr "Datei hochladen"
-
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="cps_wikipage_edit" id="editButton" />
-#: from ../skins/cps_wiki/cps_wiki_pageview.pt
-msgid "action_edit_ajax"
-msgstr ""
 
 #.   <div style="display:none" id="ajax_psm">
 #.                 Transferring
@@ -67,12 +67,18 @@ msgstr ""
 msgid "cpswiki_choose_parser"
 msgstr ""
 
+#.   <h2>About the syntax to use
+#.         and the parser</h2>
+#: from ../skins/cps_wiki/cps_wiki_help.pt
+msgid "cpswiki_heading_parser_syntax"
+msgstr ""
+
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
 msgstr ""
 
-#.   <h1>Special tags</h1>
+#.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
 msgstr ""
@@ -82,6 +88,15 @@ msgstr ""
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
+msgstr ""
+
+msgid "cpswiki_parser_syntax_restructuredtext"
+msgstr ""
+
+msgid "cpswiki_parser_syntax_wikiwikiweb"
+msgstr ""
+
+msgid "cpswiki_parser_syntax_html"
 msgstr ""
 
 msgid "portal_type_CPSWiki_title"

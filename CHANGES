@@ -6,6 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
+- cps_wiki_help now provides an help contextual to the used wiki parser.
 - Added the missing actionicon for the wiki full view.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
