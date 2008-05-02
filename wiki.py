@@ -20,6 +20,7 @@
 #
 # $Id$
 
+import os
 import urllib
 
 from AccessControl import ClassSecurityInfo
@@ -438,6 +439,25 @@ class Wiki(CPSBaseFolder):
             content += '</li>'
         content += '</ul>'
         return content
+
+    security.declareProtected(View, 'getDetailedHtmlHelp')
+    def getDetailedHtmlHelp(self, lang):
+        """Return a HTML formated string that provides a detailed help.
+
+        The PO i18n framework is not very handy for providing an HTML document
+        with a precise layout, so we have to rely on a dedicated method.
+        """
+        # Typical names are of the form wiki_help.restructuredtext.fr.html
+        file_name = 'wiki_help.%s.%s.html' % (self.parser, lang)
+        file_path = os.path.join(INSTANCE_HOME,
+                                 'Products', 'CPSWiki', 'doc', file_name)
+        try:
+            f = open(file_path, 'rb')
+            html_content = f.read()
+            f.close()
+        except IOError:
+            html_content = ''
+        return html_content
 
     #
     # ZMI

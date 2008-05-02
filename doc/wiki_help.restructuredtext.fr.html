@@ -1,0 +1,115 @@
+<h2 class="title">Introduction à CPS Wiki</h2>
+<p>Le contenu des pages est du texte pur. Mais il existe des règles de mise en
+forme simples. Le système de mise en forme est le <a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>.</p>
+<div class="section" id="un-nom-wiki">
+<h3><a name="un-nom-wiki">Un nom wiki</a></h3>
+<p>Un nom wiki s'écrit en casse chameau : les mots sont attachés et la première
+lettre de chaque mot est en majuscule comme dans <em>NomWiki</em>. Un nom wiki
+est automatiquement transformé en un lien hypertexte vers la page du même nom.</p>
+</div>
+<div class="section" id="les-paragraphes">
+<h3><a name="les-paragraphes">Les paragraphes</a></h3>
+<p>L'élément de base est le paragraphe. C'est un bloc de lignes séparé du reste
+par au moins une ligne vide.</p>
+</div>
+<div class="section" id="mise-en-forme-des-caract-res">
+<h3><a name="mise-en-forme-des-caract-res">Mise en forme des caractères</a></h3>
+<p>A l'intérieur d'un paragraphe, un texte entouré d'astérisques comme
+<tt class="docutils literal"><span class="pre">*italique*</span></tt> apparaît en <em>italique</em>. Alors que <tt class="docutils literal"><span class="pre">**gras**</span></tt> apparaîtra en
+<strong>gras</strong>.</p>
+</div>
+<div class="section" id="listes">
+<h3><a name="listes">Listes</a></h3>
+<p>Une liste doit toujours être précédée d'une ligne vide. Les listes non-énumérées
+peuvent commencer par &quot;-&quot;, &quot;+&quot; ou &quot;*&quot;. Les listes énumérées sont marquées par
+un chiffre ou une lettre suivi d'un point:</p>
+<pre class="literal-block">
+* Première ligne.
+* Seconde ligne.
+
+1. Première ligne.
+2. Seconde ligne.
+</pre>
+<p>Donne :</p>
+<blockquote>
+<ul class="simple">
+<li>Première ligne.</li>
+<li>Seconde ligne.</li>
+</ul>
+<ol class="arabic simple">
+<li>Première ligne.</li>
+<li>Seconde ligne.</li>
+</ol>
+</blockquote>
+</div>
+<div class="section" id="texte-sans-mise-en-page-verbatim">
+<h3><a name="texte-sans-mise-en-page-verbatim">Texte sans mise en page (verbatim)</a></h3>
+<p>Pour insérer un texte sans aucune mise en forme et en préservant les sauts de
+lignes, il faut ajouter <tt class="docutils literal"><span class="pre">::</span></tt> à la fin du paragraphe précédent. Le bloc
+a formatter doit-être indenté comme une citation. La fin de l'indentation
+détermine la fin du bloc:</p>
+<pre class="literal-block">
+Un texte sans mise en page::
+
+  Tout est
+    respecté.
+      même les caractères comme les *astérisques*.
+</pre>
+<p>Donne:</p>
+<blockquote>
+<p>Un texte sans mise en page:</p>
+<pre class="literal-block">
+Tout est
+  respecté.
+    même les caractères comme les *astérisques*.
+</pre>
+</blockquote>
+</div>
+<div class="section" id="titres-et-sous-titres">
+<h3><a name="titres-et-sous-titres">Titres et sous-titres</a></h3>
+<p>Un titre est défini en le soulignant par des lignes de même longueurs
+composées de caractères de ponctuations. Les caractères sont choisis
+parmi <tt class="docutils literal"><span class="pre">=</span> <span class="pre">-</span> <span class="pre">`</span> <span class="pre">:</span> <span class="pre">'</span> <span class="pre">&quot;</span> <span class="pre">~</span> <span class="pre">^</span> <span class="pre">_</span> <span class="pre">*</span> <span class="pre">+</span> <span class="pre">#</span> <span class="pre">&lt;</span> <span class="pre">&gt;</span></tt>.</p>
+<p>Il faut associer un signe de ponctuation à chaque niveau</p>
+<pre class="literal-block">
+Chapitre 1
+==========
+
+Section 1.1
+-----------
+
+Section 1.2
+-----------
+
+Chapitre 2
+==========
+</pre>
+</div>
+<div class="section" id="lignes-horizontale">
+<h3><a name="lignes-horizontale">Lignes horizontale</a></h3>
+<p>Un paragraphe composé uniquement d'une suite de plus de 4 signes de ponctuation
+est transformé en une ligne horizontale.</p>
+</div>
+<div class="section" id="images">
+<h3><a name="images">Images</a></h3>
+<p>Pour inclure une image, il faut utiliser la directive <tt class="docutils literal"><span class="pre">image</span></tt>:</p>
+<pre class="literal-block">
+.. image:: smiley.png
+</pre>
+<p>Donne :</p>
+<div class="image"><img alt="smiley.png" src="smiley.png" /></div>
+</div>
+<div class="section" id="liens-hypertextes">
+<h3><a name="liens-hypertextes">Liens hypertextes</a></h3>
+<p>Un lien hypertexte est indiqué par un caractère souligné après le nom. L'URL
+correspondante est définit plus bas précédé de deux points</p>
+<pre class="literal-block">
+Le w3c_ est une organisation qui vise à définir des `standards du web`_.
+
+.. _w3c: <a href="http://www.w3.org/">http://www.w3.org/</a>
+.. _standards du web: <a href="http://www.w3.org/TR/">http://www.w3.org/TR/</a>
+</pre>
+<p>Donne :</p>
+<blockquote>
+<p>Le <a class="reference" href="http://www.w3.org/">w3c</a> est une organisation qui vise à définir des <a class="reference" href="http://www.w3.org/TR/">standards du web</a>.</p>
+</blockquote>

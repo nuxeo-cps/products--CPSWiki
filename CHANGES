@@ -3,7 +3,8 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- Added the getDetailedHtmlHelp method on the wiki to provide a detailed HTML
+  help page contextual to the used parser and language.
 Bug fixes
 ~~~~~~~~~
 - cps_wiki_help now provides an help contextual to the used wiki parser.
