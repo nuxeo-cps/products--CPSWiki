@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2008-05-02 16:41default\n"
+"POT-Creation-Date: 2008-05-02 16:49default\n"
 "PO-Revision-Date: 2007-05-01 16:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: Português <luis727@gmail.com>\n"

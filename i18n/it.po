@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki Italian Translation\n"
-"POT-Creation-Date: 2008-05-02 16:41default\n"
+"POT-Creation-Date: 2008-05-02 16:49default\n"
 "PO-Revision-Date: 2005-11-10 09:17+0100\n"
 "Last-Translator: Stefano Schintu <schintu@gmail.com>\n"
 "Language-Team: CPS Italian <schintu@gmail.com>\n"
@@ -92,7 +92,9 @@ msgstr "La richiesta di eliminazione richiede una conferma."
 
 #, fuzzy
 msgid "cpswiki_parser_syntax_restructuredtext"
-msgstr "<p>La syntaxe à utiliser est la syntaxe reStructuredText</p>"
+msgstr ""
+"<p>La syntaxe à utiliser est la syntaxe <a href=\"http://docutils."
+"sourceforge.net/rst.html\">reStructuredText</a></p>"
 
 #, fuzzy
 msgid "cpswiki_parser_syntax_wikiwikiweb"

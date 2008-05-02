@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2008-05-02 16:39default\n"
+"POT-Creation-Date: 2008-05-02 16:41default\n"
 "PO-Revision-Date: 2007-05-31 13:12+0100\n"
 "Language-Team: valencià/català. <juangus@lasalle.es>\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr "\"Parser\" (analitzador) en ús"
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 #, fuzzy
 msgid "cpswiki_heading_parser_syntax"
-msgstr "Used parser :"
+msgstr "About the syntax to use and the parser"
 
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
@@ -157,7 +157,3 @@ msgstr ""
 
 msgid "cps_wikipage_home"
 msgstr "Pàgina inicial"
-
-#, fuzzy
-msgid "python:'cpswiki_parser_syntax' + context.parser"
-msgstr "Add page"
