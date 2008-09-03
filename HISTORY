@@ -1,4 +1,26 @@
 ===========================================================
+Package: CPSWiki 1.1.0
+===========================================================
+First release built by: madarche at: 2008-09-03T15:26:15
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/tags/1.1.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/trunk@52925
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- Added the getDetailedHtmlHelp method on the wiki to provide a detailed HTML
+  help page contextual to the used parser and language.
+Bug fixes
+~~~~~~~~~
+- cps_wiki_help now provides an help contextual to the used wiki parser.
+- Added the missing actionicon for the wiki full view.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSWiki 1.0.0
 ===========================================================
 First release built by: madarche at: 2008-04-18T12:50:27
