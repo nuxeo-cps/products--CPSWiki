@@ -16,13 +16,13 @@ msgstr ""
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: pt_BR\n"
 "Language-Name: Portuguese Brazilian\n"
-"Preferred-encodings: utf-8 latin1\n"
 "Domain: default\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Preferred-Encodings: utf-8\n"
 
 #.   <h4>Attached files</h4>
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
@@ -50,7 +50,7 @@ msgid ""
 "The page is locked by someone else, you can read it but not write to it at "
 "this time."
 msgstr ""
-"Esta p·gina est· bloqueada por alguÈm; vocÍ pode lÍ-la mas n„o escrever nela "
+"Esta p√°gina est√° bloqueada por algu√©m; voc√™ pode l√™-la mas n√£o escrever nela "
 "neste momento."
 
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
@@ -91,14 +91,14 @@ msgstr "Adicionar"
 #.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
-msgstr "RÛtulos especiais"
+msgstr "R√≥tulos especiais"
 
 #.   <p>
 #.         We need a confirmation to delete this page.
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
-msgstr "Precisamos uma confirmaÁ„o para remover esta p·gina."
+msgstr "Precisamos uma confirma√ß√£o para remover esta p√°gina."
 
 #, fuzzy
 msgid "cpswiki_parser_syntax_restructuredtext"
@@ -116,16 +116,16 @@ msgid "portal_type_CPSWiki_title"
 msgstr "Wiki"
 
 msgid "portal_type_CPSWiki_description"
-msgstr "ContÈm p·ginas customiz·veis"
+msgstr "Cont√©m p√°ginas customiz√°veis"
 
 msgid "action_add_page"
-msgstr "Adiciona uma p·gina"
+msgstr "Adiciona uma p√°gina"
 
 msgid "action_history"
-msgstr "HistÛria"
+msgstr "Hist√≥ria"
 
 msgid "action_full_view"
-msgstr "Vis„o expandida"
+msgstr "Vis√£o expandida"
 
 msgid "Back to the top"
 msgstr "Volta para o topo"
@@ -152,18 +152,18 @@ msgstr "Ajuda de sintaxe"
 
 msgid "cpswiki_member_help"
 msgstr ""
-"mostra um link para uma entrada do diretÛrio de membros. uso:  <i>[member:id "
-"do membro,texto]</i><br/>Se 'texto' È fornecido, ele È utilizado para ser "
+"mostra um link para uma entrada do diret√≥rio de membros. uso:  <i>[member:id "
+"do membro,texto]</i><br/>Se 'texto' √© fornecido, ele √© utilizado para ser "
 "mostrado no link. <br/> exemplo: <i>[member:manager, O Administrador do Wiki]"
 "</i>"
 
 msgid "cpswiki_pycode_help"
 msgstr ""
-"colore os cÛdigos usados:<br/>   <p>{{{pycode:       algum cÛdigo python }}}"
+"colore os c√≥digos usados:<br/>   <p>{{{pycode:       algum c√≥digo python }}}"
 "</p>"
 
 msgid "cps_wikipage_home"
-msgstr "P·gina Inicial"
+msgstr "P√°gina Inicial"
 
 #, fuzzy
 #~ msgid "python:'cpswiki_parser_syntax' + context.parser"

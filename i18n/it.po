@@ -6,13 +6,14 @@ msgstr ""
 "Last-Translator: Stefano Schintu <schintu@gmail.com>\n"
 "Language-Team: CPS Italian <schintu@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Italian\n"
 "X-Poedit-Country: ITALY\n"
 "Language-Code: it\n"
 "Language-Name: Italian\n"
 "Domain: default\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Preferred-Encodings: utf-8\n"
 
 #.   <h4>Attached files</h4>
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
@@ -39,7 +40,7 @@ msgstr ""
 msgid ""
 "The page is locked by someone else, you can read it but not write to it at "
 "this time."
-msgstr "La pagina Ë bloccata da qualcun altro, attualmente puoi solo leggerla."
+msgstr "La pagina √® bloccata da qualcun altro, attualmente puoi solo leggerla."
 
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
@@ -70,7 +71,7 @@ msgstr "Parser in uso"
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 #, fuzzy
 msgid "cpswiki_heading_parser_syntax"
-msgstr "A propos de la syntaxe ‡ utiliser et du parseur"
+msgstr "A propos de la syntaxe √† utiliser et du parseur"
 
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
@@ -93,18 +94,18 @@ msgstr "La richiesta di eliminazione richiede una conferma."
 #, fuzzy
 msgid "cpswiki_parser_syntax_restructuredtext"
 msgstr ""
-"<p>La syntaxe ‡ utiliser est la syntaxe <a href=\"http://docutils."
+"<p>La syntaxe √† utiliser est la syntaxe <a href=\"http://docutils."
 "sourceforge.net/rst.html\">reStructuredText</a></p>"
 
 #, fuzzy
 msgid "cpswiki_parser_syntax_wikiwikiweb"
 msgstr ""
-"<p>La syntaxe ‡ utiliser est la syntaxe <a href=\"http://c2.com/cgi/wiki?"
+"<p>La syntaxe √† utiliser est la syntaxe <a href=\"http://c2.com/cgi/wiki?"
 "TextFormattingRules\">Wiki Wiki Web</a></p>"
 
 #, fuzzy
 msgid "cpswiki_parser_syntax_html"
-msgstr "<p>La syntaxe ‡ utiliser est la syntaxe HTML</p>"
+msgstr "<p>La syntaxe √† utiliser est la syntaxe HTML</p>"
 
 msgid "portal_type_CPSWiki_title"
 msgstr "Wiki"
@@ -133,13 +134,13 @@ msgid "psm_page_deleted"
 msgstr "Pagina eliminata"
 
 msgid "psm_properties_changed"
-msgstr "Propriet‡ modificate"
+msgstr "Propriet√† modificate"
 
 msgid "cpswiki_button_submit"
 msgstr "Modifica"
 
 msgid "action_properties"
-msgstr "Propriet‡"
+msgstr "Propriet√†"
 
 msgid "action_syntax_help"
 msgstr "Aiuto sulla sintassi"
@@ -147,7 +148,7 @@ msgstr "Aiuto sulla sintassi"
 msgid "cpswiki_member_help"
 msgstr ""
 "visualizza un collegamento alla cartella di un membro. utilizzo: <i>[member:"
-"id del membro, testo]</i><br/>Se il testo Ë stato inserito verr‡ mostrato "
+"id del membro, testo]</i><br/>Se il testo √® stato inserito verr√† mostrato "
 "nel collegamento.<br/>esempio: <i>[member:manager, L'amministratore del "
 "Wiki</i>"
 

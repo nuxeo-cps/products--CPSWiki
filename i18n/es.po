@@ -3,19 +3,19 @@ msgstr ""
 "Project-Id-Version: CPSWiki\n"
 "POT-Creation-Date: 2008-05-02 16:49default\n"
 "PO-Revision-Date: 2006-02-21 16:56+0100\n"
-"Last-Translator: Jes˙s MartÌn <jesusmartin@lasalle.es>\n"
-"Language-Team: espaÒol <jesusmartin@lasalle.es>\n"
+"Last-Translator: Jes√∫s Mart√≠n <jesusmartin@lasalle.es>\n"
+"Language-Team: espa√±ol <jesusmartin@lasalle.es>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Preferred-encodings: latin9 utf-8\n"
 "X-Generator: KBabel 1.3.1\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: Spain\n"
 "Language-Code: es\n"
 "Language-Name: Spanish\n"
 "Domain: default\n"
-"X-Poedit-Language: Spanish\n"
-"X-Poedit-Country: Spain\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Preferred-Encodings: utf-8\n"
 
 #.   <h4>Attached files</h4>
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
@@ -27,7 +27,7 @@ msgstr "Archivos adjuntos"
 #.           </a>
 #: from ../skins/cps_wiki/cps_wiki_full_view.pt
 msgid "Back to the top&#32;<img src=\"wikipage_up.png\" />"
-msgstr "Volver al Ìndice&#32;<img src=\"wikipage_up.png\" />"
+msgstr "Volver al √≠ndice&#32;<img src=\"wikipage_up.png\" />"
 
 #.   <h4>BackLinks</h4>
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
@@ -43,13 +43,13 @@ msgid ""
 "The page is locked by someone else, you can read it but not write to it at "
 "this time."
 msgstr ""
-"La p·gina est· siendo utilizada por alguien m·s. Puedes leer, pero no "
-"escribir mientras el otro usuario la estÈ editando."
+"La p√°gina est√° siendo utilizada por alguien m√°s. Puedes leer, pero no "
+"escribir mientras el otro usuario la est√© editando."
 
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "action_edit_ajax"
-msgstr "Editar p·gina (AJAX)"
+msgstr "Editar p√°gina (AJAX)"
 
 #.   <button type="submit" name="upload">Upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
@@ -79,7 +79,7 @@ msgstr "About the syntax to use and the parser"
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
-msgstr "AÒadir una p·gina"
+msgstr "A√±adir una p√°gina"
 
 #.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
@@ -91,7 +91,7 @@ msgstr "Etiquetas especiales"
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
-msgstr "Necesitamos una confirmaciÛn antes de borrar esta p·gina"
+msgstr "Necesitamos una confirmaci√≥n antes de borrar esta p√°gina"
 
 #, fuzzy
 msgid "cpswiki_parser_syntax_restructuredtext"
@@ -112,11 +112,11 @@ msgstr "Documento Wiki"
 
 msgid "portal_type_CPSWiki_description"
 msgstr ""
-"Tipo especial de documento. Todos los usuarios que tengan acceso a Èl, "
-"podr·n modificarlo en lÌnea, guard·ndose un historial de todos los cambios."
+"Tipo especial de documento. Todos los usuarios que tengan acceso a √©l, "
+"podr√°n modificarlo en l√≠nea, guard√°ndose un historial de todos los cambios."
 
 msgid "action_add_page"
-msgstr "AÒadir una p·gina"
+msgstr "A√±adir una p√°gina"
 
 msgid "action_history"
 msgstr "Historial"
@@ -125,7 +125,7 @@ msgid "action_full_view"
 msgstr "Ver todo"
 
 msgid "Back to the top"
-msgstr "Volver al Ìndice"
+msgstr "Volver al √≠ndice"
 
 msgid "File uploaded."
 msgstr "Archivo subido"
@@ -133,7 +133,7 @@ msgstr "Archivo subido"
 # Status messages (psm)
 # ######################
 msgid "psm_page_deleted"
-msgstr "P·gina borrada"
+msgstr "P√°gina borrada"
 
 msgid "psm_properties_changed"
 msgstr "Propiedades cambiadas"
@@ -155,7 +155,7 @@ msgstr ""
 
 msgid "cpswiki_pycode_help"
 msgstr ""
-"colorea el cÛdigo:<br/>   <p>{{{pycode:       some python code   }}}</p>"
+"colorea el c√≥digo:<br/>   <p>{{{pycode:       some python code   }}}</p>"
 
 msgid "cps_wikipage_home"
-msgstr "P·gina de inicio"
+msgstr "P√°gina de inicio"

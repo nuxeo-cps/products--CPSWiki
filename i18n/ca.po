@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: CPSWiki\n"
 "POT-Creation-Date: 2008-05-02 16:41default\n"
 "PO-Revision-Date: 2007-05-31 13:12+0100\n"
-"Language-Team: valenci‡/catal‡. <juangus@lasalle.es>\n"
+"Language-Team: valenci√†/catal√†. <juangus@lasalle.es>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Preferred-encodings: latin9 utf-8\n"
-"Domain: default\n"
-"Language-Code: ca\n"
-"Language-Name: valenci‡/catal‡\n"
 "X-Poedit-Language: Catalan\n"
 "X-Poedit-Country: SPAIN\n"
+"Language-Code: ca\n"
+"Language-Name: ca\n"
+"Domain: default\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Preferred-Encodings: utf-8\n"
 
 #.   <h4>Attached files</h4>
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
@@ -25,12 +25,12 @@ msgstr "Arxius adjunts"
 #.           </a>
 #: from ../skins/cps_wiki/cps_wiki_full_view.pt
 msgid "Back to the top&#32;<img src=\"wikipage_up.png\" />"
-msgstr "Tornar a l'Ìndex&#32;<img src=\"wikipage_up.png\" />"
+msgstr "Tornar a l'√≠ndex&#32;<img src=\"wikipage_up.png\" />"
 
 #.   <h4>BackLinks</h4>
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "BackLinks"
-msgstr "EnllaÁos anteriors"
+msgstr "Enlla√ßos anteriors"
 
 #.   <div class="message">
 #.                   The page is locked by someone else, you
@@ -41,13 +41,13 @@ msgid ""
 "The page is locked by someone else, you can read it but not write to it at "
 "this time."
 msgstr ""
-"Alg˙ altre est‡ bloquejant aquesta p‡gina. Pot llegir-la, perÚ no escriure-"
+"Alg√∫ altre est√† bloquejant aquesta p√†gina. Pot llegir-la, per√≤ no escriure-"
 "hi."
 
 #.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "action_edit_ajax"
-msgstr "Editar p‡gina"
+msgstr "Editar p√†gina"
 
 #.   <button type="submit" name="upload">Upload file</button>
 #: from ../skins/cps_wiki/cps_wiki_pageedit.pt
@@ -65,7 +65,7 @@ msgstr "Transferint..."
 #.   <label for="wikiParser">cpswiki_choose_parser</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_choose_parser"
-msgstr "\"Parser\" (analitzador) en ˙s"
+msgstr "\"Parser\" (analitzador) en √∫s"
 
 #.   <h2>About the syntax to use
 #.         and the parser</h2>
@@ -77,7 +77,7 @@ msgstr "About the syntax to use and the parser"
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
-msgstr "Afegir una p‡gina"
+msgstr "Afegir una p√†gina"
 
 #.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
@@ -89,7 +89,7 @@ msgstr "Etiquetes especials"
 #.       </p>
 #: from ../skins/cps_wiki/cps_wiki_pagedelete.pt
 msgid "description_confirm_page_delete"
-msgstr "Necessitem una confirmaciÛ per esborrar aquesta p‡gina"
+msgstr "Necessitem una confirmaci√≥ per esborrar aquesta p√†gina"
 
 #, fuzzy
 msgid "cpswiki_parser_syntax_restructuredtext"
@@ -110,11 +110,11 @@ msgstr "Document Wiki"
 
 msgid "portal_type_CPSWiki_description"
 msgstr ""
-"Tipus especial de document. Tots els usuaris que hi tinguin accÈs poden "
-"modificar-lo en lÌnia, i es guarda un historial dels canvis."
+"Tipus especial de document. Tots els usuaris que hi tinguin acc√©s poden "
+"modificar-lo en l√≠nia, i es guarda un historial dels canvis."
 
 msgid "action_add_page"
-msgstr "Afegir una p‡gina"
+msgstr "Afegir una p√†gina"
 
 msgid "action_history"
 msgstr "Historial"
@@ -123,7 +123,7 @@ msgid "action_full_view"
 msgstr "Vore-ho tot"
 
 msgid "Back to the top"
-msgstr "Tornar a l'Ìndex"
+msgstr "Tornar a l'√≠ndex"
 
 msgid "File uploaded."
 msgstr "Arxiu carregat"
@@ -131,7 +131,7 @@ msgstr "Arxiu carregat"
 # Status messages (psm)
 # ######################
 msgid "psm_page_deleted"
-msgstr "P‡gina esborrada"
+msgstr "P√†gina esborrada"
 
 msgid "psm_properties_changed"
 msgstr "Propietats canviades"
@@ -147,8 +147,8 @@ msgstr "Ajuda amb la sintaxi"
 
 msgid "cpswiki_member_help"
 msgstr ""
-"renderitza un enllaÁ a una entrada de directori d'un membre. ⁄s: <i>[member:"
-"member id, text]</i><br/>Si es dÛna el text, sol mostrar-se a l'enllaÁ<br/"
+"renderitza un enlla√ß a una entrada de directori d'un membre. √ös: <i>[member:"
+"member id, text]</i><br/>Si es d√≥na el text, sol mostrar-se a l'enlla√ß<br/"
 ">exemple: <i>[member:manager, L'administrador del Wiki]</i>"
 
 msgid "cpswiki_pycode_help"
@@ -156,4 +156,4 @@ msgstr ""
 "acoloreix el codi:<br/>   <p>{{{pycode:       some python code   }}}</p>"
 
 msgid "cps_wikipage_home"
-msgstr "P‡gina inicial"
+msgstr "P√†gina inicial"
