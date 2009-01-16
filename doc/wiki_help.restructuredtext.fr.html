@@ -3,9 +3,23 @@
 forme simples. Le système de mise en forme est le <a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>.</p>
 <div class="section" id="un-nom-wiki">
 <h3><a name="un-nom-wiki">Un nom wiki</a></h3>
-<p>Un nom wiki s'écrit en casse chameau : les mots sont attachés et la première
-lettre de chaque mot est en majuscule comme dans <em>NomWiki</em>. Un nom wiki
-est automatiquement transformé en un lien hypertexte vers la page du même nom.</p>
+<p>Un nom wiki s'écrit en casse chameau (mixed case en anglais) : les mots sont
+attachés et la première lettre de chaque mot est en majuscule comme dans
+les exemples suivants :</p>
+<pre class="literal-block">
+NomWiki
+OpenMind
+UneOperationComplexe
+</pre>
+<p>Un nom wiki est soit automatiquement transformé en un lien
+hypertexte vers la page du même nom (si la page existe), soit suivi d'un point
+d'interrogation pour créer cette page (si la page n'existe pas).</p>
+<p>Pour qu'un nom wiki ne soit reconnu comme tel (et donc par exemple non suivi
+d'un point d'interrogation), il suffit de le précéder d'un point 
+d'exclamation (!), par exemple :</p>
+<pre class="literal-block">
+!OpenMind
+</pre>
 </div>
 <div class="section" id="les-paragraphes">
 <h3><a name="les-paragraphes">Les paragraphes</a></h3>
@@ -113,3 +127,5 @@ Le w3c_ est une organisation qui vise à définir des `standards du web`_.
 <blockquote>
 <p>Le <a class="reference" href="http://www.w3.org/">w3c</a> est une organisation qui vise à définir des <a class="reference" href="http://www.w3.org/TR/">standards du web</a>.</p>
 </blockquote>
+</div>
+

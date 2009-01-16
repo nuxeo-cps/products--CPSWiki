@@ -1,7 +1,6 @@
-# -*- coding: ISO-8859-15 -*-
-# (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2005-2009 Nuxeo SARL <http://nuxeo.com>
 # Authors:
-# Tarek Ziadé <tz@nuxeo.com>
+# Tarek Ziade <tz@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -62,6 +61,12 @@ TRIPLE_BRACKETED_CONTENT = r'(?s)\{\{\{.*?\}\}\}'
 
 # WIKILINK is just a combitation of the possibilities of WIKINAME1, WIKINAME2,
 # BRACKETED_CONTENT and URL.
+#
+# ! is to escape wiki names.
+# Examples:
+# OpenMind
+# !OpenMind
+# etc.
 WIKILINK  = r'!?(%s|%s|%s|%s|%s)' % (WIKINAME1, WIKINAME2, TRIPLE_BRACKETED_CONTENT,
                                      BRACKETED_CONTENT, URL)
 WIKILINK_REGEXP = re.compile(WIKILINK, re.S)
