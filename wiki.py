@@ -1,7 +1,6 @@
-# -*- coding: ISO-8859-15 -*-
-# (C) Copyright 2005-2008 Nuxeo SAS <http://nuxeo.com>
+# (C) Copyright 2005-2009 Nuxeo SA <http://nuxeo.com>
 # Authors:
-# Tarek Ziadé <tz@nuxeo.com>
+# Tarek Ziade <tz@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -194,10 +193,10 @@ class Wiki(CPSBaseFolder):
 
     security.declareProtected(DeleteObjects, 'manage_delObjects')
     def manage_delObjects(self, ids=[], REQUEST=None):
-        """ used by regular views """
+        """Used by regular views and for deletion in the ZMI too.
+        """
         for id in ids:
             page = self.getPage(id)
-            page_id = page.id
             if page is not None:
                 backlinks = page.getBackedLinkedPages()
                 links = page.getLinkedPages()
@@ -205,16 +204,14 @@ class Wiki(CPSBaseFolder):
                 backlinks = []
                 links = []
 
-            CPSBaseFolder.manage_delObjects(self, ids=[page_id])
+            CPSBaseFolder.manage_delObjects(self, ids=[id])
             for backlink in backlinks + links:
                 linked_page = self.getPage(backlink)
                 if linked_page is not None:
-                    linked_page.removeReference(page_id)
+                    linked_page.removeReference(id)
 
         if REQUEST is not None:
-            psm = 'psm_page_deleted'
-            REQUEST.RESPONSE.redirect(self.absolute_url()+\
-                '?portal_status_message=%s' % psm)
+            return self.manage_main(self, REQUEST, update_menu=1)
 
     security.declareProtected(DeleteObjects, 'deletePage')
     def deletePage(self, title_or_id, REQUEST=None):

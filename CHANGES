@@ -6,6 +6,8 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
+- Made it possible to delete non-wiki page, such as .cps_subscriptions files, in
+  the ZMI.
 - Better wiki help.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
