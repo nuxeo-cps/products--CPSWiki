@@ -247,7 +247,7 @@ class WikiPage(CPSBaseFolder):
         version_number_previous = version_number_current - 1
         diff = self.getDiffs(version_number_previous, version_number_current)
         wiki = self.getParent()
-        if wiki.send_diffs:
+        if wiki.send_diff:
             comments = '\n\n' + diff
         else:
             comments = ''
