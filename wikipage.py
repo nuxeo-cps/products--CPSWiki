@@ -19,8 +19,6 @@
 #
 # $Id$
 
-from zLOG import LOG, DEBUG, TRACE
-
 import urllib
 from datetime import datetime
 

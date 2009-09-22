@@ -31,8 +31,6 @@ from Products.CPSUtil.id import generateId
 from interfaces import IWikiParser
 from wikitags import renderBrackets
 
-from zLOG import LOG, DEBUG
-
 LOG_KEY = 'CPSWiki.baseparser'
 
 # All the characters that can be found in a URL

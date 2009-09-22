@@ -19,6 +19,7 @@
 #
 # $Id$
 
+from logging import getLogger
 import os
 import urllib
 
@@ -43,8 +44,6 @@ from wikipage import WikiPage
 from wikiparsers import parsers, generateParser
 from wikilocker import LockerList, ILockableItem
 from wikitags import getRegisteredTags as _getRegisteredTags
-
-from zLOG import LOG, DEBUG, TRACE
 
 LOG_KEY = 'CPSWiki.wiki'
 
