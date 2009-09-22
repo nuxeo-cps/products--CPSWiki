@@ -19,13 +19,14 @@
           </tr>
           <tr>
             <th>
-              <label for="wikiSendDiff" i18n:translate="cpswiki_send_diff">
+              <label for="send_diff" i18n:translate="cpswiki_send_diff">
                 Send the diff in the notification</label>
             </th>
             <td>
               <input type="checkbox" name="send_diff:boolean"
-                id="wikiSendDiff"
+                id="send_diff"
                 tal:attributes="checked here/send_diff" />
+              <input type="hidden" name="send_diff:boolean:default" value=""/>
             </td>
           </tr>
         </tbody>
