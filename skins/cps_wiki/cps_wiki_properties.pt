@@ -1,15 +1,36 @@
 <html metal:use-macro="here/content_lib_master/macros/master">
   <metal:block fill-slot="main">
     <form action="." method="post">
+      <table>
+        <tbody>
+          <tr>
+            <th>
+              <label for="wikiParser" i18n:translate="cpswiki_choose_parser">Parser used</label>
+            </th>
+            <td>
+              <select id="wikiParser" name="parser" tal:define="all_parsers here/all_parsers;
+                current here/parser">
+                <tal:block tal:repeat="one_parser all_parsers">
+                  <option tal:content="one_parser"
+                    tal:attributes="selected python:test(current==one_parser, 'selected', '')"/>
+                </tal:block>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>
+              <label for="wikiSendDiff" i18n:translate="cpswiki_send_diff">
+                Send the diff in the notification</label>
+            </th>
+            <td>
+              <input type="checkbox" name="send_diff:boolean"
+                id="wikiSendDiff"
+                tal:attributes="checked here/send_diff" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <p>
-        <label for="wikiParser" i18n:translate="">cpswiki_choose_parser</label>
-        <select id="wikiParser" name="parser" tal:define="all_parsers here/all_parsers;
-          current here/parser">
-          <tal:block tal:repeat="one_parser all_parsers">
-            <option tal:content="one_parser"
-              tal:attributes="selected python:test(current==one_parser, 'selected', '')"/>
-          </tal:block>
-        </select>
         <button name="changeProperties:method"
           i18n:translate="button_change" type="submit">Save Changes</button>
       </p>

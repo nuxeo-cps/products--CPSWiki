@@ -1,8 +1,7 @@
-# -*- coding: ISO-8859-15 -*-
-# (C) Copyright 2005-2008 Nuxeo SAS <http://nuxeo.com>
+# (C) Copyright 2005-2009 Nuxeo SA <http://nuxeo.com>
 # Authors:
-# Tarek Ziadé <tz@nuxeo.com>
-# M.-A. Darche <madarche@nuxeo.com>
+# Tarek Ziade <tz@nuxeo.com>
+# M.-A. Darche
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -247,7 +246,11 @@ class WikiPage(CPSBaseFolder):
         version_number_current = self.source.getVersionCount() - 1
         version_number_previous = version_number_current - 1
         diff = self.getDiffs(version_number_previous, version_number_current)
-        comments = '\n\n' + diff
+        wiki = self.getParent()
+        if wiki.send_diffs:
+            comments = '\n\n' + diff
+        else:
+            comments = ''
         getPublicEventService(self).notifyEvent('workflow_modify', self,
                                                 {'comments': comments,
                                                  })

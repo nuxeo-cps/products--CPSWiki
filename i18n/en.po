@@ -11,18 +11,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
-"POT-Creation-Date: 2008-05-02 16:49default\n"
+"POT-Creation-Date: 2009-09-22 16:56default\n"
 "PO-Revision-Date: 2004-10-25 11:38+0200\n"
 "Last-Translator: DARCHE <madarche@nuxeo.com>\n"
 "Language-Team: Francais <fr@li.org>\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.3.1\n"
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Domain: default\n"
-"Content-Type: text/plain; charset=UTF-8\n"
 "Preferred-Encodings: utf-8\n"
 
 #.   <h4>Attached files</h4>
@@ -52,7 +52,7 @@ msgid ""
 "this time."
 msgstr ""
 
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
+#.   <img src="wikipage_write.png" alt="action_edit" id="editButton" onmouseover="setCursor(this)" title="action_edit_ajax" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "action_edit_ajax"
 msgstr "Edit the page fast (through AJAX)"
@@ -70,7 +70,7 @@ msgstr "Upload file"
 msgid "cpswiki_ajax_transferring"
 msgstr "Transferring..."
 
-#.   <label for="wikiParser">cpswiki_choose_parser</label>
+#.   <label for="wikiParser">Parser used</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_choose_parser"
 msgstr "Used parser :"
@@ -85,6 +85,12 @@ msgstr "About the syntax to use and the parser"
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
 msgstr "Add page"
+
+#.   <label for="wikiSendDiff">
+#.                   Send the diff in the notification</label>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+msgid "cpswiki_send_diff"
+msgstr "Sending of the diff with the notifications"
 
 #.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt

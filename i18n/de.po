@@ -1,19 +1,19 @@
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki-de CPS-3.3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-02 16:49default\n"
+"POT-Creation-Date: 2009-09-22 16:56default\n"
 "PO-Revision-Date: 2005-10-07 17:13+0200\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: German <rheinland@dzug.org>\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: de\n"
 "Language-Name: German\n"
 "Domain: default\n"
-"Content-Type: text/plain; charset=UTF-8\n"
 "Preferred-Encodings: utf-8\n"
 
 #.   <h4>Attached files</h4>
@@ -45,7 +45,7 @@ msgstr ""
 "Diese Seite wird gerade von jemand anderem verwendet, Sie können zur Zeit "
 "nur lesen aber nicht schreiben"
 
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
+#.   <img src="wikipage_write.png" alt="action_edit" id="editButton" onmouseover="setCursor(this)" title="action_edit_ajax" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "action_edit_ajax"
 msgstr ""
@@ -63,7 +63,7 @@ msgstr "Datei hochladen"
 msgid "cpswiki_ajax_transferring"
 msgstr ""
 
-#.   <label for="wikiParser">cpswiki_choose_parser</label>
+#.   <label for="wikiParser">Parser used</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_choose_parser"
 msgstr ""
@@ -77,6 +77,12 @@ msgstr ""
 #.   <img src="wikipage_new.png" style="float:right;visibility: visible" onmouseover="setCursor(this)" title="cpswiki_page_add" alt="cpswiki_page_add" id="addPageButton" />
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
+msgstr ""
+
+#.   <label for="wikiSendDiff">
+#.                   Send the diff in the notification</label>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+msgid "cpswiki_send_diff"
 msgstr ""
 
 #.   <h2>Special tags</h2>

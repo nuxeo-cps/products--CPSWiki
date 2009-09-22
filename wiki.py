@@ -1,7 +1,7 @@
 # (C) Copyright 2005-2009 Nuxeo SA <http://nuxeo.com>
 # Authors:
 # Tarek Ziade <tz@nuxeo.com>
-# M.-A. Darche <madarche@nuxeo.com>
+# M.-A. Darche
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -81,11 +81,14 @@ class Wiki(CPSBaseFolder):
         {'id': 'parser', 'type': 'selection', 'mode': 'w',
          'select_variable': 'all_parsers',
          'label': 'Parser'},
-           )
+        {'id': 'send_diff', 'type': 'boolean', 'mode': 'w',
+         'label': "Sending of the diff in the notifications"},
+        )
 
     all_parsers = parsers
     parser = all_parsers[0]
     _parser = None
+    send_diff = False
     lock_duration = 30
 
     security = ClassSecurityInfo()

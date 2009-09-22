@@ -1,11 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2008-05-02 16:49default\n"
+"POT-Creation-Date: 2009-09-22 16:55default\n"
 "PO-Revision-Date: 2007-05-12 11:20+0100\n"
 "Last-Translator: xosé francisco martínez reboiras <xosereboiras@lasalle.es>\n"
 "Language-Team: español <jesusmartin@lasalle.es>\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.3.1\n"
@@ -14,7 +15,6 @@ msgstr ""
 "Language-Code: gl\n"
 "Language-Name: Galician\n"
 "Domain: default\n"
-"Content-Type: text/plain; charset=UTF-8\n"
 "Preferred-Encodings: utf-8\n"
 
 #.   <h4>Attached files</h4>
@@ -46,7 +46,7 @@ msgstr ""
 "A páxina está sendo utilizada por alguén máis. Podes ler, pero non escribir "
 "mentres o outro usuario a este editando."
 
-#.   <img src="wikipage_write.png" onmouseover="setCursor(this)" title="action_edit_ajax" alt="action_edit" id="editButton" />
+#.   <img src="wikipage_write.png" alt="action_edit" id="editButton" onmouseover="setCursor(this)" title="action_edit_ajax" />
 #: from ../skins/cps_wiki/cps_wiki_pageview.pt
 msgid "action_edit_ajax"
 msgstr "Editar páxina"
@@ -64,7 +64,7 @@ msgstr "Subir un arquivo"
 msgid "cpswiki_ajax_transferring"
 msgstr "Transferindo..."
 
-#.   <label for="wikiParser">cpswiki_choose_parser</label>
+#.   <label for="wikiParser">Parser used</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_choose_parser"
 msgstr "\"Parser\" (analizador) en uso"
@@ -80,6 +80,13 @@ msgstr "About the syntax to use and the parser"
 #: from ../skins/cps_wiki/cps_wiki_view.pt
 msgid "cpswiki_page_add"
 msgstr "Engadir unha páxina"
+
+#.   <label for="wikiSendDiff">
+#.                   Send the diff in the notification</label>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+#, fuzzy
+msgid "cpswiki_send_diff"
+msgstr "Sending of the diff with the notifications"
 
 #.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
