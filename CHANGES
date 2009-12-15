@@ -3,13 +3,10 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- Added an option to decide whether sending the diff along with the
-  notifications (later used for email notifications for example).
+-
 Bug fixes
 ~~~~~~~~~
-- Made it possible to delete non-wiki page, such as .cps_subscriptions files, in
-  the ZMI.
-- Better wiki help.
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

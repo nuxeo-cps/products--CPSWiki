@@ -1,4 +1,27 @@
 ===========================================================
+Package: CPSWiki 1.2.0
+===========================================================
+First release built by: gracinet at: 2009-12-15T12:28:58
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/tags/1.2.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSWiki/trunk@54101
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- Added an option to decide whether sending the diff along with the
+  notifications (later used for email notifications for example).
+Bug fixes
+~~~~~~~~~
+- Made it possible to delete non-wiki page, such as .cps_subscriptions files, in
+  the ZMI.
+- Better wiki help.
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSWiki 1.1.1
 ===========================================================
 First release built by: madarche at: 2008-11-23T22:24:56
