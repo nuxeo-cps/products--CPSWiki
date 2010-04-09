@@ -11,10 +11,9 @@
     <script type="text/javascript" src="cookie.js"
       tal:attributes="src string:${base_url}cookie.js"></script>
     <script type="text/javascript"
-      tal:attributes="src string:${base_url}cpsdocument.js">
+      tal:attributes="src string:${base_url}cpsdocument.js"></script>
     <script type="text/javascript"
-      tal:attributes="src string:${base_url}cpswiki.js">
-    </script>
+      tal:attributes="src string:${base_url}cpswiki.js"></script>
   </metal:main>
   <metal:block fill-slot="main"
                tal:define="wiki here/getParent;

@@ -6,7 +6,8 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- Fixed cps_wiki_pageedit.pt XML well-formedness which was making CPSWiki
+  incompatible with the use of CPSDesignerThemes.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
