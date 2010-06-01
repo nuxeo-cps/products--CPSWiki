@@ -8,6 +8,8 @@ Bug fixes
 ~~~~~~~~~
 - Fixed cps_wiki_pageedit.pt XML well-formedness which was making CPSWiki
   incompatible with the use of CPSDesignerThemes.
+- Fixed #2158: AssertionError: stylesheet and stylesheet_path are mutually
+  exclusive.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
