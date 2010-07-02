@@ -1,6 +1,8 @@
-# -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
-# Author: Tarek Ziadé <tz@nuxeo.com>
+# (C) Copyright 2010 AFUL <http://aful.org/>
+# Authors:
+# Tarek Ziade <tz@nuxeo.com>
+# M.-A. Darche
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -15,8 +17,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
-#
-# $Id$
 import re
 
 from interfaces import IWikiParser
@@ -46,7 +46,11 @@ class RstParser(BaseParser):
         if rst_available:
             content = HTML(content, output_encoding=self.output_encoding,
                            input_encoding=self.input_encoding,
-                           initial_header_level=2, report_level=0)
+                           initial_header_level=2, report_level=0,
+                           # Fix for #2158 to disable stylesheet and the CSS
+                           # stylesheets are applied by the CPS theme engine
+                           # anyway.
+                           stylesheet='')
 
         result = BaseParser.parseContent(self, content, wiki)
         return result
