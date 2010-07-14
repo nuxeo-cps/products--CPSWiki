@@ -71,7 +71,7 @@ CPSWikiPageEditor.prototype = {
   prepareEditContent: function(text) {
     var content = new Array();
     content.push('<textarea id="' + this.content_id + '"');
-    content.push(' name="source" rows="30" cols="80"');
+    content.push(' name="source:utf8:ustring" rows="30" cols="80"');
     content.push(' class="monospaceFont" style="width: 100%;">');
     content.push(text);
     content.push('</textarea>');
