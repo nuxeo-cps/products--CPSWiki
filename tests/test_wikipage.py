@@ -1,4 +1,3 @@
-# -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
 # Authors:
 # Tarek Ziade <tz@nuxeo.com>
@@ -181,9 +180,8 @@ class WikiPageTests(WikiTestCase):
             wiki.parser = parser
             wiki._getCurrentUser = self._getCurrentUser
 
-            # Testing edit and rendering of a page using default encoding,
-            # typically ISO-8859-15.
-            content = "C'est éeéfffélo là et où donc ?"
+            # Testing edit and rendering of a page using the UTF-8 encoding
+            content = "C'est \xe9e\xe9fff\xe9lo l\xe0 et o\xf9 donc ?"
             page = wiki.addPage('Page 1: with default encoding')
             self.assert_(page.edit(source=content))
             if parser == 'restructuredtext':
@@ -192,7 +190,7 @@ class WikiPageTests(WikiTestCase):
                 self.assertEquals(page.render(), content)
 
             # just checking that given parser support unicoding as well
-            content = u"C'est éeéfffélo là et où donc ?"
+            content = u"C'est \xe9e\xe9fff\xe9lo l\xe0 et o\xf9 donc ?"
             page = wiki.addPage(u'Page 2: with Unicode')
             self.assert_(page.edit(source=content))
             if parser == 'restructuredtext':
@@ -205,7 +203,7 @@ class WikiPageTests(WikiTestCase):
                 self.assertEquals(page.render(), content)
 
             # Testing the creation of a page with accented characters
-            page = wiki.addPage('éeedzzzzzzzzéé à doù !')
+            page = wiki.addPage('\xe9eedzzzzzzzz\xe9\xe9 \xe0 do\xf9 !')
 
     def test_getLinkedPages(self):
         wiki = Wiki('wiki')
@@ -257,8 +255,8 @@ class WikiPageTests(WikiTestCase):
         wiki = Wiki('wiki')
         wiki._getCurrentUser = self._getCurrentUser
         page1 = wiki.addPage('page1')
-        page1.jedit(source='tÃ©tÃ©tÃ©')
-        self.assertEquals(page1.render(), '<p>tétété</p>\n')
+        page1.jedit(source='t\xe9t\xe9t\xe9')
+        self.assertEquals(page1.render(), '<p>t\xe9t\xe9t\xe9</p>\n')
 
 
 def test_suite():
