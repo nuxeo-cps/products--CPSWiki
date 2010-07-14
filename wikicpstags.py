@@ -1,7 +1,6 @@
-# -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
 # Authors:
-# Tarek Ziadé <tz@nuxeo.com>
+# Tarek Ziade <tz@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -16,8 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
-#
-# $Id:$
+
 from Products.CMFCore.utils import getToolByName
 
 from interfaces import IWikiTag
@@ -28,7 +26,7 @@ class MemberInfos:
         renders a link to member's directory entry
         if text is given, it's used to be displayed in the link
 
-        example: [member:tarek, Tarek Ziadé]
+        example: [member:tarek, Tarek Ziade]
     """
     __implements__ = (IWikiTag,)
 

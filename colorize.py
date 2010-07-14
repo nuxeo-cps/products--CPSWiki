@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# -*- coding: iso-8859-1 -*-
 """
     MoinMoin - Python source parser and colorizer
 """
@@ -19,12 +18,12 @@
 # - parse script encoding and allow output in any encoding by using unicode
 #   as intermediate
 
-# Tarek Ziadé <tz@nuxeo.com> : modified to avoid getting back the  stylesheet
+# Tarek Ziade <tz@nuxeo.com> : modified to avoid getting back the  stylesheet
 
 __version__ = '0.3'
 __date__ = '2005-07-04'
 __license__ = 'GPL'
-__author__ = 'Jürgen Hermann, Mike Brown, Christopher Arndt'
+__author__ = 'Jurgen Hermann, Mike Brown, Christopher Arndt'
 
 
 # Imports

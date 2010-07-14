@@ -1,7 +1,6 @@
-# -*- coding: ISO-8859-15 -*-
 # WikiWikiWeb-style markup
 # contributed by Tres Seaver <tseaver@palladion.com>
-# adapted from ZWiki to CPSWiki by Tarek Ziadé <tz@nuxeo.com>
+# adapted from ZWiki to CPSWiki by Tarek Ziade <tz@nuxeo.com>
 from interfaces import IWikiParser
 import re
 from urllib import quote
