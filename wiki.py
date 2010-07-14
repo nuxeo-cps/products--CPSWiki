@@ -176,8 +176,6 @@ class Wiki(CPSBaseFolder):
 
     security.declareProtected(View, 'getPage')
     def getPage(self, title_or_id):
-        if isinstance(title_or_id, unicode):
-            title_or_id = title_or_id.encode('ISO-8859-15')
         wikipage_id = generateId(title_or_id, lower=False)
         if wikipage_id in self.objectIds():
             return self[wikipage_id]
