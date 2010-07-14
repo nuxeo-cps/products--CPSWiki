@@ -16,8 +16,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
-#
-# $Id$
 
 from logging import getLogger
 import os
@@ -241,8 +239,6 @@ class Wiki(CPSBaseFolder):
     security.declareProtected(AddPortalContent, 'addPage')
     def addPage(self, title, REQUEST=None):
         """Create and add a wiki page."""
-        if isinstance(title, unicode):
-            title = title.encode('ISO-8859-15')
         wikipage_id = generateId(title, lower=False)
         if wikipage_id in self.objectIds():
             raise ValueError("The ID \"%s\" is already in use." % wikipage_id)
