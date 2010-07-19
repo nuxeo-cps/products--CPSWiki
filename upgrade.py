@@ -31,6 +31,7 @@ def upgrade_unicode(portal):
     """
     logger = logging.getLogger('Products.CPSWiki.upgrades.unicode')
 
+    ctool = getToolByName(portal, 'portal_catalog')
     brains = ctool.searchResults(portal_type='Wiki')
     total = len(brains)
     for brain in brains:
@@ -76,7 +77,7 @@ def upgrade_wiki_unicode(wiki):
     return True
 
 def upgrade_wiki_page_unicode(wiki_page):
-    for index in len(self._versions):
-        wiki_page.source._versions[index][0] = upgrade_string_unicode(wiki_page.source._versions[index][0])
+    for index, version in enumerate(wiki_page.source._versions):
+        wiki_page.source._versions[index][0] = upgrade_string_unicode(version[0])
     return True
 
