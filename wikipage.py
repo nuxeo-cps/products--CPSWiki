@@ -333,6 +333,10 @@ class WikiPage(CPSBaseFolder):
     security.declareProtected(ModifyPortalContent, 'jedit')
     def jedit(self, title=None, source=None, REQUEST=None):
         """ """
+        if title is not None:
+            title = unicode(title, 'utf-8')
+        if source is not None:
+            source = unicode(source, 'utf-8')
         return self.edit(title, source)
 
     security.declareProtected(View, 'jrender')
