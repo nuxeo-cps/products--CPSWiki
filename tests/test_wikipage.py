@@ -239,8 +239,8 @@ class WikiPageTests(WikiTestCase):
         wiki = Wiki('wiki')
         wiki._getCurrentUser = self._getCurrentUser
         page1 = wiki.addPage('page1')
-        page1.jedit(source='t\xe9t\xe9t\xe9')
-        self.assertEquals(page1.render(), '<p>t\xe9t\xe9t\xe9</p>\n')
+        page1.jedit(source='t\xc3\x83\xc2\xa9t\xc3\x83\xc2\xa9t\xc3\x83\xc2\xa9')
+        self.assertEquals(page1.render(), '<p>t\xc3\x83\xc2\xa9t\xc3\x83\xc2\xa9t\xc3\x83\xc2\xa9</p>\n')
 
 
 def test_suite():
