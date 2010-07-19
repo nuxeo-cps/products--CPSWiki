@@ -16,8 +16,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
-#
-# $Id$
 
 import urllib
 from datetime import datetime
@@ -332,40 +330,27 @@ class WikiPage(CPSBaseFolder):
     def clearCache(self):
         self._render = None
 
-    #
-    # utf8 I/O for AJAX - XXX need to be moved in a view
-    #
-    def _Utf8ToIso(self, value, codec='ISO-8859-15'):
-        if isinstance(value, str):
-            uvalue = value.decode('utf-8', 'replace')
-            return uvalue.encode(codec)
-        else:
-            return value
-
     security.declareProtected(ModifyPortalContent, 'jedit')
     def jedit(self, title=None, source=None, REQUEST=None):
-        """ prevents uf8 junk
-
-        if edited from AJAX for example, we get a string
-        that contains unicode"""
+        """ """
         if title is not None:
-            title = self._Utf8ToIso(title)
+            title = unicode(title, 'utf-8')
         if source is not None:
-            source = self._Utf8ToIso(source)
+            source = unicode(source, 'utf-8')
         return self.edit(title, source)
 
     security.declareProtected(View, 'jrender')
     def jrender(self, REQUEST):
-        """ prevents uf8 junk """
+        """ """
         REQUEST.response.setHeader('content-type',
-                                   'text/plain; charset=ISO-8859-15')
+                                   'text/plain; charset=UTF-8')
         return self.render()
 
     security.declareProtected(View, 'jgetSource')
     def jgetSource(self, REQUEST):
-        """ prevents uf8 junk """
+        """ """
         REQUEST.response.setHeader('content-type',
-                                   'text/plain; charset=ISO-8859-15')
+                                   'text/plain; charset=UTF-8')
         return self.getSource()
 
     #

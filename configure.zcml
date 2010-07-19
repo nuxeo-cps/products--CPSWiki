@@ -1,0 +1,12 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:cps="http://namespaces.nuxeo.org/cps"
+    xmlns:five="http://namespaces.zope.org/five">
+
+  <cps:upgradeStep
+      title="Upgrade CPSWiki instances to unicode"
+      source="3.5.0" destination="3.5.1"
+      handler=".upgrade.upgrade_unicode"
+      />
+
+</configure>

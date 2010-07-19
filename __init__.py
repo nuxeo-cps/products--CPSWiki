@@ -1,6 +1,5 @@
-# -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005-2008 Nuxeo SAS <http://nuxeo.com>
-# Author: Tarek Ziadé <tz@nuxeo.com>
+# Author: Tarek Ziade <tz@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -15,8 +14,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
-#
-# $Id$
+
 from Products.CMFCore.utils import ContentInit
 from Products.CMFCore.DirectoryView import registerDirectory
 try:

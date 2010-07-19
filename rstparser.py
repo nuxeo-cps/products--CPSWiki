@@ -17,6 +17,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
+
 import re
 
 from interfaces import IWikiParser
@@ -33,8 +34,8 @@ class RstParser(BaseParser):
 
     __implements__ = (IWikiParser, )
 
-    input_encoding = 'iso-8859-15'
-    output_encoding = 'iso-8859-15'
+    input_encoding = 'utf-8'
+    output_encoding = 'utf-8'
 
     def getId(self):
         return 'restructuredtext'

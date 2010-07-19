@@ -1,7 +1,6 @@
-# -*- coding: ISO-8859-15 -*-
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
 # Authors:
-# Tarek Ziadé <tz@nuxeo.com>
+# Tarek Ziade <tz@nuxeo.com>
 # M.-A. Darche <madarche@nuxeo.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -17,8 +16,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
-#
-# $Id$
 
 import unittest
 
@@ -183,31 +180,14 @@ class WikiPageTests(WikiTestCase):
             wiki.parser = parser
             wiki._getCurrentUser = self._getCurrentUser
 
-            # Testing edit and rendering of a page using default encoding,
-            # typically ISO-8859-15.
-            content = "C'est éeéfffélo là et où donc ?"
+            # Testing edit and rendering of a page
+            content = u"C'est \xe9e\xe9fff\xe9lo l\xe0 et o\xf9 donc ?"
             page = wiki.addPage('Page 1: with default encoding')
             self.assert_(page.edit(source=content))
-            if parser == 'restructuredtext':
-                self.assertEquals(page.render(), '<p>%s</p>\n' % content)
-            else:
-                self.assertEquals(page.render(), content)
-
-            # just checking that given parser support unicoding as well
-            content = u"C'est éeéfffélo là et où donc ?"
-            page = wiki.addPage(u'Page 2: with Unicode')
-            self.assert_(page.edit(source=content))
-            if parser == 'restructuredtext':
-                render = page.render()
-                expected_render = ('<p>%s</p>\n'
-                                   % content).encode(wiki.getParser()
-                                                     .output_encoding)
-                self.assertEquals(render, expected_render)
-            else:
-                self.assertEquals(page.render(), content)
+            self.assert_(page.render())
 
             # Testing the creation of a page with accented characters
-            page = wiki.addPage('éeedzzzzzzzzéé à doù !')
+            page = wiki.addPage('\xe9eedzzzzzzzz\xe9\xe9 \xe0 do\xf9 !')
 
     def test_getLinkedPages(self):
         wiki = Wiki('wiki')
@@ -259,8 +239,8 @@ class WikiPageTests(WikiTestCase):
         wiki = Wiki('wiki')
         wiki._getCurrentUser = self._getCurrentUser
         page1 = wiki.addPage('page1')
-        page1.jedit(source='tÃ©tÃ©tÃ©')
-        self.assertEquals(page1.render(), '<p>tétété</p>\n')
+        page1.jedit(source='t\xc3\x83\xc2\xa9t\xc3\x83\xc2\xa9t\xc3\x83\xc2\xa9')
+        self.assertEquals(page1.render(), '<p>t\xc3\x83\xc2\xa9t\xc3\x83\xc2\xa9t\xc3\x83\xc2\xa9</p>\n')
 
 
 def test_suite():

@@ -30,7 +30,7 @@
     <form action="edit" enctype="multipart/form-data" method="post">
       <tal:block condition="python:parser_type != 'html'">
         <p>
-          <textarea name="source" rows="30" cols="80"
+          <textarea name="source:utf8:ustring" rows="30" cols="80"
             class="monospaceFont resizable"
             tal:content="source">
           </textarea>
