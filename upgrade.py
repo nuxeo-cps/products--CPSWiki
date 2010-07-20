@@ -63,6 +63,9 @@ def upgrade_unicode(portal):
             transaction.commit()
 
     logger.warn("Finished unicode upgrade of the %d/%d documents.", done, total)
+    transaction.commit()
+    if not done:
+        return
 
     logger.info("Rebuilding Tree Caches")
     trees = portal.portal_trees.objectValues('CPS Tree Cache')
