@@ -34,11 +34,11 @@ def upgrade_unicode(portal):
     ctool = getToolByName(portal, 'portal_catalog')
     brains = ctool.searchResults(portal_type='Wiki')
     total = len(brains)
+    done = 0
     for brain in brains:
         wiki = brain.getObject()
         if wiki is None:
             continue
-        done = 0
         if not upgrade_wiki_unicode(wiki):
             logger.error("Could not upgrade document revision %s", doc)
             continue
