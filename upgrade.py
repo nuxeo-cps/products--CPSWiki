@@ -119,9 +119,6 @@ def upgrade_wiki_page_unicode(wiki_page):
             wiki_page.source._setContent(i, converted_lines, tags)
         logger.info("Upgrading version %s DONE", i)
 
-#     if wiki_page.title == 'PourquoiCPS':
-#         import pdb;pdb.set_trace()
-
     logger.info("Upgrading versions DONE")
     return True
 
