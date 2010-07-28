@@ -29,7 +29,7 @@ _marker = object()
 def upgrade_unicode(portal):
     """Upgrades all CPSWiki instances to unicode.
     """
-    logger = logging.getLogger('Products.CPSWiki.upgrades.unicode')
+    logger = logging.getLogger('Products.CPSWiki.upgrade.upgrade_unicode')
 
     ctool = getToolByName(portal, 'portal_catalog')
     brains = ctool.searchResults(portal_type='Wiki')
@@ -40,12 +40,26 @@ def upgrade_unicode(portal):
         if wiki is None:
             continue
         if not upgrade_wiki_unicode(wiki):
-            logger.error("Could not upgrade document revision %s", doc)
+            logger.error("Could not upgrade wiki at %s", brain.getPath())
             continue
         done += 1
         if done % 100 == 0:
-            logger.info("Upgraded %d/%d document revisions", done, total)
+            logger.info("Upgraded %d/%d wikis", done, total)
             transaction.commit()
+
+    logger.warn("Finished unicode upgrade of the %d/%d wikis.", done, total)
+    transaction.commit()
+
+    if not done:
+        return
+    logger.info("Rebuilding Tree Caches for wiki titles")
+    trees = portal.portal_trees.objectValues('CPS Tree Cache')
+    for tree in trees:
+        logger.info("Rebuilding %s", tree)
+        tree.rebuild()
+        transaction.commit()
+    logger.warn("Finished rebuilding the Tree Caches for wiki titles")
+
 
     total = len(brains)
     brains = ctool.searchResults(portal_type='Wiki Page')
@@ -55,32 +69,31 @@ def upgrade_unicode(portal):
             continue
         done = 0
         if not upgrade_wiki_page_unicode(wiki_page):
-            logger.error("Could not upgrade document revision %s", doc)
+            logger.error("Could not upgrade wiki_page at %s", brain.getPage())
             continue
         done += 1
         if done % 100 == 0:
-            logger.info("Upgraded %d/%d document revisions", done, total)
+            logger.info("Upgraded %d/%d wiki_pages", done, total)
             transaction.commit()
 
-    logger.warn("Finished unicode upgrade of the %d/%d documents.", done, total)
+    logger.warn("Finished unicode upgrade of the %d/%d wiki_pages.", done, total)
     transaction.commit()
-    if not done:
-        return
-
-    logger.info("Rebuilding Tree Caches")
-    trees = portal.portal_trees.objectValues('CPS Tree Cache')
-    for tree in trees:
-        logger.info("Rebuilding %s", tree)
-        tree.rebuild()
-        transaction.commit()
-    logger.warn("Finished rebuilding the Tree Caches")
 
 def upgrade_wiki_unicode(wiki):
+    logger = logging.getLogger('Products.CPSWiki.upgrade.upgrade_wiki_unicode')
+    logger.info("Upgrading title for wiki at %s ...", wiki.getPhysicalPath())
     wiki.title = upgrade_string_unicode(wiki.title)
+    logger.info("Upgrading title %s DONE", wiki.title)
     return True
 
 def upgrade_wiki_page_unicode(wiki_page):
+    logger = logging.getLogger('Products.CPSWiki.upgrade.upgrade_wiki_page_unicode')
+    logger.info("Upgrading versions for wiki_page at %s ...",
+                wiki_page.getPhysicalPath())
     for index, version in enumerate(wiki_page.source._versions):
+        logger.info("Upgrading version " + index)
         wiki_page.source._versions[index][0] = upgrade_string_unicode(version[0])
+        logger.info("Upgrading version " + index + " DONE")
+    logger.info("Upgrading versions DONE")
     return True
 
