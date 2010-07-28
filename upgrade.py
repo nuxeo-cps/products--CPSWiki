@@ -96,11 +96,10 @@ def upgrade_wiki_page_unicode(wiki_page):
                     "with ZODBVersionContent backend.")
         return
 
-#     if wiki_page.title == 'ConfTelephoneAudio':
-#         import pdb;pdb.set_trace()
-    version_count = wiki_page.source._getHistorySize()
-    version_numbers = range(version_count)
-    for i in version_numbers:
+    wiki_page.clearCache()
+
+    plist_count = len(wiki_page.source.plist)
+    for i in range(plist_count):
         logger.info("Upgrading version %s", i)
         if i == 0:
             # The initial version is always an empty string and not an array.
@@ -113,9 +112,16 @@ def upgrade_wiki_page_unicode(wiki_page):
             tags = content[1]
             converted_lines = []
             for line in lines:
-                converted_lines.append(upgrade_string_unicode(line))
+                #logger.info("line: %s", line)
+                converted_line = upgrade_string_unicode(line)
+                #logger.info("converted_line: %s", converted_line)
+                converted_lines.append(converted_line)
             wiki_page.source._setContent(i, converted_lines, tags)
         logger.info("Upgrading version %s DONE", i)
+
+#     if wiki_page.title == 'PourquoiCPS':
+#         import pdb;pdb.set_trace()
+
     logger.info("Upgrading versions DONE")
     return True
 
