@@ -1,4 +1,4 @@
-# Copyright 2010 AFUL <http://aful.org>
+# (C) Copyright 2010 AFUL <http://aful.org>
 # Author:
 # M.-A. Darche
 #

@@ -1,7 +1,8 @@
 # (C) Copyright 2005-2009 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2010 AFUL <http://aful.org>
 # Authors:
 # Tarek Ziade <tz@nuxeo.com>
-# M.-A. Darche <madarche@nuxeo.com>
+# M.-A. Darche
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -16,8 +17,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
-#
-# $Id$
 """A base parser that takes the content and create internal and external links.
 
 Parsing methods taken from ZWiki and refactored for CPSWiki needs.
@@ -45,9 +44,9 @@ U = 'A-Z\xc0-\xdf'
 L = 'a-z\xe0-\xff'
 # Using a negative lookbehind assertion (?<!...)
 B = '(?<![%s0-9])' % (U + L)
-# XXX: Give some examples
+# TODO: Give some examples
 WIKINAME1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (B, U, L, U, U + L)
-# XXX: Give some examples
+# TODO: Give some examples
 WIKINAME2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (B, U, U, L, U + L)
 # [xxx] but not [[xxx]] or [xxx[xxx] or [xxx]xxx]
 BRACKETED_CONTENT = r'(?s)\[.*?\]'
@@ -67,7 +66,7 @@ TRIPLE_BRACKETED_CONTENT = r'(?s)\{\{\{.*?\}\}\}'
 # etc.
 WIKILINK  = r'!?(%s|%s|%s|%s|%s)' % (WIKINAME1, WIKINAME2, TRIPLE_BRACKETED_CONTENT,
                                      BRACKETED_CONTENT, URL)
-WIKILINK_REGEXP = re.compile(WIKILINK, re.S)
+WIKILINK_REGEXP = re.compile(WIKILINK, re.DOTALL | re.UNICODE)
 BRACKETED_CONTENT_REGEXP = re.compile(BRACKETED_CONTENT)
 TRIPLE_BRACKETED_CONTENT = re.compile(TRIPLE_BRACKETED_CONTENT)
 STRICT_BRACKETED_CONTENT_REGEXP = re.compile(STRICT_BRACKETED_CONTENT)

@@ -1,7 +1,8 @@
 # (C) Copyright 2005 Nuxeo SARL <http://nuxeo.com>
+# (C) Copyright 2010 AFUL <http://aful.org>
 # Authors:
 # Tarek Ziade <tz@nuxeo.com>
-# M.-A. Darche <madarche@nuxeo.com>
+# M.-A. Darche
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as published
@@ -30,7 +31,6 @@ class WikiParserTest(ZopeTestCase):
     def test_parsing(self):
         wiki = Wiki('wiki')
         wiki.absolute_url = self._wiki_url
-
         parser = BaseParser()
 
         # Testing no links
@@ -68,13 +68,23 @@ class WikiParserTest(ZopeTestCase):
            ['spds'], []))
 
 
+    def test_parsingAccentedCharacters(self):
+        wiki = Wiki('wiki')
+        wiki.absolute_url = self._wiki_url
+        parser = BaseParser()
+
+        res = parser.parseContent('MyP\xc3\xa9age', wiki)
+        self.assertEquals(res,
+          ('My\xc3\xa9Page<a href="http://xxx/addPage?title=MyPeage">?</a>',
+           [], ['MyP\xc3\xa9age']))
+
+
     def test_weirdParsingCases(self):
         # Checking that weird characters and expressions dont' break the
         # rendering.
         # trac ticket #698
         wiki = Wiki('wiki')
         wiki.absolute_url = self._wiki_url
-
         parser = BaseParser()
 
         res = parser.parseContent('qzpijd [***] dsvjpdsovj', wiki)
