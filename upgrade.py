@@ -23,6 +23,7 @@ import transaction
 from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
 from Products.CPSUtil.text import upgrade_string_unicode
+from Products.CPSCore.ProxyBase import walk_cps_folders
 
 from wikipage import ZODBVersionContent
 
@@ -31,27 +32,19 @@ def upgrade_unicode(portal):
     """
     logger = logging.getLogger('Products.CPSWiki.upgrade.upgrade_unicode')
 
-    ctool = getToolByName(portal, 'portal_catalog')
-    brains = ctool.searchResults(portal_type='Wiki')
-    total = len(brains)
-    done = 0
-    for brain in brains:
-        wiki = brain.getObject()
-        if wiki is None:
-            continue
-        if not upgrade_wiki_unicode(wiki):
-            logger.error("Could not upgrade wiki at %s", brain.getPath())
-            continue
-        done += 1
-        if done % 100 == 0:
-            logger.info("Upgraded %d/%d wikis", done, total)
-            transaction.commit()
+    wiki_counters = dict(done=0, total=0)
+    wiki_page_counters = dict(done=0, total=0)
+    for folder in walk_cps_folders(portal):
+        upgrade_unicode_in(folder, wiki_counters=wiki_counters,
+                           wiki_page_counters=wiki_page_counters)
 
-    logger.warn("Finished unicode upgrade of the %d/%d wikis.", done, total)
-    transaction.commit()
+    logger.warn("Finished unicode upgrade of the %d/%d wikis and %d/%d wiki_pages.",
+                wiki_counters['done'], wiki_counters['total'],
+                wiki_page_counters['done'], wiki_page_counters['total'])
 
-    if not done:
+    if not wiki_counters['done']:
         return
+
     logger.info("Rebuilding Tree Caches for wiki titles")
     trees = portal.portal_trees.objectValues('CPS Tree Cache')
     for tree in trees:
@@ -60,30 +53,31 @@ def upgrade_unicode(portal):
         transaction.commit()
     logger.warn("Finished rebuilding the Tree Caches for wiki titles")
 
-
-    brains = ctool.searchResults(portal_type='Wiki Page')
-    total = len(brains)
-    done = 0
-    for brain in brains:
-        wiki_page = brain.getObject()
-        if wiki_page is None:
-            continue
-        if not upgrade_wiki_page_unicode(wiki_page):
-            logger.error("Could not upgrade wiki_page at %s", brain.getPath())
-            continue
-        done += 1
-        if done % 100 == 0:
-            logger.info("Upgraded %d/%d wiki_pages", done, total)
+def upgrade_unicode_in(folder, wiki_counters, wiki_page_counters):
+    for wiki in folder.objectValues(['Wiki']):
+        wiki_counters['total'] += 1
+        upgrade_wiki_unicode(wiki, wiki_page_counters)
+        wiki_counters['done'] += 1
+        if wiki_counters['done'] % 100 == 0:
+            logger.info("Upgraded %d wikis over %d currently known",
+                        wiki_counters['done'], wiki_counters['total'])
             transaction.commit()
 
-    logger.warn("Finished unicode upgrade of the %d/%d wiki_pages.", done, total)
-    transaction.commit()
-
-def upgrade_wiki_unicode(wiki):
+def upgrade_wiki_unicode(wiki, wiki_page_counters):
     logger = logging.getLogger('Products.CPSWiki.upgrade.upgrade_wiki_unicode')
     logger.info("Upgrading title for wiki at %s ...", wiki.getPhysicalPath())
     wiki.title = upgrade_string_unicode(wiki.title)
     logger.info("Upgrading title %s DONE", wiki.title)
+
+    for wiki_page in wiki.objectValues(['Wiki Page']):
+        wiki_page_counters['total'] += 1
+        upgrade_wiki_page_unicode(wiki_page)
+        wiki_page_counters['done'] += 1
+        if wiki_page_counters['done'] % 100 == 0:
+            logger.info("Upgraded %d wiki_pages over %d currently known",
+                        wiki_page_counters['done'], wiki_page_counters['total'])
+            transaction.commit()
+
     return True
 
 def upgrade_wiki_page_unicode(wiki_page):
