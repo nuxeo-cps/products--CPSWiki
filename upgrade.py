@@ -65,9 +65,9 @@ def upgrade_unicode_in(folder, wiki_counters, wiki_page_counters):
 
 def upgrade_wiki_unicode(wiki, wiki_page_counters):
     logger = logging.getLogger('Products.CPSWiki.upgrade.upgrade_wiki_unicode')
-    logger.info("Upgrading title for wiki at %s ...", wiki.getPhysicalPath())
+    logger.info("Upgrading wiki at %s", wiki.absolute_url_path())
     wiki.title = upgrade_string_unicode(wiki.title)
-    logger.info("Upgrading title %s DONE", wiki.title)
+    logger.debug("Upgrading title %r DONE", wiki.title)
 
     for wiki_page in wiki.objectValues(['Wiki Page']):
         wiki_page_counters['total'] += 1
@@ -82,8 +82,8 @@ def upgrade_wiki_unicode(wiki, wiki_page_counters):
 
 def upgrade_wiki_page_unicode(wiki_page):
     logger = logging.getLogger('Products.CPSWiki.upgrade.upgrade_wiki_page_unicode')
-    logger.info("Upgrading versions for wiki_page at %s ...",
-                wiki_page.getPhysicalPath())
+    logger.debug("Upgrading versions for wiki_page at %s ...",
+                wiki_page.absolute_url_path())
     if not isinstance(wiki_page.source, ZODBVersionContent):
         logger.warn("Upgrade not done. "
                     "Upgrade is only supported for wiki_page "
@@ -94,7 +94,7 @@ def upgrade_wiki_page_unicode(wiki_page):
 
     plist_count = len(wiki_page.source.plist)
     for i in range(plist_count):
-        logger.info("Upgrading version %s", i)
+        logger.debug("Upgrading version %s", i)
         if i == 0:
             # The initial version is always an empty string and not an array.
             # We don't need to touch it.
@@ -106,13 +106,13 @@ def upgrade_wiki_page_unicode(wiki_page):
             tags = content[1]
             converted_lines = []
             for line in lines:
-                #logger.info("line: %s", line)
+                #logger.debug("line: %s", line)
                 converted_line = upgrade_string_unicode(line)
-                #logger.info("converted_line: %s", converted_line)
+                #logger.debug("converted_line: %s", converted_line)
                 converted_lines.append(converted_line)
             wiki_page.source._setContent(i, converted_lines, tags)
-        logger.info("Upgrading version %s DONE", i)
+        logger.debug("Upgrading version %s DONE", i)
 
-    logger.info("Upgrading versions DONE")
+    logger.debug("Upgrading versions DONE")
     return True
 
