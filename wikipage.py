@@ -85,10 +85,14 @@ class WikiPage(CPSBaseFolder):
         self.source = ZODBVersionContent(source, initial_tags)
 
         # This is a cache. It contains the last HTML render as a string.
+        # Note that this cache is persistent and that a Zope restart doesn't
+        # reset it.
         self._render = None
 
         # This is a cache. It contains the IDs of the pages that can be created
         # from this page.
+        # Note that this cache is persistent and that a Zope restart doesn't
+        # reset it.
         self._potential_linked_pages = None
 
         self._relations = WikiRelation(self, ZODBBackend())
