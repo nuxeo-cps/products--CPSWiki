@@ -34,7 +34,7 @@ class RstParser(BaseParser):
 
     __implements__ = (IWikiParser, )
 
-    input_encoding = 'utf-8'
+    input_encoding = 'unicode'
     output_encoding = 'utf-8'
 
     def getId(self):

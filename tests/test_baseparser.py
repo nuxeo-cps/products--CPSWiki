@@ -73,10 +73,14 @@ class WikiParserTest(ZopeTestCase):
         wiki.absolute_url = self._wiki_url
         parser = BaseParser()
 
+        # The input is UTF-8
+        # str type with UTF-8 encoding (and not unicode object), as generated
+        # by the rstparser.
         res = parser.parseContent('MyP\xc3\xa9age', wiki)
+        # The output is unicode
         self.assertEquals(res,
-          ('My\xc3\xa9Page<a href="http://xxx/addPage?title=MyPeage">?</a>',
-           [], ['MyP\xc3\xa9age']))
+          (u'MyP\xe9age<a href="http://xxx/addPage?title=MyP%C3%A9age">?</a>',
+           [], [u'MyPeage']))
 
 
     def test_weirdParsingCases(self):

@@ -19,6 +19,11 @@
 # 02111-1307, USA.
 """A base parser that takes the content and create internal and external links.
 
+In this module we don't use UTF-8 in regular expressions. UTF-8 being a
+multibyte encoding, where some unicode code points are encoded by 2 or more
+bytes, using it would make parts of string - that we don't plan to match -
+actually match. Instead we use unicode strings everywhere.
+
 Parsing methods taken from ZWiki and refactored for CPSWiki needs.
 """
 
@@ -38,16 +43,19 @@ URL_CHARS = r'[A-Za-z0-9/:@_%~#=&\.\-\?\+\$,]+'
 URL = r'["=]?((about|http|https|ftp|mailto|file):%s)' % URL_CHARS
 URL_REGEXP = re.compile(URL)
 
-# All the letters ASCII and unicode in upper-case
+# All the letters ASCII and UTF-8 in upper-case
 U = 'A-Z\xc0-\xdf'
-# All the letters ASCII and unicode in lower-case
+# All the letters ASCII and UTF-8 in lower-case
 L = 'a-z\xe0-\xff'
+# Word boundary
 # Using a negative lookbehind assertion (?<!...)
 B = '(?<![%s0-9])' % (U + L)
+
 # TODO: Give some examples
 WIKINAME1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (B, U, L, U, U + L)
 # TODO: Give some examples
 WIKINAME2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (B, U, U, L, U + L)
+
 # [xxx] but not [[xxx]] or [xxx[xxx] or [xxx]xxx]
 BRACKETED_CONTENT = r'(?s)\[.*?\]'
 STRICT_BRACKETED_CONTENT = r'\[([^][\n]+)\]'
@@ -81,13 +89,22 @@ class BaseParser:
         return 'baseparser'
 
     def parseContent(self, content, wiki):
-        """Return the render of the provided content along with references on
+        """Returns the render of the provided content along with references on
         the linked pages and potentially linked pages.
+
+        content may be either a unicode string or an UTF-8 encoded string.
+        Of course it's best to use unicode strings whenever possible, but the
+        ReST parser generates only UTF-8 encoded string so we have to able to
+        process that type too.
         """
         self.wiki = wiki
         self.linked_pages = []
         self.potential_linked_pages = []
-        # A regexp can be with either a replacement string or a replacement
+
+        if isinstance(content, str):
+            content = unicode(content, 'utf-8')
+
+        # A regexp can either have a replacement string or a replacement
         # function.
         render = WIKILINK_REGEXP.sub(self._wikilinkReplace, content)
         return render, self.linked_pages, self.potential_linked_pages
@@ -174,5 +191,8 @@ class BaseParser:
 
             # Providing a "?" creation link
             root = self.wiki.absolute_url()
+
+            # In Python 2.x quote does not support unicode string
+            stripped_label = stripped_label.encode('utf-8')
             return '%s<a href="%s/addPage?title=%s">?</a>' % (morig, wiki_url,
                                                               quote(stripped_label))
