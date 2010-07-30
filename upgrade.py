@@ -91,6 +91,7 @@ def upgrade_wiki_page_unicode(wiki_page):
         return
 
     wiki_page.clearCache()
+    wiki_page.title = upgrade_string_unicode(wiki_page.title)
 
     plist_count = len(wiki_page.source.plist)
     for i in range(plist_count):
