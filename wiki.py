@@ -236,7 +236,7 @@ class Wiki(CPSBaseFolder):
 
     security.declareProtected(AddPortalContent, 'addPage')
     def addPage(self, title, REQUEST=None):
-        """Create and add a wiki page."""
+        """Creates and adds a wiki page."""
         wikipage_id = generateId(title, lower=False)
         if wikipage_id in self.objectIds():
             raise ValueError("The ID \"%s\" is already in use." % wikipage_id)
