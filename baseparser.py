@@ -192,7 +192,8 @@ class BaseParser:
             # Providing a "?" creation link
             root = self.wiki.absolute_url()
 
-            # In Python 2.x quote does not support unicode string
+            # In Python 2.x quote does not support unicode string, so we have to
+            # convert it to a base string.
             stripped_label = stripped_label.encode('utf-8')
-            return '%s<a href="%s/addPage?title=%s">?</a>' % (morig, wiki_url,
+            return '%s<a href="%s/addPage?title:utf8:ustring=%s">?</a>' % (morig, wiki_url,
                                                               quote(stripped_label))
