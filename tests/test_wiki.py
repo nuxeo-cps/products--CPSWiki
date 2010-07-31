@@ -89,7 +89,7 @@ class WikiTests(WikiTestCase):
         page1 = wiki.addPage('MyPage')
         page1.edit(source='AnotherPage')
         self.assertEquals(page1.render(),
-          '<p>AnotherPage<a href="http://xxx/addPage?title=AnotherPage">?</a></p>\n')
+          '<p>AnotherPage<a href="http://xxx/addPage?title:utf8:ustring=AnotherPage">?</a></p>\n')
         self.assertEquals(page1.getLinkedPages(), [])
         self.assertEquals(page1.getPotentialLinkedPages(), ['AnotherPage'])
         page2 = wiki.addPage('AnotherPage')

@@ -40,24 +40,24 @@ class WikiParserTest(ZopeTestCase):
         # Testing potential links
         res = parser.parseContent('I want to create MyPage', wiki)
         self.assertEquals(res,
-          ('I want to create MyPage<a href="http://xxx/addPage?title=MyPage">?</a>',
+          ('I want to create MyPage<a href="http://xxx/addPage?title:utf8:ustring=MyPage">?</a>',
            [], ['MyPage']))
 
         res = parser.parseContent('I want to create MyPage I said.', wiki)
         self.assertEquals(res,
-          ('I want to create MyPage<a href="http://xxx/addPage?title=MyPage">?</a> I said.',
+          ('I want to create MyPage<a href="http://xxx/addPage?title:utf8:ustring=MyPage">?</a> I said.',
            [], ['MyPage']))
 
         res = parser.parseContent('MyPage\n\nAnotherProduct\n\nTryMe.', wiki)
         self.assertEquals(res,
-          ('MyPage<a href="http://xxx/addPage?title=MyPage">?</a>\n\n'
-           'AnotherProduct<a href="http://xxx/addPage?title=AnotherProduct">?</a>\n\n'
-           'TryMe<a href="http://xxx/addPage?title=TryMe">?</a>.',
+          ('MyPage<a href="http://xxx/addPage?title:utf8:ustring=MyPage">?</a>\n\n'
+           'AnotherProduct<a href="http://xxx/addPage?title:utf8:ustring=AnotherProduct">?</a>\n\n'
+           'TryMe<a href="http://xxx/addPage?title:utf8:ustring=TryMe">?</a>.',
            [], ['MyPage', 'AnotherProduct', 'TryMe']))
 
         res = parser.parseContent('qzpijdspjvd [spds] vjpdsovj', wiki)
         self.assertEquals(res,
-          ('qzpijdspjvd [spds]<a href="http://xxx/addPage?title=spds">?</a> vjpdsovj',
+          ('qzpijdspjvd [spds]<a href="http://xxx/addPage?title:utf8:ustring=spds">?</a> vjpdsovj',
            [], ['spds']))
 
         # Testing found links
@@ -79,7 +79,7 @@ class WikiParserTest(ZopeTestCase):
         res = parser.parseContent('MyP\xc3\xa9age', wiki)
         # The output is unicode
         self.assertEquals(res,
-          (u'MyP\xe9age<a href="http://xxx/addPage?title=MyP%C3%A9age">?</a>',
+          (u'MyP\xe9age<a href="http://xxx/addPage?title:utf8:ustring=MyP%C3%A9age">?</a>',
            [], [u'MyPeage']))
 
 
@@ -93,27 +93,27 @@ class WikiParserTest(ZopeTestCase):
 
         res = parser.parseContent('qzpijd [***] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [***]<a href="http://xxx/addPage?title=%2A%2A%2A">?</a> dsvjpdsovj')
+          'qzpijd [***]<a href="http://xxx/addPage?title:utf8:ustring=%2A%2A%2A">?</a> dsvjpdsovj')
 
         res = parser.parseContent('qzpijd [???] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [???]<a href="http://xxx/addPage?title=%3F%3F%3F">?</a> dsvjpdsovj')
+          'qzpijd [???]<a href="http://xxx/addPage?title:utf8:ustring=%3F%3F%3F">?</a> dsvjpdsovj')
 
         res = parser.parseContent('qzpijd [?a?] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [?a?]<a href="http://xxx/addPage?title=%3Fa%3F">?</a> dsvjpdsovj')
+          'qzpijd [?a?]<a href="http://xxx/addPage?title:utf8:ustring=%3Fa%3F">?</a> dsvjpdsovj')
 
         res = parser.parseContent('qzpijd [[junk] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [[junk]<a href="http://xxx/addPage?title=junk">?</a> dsvjpdsovj')
+          'qzpijd [[junk]<a href="http://xxx/addPage?title:utf8:ustring=junk">?</a> dsvjpdsovj')
 
         res = parser.parseContent('qzpijd [[Junk] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [[Junk]<a href="http://xxx/addPage?title=Junk">?</a> dsvjpdsovj')
+          'qzpijd [[Junk]<a href="http://xxx/addPage?title:utf8:ustring=Junk">?</a> dsvjpdsovj')
 
         res = parser.parseContent('qzpijd [[Detaxe]] dsvjpdsovj', wiki)
         self.assertEquals(res[0],
-          'qzpijd [[Detaxe]<a href="http://xxx/addPage?title=Detaxe">?</a>] dsvjpdsovj')
+          'qzpijd [[Detaxe]<a href="http://xxx/addPage?title:utf8:ustring=Detaxe">?</a>] dsvjpdsovj')
 
         res = parser.parseContent("""
 http://www.cps-project.org/

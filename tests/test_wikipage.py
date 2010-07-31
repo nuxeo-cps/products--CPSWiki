@@ -59,7 +59,7 @@ class WikiPageTests(WikiTestCase):
 
         page.edit(source='once[again] again')
         self.assertEquals(page.render(),
-                          'once[again]<a href="http://xxx/addPage?title=again">?</a> again')
+                          'once[again]<a href="http://xxx/addPage?title:utf8:ustring=again">?</a> again')
 
         if has_rst:
             wiki.parser = 'restructuredtext'
@@ -87,7 +87,7 @@ class WikiPageTests(WikiTestCase):
         page.edit(source='once[again] again')
         page.clearCache()
         self.assertEquals(page.render(),
-                          'once[again]<a href="http://xxx/addPage?title=again">?</a> again')
+                          'once[again]<a href="http://xxx/addPage?title:utf8:ustring=again">?</a> again')
         self.assertEquals(page.getLinkedPages(), [])
         self.assertEquals(page.getPotentialLinkedPages(), ['again'])
 
