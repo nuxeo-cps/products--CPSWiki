@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSWiki 1.3.1
+===========================================================
+First release built by: gracinet at: 2010-08-02T20:01:20
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Finished unicode upgrade step
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSWiki 1.3.0
 ===========================================================
 First release built by: gracinet at: 2010-07-26T22:53:02
