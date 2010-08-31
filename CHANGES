@@ -7,6 +7,7 @@ New features
 Bug fixes
 ~~~~~~~~~
 - Adapted to TinyMCE
+- Don't show AJAX speedup edit button if the wiki parser is HTML
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

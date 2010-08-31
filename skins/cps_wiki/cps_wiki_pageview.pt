@@ -1,3 +1,6 @@
+<tal:block define="wiki here/getParent;
+                   parser_type wiki/parser;
+    ">
 <html metal:use-macro="here/content_lib_master/macros/master">
   <metal:main fill-slot="style_slot">
     <link rel="Stylesheet" type="text/css" href=""
@@ -21,6 +24,7 @@
           <td align="left">
             <h1 tal:content="here/title_or_id"/>
           </td>
+          <tal:block condition="python:parser_type != 'html'">
           <td align="left">
             <div id="ajax_psm" style="display:none"
               i18n:translate="cpswiki_ajax_transferring">
@@ -38,6 +42,7 @@
                 i18n:attributes="alt; title"/>
             </tal:block>
           </td>
+          </tal:block>
         </tr>
       </table>
     </div>
@@ -45,7 +50,6 @@
 
   <metal:block fill-slot="main"
                  tal:define="content python:here.render();
-                             wiki here/getParent;
                              backlinks python:here.getBackedLinkedPages();
                              files here/objectItems">
 
@@ -85,3 +89,4 @@
 
   </metal:block>
 </html>
+  </tal:block>
