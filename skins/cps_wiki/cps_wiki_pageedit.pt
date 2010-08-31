@@ -11,12 +11,18 @@
     <script type="text/javascript" src="cookie.js"
       tal:attributes="src string:${base_url}cookie.js"></script>
     <script type="text/javascript"
+      tal:attributes="src string:${base_url}tiny_mce.js"></script>
+    <script type="text/javascript"
+      tal:attributes="src string:${base_url}cpsschemas.js"></script>
+    <script type="text/javascript"
       tal:attributes="src string:${base_url}cpsdocument.js"></script>
     <script type="text/javascript"
       tal:attributes="src string:${base_url}cpswiki.js"></script>
   </metal:main>
   <metal:block fill-slot="main"
-               tal:define="wiki here/getParent;
+               tal:define="utool nocall:here/portal_url;
+                           portal utool/getPortalObject;
+                           wiki here/getParent;
                            parser_type wiki/parser;
                            source here/getSource;">
     <tal:block tal:define="locked python:here.lock(request)">
@@ -28,27 +34,18 @@
         </tal:block>
     </tal:block>
     <form action="edit" enctype="multipart/form-data" method="post">
-      <tal:block condition="python:parser_type != 'html'">
-        <p>
-          <textarea name="source:utf8:ustring" rows="30" cols="80"
-            class="monospaceFont resizable"
-            tal:content="source">
-          </textarea>
-        </p>
-      </tal:block>
+      <p>
+        <textarea name="source:utf8:ustring" id="source"
+          rows="30" cols="80" class="monospaceFont resizable mceEditor"
+          tal:content="source">
+        </textarea>
+      </p>
       <tal:block condition="python:parser_type == 'html'">
-        <script type="text/javascript" src=""
-                tal:attributes="src string:${base_url}fckeditor.js">
-        </script>
-        <script type="text/javascript" tal:content="structure string:
-var oFCKeditor = new FCKeditor('source');
-oFCKeditor.BasePath = '${base_url}';
-oFCKeditor.Config['CustomConfigurationsPath'] = 'fckconfig-cps.js';
-oFCKeditor.ToolbarSet='Semantic';
-oFCKeditor.Width = 610;
-oFCKeditor.Height = 410;
-oFCKeditor.Create();
-">
+        <script type="text/javascript"
+          tal:define="selected_language portal/getSelectedLanguage"
+          tal:content="structure string:
+          displayTinyMceEditor('mceEditor', '${selected_language}');
+          ">
         </script>
       </tal:block>
       <p>
