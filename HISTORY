@@ -1,4 +1,22 @@
 ===========================================================
+Package: CPSWiki 1.3.2
+===========================================================
+First release built by: gracinet at: 2010-10-03T11:46:53
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Adapted to TinyMCE
+- Don't show AJAX speedup edit button if the wiki parser is HTML
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSWiki 1.3.1
 ===========================================================
 First release built by: gracinet at: 2010-08-02T20:01:20
