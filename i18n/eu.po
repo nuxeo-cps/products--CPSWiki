@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki\n"
-"POT-Creation-Date: 2009-09-22 16:55default\n"
+"POT-Creation-Date: 2011-03-08 10:00default\n"
 "PO-Revision-Date: 2006-11-16 15:58+0100\n"
 "Last-Translator: Jesus Martin <jesusmartin@lasalle.es>\n"
 "Language-Team: euskara <perikoalkain@lasalle.es>\n"
@@ -82,7 +82,7 @@ msgstr "About the syntax to use and the parser"
 msgid "cpswiki_page_add"
 msgstr "Orrialde bat erantsi"
 
-#.   <label for="wikiSendDiff">
+#.   <label for="send_diff">
 #.                   Send the diff in the notification</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 #, fuzzy
@@ -93,6 +93,12 @@ msgstr "Sending of the diff with the notifications"
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
 msgstr "Etiketa bereziak"
+
+#.   <label for="wiki-title">Wiki title</label>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+#, fuzzy
+msgid "cpswiki_title"
+msgstr "Modify"
 
 #.   <p>
 #.         We need a confirmation to delete this page.

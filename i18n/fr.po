@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
-"POT-Creation-Date: 2009-09-22 16:56default\n"
+"POT-Creation-Date: 2011-03-08 10:01default\n"
 "PO-Revision-Date: 2004-10-25 11:38+0200\n"
 "Last-Translator: DARCHE <madarche@nuxeo.com>\n"
 "Language-Team: Francais <fr@li.org>\n"
@@ -66,7 +66,7 @@ msgstr "Transfert en cours..."
 #.   <label for="wikiParser">Parser used</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_choose_parser"
-msgstr "Parser utilisé :"
+msgstr "Parser utilisé"
 
 #.   <h2>About the syntax to use
 #.         and the parser</h2>
@@ -79,7 +79,7 @@ msgstr "A propos de la syntaxe à utiliser et du parseur"
 msgid "cpswiki_page_add"
 msgstr "Ajouter une page"
 
-#.   <label for="wikiSendDiff">
+#.   <label for="send_diff">
 #.                   Send the diff in the notification</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_send_diff"
@@ -89,6 +89,11 @@ msgstr "Envoi du diff avec les notifications"
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
 msgstr "Marqueurs spéciaux"
+
+#.   <label for="wiki-title">Wiki title</label>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+msgid "cpswiki_title"
+msgstr "Titre du wiki"
 
 #.   <p>
 #.         We need a confirmation to delete this page.

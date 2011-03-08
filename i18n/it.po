@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki Italian Translation\n"
-"POT-Creation-Date: 2009-09-22 16:55default\n"
+"POT-Creation-Date: 2011-03-08 10:01default\n"
 "PO-Revision-Date: 2005-11-10 09:17+0100\n"
 "Last-Translator: Stefano Schintu <schintu@gmail.com>\n"
 "Language-Team: CPS Italian <schintu@gmail.com>\n"
@@ -79,7 +79,7 @@ msgstr "A propos de la syntaxe à utiliser et du parseur"
 msgid "cpswiki_page_add"
 msgstr "Ajouter une page"
 
-#.   <label for="wikiSendDiff">
+#.   <label for="send_diff">
 #.                   Send the diff in the notification</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 #, fuzzy
@@ -90,6 +90,12 @@ msgstr "Envoi du diff avec les notifications"
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
 msgstr "Tag speciali"
+
+#.   <label for="wiki-title">Wiki title</label>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+#, fuzzy
+msgid "cpswiki_title"
+msgstr "Titre du wiki"
 
 #.   <p>
 #.         We need a confirmation to delete this page.

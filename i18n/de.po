@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CPSWiki-de CPS-3.3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-22 16:56default\n"
+"POT-Creation-Date: 2011-03-08 10:00default\n"
 "PO-Revision-Date: 2005-10-07 17:13+0200\n"
 "Last-Translator: Georg Hennemann <georg.hennemann@dhl.com>\n"
 "Language-Team: German <rheinland@dzug.org>\n"
@@ -79,7 +79,7 @@ msgstr ""
 msgid "cpswiki_page_add"
 msgstr ""
 
-#.   <label for="wikiSendDiff">
+#.   <label for="send_diff">
 #.                   Send the diff in the notification</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 msgid "cpswiki_send_diff"
@@ -88,6 +88,11 @@ msgstr ""
 #.   <h2>Special tags</h2>
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
+msgstr ""
+
+#.   <label for="wiki-title">Wiki title</label>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+msgid "cpswiki_title"
 msgstr ""
 
 #.   <p>

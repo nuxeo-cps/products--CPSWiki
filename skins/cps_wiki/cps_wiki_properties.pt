@@ -5,6 +5,14 @@
         <tbody>
           <tr>
             <th>
+              <label for="wiki-title" i18n:translate="cpswiki_title">Wiki title</label>
+            </th>
+            <td>
+              <input id="wiki-title" name="title" type="text" tal:attributes="value here/title"/>
+            </td>
+          </tr>
+          <tr>
+            <th>
               <label for="wikiParser" i18n:translate="cpswiki_choose_parser">Parser used</label>
             </th>
             <td>

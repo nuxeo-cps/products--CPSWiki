@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"POT-Creation-Date: 2009-09-22 16:56default\n"
+"POT-Creation-Date: 2011-03-08 10:01default\n"
 "PO-Revision-Date: 2006-04-07 15:06-0300\n"
 "Last-Translator: Mario Olimpio de Menezes <mario@ipen.br>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -88,7 +88,7 @@ msgstr "Escolher analisador"
 msgid "cpswiki_page_add"
 msgstr "Adicionar"
 
-#.   <label for="wikiSendDiff">
+#.   <label for="send_diff">
 #.                   Send the diff in the notification</label>
 #: from ../skins/cps_wiki/cps_wiki_properties.pt
 #, fuzzy
@@ -99,6 +99,12 @@ msgstr "Adicionar"
 #: from ../skins/cps_wiki/cps_wiki_help.pt
 msgid "cpswiki_specialtags"
 msgstr "Rótulos especiais"
+
+#.   <label for="wiki-title">Wiki title</label>
+#: from ../skins/cps_wiki/cps_wiki_properties.pt
+#, fuzzy
+msgid "cpswiki_title"
+msgstr "Submeter"
 
 #.   <p>
 #.         We need a confirmation to delete this page.
