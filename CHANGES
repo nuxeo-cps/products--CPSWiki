@@ -7,6 +7,8 @@ New features
 Bug fixes
 ~~~~~~~~~
 - #1558: Title of a wiki not editable after creation
+- The wiki_help.restructuredtext.fr.html detailed help file is still encoded in
+  Latin9 instead of UTF-8.
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

@@ -1,21 +1,21 @@
-<h2 class="title">Introduction à CPS Wiki</h2>
-<p>Le contenu des pages est du texte pur. Mais il existe des règles de mise en
-forme simples. Le système de mise en forme est le <a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>.</p>
+<h2 class="title">Introduction Ã  CPS Wiki</h2>
+<p>Le contenu des pages est du texte pur. Mais il existe des rÃ¨gles de mise en
+forme simples. Le systÃ¨me de mise en forme est le <a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>.</p>
 <div class="section" id="un-nom-wiki">
 <h3><a name="un-nom-wiki">Un nom wiki</a></h3>
-<p>Un nom wiki s'écrit en casse chameau (mixed case en anglais) : les mots sont
-attachés et la première lettre de chaque mot est en majuscule comme dans
+<p>Un nom wiki s'Ã©crit en casse chameau (mixed case en anglais) : les mots sont
+attachÃ©s et la premiÃ¨re lettre de chaque mot est en majuscule comme dans
 les exemples suivants :</p>
 <pre class="literal-block">
 NomWiki
 OpenMind
 UneOperationComplexe
 </pre>
-<p>Un nom wiki est soit automatiquement transformé en un lien
-hypertexte vers la page du même nom (si la page existe), soit suivi d'un point
-d'interrogation pour créer cette page (si la page n'existe pas).</p>
+<p>Un nom wiki est soit automatiquement transformÃ© en un lien
+hypertexte vers la page du mÃªme nom (si la page existe), soit suivi d'un point
+d'interrogation pour crÃ©er cette page (si la page n'existe pas).</p>
 <p>Pour qu'un nom wiki ne soit reconnu comme tel (et donc par exemple non suivi
-d'un point d'interrogation), il suffit de le précéder d'un point 
+d'un point d'interrogation), il suffit de le prÃ©cÃ©der d'un point 
 d'exclamation (!), par exemple :</p>
 <pre class="literal-block">
 !OpenMind
@@ -23,68 +23,68 @@ d'exclamation (!), par exemple :</p>
 </div>
 <div class="section" id="les-paragraphes">
 <h3><a name="les-paragraphes">Les paragraphes</a></h3>
-<p>L'élément de base est le paragraphe. C'est un bloc de lignes séparé du reste
+<p>L'Ã©lÃ©ment de base est le paragraphe. C'est un bloc de lignes sÃ©parÃ© du reste
 par au moins une ligne vide.</p>
 </div>
 <div class="section" id="mise-en-forme-des-caract-res">
-<h3><a name="mise-en-forme-des-caract-res">Mise en forme des caractères</a></h3>
-<p>A l'intérieur d'un paragraphe, un texte entouré d'astérisques comme
-<tt class="docutils literal"><span class="pre">*italique*</span></tt> apparaît en <em>italique</em>. Alors que <tt class="docutils literal"><span class="pre">**gras**</span></tt> apparaîtra en
+<h3><a name="mise-en-forme-des-caract-res">Mise en forme des caractÃ¨res</a></h3>
+<p>A l'intÃ©rieur d'un paragraphe, un texte entourÃ© d'astÃ©risques comme
+<tt class="docutils literal"><span class="pre">*italique*</span></tt> apparaÃ®t en <em>italique</em>. Alors que <tt class="docutils literal"><span class="pre">**gras**</span></tt> apparaÃ®tra en
 <strong>gras</strong>.</p>
 </div>
 <div class="section" id="listes">
 <h3><a name="listes">Listes</a></h3>
-<p>Une liste doit toujours être précédée d'une ligne vide. Les listes non-énumérées
-peuvent commencer par &quot;-&quot;, &quot;+&quot; ou &quot;*&quot;. Les listes énumérées sont marquées par
+<p>Une liste doit toujours Ãªtre prÃ©cÃ©dÃ©e d'une ligne vide. Les listes non-Ã©numÃ©rÃ©es
+peuvent commencer par &quot;-&quot;, &quot;+&quot; ou &quot;*&quot;. Les listes Ã©numÃ©rÃ©es sont marquÃ©es par
 un chiffre ou une lettre suivi d'un point:</p>
 <pre class="literal-block">
-* Première ligne.
+* PremiÃ¨re ligne.
 * Seconde ligne.
 
-1. Première ligne.
+1. PremiÃ¨re ligne.
 2. Seconde ligne.
 </pre>
 <p>Donne :</p>
 <blockquote>
 <ul class="simple">
-<li>Première ligne.</li>
+<li>PremiÃ¨re ligne.</li>
 <li>Seconde ligne.</li>
 </ul>
 <ol class="arabic simple">
-<li>Première ligne.</li>
+<li>PremiÃ¨re ligne.</li>
 <li>Seconde ligne.</li>
 </ol>
 </blockquote>
 </div>
 <div class="section" id="texte-sans-mise-en-page-verbatim">
 <h3><a name="texte-sans-mise-en-page-verbatim">Texte sans mise en page (verbatim)</a></h3>
-<p>Pour insérer un texte sans aucune mise en forme et en préservant les sauts de
-lignes, il faut ajouter <tt class="docutils literal"><span class="pre">::</span></tt> à la fin du paragraphe précédent. Le bloc
-a formatter doit-être indenté comme une citation. La fin de l'indentation
-détermine la fin du bloc:</p>
+<p>Pour insÃ©rer un texte sans aucune mise en forme et en prÃ©servant les sauts de
+lignes, il faut ajouter <tt class="docutils literal"><span class="pre">::</span></tt> Ã  la fin du paragraphe prÃ©cÃ©dent. Le bloc
+a formatter doit-Ãªtre indentÃ© comme une citation. La fin de l'indentation
+dÃ©termine la fin du bloc:</p>
 <pre class="literal-block">
 Un texte sans mise en page::
 
   Tout est
-    respecté.
-      même les caractères comme les *astérisques*.
+    respectÃ©.
+      mÃªme les caractÃ¨res comme les *astÃ©risques*.
 </pre>
 <p>Donne:</p>
 <blockquote>
 <p>Un texte sans mise en page:</p>
 <pre class="literal-block">
 Tout est
-  respecté.
-    même les caractères comme les *astérisques*.
+  respectÃ©.
+    mÃªme les caractÃ¨res comme les *astÃ©risques*.
 </pre>
 </blockquote>
 </div>
 <div class="section" id="titres-et-sous-titres">
 <h3><a name="titres-et-sous-titres">Titres et sous-titres</a></h3>
-<p>Un titre est défini en le soulignant par des lignes de même longueurs
-composées de caractères de ponctuations. Les caractères sont choisis
+<p>Un titre est dÃ©fini en le soulignant par des lignes de mÃªme longueurs
+composÃ©es de caractÃ¨res de ponctuations. Les caractÃ¨res sont choisis
 parmi <tt class="docutils literal"><span class="pre">=</span> <span class="pre">-</span> <span class="pre">`</span> <span class="pre">:</span> <span class="pre">'</span> <span class="pre">&quot;</span> <span class="pre">~</span> <span class="pre">^</span> <span class="pre">_</span> <span class="pre">*</span> <span class="pre">+</span> <span class="pre">#</span> <span class="pre">&lt;</span> <span class="pre">&gt;</span></tt>.</p>
-<p>Il faut associer un signe de ponctuation à chaque niveau</p>
+<p>Il faut associer un signe de ponctuation Ã  chaque niveau</p>
 <pre class="literal-block">
 Chapitre 1
 ==========
@@ -101,8 +101,8 @@ Chapitre 2
 </div>
 <div class="section" id="lignes-horizontale">
 <h3><a name="lignes-horizontale">Lignes horizontale</a></h3>
-<p>Un paragraphe composé uniquement d'une suite de plus de 4 signes de ponctuation
-est transformé en une ligne horizontale.</p>
+<p>Un paragraphe composÃ© uniquement d'une suite de plus de 4 signes de ponctuation
+est transformÃ© en une ligne horizontale.</p>
 </div>
 <div class="section" id="images">
 <h3><a name="images">Images</a></h3>
@@ -115,17 +115,17 @@ est transformé en une ligne horizontale.</p>
 </div>
 <div class="section" id="liens-hypertextes">
 <h3><a name="liens-hypertextes">Liens hypertextes</a></h3>
-<p>Un lien hypertexte est indiqué par un caractère souligné après le nom. L'URL
-correspondante est définit plus bas précédé de deux points</p>
+<p>Un lien hypertexte est indiquÃ© par un caractÃ¨re soulignÃ© aprÃ¨s le nom. L'URL
+correspondante est dÃ©finit plus bas prÃ©cÃ©dÃ© de deux points</p>
 <pre class="literal-block">
-Le w3c_ est une organisation qui vise à définir des `standards du web`_.
+Le w3c_ est une organisation qui vise Ã  dÃ©finir des `standards du web`_.
 
 .. _w3c: <a href="http://www.w3.org/">http://www.w3.org/</a>
 .. _standards du web: <a href="http://www.w3.org/TR/">http://www.w3.org/TR/</a>
 </pre>
 <p>Donne :</p>
 <blockquote>
-<p>Le <a class="reference" href="http://www.w3.org/">w3c</a> est une organisation qui vise à définir des <a class="reference" href="http://www.w3.org/TR/">standards du web</a>.</p>
+<p>Le <a class="reference" href="http://www.w3.org/">w3c</a> est une organisation qui vise Ã  dÃ©finir des <a class="reference" href="http://www.w3.org/TR/">standards du web</a>.</p>
 </blockquote>
 </div>
 
