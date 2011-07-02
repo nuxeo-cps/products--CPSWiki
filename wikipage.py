@@ -420,7 +420,7 @@ class WikiPage(CPSBaseFolder):
 InitializeClass(WikiPage)
 
 
-manage_addWikiPageForm = PageTemplateFile('zmi/zmi_wikiPageAdd', globals(),
+manage_addWikiPageForm = PageTemplateFile('zmi/wikiPageAdd', globals(),
                                           __name__='manage_addWikiPageForm')
 
 def manage_addWikiPage(self, id, title, REQUEST=None):
