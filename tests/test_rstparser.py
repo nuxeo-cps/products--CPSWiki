@@ -24,13 +24,19 @@ from Testing.ZopeTestCase import ZopeTestCase, _print
 from Products.CPSWiki.rstparser import RstParser
 from Products.CPSWiki.wiki import Wiki
 
+import re
+
 class WikiParserTest(ZopeTestCase):
+
+    def assertRegexp(self, content, regexp):
+        if not re.search(regexp, content):
+            self.fail("%r does not match regexp %r", content, regexp)
 
     def testParsing(self):
         wiki = Wiki('wiki')
         parser = RstParser()
 
-        res = parser.parseContent("Title\n"
+        res = parser.parseContent(u"Title\n"
                                   "-----\n"
                                   "\n"
                                   "Some content.\n"
@@ -38,13 +44,14 @@ class WikiParserTest(ZopeTestCase):
         self.assertEquals(res, ('<h2 class="title">Title</h2>\n<p>'
                                 'Some content.</p>\n', [], []))
 
-        res = parser.parseContent("This web site http://foo.bar that is", wiki)
-        self.assertEquals(res, ('<p>This web site <a class="reference" '
+        res = parser.parseContent(u"This web site http://foo.bar that is", wiki)
+        self.assertRegexp(res[0], u'<p>This web site <a class="[^"]+" '
                                 'href="http://foo.bar"><a href="http://'
                                 'foo.bar">http://foo.bar</a></a> that '
-                                'is</p>\n', [], []))
+                                'is</p>\n')
+        self.assertEquals(res[1:], ([], []))
 
-        waited = ('http://www.cps-project.org/\n'
+        waited = (u'http://www.cps-project.org/\n'
                   'http://www.cps-project.org/\n'
                   'http://www.cps-project.org/\n'
                   'http://www.cps-project.org/\n'
