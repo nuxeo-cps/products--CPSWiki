@@ -13,7 +13,7 @@
     <script type="text/javascript"
       tal:attributes="src string:${base_url}tiny_mce.js"></script>
     <script type="text/javascript"
-      tal:attributes="src string:${base_url}cpsschemas.js"></script>
+      tal:attributes="src string:${base_url}display_tiny_mce.js"></script>
     <script type="text/javascript"
       tal:attributes="src string:${base_url}cpsdocument.js"></script>
     <script type="text/javascript"
