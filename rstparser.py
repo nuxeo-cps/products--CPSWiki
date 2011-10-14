@@ -44,6 +44,7 @@ class RstParser(BaseParser):
         """Return the render of the provided content along with references on
         the linked pages and potentially linked pages.
         """
+        content = unicode(content)
         if rst_available:
             content = HTML(content, output_encoding=self.output_encoding,
                            input_encoding=self.input_encoding,
