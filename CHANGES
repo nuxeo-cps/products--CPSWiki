@@ -6,8 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- #2462: CPSWiki edit form doesn't show the TinyMCE HTML editor wheh the parser
-  is set to "html"
+- Fixed unit tests under Zope 2.10
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

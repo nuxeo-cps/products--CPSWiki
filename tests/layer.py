@@ -17,25 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import unittest
+from Testing import ZopeTestCase
+from Products.CPSDefault.tests.CPSTestCase import ExtensionProfileLayerClass
 
-from Products.CPSUtil.tests.web_conformance import assertValidCss
-from Products.CPSDefault.tests.CPSTestCase import CPSTestCase
-from layer import CPSWikiLayer
+ZopeTestCase.installProduct('CPSWiki')
 
-class WebConformanceTests(CPSTestCase):
+class CPSWikiLayerClass(ExtensionProfileLayerClass):
+    extension_ids = ('CPSWiki:default',)
 
-    layer = CPSWikiLayer
-
-    def test_css(self):
-        portal = self.portal
-        ALL_CSS = ['wiki.css']
-        for css_name in ALL_CSS:
-            css_body = getattr(portal, css_name)(portal)
-            assertValidCss(css_body, css_name)
-
-
-def test_suite():
-    return unittest.TestSuite((
-        unittest.makeSuite(WebConformanceTests),
-        ))
+CPSWikiLayer = CPSWikiLayerClass(__name__, 'CPSWikiLayer')
