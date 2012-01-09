@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSWiki 1.4.3-CPS-3.5
+===========================================================
+First release built by: gracinet at: 2012-01-09T16:11:44
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2514: Wikis should appear in the navigation portlet on the left
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSWiki 1.4.2-CPS-3.5
 ===========================================================
 First release built by: gracinet at: 2011-11-23T19:59:10
