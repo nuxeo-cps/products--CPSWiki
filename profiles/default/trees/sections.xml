@@ -3,4 +3,7 @@
  <property name="type_names" purge="False">
   <element value="Wiki"/>
  </property>
+ <property name="meta_types" purge="False">
+  <element value="Wiki"/>
+ </property>
 </object>
