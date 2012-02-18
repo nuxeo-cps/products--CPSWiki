@@ -24,7 +24,9 @@ from cStringIO import StringIO
 from OFS.Image import Image, File
 from OFS.Folder import Folder
 
+from Products.CPSDefault.tests.CPSTestCase import CPSTestCase
 from Products.CPSWiki.tests.wiki_test_case import WikiTestCase
+from layer import CPSWikiLayer
 from Products.CPSWiki.wiki import Wiki
 
 
@@ -273,6 +275,20 @@ class WikiTests(WikiTestCase):
         wiki_2.version = (0, 3)
         self.assertNotEquals(wiki_1.version, wiki_2.version)
 
+class WikiIntegrationTests(CPSTestCase):
+
+    layer = CPSWikiLayer
+
+    def test_creation_action(self):
+        # test what happens if Wiki type is selected from folder_factories
+        # update this for #2556 to check the redirection to form
+        self.login('manager')
+        ws = self.portal.workspaces
+        wid = ws.content_create(type_name='Wiki')
+        self.assertTrue(ws.hasObject(wid))
+        wiki = ws[wid]
+        self.assertEquals(wiki.meta_type, 'Wiki')
+
 def test_suite():
     """
     return unittest.TestSuite((
@@ -282,6 +298,7 @@ def test_suite():
     """
     return unittest.TestSuite((
         unittest.makeSuite(WikiTests),
+        unittest.makeSuite(WikiIntegrationTests),
         ))
 
 if __name__ == '__main__':

@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2551: integration test for Wiki instantiation
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
